@@ -58,7 +58,7 @@ const CustomerMeetingDetails = props => {
     if (!item) return null;
 
     return (
-        <div style={{ flex: 1, backgroundColor: "rgba(254,254,250, 0.1)", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
             {customerMeetingDetailsObj ? (
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     {item.category_type === "Residential" ? (
@@ -78,7 +78,10 @@ const CustomerMeetingDetails = props => {
                                         marginBottom: 1,
                                         flexDirection: "row",
                                         justifyContent: "space-between",
-                                        display: 'flex'
+                                        display: 'flex',
+                                        borderBottom: '1px solid #e0e0e0',
+                                        color: '#000',
+                                        fontWeight: '600'
                                     }}
                                 >
                                     <span style={{ padding: 10 }}>
@@ -93,10 +96,10 @@ const CustomerMeetingDetails = props => {
                                 </div>
                                 <div
                                     style={{
-                                        backgroundColor: "rgba(0,255,255, 0.1)"
+                                        backgroundColor: "#E0F7FA"
                                     }}
                                 >
-                                    <p style={{ padding: 10, textAlign: "center", margin: 0 }}>
+                                    <p style={{ padding: 10, textAlign: "center", margin: 0, color: '#000', fontWeight: 'bold' }}>
                                         Related Properties For Meeting
                                     </p>
                                 </div>
@@ -143,7 +146,10 @@ const CustomerMeetingDetails = props => {
                                         marginBottom: 1,
                                         flexDirection: "row",
                                         justifyContent: "space-between",
-                                        display: 'flex'
+                                        display: 'flex',
+                                        borderBottom: '1px solid #e0e0e0',
+                                        color: '#000',
+                                        fontWeight: '600'
                                     }}
                                 >
                                     <span style={{ padding: 10 }}>
@@ -158,10 +164,10 @@ const CustomerMeetingDetails = props => {
                                 </div>
                                 <div
                                     style={{
-                                        backgroundColor: "rgba(0,255,255, 0.1)"
+                                        backgroundColor: "#E0F7FA"
                                     }}
                                 >
-                                    <p style={{ padding: 10, textAlign: "center", margin: 0 }}>
+                                    <p style={{ padding: 10, textAlign: "center", margin: 0, color: '#000', fontWeight: 'bold' }}>
                                         Related Properties For Meeting
                                     </p>
                                 </div>
@@ -212,7 +218,10 @@ const CustomerMeetingDetails = props => {
                                         marginBottom: 1,
                                         flexDirection: "row",
                                         justifyContent: "space-between",
-                                        display: 'flex'
+                                        display: 'flex',
+                                        borderBottom: '1px solid #e0e0e0',
+                                        color: '#000',
+                                        fontWeight: '600'
                                     }}
                                 >
                                     <span style={{ padding: 10 }}>
@@ -227,10 +236,10 @@ const CustomerMeetingDetails = props => {
                                 </div>
                                 <div
                                     style={{
-                                        backgroundColor: "rgba(0,255,255, 0.1)"
+                                        backgroundColor: "#E0F7FA"
                                     }}
                                 >
-                                    <p style={{ padding: 10, textAlign: "center", margin: 0 }}>
+                                    <p style={{ padding: 10, textAlign: "center", margin: 0, color: '#000', fontWeight: 'bold' }}>
                                         Related Properties For Meeting
                                     </p>
                                 </div>
@@ -278,7 +287,10 @@ const CustomerMeetingDetails = props => {
                                         marginBottom: 1,
                                         flexDirection: "row",
                                         justifyContent: "space-between",
-                                        display: 'flex'
+                                        display: 'flex',
+                                        borderBottom: '1px solid #e0e0e0',
+                                        color: '#000',
+                                        fontWeight: '600'
                                     }}
                                 >
                                     <span style={{ padding: 10 }}>
@@ -293,10 +305,10 @@ const CustomerMeetingDetails = props => {
                                 </div>
                                 <div
                                     style={{
-                                        backgroundColor: "rgba(0,255,255, 0.1)"
+                                        backgroundColor: "#E0F7FA"
                                     }}
                                 >
-                                    <p style={{ padding: 10, textAlign: "center", margin: 0 }}>
+                                    <p style={{ padding: 10, textAlign: "center", margin: 0, color: '#000', fontWeight: 'bold' }}>
                                         Related Properties For Meeting
                                     </p>
                                 </div>

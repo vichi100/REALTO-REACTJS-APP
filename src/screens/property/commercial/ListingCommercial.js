@@ -30,7 +30,17 @@ const sortByAvailabilityArray = ["Earliest First", "Oldest First"];
 const sortByPostedDateArray = ["Recent First", "Oldest Fist"];
 
 const ListingCommercial = props => {
-    const { navigation } = props;
+    const navigate = useNavigate();
+    const navigation = {
+        navigate: (path, params) => {
+            if (!path.startsWith('/')) {
+                navigate(`/listing/${path}`, { state: params });
+            } else {
+                navigate(path, { state: params });
+            }
+        },
+        goBack: () => navigate(-1)
+    };
     const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false } = props.route?.params || {};
     const [search, setSearch] = useState("");
     const [isVisible, setIsVisible] = useState(false);
@@ -410,7 +420,7 @@ const ListingCommercial = props => {
         }
     };
 
-    const navigate = useNavigate();
+
     const navigateTo = () => {
         navigate("/listing/Add");
     };

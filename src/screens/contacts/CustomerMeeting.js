@@ -11,13 +11,14 @@ import {
     setUserMobile,
     setUserDetails,
     setPropReminderList,
-    setPropListForMeeting
+    setPropListForMeeting,
+    setCustomerMeetingFormState
 } from "./../../reducers/Action";
 import PropertyReminder from "../property/PropertyReminder";
 import * as  AppConstant from "./../../utils/AppConstant";
 import CustomButtonGroup from "./../../components/CustomButtonGroup";
 
-const ampmArray = ["AM", "PM"];
+const ampmArray = [{ text: "AM" }, { text: "PM" }];
 
 const CustomerMeeting = props => {
     const { navigation } = props;
@@ -28,7 +29,7 @@ const CustomerMeeting = props => {
     const [newTime, setNewTime] = React.useState("");
     const [clientName, setClientName] = useState(item.customer_details.name);
     const [clientMobile, setClientMobile] = useState(
-        item.customer_details.mobile1
+        item.customer_details.mobile1 || item.customer_details.mobile2 || item.customer_details.mobile || item.customer_details.phone || item.mobile || item.phone || ""
     );
 
     const [isVisible, setIsVisible] = useState(false);
@@ -51,7 +52,34 @@ const CustomerMeeting = props => {
         setAMPMIndex(-1);
         setReminderType("Call");
         props.setPropListForMeeting([])
+        props.setCustomerMeetingFormState(null);
     }
+
+    useEffect(() => {
+        if (props.customerMeetingFormState && props.customerMeetingFormState.customerId === item.customer_id) {
+            setReminderType(props.customerMeetingFormState.remiderType || "Call");
+            setNewDate(props.customerMeetingFormState.newDate || "");
+            setNewTime(props.customerMeetingFormState.newTime || "");
+            setAMPMIndex(props.customerMeetingFormState.ampmIndex || -1);
+            setHour(props.customerMeetingFormState.hour || "");
+            setMinutes(props.customerMeetingFormState.minutes || "");
+        } else {
+            clearState();
+        }
+    }, []);
+
+    useEffect(() => {
+        const formState = {
+            remiderType,
+            newDate,
+            newTime,
+            ampmIndex,
+            hour,
+            minutes,
+            customerId: item.customer_id
+        };
+        props.setCustomerMeetingFormState(formState);
+    }, [remiderType, newDate, newTime, ampmIndex, hour, minutes]);
 
     const checkHourValidation = hour => {
         setIsVisible(false);
@@ -89,7 +117,7 @@ const CustomerMeeting = props => {
             setIsVisible(true);
             return;
         }
-        const timeX = hour + ":" + minutes + " " + ampmArray[ampmIndex];
+        const timeX = hour + ":" + minutes + " " + ampmArray[ampmIndex].text;
         setNewTime(timeX);
         setModalVisible(false);
     };
@@ -187,7 +215,6 @@ const CustomerMeeting = props => {
     };
 
     useEffect(() => {
-        clearState();
         getCustomerReminderList();
     }, [propertyIdX]);
 
@@ -197,15 +224,15 @@ const CustomerMeeting = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "rgba(245,245,245, 0.2)", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
             <div style={styles.container}>
                 <div>
-                    <p style={{ marginTop: 10, marginBottom: 10, fontSize: 14 }}>
+                    <p style={{ marginTop: 10, marginBottom: 10, fontSize: 14, color: '#000', fontWeight: '500' }}>
                         Create a call/visiting schedule to show property to client and get
                         reminder on time
                     </p>
                     <div style={{ borderBottom: '1px solid #ccc' }} />
-                    <p style={{ marginTop: 20, marginBottom: 15, fontSize: 14 }}>
+                    <p style={{ marginTop: 20, marginBottom: 15, fontSize: 14, color: '#000', fontWeight: '500' }}>
                         Reminder For ?
                     </p>
                     <div style={styles.propSubSection}>
@@ -225,31 +252,31 @@ const CustomerMeeting = props => {
                     </div>
 
                     <div style={{ marginBottom: 15, marginTop: 25 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: 'rgba(0,191,255, .9)' }}>Customer Name*</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: '#000', fontWeight: '500' }}>Customer Name*</label>
                         <input
                             disabled={true}
                             value={clientName}
                             onChange={e => setClientName(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            style={{ ...styles.input, backgroundColor: "#ffffff", color: "blue" }}
+                            style={{ ...styles.input, backgroundColor: "#ffffff", color: "#000", borderColor: '#999' }}
                         />
                     </div>
 
                     <div style={{ marginBottom: 15 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: 'rgba(0,191,255, .9)' }}>Customer Mobile*</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Customer Mobile*</label>
                         <input
                             disabled={true}
                             value={clientMobile}
                             onChange={e => setClientMobile(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            type="number"
-                            style={{ ...styles.input, backgroundColor: "#ffffff" }}
+                            type="text"
+                            style={{ ...styles.input, backgroundColor: "#ffffff", color: "#000", borderColor: '#999' }}
                         />
                     </div>
 
                     {props.propListForMeeting.length > 0 ? (
                         <div style={{ marginBottom: 10 }}>
-                            <p style={{ marginBottom: 5, marginTop: 10 }}>Property List</p>
+                            <p style={{ marginBottom: 5, marginTop: 10, color: '#000', fontWeight: '500' }}>Property List</p>
                             {props.propListForMeeting.map((item, index) => (
                                 <div
                                     key={index}
@@ -261,7 +288,7 @@ const CustomerMeeting = props => {
                                         display: 'flex'
                                     }}
                                 >
-                                    <span style={{ padding: 10 }}>{item.name}</span>
+                                    <span style={{ padding: 10, color: '#000' }}>{item.name}</span>
                                     <div onClick={() => remove(item)} style={{ cursor: 'pointer' }}>
                                         <div style={{ marginTop: 0, backgroundColor: "#ffffff" }}>
                                             <div style={{ margin: 9 }}>
@@ -297,22 +324,25 @@ const CustomerMeeting = props => {
 
                     <div style={{ flexDirection: "row", marginTop: 20, display: 'flex' }}>
                         <div style={{ flex: 1, marginRight: 10 }}>
-                            <label style={{ display: 'block', marginBottom: 5, color: 'rgba(0,191,255, .9)' }}>Date*</label>
+                            <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Date*</label>
                             <input
-                                type="date"
+                                type={newDate ? "date" : "text"}
+                                onFocus={(e) => e.target.type = 'date'}
+                                onBlur={(e) => { if (!newDate) e.target.type = 'text' }}
                                 value={newDate}
                                 onChange={e => setNewDate(e.target.value)}
-                                style={styles.input}
+                                placeholder="DD/MM/YYYY"
+                                style={{ ...styles.input, color: '#000', borderColor: '#999' }}
                             />
                         </div>
                         <div style={{ flex: 1 }}>
-                            <label style={{ display: 'block', marginBottom: 5, color: 'rgba(0,191,255, .9)' }}>Time*</label>
+                            <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Time*</label>
                             <input
                                 readOnly
                                 value={newTime}
                                 onClick={() => setModalVisible(true)}
                                 placeholder="Select Time"
-                                style={styles.input}
+                                style={{ ...styles.input, color: '#000', borderColor: '#999' }}
                             />
                         </div>
                     </div>
@@ -361,71 +391,59 @@ const CustomerMeeting = props => {
                     alignItems: 'center'
                 }}>
                     <div style={styles.modalView}>
-                        <div style={{ flexDirection: "row", display: 'flex' }}>
-                            <div style={{ marginRight: 10 }}>
-                                <label>Hour*</label>
-                                <input
-                                    type="number"
-                                    style={{ ...styles.input, width: 80, textAlign: "center" }}
-                                    placeholder="Hour"
-                                    value={hour}
-                                    onChange={e => checkHourValidation(e.target.value)}
-                                />
-                            </div>
-                            <div style={{ marginRight: 10 }}>
-                                <label>Minute*</label>
-                                <input
-                                    type="number"
-                                    style={{ ...styles.input, width: 90, textAlign: "center" }}
-                                    placeholder="Minute"
-                                    value={minutes}
-                                    onChange={e => checkMinutesValidation(e.target.value)}
-                                />
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                {ampmArray.map((item, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => selectAMPMIndex(index)}
-                                        style={{
-                                            backgroundColor: ampmIndex === index ? "rgba(27, 106, 158, 0.85)" : "#fff",
-                                            color: ampmIndex === index ? "#fff" : "#000",
-                                            padding: 10,
-                                            border: '1px solid #ccc',
-                                            cursor: 'pointer'
-                                        }}
-                                    >
-                                        {item}
-                                    </button>
-                                ))}
-                            </div>
+                        <div style={{ flexDirection: "row", display: 'flex', gap: 15, alignItems: 'center' }}>
+                            <input
+                                type="number"
+                                value={hour}
+                                onChange={e => checkHourValidation(e.target.value)}
+                                style={styles.timeInput}
+                                placeholder="Hour*"
+                            />
+                            <input
+                                type="number"
+                                value={minutes}
+                                onChange={e => checkMinutesValidation(e.target.value)}
+                                style={styles.timeInput}
+                                placeholder="Minute*"
+                            />
+
+                            <CustomButtonGroup
+                                selectedButtonStyle={{ backgroundColor: "#00BFFF" }}
+                                onButtonPress={(index) => selectAMPMIndex(index)}
+                                selectedIndices={[ampmIndex]}
+                                buttons={ampmArray}
+                                buttonTextStyle={{ textAlign: "center" }}
+                                selectedButtonTextStyle={{ color: "#fff" }}
+                                containerStyle={{ borderRadius: 5, width: 70, height: 82, borderColor: '#757575', borderWidth: 1 }}
+                                vertical={true}
+                            />
                         </div>
 
                         <div
                             style={{
                                 flexDirection: "row",
-                                marginTop: 20,
-                                marginBottom: 15,
+                                marginTop: 25,
+                                marginBottom: 5,
                                 display: 'flex',
                                 justifyContent: 'flex-end',
                                 width: '100%'
                             }}
                         >
                             <div
-                                style={{ ...styles.cancelButton, cursor: 'pointer' }}
+                                style={styles.textButton}
                                 onClick={() => {
                                     setModalVisible(false);
                                 }}
                             >
-                                <span style={styles.textStyle}>Cancel</span>
+                                <span style={styles.textButtonLabel}>Cancel</span>
                             </div>
                             <div
-                                style={{ ...styles.applyButton, cursor: 'pointer' }}
+                                style={styles.textButton}
                                 onClick={() => {
                                     onApply();
                                 }}
                             >
-                                <span style={styles.textStyle}>Apply</span>
+                                <span style={styles.textButtonLabel}>Apply</span>
                             </div>
                         </div>
                     </div>
@@ -455,27 +473,38 @@ const styles = {
         display: 'flex',
         flexDirection: 'column'
     },
-    applyButton: {
+    timeInput: {
+        width: 80,
+        height: 80,
+        textAlign: 'center',
+        fontSize: 16,
+        borderRadius: 5,
+        border: '1px solid #757575',
+        backgroundColor: "#ffffff",
+        outline: 'none',
+        color: '#000'
+    },
+    textButton: {
         marginLeft: 10,
         marginRight: 10,
         padding: 10,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 5
+        backgroundColor: 'transparent',
+        cursor: 'pointer'
     },
-    cancelButton: {
-        marginLeft: 10,
-        marginRight: 30,
-        padding: 10,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 5
+    textButtonLabel: {
+        color: "#000",
+        fontWeight: "500",
+        textAlign: "center",
+        fontSize: 16
     },
     input: {
         width: '100%',
         padding: 10,
         borderRadius: 5,
         border: '1px solid #ccc',
-        backgroundColor: "rgba(245,245,245, 0.1)",
-        outline: 'none'
+        backgroundColor: "#ffffff",
+        outline: 'none',
+        fontSize: 16
     },
     propSubSection: {
         marginBottom: 10
@@ -485,14 +514,16 @@ const styles = {
 const mapStateToProps = state => ({
     userDetails: state.AppReducer.userDetails,
     propReminderList: state.AppReducer.propReminderList,
-    propListForMeeting: state.AppReducer.propListForMeeting
+    propListForMeeting: state.AppReducer.propListForMeeting,
+    customerMeetingFormState: state.AppReducer.customerMeetingFormState
 });
 
 const mapDispatchToProps = {
     setUserMobile,
     setUserDetails,
     setPropReminderList,
-    setPropListForMeeting
+    setPropListForMeeting,
+    setCustomerMeetingFormState
 };
 export default connect(
     mapStateToProps,

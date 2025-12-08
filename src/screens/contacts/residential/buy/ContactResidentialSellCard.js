@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 // import { CheckBox } from "@rneui/themed";
 import {
@@ -59,61 +60,59 @@ const CheckBox = ({ checked, onPress, containerStyle }) => (
 
 
 const ContactResidentialSellCard = props => {
+    const navigate = useNavigate();
+    const navigation = {
+        navigate: (path, params) => {
+            navigate(path, { state: params });
+        }
+    };
     const {
-        navigation,
+        // navigation,
         item,
         disableDrawer,
         displayCheckBox,
         displayChat,
         deleteMe,
         closeMe,
-        navigatedFrom = "none",
         displayMatchCount = true,
         displayMatchPercent = false,
         displayCheckBoxForEmployee = false,
         employeeObj = null,
-        displayAvatar = true,
     } = props;
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [index, setIndex] = React.useState(null);
     const [chatModalVisible, setChatModalVisible] = useState(false);
     const [refresh, setRefresh] = useState(false);
-    const [message, setMessage] = React.useState(
-        "I have property for this customer. Please call me. "
-    );
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
-    const [Sliding_Drawer_Width, setSlidingDrawerWidth] = useState(232); // 40 + 64 + 64 + 64
-    const [Sliding_Drawer_Width_WO_Delete, setSlidingDrawerWidthWODelete] = useState(168); // 40 + 64 + 64
-    const [dealWin, setDealWin] = useState("Yes");
-    const [slidingDrawerToggle, setSlidingDrawerToggle] = useState(true); // true = closed (hidden), false = open (shown)
+    const [Sliding_Drawer_Width, setSlidingDrawerWidth] = useState(250);
+    const [Sliding_Drawer_Width_WO_Delete, setSlidingDrawerWidthWODelete] = useState(195);
 
     const iscustomerClosed = item && item.customer_status === 0;
 
     const canDelete = props.userDetails &&
         ((props.userDetails.works_for === props.userDetails.id) ||
-            (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE_DELETE.includes(props.userDetails.employee_role)));
+            (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE_DELETE.includes(props.userDetails.employee_role)))
 
     const canAddDelete = true;
-
     const slidingDrawerWidth = canAddDelete
         ? Sliding_Drawer_Width
         : Sliding_Drawer_Width_WO_Delete;
 
     useEffect(() => {
         if (item && item.agent_id === props.userDetails.works_for) {
-            setSlidingDrawerWidth(232);
+            setSlidingDrawerWidth(250);
         } else {
-            setSlidingDrawerWidth(168);
+            setSlidingDrawerWidth(195);
         }
     }, [item, props.userDetails.works_for]);
 
-
     const ShowSlidingDrawer = () => {
-        setSlidingDrawerToggle(!slidingDrawerToggle);
+        setDrawerOpen(!drawerOpen);
     };
 
     const gotoEmployeeList = itemForAddEmplyee => {
+        console.log("gotoEmployeeList: ", itemForAddEmplyee);
         navigation.navigate("EmployeeListOfListing", {
             itemForAddEmplyee: itemForAddEmplyee,
             disableDrawer: true,
@@ -122,7 +121,7 @@ const ContactResidentialSellCard = props => {
     }
 
     const getMatched = (matchedCustomerItem) => {
-        navigation.navigate('MatchedProperties', { matchedCustomerItem: matchedCustomerItem },);
+        navigation.navigate('/contacts/MatchedProperties', { matchedCustomerItem: matchedCustomerItem },);
     }
 
     const onChangeText = e => {
@@ -325,7 +324,7 @@ const ContactResidentialSellCard = props => {
     const onClickCheckBox = item => {
         const customerObj = {
             name: item.customer_details.name,
-            mobile: item.customer_details.mobile1,
+            mobile: item.customer_details.mobile1 || item.customer_details.mobile2 || item.customer_details.mobile || item.customer_details.phone || item.mobile || item.phone || "",
             customer_id: item.customer_id,
             agent_id: item.agent_id
         };
@@ -337,7 +336,7 @@ const ContactResidentialSellCard = props => {
         props.setCustomerDetailsForMeeting(null);
         props.setStartNavigationPoint("PropertyListForMeeting");
         props.setCustomerDetails(item)
-        navigation.navigate("CustomerMeeting", {
+        navigation.navigate("/contacts/CustomerMeeting", {
             item: item,
             category: "customer"
         });
@@ -471,7 +470,7 @@ const ContactResidentialSellCard = props => {
     // We want to translate X.
     // Closed: translateX(slidingDrawerWidth - 33)
     // Open: translateX(-15)
-    const drawerTranslateX = slidingDrawerToggle ? (slidingDrawerWidth - 40) : 0;
+    const drawerTranslateX = !drawerOpen ? (slidingDrawerWidth - 40) : 0;
 
     return (
         <div style={styles.card}>
@@ -492,9 +491,9 @@ const ContactResidentialSellCard = props => {
                         }}
                     >
                         {displayMatchCount === true && (
-                            <div onClick={(e) => { e.stopPropagation(); getMatched(item); }} style={{ cursor: 'pointer', position: 'relative', width: 1, height: 1 }}>
-                                <div style={{ backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', left: 0, top: 0, alignItems: 'center', justifyContent: 'center', width: 50, height: 20, marginLeft: -20, display: 'flex' }}>
-                                    <span style={{ fontSize: 15, fontWeight: '500', color: '#000', paddingLeft: 20 }}>{item.match_count ? item.match_count : 0}</span>
+                            <div className="w-10 h-24 relative flex-shrink-0 cursor-pointer" onClick={(e) => { e.stopPropagation(); getMatched(item); }}>
+                                <div style={{ backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', left: 0, top: 0, alignItems: 'center', justifyContent: 'center', width: 30, height: 20, display: 'flex', zIndex: 10 }}>
+                                    <span style={{ fontSize: 15, fontWeight: '500', color: '#000' }}>{item.match_count ? item.match_count : 0}</span>
                                 </div>
                                 <div style={{
                                     position: 'absolute', left: 0, top: 20, transform: 'rotate(270deg)',

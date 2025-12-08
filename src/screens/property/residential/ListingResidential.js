@@ -64,7 +64,16 @@ const furnishingStatusOptions = [
 
 const ListingResidential = props => {
     const navigate = useNavigate();
-    // const { navigation } = props;
+    const navigation = {
+        navigate: (path, params) => {
+            if (!path.startsWith('/')) {
+                navigate(`/listing/${path}`, { state: params });
+            } else {
+                navigate(path, { state: params });
+            }
+        },
+        goBack: () => navigate(-1)
+    };
     const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false } = props.route?.params || {};
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");

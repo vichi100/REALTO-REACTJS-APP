@@ -114,7 +114,7 @@ const PropertyListForMeeting = props => {
     };
 
     return (
-        <div style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <div style={styles.searchBarContainer}>
                 <input
                     style={styles.textInputStyle}
@@ -125,7 +125,7 @@ const PropertyListForMeeting = props => {
             </div>
             {data.length > 0 ? (
                 <div style={styles.container}>
-                    <div style={{ overflowY: 'auto', flex: 1 }}>
+                    <div style={{ flex: 1 }}>
                         {data.map((item, index) => {
                             if (item.property_type === "Residential") {
                                 if (item.property_for === "Rent") {
@@ -259,7 +259,7 @@ const PropertyListForMeeting = props => {
                         flexDirection: 'column'
                     }}
                 >
-                    <p style={{ textAlign: "center" }}>
+                    <p style={{ textAlign: "center", color: '#000', fontWeight: '500' }}>
                         You have no property listing
                     </p>
                     {props.userDetails && ((props.userDetails.works_for === props.userDetails.id) ||
@@ -484,7 +484,6 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        height: '100%'
     },
     fab: {
         flexDirection: "row",
@@ -528,7 +527,8 @@ const styles = {
         margin: 5,
         borderRadius: 10,
         backgroundColor: "#FFFFFF",
-        border: '1px solid #ccc'
+        border: '1px solid #ccc',
+        color: '#000'
     },
     searchBarContainer: {
         marginBottom: 10

@@ -124,3 +124,17 @@ export const setStartNavigationPoint = payload => {
         payload
     };
 };
+
+export const setMeetingFormState = payload => {
+    return {
+        type: ACTION_TYPES.SET_MEETING_FORM_STATE,
+        payload
+    };
+};
+
+export const setCustomerMeetingFormState = payload => {
+    return {
+        type: ACTION_TYPES.SET_CUSTOMER_MEETING_FORM_STATE,
+        payload
+    };
+};

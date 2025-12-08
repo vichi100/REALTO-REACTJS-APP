@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // import {
 //   StyleSheet,
 //   View,
@@ -55,8 +56,14 @@ import CustomButtonGroup from "./../../../../components/CustomButtonGroup";
 // const width = window.innerWidth; // Dimensions.get("window").width;
 
 const CustomerCommercialBuyCard = props => {
+    const navigate = useNavigate();
+    const navigation = {
+        navigate: (path, params) => {
+            navigate(path, { state: params });
+        }
+    };
     const {
-        navigation,
+        // navigation,
         item,
         disableDrawer,
         displayCheckBox,
@@ -167,7 +174,7 @@ const CustomerCommercialBuyCard = props => {
     );
 
     const getMatched = (matchedCustomerItem) => {
-        navigation.navigate('MatchedProperties', { matchedCustomerItem: matchedCustomerItem },);
+        navigation.navigate('/contacts/MatchedProperties', { matchedCustomerItem: matchedCustomerItem },);
     }
 
     const onChangeText = e => {
@@ -439,7 +446,7 @@ const CustomerCommercialBuyCard = props => {
         // console.log("onClickCheckBox", item.customer_id);
         const customerObj = {
             name: item.customer_details.name,
-            mobile: item.customer_details.mobile1,
+            mobile: item.customer_details.mobile1 || item.customer_details.mobile2 || item.customer_details.mobile || item.customer_details.phone || item.mobile || item.phone || "",
             customer_id: item.customer_id,
             agent_id: item.agent_id
         };
@@ -452,7 +459,7 @@ const CustomerCommercialBuyCard = props => {
         // props.setPropListForMeeting([]);
         props.setStartNavigationPoint("PropertyListForMeeting");
         props.setCustomerDetails(item)
-        navigation.navigate("CustomerMeeting", {
+        navigation.navigate("/contacts/CustomerMeeting", {
             item: item,
             category: "customer"
         })
@@ -483,12 +490,9 @@ const CustomerCommercialBuyCard = props => {
 
                         {displayMatchCount === true && (
                             <>
-                                <button onClick={(e) => { e.stopPropagation(); getMatched(item); }}
-                                    aria-label={`match_${item.customer_id?.slice(-6)}`}
-                                    style={{ width: 1, height: 1, border: 'none', background: 'transparent' }}
-                                >
-                                    <div style={{ backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 50, height: 20, marginLeft: -20 }}>
-                                        <span style={{ fontSize: 15, fontWeight: '500', color: '#000', paddingLeft: 20 }}>{item.match_count ? item.match_count : 0}</span>
+                                <div className="w-10 h-24 relative flex-shrink-0 cursor-pointer" onClick={(e) => { e.stopPropagation(); getMatched(item); }}>
+                                    <div style={{ backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 30, height: 20, zIndex: 10 }}>
+                                        <span style={{ fontSize: 15, fontWeight: '500', color: '#000' }}>{item.match_count ? item.match_count : 0}</span>
                                     </div>
                                     <div style={{
                                         position: 'absolute', left: 0, top: 20, transform: 'rotate(270deg)',
@@ -498,7 +502,7 @@ const CustomerCommercialBuyCard = props => {
                                     >
                                         <span style={{ fontSize: 14, fontWeight: '300', color: '#000' }}>Match</span>
                                     </div>
-                                </button>
+                                </div>
                             </>
                         )}
 

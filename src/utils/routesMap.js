@@ -17,4 +17,5 @@ export const routesMap = {
     "GlobalCommercialPropertySearchResult": "/search/GlobalCommercialPropertySearchResult",
     "GlobalResidentialContactsSearchResult": "/search/GlobalResidentialContactsSearchResult",
     "GlobalCommercialCustomersSearchResult": "/search/GlobalCommercialCustomersSearchResult",
+    "CustomerMeetingDetails": "/notifications/CustomerMeetingDetails",
 };

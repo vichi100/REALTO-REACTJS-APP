@@ -5,14 +5,14 @@ import { AiOutlineSearch } from "react-icons/ai";
 import axios from "axios";
 import { SERVER_URL } from "./../../utils/Constant";
 import { formatIsoDateToCustomString, formatClientNameForDisplay, formatMobileNumber, makeCall } from "../../utils/methods";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const Reminder = props => {
     const {
         customerData,
         isSpecificRemider = false,
     } = props;
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { didDbCall = true } = props.route?.params || {};
     const [reminderList, setReminderList] = useState([]);
     const [futureReminderList, setFutureReminderList] = useState([]);
@@ -26,24 +26,24 @@ const Reminder = props => {
     }, []);
 
     useEffect(() => {
-        if (dbCall && !isSpecificRemider && customerData == null) {
-            getReminderList();
+        console.log("Reminder Debug: Effect triggered.", {
+            userDetails: props.userDetails,
+            customerData,
+            isSpecificRemider,
+            dbCall
+        });
+
+        if (!props.userDetails) {
+            console.log("Reminder Debug: No userDetails, skipping.");
+            return;
         }
-        // Cleanup equivalent
-        return () => {
-            setDbCall(true);
-        };
-    }, [dbCall, isSpecificRemider, customerData]);
 
-
-    useEffect(() => {
         if (customerData != null) {
-            getReminderListById(customerData)
+            getReminderListById(customerData);
         } else if (!isSpecificRemider) {
             getReminderList();
         }
-        setLoading(false);
-    }, [props.userDetails, customerData, isSpecificRemider]);
+    }, [props.userDetails, customerData, isSpecificRemider, dbCall]);
 
     const getReminderListById = (customerData) => {
         if (props.userDetails === null) {
@@ -96,7 +96,9 @@ const Reminder = props => {
     }
 
     const getReminderList = () => {
+        console.log("Reminder Debug: getReminderList called");
         if (props.userDetails === null) {
+            console.log("Reminder Debug: userDetails is null, returning");
             setFutureReminderList([]);
             setPastReminderList([]);
             setReminderList([]);
@@ -107,6 +109,7 @@ const Reminder = props => {
             req_user_id: props.userDetails.id,
             agent_id: props.userDetails.works_for
         };
+        console.log("Reminder Debug: Sending request to:", SERVER_URL + "/getReminderList", "with data:", userData);
         setLoading(true);
 
         axios
@@ -116,31 +119,68 @@ const Reminder = props => {
             )
             .then(
                 response => {
+                    console.log("Reminder Debug: API Response received:", response.data);
                     const dataArr = response.data;
+                    if (!Array.isArray(dataArr)) {
+                        console.error("Reminder Debug: response.data is not an array:", dataArr);
+                        setLoading(false);
+                        return;
+                    }
                     const future = [];
                     const past = [];
-                    for (const value of dataArr) {
-                        const todayDateTime = new Date();
-                        const meetingDate = new Date(value.meeting_date);
-                        const meetingTime = value.meeting_time || "12:00 AM";
+                    try {
+                        for (const value of dataArr) {
+                            try {
+                                const todayDateTime = new Date();
+                                let meetingDate = new Date(value.meeting_date);
 
-                        const [time, modifier] = meetingTime.split(" ");
-                        let [hours, minutes] = time.split(":").map(Number);
-                        if (modifier === "PM" && hours < 12) hours += 12;
-                        if (modifier === "AM" && hours === 12) hours = 0;
+                                // Fallback for invalid date
+                                if (isNaN(meetingDate.getTime())) {
+                                    console.warn("Reminder Debug: Invalid meeting_date:", value.meeting_date, "for item:", value);
+                                    // Option: Skip or default to today? Let's skip for now to avoid bad data display, or push to future?
+                                    // Let's try to parse if it's DD-MM-YYYY or similar if needed, but for now just log and maybe skip or default.
+                                    // Defaulting to future to ensure visibility
+                                    meetingDate = new Date();
+                                    meetingDate.setFullYear(meetingDate.getFullYear() + 1); // Set to next year so it shows in future
+                                }
 
-                        const meetingDateTime = new Date(meetingDate);
-                        meetingDateTime.setHours(hours, minutes, 0, 0);
+                                const meetingTime = value.meeting_time || "12:00 AM";
 
-                        if (meetingDateTime > todayDateTime) {
-                            future.push(value);
-                        } else {
-                            past.push(value);
+                                console.log("Reminder Debug: Processing item:", value);
+                                console.log("Reminder Debug: meetingDate raw:", value.meeting_date, "parsed:", meetingDate);
+
+                                const [time, modifier] = meetingTime.split(" ");
+                                let [hours, minutes] = time.split(":").map(Number);
+                                if (modifier === "PM" && hours < 12) hours += 12;
+                                if (modifier === "AM" && hours === 12) hours = 0;
+
+                                // Handle invalid time parsing
+                                if (isNaN(hours) || isNaN(minutes)) {
+                                    console.warn("Reminder Debug: Invalid meeting_time:", value.meeting_time);
+                                    hours = 0; minutes = 0;
+                                }
+
+                                const meetingDateTime = new Date(meetingDate);
+                                meetingDateTime.setHours(hours, minutes, 0, 0);
+                                console.log("Reminder Debug: meetingDateTime:", meetingDateTime);
+
+                                if (meetingDateTime > todayDateTime) {
+                                    future.push(value);
+                                } else {
+                                    past.push(value);
+                                }
+                            } catch (itemError) {
+                                console.error("Reminder Debug: Error processing individual item:", value, itemError);
+                            }
                         }
+                        console.log("Reminder Debug: Future list:", future);
+                        console.log("Reminder Debug: Past list:", past);
+                        setFutureReminderList(future);
+                        setPastReminderList(past);
+                        setReminderList(response.data);
+                    } catch (error) {
+                        console.error("Reminder Debug: Error processing data:", error);
                     }
-                    setFutureReminderList(future);
-                    setPastReminderList(past);
-                    setReminderList(response.data);
                     setLoading(false);
                 },
                 error => {
@@ -193,12 +233,9 @@ const Reminder = props => {
             >
                 <div
                     onClick={() =>
-                        navigate("/customer-meeting-details", {
-                            state: {
-                                item: item,
-                                category: "property",
-                                updateDbCall: updateDbCall
-                            }
+                        props.navigation.navigate("CustomerMeetingDetails", {
+                            item: item,
+                            category: "property"
                         })
                     }
                     style={{
@@ -214,7 +251,7 @@ const Reminder = props => {
                             style={{
                                 fontSize: 16,
                                 fontWeight: "600",
-                                color: "rgba(0,0,0, 0.7)",
+                                color: "#000",
                                 margin: 0,
                                 overflow: 'hidden',
                                 textOverflow: 'ellipsis',
@@ -225,18 +262,18 @@ const Reminder = props => {
                         >
                             {formatClientNameForDisplay(item.client_name)}
                         </p>
-                        <p style={{ margin: 0 }}>{formatMobileNumber(item.client_mobile)}</p>
+                        <p style={{ margin: 0, color: '#000' }}>{formatMobileNumber(item.client_mobile)}</p>
                         {item.property_reference_id && (
-                            <p style={{ margin: 0 }}>
+                            <p style={{ margin: 0, color: '#000' }}>
                                 {"Reference id: " + item.property_reference_id}
                             </p>
                         )}
                     </div>
                     <div>
                         <div style={{ padding: 10 }}>
-                            <p style={{ margin: 0 }}>{item.reminder_for}</p>
-                            <p style={{ margin: 0 }}>{item.meeting_time}</p>
-                            <p style={{ margin: 0 }}>{formatIsoDateToCustomString(item.meeting_date)}</p>
+                            <p style={{ margin: 0, color: '#000' }}>{item.reminder_for}</p>
+                            <p style={{ margin: 0, color: '#000' }}>{item.meeting_time}</p>
+                            <p style={{ margin: 0, color: '#000' }}>{formatIsoDateToCustomString(item.meeting_date)}</p>
                         </div>
                     </div>
                 </div>
@@ -274,16 +311,17 @@ const Reminder = props => {
             <div style={{ flex: 1, overflowY: 'auto', backgroundColor: "#ffffff", height: '100%' }}>
                 {reminderList.length > 0 ? (
                     <div style={{ flex: 1, backgroundColor: "#ffffff", marginTop: 0, padding: 10 }}>
-                        <div style={styles.searchBar}>
-                            <AiOutlineSearch size={20} color="#999" style={{ marginRight: 5 }} />
-                            <input
-                                style={styles.textInputStyle}
-                                onChange={(e) => searchFilterFunction(e.target.value)}
-                                value={search}
-                                placeholder="Search By Name, Mobile"
-                                placeholderTextColor="#696969"
-                            />
-                        </div>
+                        {!isSpecificRemider && (
+                            <div style={styles.searchBar}>
+                                <AiOutlineSearch size={20} color="#999" style={{ marginRight: 5 }} />
+                                <input
+                                    style={styles.textInputStyle}
+                                    onChange={(e) => searchFilterFunction(e.target.value)}
+                                    value={search}
+                                    placeholder="Search By Name, Mobile"
+                                />
+                            </div>
+                        )}
                         <p
                             style={{
                                 textAlign: "center",
@@ -291,6 +329,7 @@ const Reminder = props => {
                                 fontWeight: "500",
                                 marginTop: 15,
                                 marginBottom: 10,
+                                color: '#000'
                             }}
                         >
                             Upcoming Meetings
@@ -317,7 +356,8 @@ const Reminder = props => {
                                         textAlign: "center",
                                         fontSize: 15,
                                         fontWeight: "300",
-                                        margin: 0
+                                        margin: 0,
+                                        color: '#000'
                                     }}
                                 >
                                     No Meetings
@@ -331,6 +371,7 @@ const Reminder = props => {
                                 fontWeight: "500",
                                 marginTop: 15,
                                 marginBottom: 10,
+                                color: '#000'
                             }}
                         >
                             Past Meetings
@@ -362,7 +403,8 @@ const Reminder = props => {
                                         textAlign: "center",
                                         fontSize: 15,
                                         fontWeight: "300",
-                                        margin: 0
+                                        margin: 0,
+                                        color: '#000'
                                     }}
                                 >
                                     No Meetings

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import DoughnutChart from "./../../../../components/DoughnutChart";
 // import { CheckBox } from "@rneui/themed";
@@ -59,15 +60,20 @@ const CheckBox = ({ checked, onPress, containerStyle }) => (
 );
 
 const ContactResidentialRentCard = props => {
+    const navigate = useNavigate();
+    const navigation = {
+        navigate: (path, params) => {
+            navigate(path, { state: params });
+        }
+    };
     const {
-        navigation,
+        // navigation,
         item,
         disableDrawer = false,
         displayCheckBox = false,
         displayChat,
         deleteMe,
         closeMe,
-        navigatedFrom = "none",
         displayMatchCount = true,
         displayMatchPercent = false,
         displayCheckBoxForEmployee = false,
@@ -75,17 +81,15 @@ const ContactResidentialRentCard = props => {
     } = props;
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [index, setIndex] = React.useState(null);
     const [chatModalVisible, setChatModalVisible] = useState(false);
     const [refresh, setRefresh] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const [message, setMessage] = React.useState(
         "I have property for this customer. Please call me. "
     );
 
-    const [Sliding_Drawer_Width, setSlidingDrawerWidth] = useState(232); // 40 + 64 + 64 + 64
-    const [Sliding_Drawer_Width_WO_Delete, setSlidingDrawerWidthWODelete] = useState(168); // 40 + 64 + 64
-    const [dealWin, setDealWin] = useState("Yes");
-    const [slidingDrawerToggle, setSlidingDrawerToggle] = useState(true); // true = closed (hidden), false = open (shown)
+    const [Sliding_Drawer_Width, setSlidingDrawerWidth] = useState(250);
+    const [Sliding_Drawer_Width_WO_Delete, setSlidingDrawerWidthWODelete] = useState(195);
 
     const iscustomerClosed = item && item.customer_status === 0;
 
@@ -101,15 +105,15 @@ const ContactResidentialRentCard = props => {
 
     useEffect(() => {
         if (item && item.agent_id === props.userDetails.works_for) {
-            setSlidingDrawerWidth(232);
+            setSlidingDrawerWidth(250);
         } else {
-            setSlidingDrawerWidth(168);
+            setSlidingDrawerWidth(195);
         }
     }, [item, props.userDetails.works_for]);
 
 
     const ShowSlidingDrawer = () => {
-        setSlidingDrawerToggle(!slidingDrawerToggle);
+        setDrawerOpen(!drawerOpen);
     };
 
     const gotoEmployeeList = itemForAddEmplyee => {
@@ -122,7 +126,7 @@ const ContactResidentialRentCard = props => {
     }
 
     const getMatched = (matchedCustomerItem) => {
-        navigation.navigate('MatchedProperties', { matchedCustomerItem: matchedCustomerItem },);
+        navigation.navigate('/contacts/MatchedProperties', { matchedCustomerItem: matchedCustomerItem },);
     }
 
     const onChangeText = e => {
@@ -326,7 +330,7 @@ const ContactResidentialRentCard = props => {
     const onClickCheckBox = item => {
         const customerObj = {
             name: item.customer_details.name,
-            mobile: item.customer_details.mobile1,
+            mobile: item.customer_details.mobile1 || item.customer_details.mobile2 || item.customer_details.mobile || item.customer_details.phone || item.mobile || item.phone || "",
             customer_id: item.customer_id,
             agent_id: item.agent_id
         };
@@ -339,7 +343,7 @@ const ContactResidentialRentCard = props => {
         props.setCustomerDetailsForMeeting(null);
         props.setStartNavigationPoint("PropertyListForMeeting");
         props.setCustomerDetails(item);
-        navigation.navigate("CustomerMeeting", {
+        navigation.navigate("/contacts/CustomerMeeting", {
             item: item,
             category: "customer"
         });
@@ -467,7 +471,7 @@ const ContactResidentialRentCard = props => {
         }
     };
 
-    const drawerTranslateX = slidingDrawerToggle ? (slidingDrawerWidth - 40) : 0;
+    const drawerTranslateX = !drawerOpen ? (slidingDrawerWidth - 40) : 0;
 
     return (
         <div style={styles.card}>
@@ -492,26 +496,21 @@ const ContactResidentialRentCard = props => {
                         }}
                     >
                         {displayMatchCount === true && (
-                            <>
-                                <button onClick={(e) => { e.stopPropagation(); getMatched(item); }}
-                                    aria-label={`match_${item.customer_id?.slice(-6)}`}
-                                    style={{ height: 1, width: 1, border: 'none', background: 'transparent' }}
+                            <div className="w-10 h-24 relative flex-shrink-0 cursor-pointer" onClick={(e) => { e.stopPropagation(); getMatched(item); }}>
+                                <div style={{ backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 30, height: 20, zIndex: 10 }}>
+                                    <span style={{ fontSize: 15, fontWeight: '500', color: '#000' }}>{item.match_count ? item.match_count : 0}</span>
+                                </div>
+                                <div style={{
+                                    position: 'absolute', left: 0, top: 20, transform: 'rotate(270deg)',
+                                    backgroundColor: 'rgba(80, 200, 120, 0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    width: 70, height: 30, padding: 0, marginLeft: -20, marginTop: 20, marginBottom: 15
+                                }}
                                 >
-                                    <div style={{ backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 50, height: 20, marginLeft: -20 }}>
-                                        <span style={{ fontSize: 15, fontWeight: '500', color: '#000', paddingLeft: 20 }}>{item.match_count ? item.match_count : 0}</span>
-                                    </div>
-                                    <div style={{
-                                        position: 'absolute', left: 0, top: 20, transform: 'rotate(270deg)',
-                                        backgroundColor: 'rgba(80, 200, 120, 0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        width: 70, height: 30, padding: 0, marginLeft: -20, marginTop: 20, marginBottom: 15
-                                    }}
-                                    >
-                                        <span style={{ fontSize: 14, fontWeight: '300', color: '#000' }}
+                                    <span style={{ fontSize: 14, fontWeight: '300', color: '#000' }}
 
-                                        >Match</span>
-                                    </div>
-                                </button>
-                            </>
+                                    >Match</span>
+                                </div>
+                            </div>
                         )}
 
                         {displayMatchPercent === true && (

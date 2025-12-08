@@ -27,8 +27,8 @@ const ContactsStack = () => {
             <Route path="/*" element={<ScreenWrapper Component={ContactsTopTab} />} />
             <Route path="/Contacts/*" element={<ScreenWrapper Component={ContactsTopTab} />} />
             <Route path="/Meeting" element={<ScreenWrapper Component={Meeting} />} />
-            <Route path="/CustomerMeeting" element={<ScreenWrapper Component={CustomerMeeting} />} />
-            <Route path="/PropertyListForMeeting" element={<ScreenWrapper Component={PropertyListForMeeting} />} />
+            <Route path="CustomerMeeting" element={<ScreenWrapper Component={CustomerMeeting} />} />
+            <Route path="PropertyListForMeeting" element={<ScreenWrapper Component={PropertyListForMeeting} />} />
             <Route path="/PropDetailsFromListing" element={<ScreenWrapper Component={PropDetailsFromListing} />} />
             <Route path="/PropDetailsFromListingForSell" element={<ScreenWrapper Component={PropDetailsFromListingForSell} />} />
             <Route path="/CommercialRentPropDetails" element={<ScreenWrapper Component={CommercialRentPropDetails} />} />

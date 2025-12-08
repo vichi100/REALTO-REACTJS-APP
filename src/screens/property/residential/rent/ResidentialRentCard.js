@@ -7,7 +7,9 @@ import {
     MdAlarm,
     MdCall,
     MdPersonAdd,
-    MdMessage
+    MdMessage,
+    MdCheckBox,
+    MdCheckBoxOutlineBlank
 } from "react-icons/md";
 import axios from "axios";
 import Slideshow from "./../../../../components/Slideshow";
@@ -15,6 +17,9 @@ import { numDifferentiation } from "././../../../../utils/methods";
 import { connect } from "react-redux";
 import {
     setPropertyDetails,
+    setCustomerDetailsForMeeting,
+    setStartNavigationPoint,
+    setPropListForMeeting
 } from "./../../../../reducers/Action";
 import { SERVER_URL, WEB_APP_URL } from "./../../../../utils/Constant";
 import { EMPLOYEE_ROLE_DELETE } from "././../../../../utils/AppConstant";
@@ -297,7 +302,13 @@ const Card = props => {
             <div className="flex flex-row relative">
                 {/* Match Badge Container */}
                 {displayMatchCount && (
-                    <div className="w-10 relative flex-shrink-0">
+                    <div
+                        className="w-10 relative flex-shrink-0 cursor-pointer"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            getMatched(item);
+                        }}
+                    >
                         {/* Orange Count Box */}
                         <div className="bg-orange-400 w-8 h-8 flex items-center justify-center absolute top-0 left-0 z-10">
                             <span className="text-sm font-bold text-black">{item.match_count || 0}</span>
@@ -309,22 +320,52 @@ const Card = props => {
                     </div>
                 )}
 
+                {displayMatchPercent && (
+                    <div className="flex items-center justify-center pl-2">
+                        <DoughnutChart
+                            data={[
+                                Math.max(0, Number(
+                                    typeof item.matched_percentage === 'number'
+                                        ? item.matched_percentage
+                                        : typeof item.matched_percentage === 'string'
+                                            ? parseFloat(item.matched_percentage) || 0
+                                            : 0
+                                )),
+                                100 - Math.max(0, Number(
+                                    typeof item.matched_percentage === 'number'
+                                        ? item.matched_percentage
+                                        : typeof item.matched_percentage === 'string'
+                                            ? parseFloat(item.matched_percentage) || 0
+                                            : 0
+                                ))
+                            ]}
+                            radius={35}
+                            holeRadius={25}
+                            strokeWidth={60}
+                            colors={['rgba(38, 208, 109, 0.8)', 'rgba(211, 61, 24, 0.6)']}
+                            textColor="#333"
+                            textSize={14}
+                            showPercentage={true}
+                        />
+                    </div>
+                )}
+
                 {/* Details Section */}
                 <div className="flex-1 py-2 pl-2 pr-12">
                     <h3 className="text-base font-bold text-black leading-tight">
                         {`Rent In ${item.property_address.building_name?.trim() || ""} ${item.property_address.landmark_or_street?.trim() || ""}`}
                     </h3>
-                    <p className="text-sm text-gray-600 mt-1">
+                    <p className="text-sm text-gray-900 mt-1">
                         {item.property_address.formatted_address}
                     </p>
-                    <p className="text-sm text-gray-800 mt-1">
+                    <p className="text-sm text-black mt-1">
                         Reference id: {item.property_id?.slice(-6)}
                     </p>
 
                     {/* Employee Info */}
                     <div className="flex flex-row items-center mt-2">
                         <MdPersonAdd size={18} className="text-black mr-2" />
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm text-gray-900">
                             {Array.isArray(item.assigned_to_employee_name) && item.assigned_to_employee_name.length > 0
                                 ? item.assigned_to_employee_name.join(", ")
                                 : "No Employees Assigned"}
@@ -332,16 +373,44 @@ const Card = props => {
                     </div>
                 </div>
 
-                {/* Right Arrow Block */}
-                <div
-                    className="w-10 bg-gray-600 flex items-center justify-center absolute right-0 top-0 bottom-0 cursor-pointer z-20"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        ShowSlidingDrawer();
-                    }}
-                >
-                    <MdChevronLeft color="white" size={24} />
-                </div>
+
+
+                {displayCheckBox && (
+                    <div
+                        className="w-10 flex items-center justify-center absolute right-0 top-0 bottom-0 cursor-pointer z-30 bg-white"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClickCheckBox(item);
+                        }}
+                    >
+                        <input
+                            type="checkbox"
+                            onChange={(e) => {
+                                e.stopPropagation();
+                                onClickCheckBox(item);
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                            checked={props.propListForMeeting.some(y => y.id === item.property_id)}
+                            style={{
+                                margin: 10,
+                                transform: 'scale(1.5)',
+                                cursor: 'pointer'
+                            }}
+                        />
+                    </div>
+                )}
+
+                {!displayCheckBox && !disableDrawer && (
+                    <div
+                        className="w-10 bg-gray-600 flex items-center justify-center absolute right-0 top-0 bottom-0 cursor-pointer z-20"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            ShowSlidingDrawer();
+                        }}
+                    >
+                        <MdChevronLeft color="white" size={24} />
+                    </div>
+                )}
 
                 {!disableDrawer && (
                     <div className={`absolute top-0 right-0 h-full bg-white transition-transform duration-300 z-50 flex flex-row ${drawerOpen ? 'translate-x-0' : 'translate-x-full'}`} style={{ width: 'auto' }}>
@@ -377,108 +446,112 @@ const Card = props => {
                 )}
             </div>
 
-            {modalVisible && (
-                <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={(e) => { e.stopPropagation(); }}>
-                    <div className="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full mx-4" onClick={(e) => { e.stopPropagation(); }}>
-                        <p className="text-lg font-medium text-center mb-6 text-black">
-                            {isPropertyClosed ? "Do you want to open this property?" : "Did you win deal for this property?"}
-                        </p>
+            {
+                modalVisible && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={(e) => { e.stopPropagation(); }}>
+                        <div className="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full mx-4" onClick={(e) => { e.stopPropagation(); }}>
+                            <p className="text-lg font-medium text-center mb-6 text-black">
+                                {isPropertyClosed ? "Do you want to open this property?" : "Did you win deal for this property?"}
+                            </p>
 
-                        {!isPropertyClosed && (
-                            <>
-                                <div className="flex justify-center space-x-4 mb-6">
-                                    <button
-                                        className="px-8 py-2 bg-green-100 text-green-800 rounded-md font-medium hover:bg-green-200"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            closeMe(item);
-                                            setModalVisible(false);
-                                        }}
-                                    >
-                                        Yes
-                                    </button>
-                                    <button
-                                        className="px-8 py-2 border border-gray-300 text-black rounded-md font-medium hover:bg-gray-50"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            closeMe(item);
-                                            setModalVisible(false);
-                                        }}
-                                    >
-                                        No
-                                    </button>
-                                </div>
+                            {!isPropertyClosed && (
+                                <>
+                                    <div className="flex justify-center space-x-4 mb-6">
+                                        <button
+                                            className="px-8 py-2 bg-green-100 text-green-800 rounded-md font-medium hover:bg-green-200"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                closeMe(item);
+                                                setModalVisible(false);
+                                            }}
+                                        >
+                                            Yes
+                                        </button>
+                                        <button
+                                            className="px-8 py-2 border border-gray-300 text-black rounded-md font-medium hover:bg-gray-50"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                closeMe(item);
+                                                setModalVisible(false);
+                                            }}
+                                        >
+                                            No
+                                        </button>
+                                    </div>
 
-                                <p className="text-sm text-gray-600 text-center mb-8 leading-relaxed">
-                                    You can close or delete property. Close will keep property in list for 10 days, Delete will remove permanently.
-                                </p>
-                            </>
-                        )}
+                                    <p className="text-sm text-gray-600 text-center mb-8 leading-relaxed">
+                                        You can close or delete property. Close will keep property in list for 10 days, Delete will remove permanently.
+                                    </p>
+                                </>
+                            )}
 
-                        <div className="flex justify-end items-center space-x-8">
-                            <button
-                                className="text-black font-medium hover:text-gray-700"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    deleteMe(item);
-                                    setModalVisible(false);
-                                }}
-                            >
-                                Delete
-                            </button>
-                            <button
-                                className="text-black font-medium hover:text-gray-700"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    closeMe(item);
-                                    setModalVisible(false);
-                                }}
-                            >
-                                {isPropertyClosed ? "Open" : "Close"}
-                            </button>
-                            <button
-                                className="text-black font-medium hover:text-gray-700"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setModalVisible(false);
-                                }}
-                            >
-                                Cancel
-                            </button>
+                            <div className="flex justify-end items-center space-x-8">
+                                <button
+                                    className="text-black font-medium hover:text-gray-700"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteMe(item);
+                                        setModalVisible(false);
+                                    }}
+                                >
+                                    Delete
+                                </button>
+                                <button
+                                    className="text-black font-medium hover:text-gray-700"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        closeMe(item);
+                                        setModalVisible(false);
+                                    }}
+                                >
+                                    {isPropertyClosed ? "Open" : "Close"}
+                                </button>
+                                <button
+                                    className="text-black font-medium hover:text-gray-700"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setModalVisible(false);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
-            {chatModalVisible && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-                        <p className="text-center mb-4 font-semibold">Send Message</p>
-                        <textarea
-                            className="w-full p-2 border border-gray-300 rounded mb-4"
-                            rows="4"
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                        />
-                        <div className="flex justify-end space-x-4">
-                            <button
-                                className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                                onClick={() => setChatModalVisible(false)}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                onClick={sendMessage}
-                            >
-                                Send
-                            </button>
+            {
+                chatModalVisible && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                        <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                            <p className="text-center mb-4 font-semibold">Send Message</p>
+                            <textarea
+                                className="w-full p-2 border border-gray-300 rounded mb-4"
+                                rows="4"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                            />
+                            <div className="flex justify-end space-x-4">
+                                <button
+                                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                    onClick={() => setChatModalVisible(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    onClick={sendMessage}
+                                >
+                                    Send
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
-        </div>
+        </div >
     );
 };
 
@@ -488,6 +561,9 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
     setPropertyDetails,
+    setCustomerDetailsForMeeting,
+    setStartNavigationPoint,
+    setPropListForMeeting
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);

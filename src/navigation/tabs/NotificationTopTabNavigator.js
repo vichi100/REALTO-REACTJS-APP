@@ -2,6 +2,8 @@ import React from "react";
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import Reminder from "./../../screens/common/Reminder";
 
+import ScreenWrapper from "../../components/ScreenWrapper";
+
 const NotificationTopTab = () => {
     const location = useLocation();
     const currentPath = location.pathname.split('/').pop();
@@ -29,7 +31,7 @@ const NotificationTopTab = () => {
             <div className="flex-1 overflow-y-auto">
                 <Routes>
                     <Route path="/" element={<Navigate to="/notifications/reminders" replace />} />
-                    <Route path="reminders" element={<Reminder />} />
+                    <Route path="reminders" element={<ScreenWrapper Component={Reminder} />} />
                     {/* <Route path="message" element={<Message />} /> */}
                 </Routes>
             </div>

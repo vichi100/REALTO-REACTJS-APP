@@ -12,7 +12,7 @@ import ScreenWrapper from "../../components/ScreenWrapper";
 const NotificationStack = () => {
     return (
         <Routes>
-            <Route path="/" element={<ScreenWrapper Component={NotificationTopTab} />} />
+            <Route path="/*" element={<ScreenWrapper Component={NotificationTopTab} />} />
             <Route path="/NotificationTopTab" element={<ScreenWrapper Component={NotificationTopTab} />} />
             <Route path="/CustomerMeetingDetails" element={<ScreenWrapper Component={CustomerMeetingDetails} />} />
             <Route path="/MessageDetails" element={<ScreenWrapper Component={MessageDetails} />} />

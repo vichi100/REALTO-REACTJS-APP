@@ -342,8 +342,8 @@ const MatchedCustomers = props => {
             data: property
         }).then(
             response => {
-                setMatchedCustomerDetailsMine(response.data.matchedCustomerDetailsMine);
-                setMatchedCustomerDetailsOther(response.data.matchedCustomerDetailsOther);
+                setMatchedCustomerDetailsMine(response.data.matchedCustomerDetailsMine || []);
+                setMatchedCustomerDetailsOther(response.data.matchedCustomerDetailsOther || []);
                 props.setResidentialCustomerList(response.data);
                 setLoading(false);
             },
@@ -476,7 +476,7 @@ const MatchedCustomers = props => {
                             </div>
                             <div style={{ overflowY: 'auto', flex: 1 }}>
                                 {selectedTab === 0 && (
-                                    matchedCustomerDetailsMine.length > 0 ? matchedCustomerDetailsMine.map((item, index) => {
+                                    matchedCustomerDetailsMine && matchedCustomerDetailsMine.length > 0 ? matchedCustomerDetailsMine.map((item, index) => {
                                         if (item.customer_locality.property_type === "Residential") {
                                             if (item.customer_locality.property_for === "Rent") {
                                                 return (
@@ -520,7 +520,7 @@ const MatchedCustomers = props => {
                                     </div>
                                 )}
                                 {selectedTab === 1 && (
-                                    matchedCustomerDetailsOther.length > 0 ? matchedCustomerDetailsOther.map((item, index) => {
+                                    matchedCustomerDetailsOther && matchedCustomerDetailsOther.length > 0 ? matchedCustomerDetailsOther.map((item, index) => {
                                         if (item.customer_locality.property_type === "Residential") {
                                             if (item.customer_locality.property_for === "Rent") {
                                                 return (
@@ -912,8 +912,7 @@ const styles = {
         display: 'flex'
     },
     tab: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        padding: '10px 20px',
         borderRadius: 20,
         backgroundColor: '#f0f0f0',
         marginLeft: 20,

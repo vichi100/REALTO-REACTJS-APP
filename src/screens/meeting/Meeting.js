@@ -11,7 +11,9 @@ import {
     setUserDetails,
     setPropReminderList,
     setPropListForMeeting,
-    setCustomerDetailsForMeeting
+
+    setCustomerDetailsForMeeting,
+    setMeetingFormState
 } from "./../../reducers/Action";
 import PropertyReminder from '../property/PropertyReminder';
 import { SERVER_URL } from "./../../utils/Constant";
@@ -51,15 +53,38 @@ const Meeting = props => {
         setMinutes("");
         setAMPMIndex(-1);
         props.setCustomerDetailsForMeeting(null);
+        props.setMeetingFormState(null);
     };
 
     useEffect(() => {
-        setClientName("");
-        setClientMobile("");
-        setClientId("");
+        if (props.meetingFormState) {
+            setReminderType(props.meetingFormState.remiderType || "Call");
+            setNewDate(props.meetingFormState.newDate || "");
+            setNewTime(props.meetingFormState.newTime || "");
+            setAMPMIndex(props.meetingFormState.ampmIndex || -1);
+            setHour(props.meetingFormState.hour || "");
+            setMinutes(props.meetingFormState.minutes || "");
+        } else {
+            setClientName("");
+            setClientMobile("");
+            setClientId("");
+        }
     }, []);
 
     useEffect(() => {
+        const formState = {
+            remiderType,
+            newDate,
+            newTime,
+            ampmIndex,
+            hour,
+            minutes
+        };
+        props.setMeetingFormState(formState);
+    }, [remiderType, newDate, newTime, ampmIndex, hour, minutes]);
+
+    useEffect(() => {
+        console.log("Meeting: customerDetailsForMeeting prop changed:", props.customerDetailsForMeeting);
         if (props.customerDetailsForMeeting) {
             setClientName(props.customerDetailsForMeeting.name);
             setClientMobile(props.customerDetailsForMeeting.mobile);
@@ -208,15 +233,15 @@ const Meeting = props => {
     }, [propertyIdX]);
 
     return (
-        <div style={{ flex: 1, backgroundColor: "rgba(245,245,245, 0.2)", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
             <div style={styles.container}>
                 <div>
-                    <p style={{ marginTop: 10, marginBottom: 10, fontSize: 14 }}>
+                    <p style={{ marginTop: 10, marginBottom: 10, fontSize: 16, color: '#000', fontWeight: '500' }}>
                         Create a call/visiting schedule to show property to client and get
                         reminder on time
                     </p>
                     <div style={{ height: 1, backgroundColor: '#ccc', width: '100%' }} />
-                    <p style={{ marginTop: 20, marginBottom: 15, fontSize: 14 }}>
+                    <p style={{ marginTop: 20, marginBottom: 15, fontSize: 16, color: '#000', fontWeight: '500' }}>
                         Reminder For ?
                     </p>
 
@@ -258,46 +283,50 @@ const Meeting = props => {
                     {clientName ? (
                         <div>
                             <div style={{ marginTop: 25 }}>
-                                <label style={{ display: 'block', marginBottom: 5 }}>Customer Name*</label>
+                                <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Customer Name*</label>
                                 <input
                                     disabled={true}
                                     value={clientName}
                                     onChange={e => setClientName(e.target.value)}
                                     onFocus={() => setIsVisible(false)}
-                                    style={styles.input}
+                                    style={{ ...styles.input, color: '#000', borderColor: '#999' }}
                                 />
                             </div>
 
                             <div style={{ marginTop: 8 }}>
-                                <label style={{ display: 'block', marginBottom: 5 }}>Customer Mobile*</label>
+                                <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Customer Mobile*</label>
                                 <input
                                     disabled={true}
                                     value={clientMobile}
                                     onChange={e => setClientMobile(e.target.value)}
                                     onFocus={() => setIsVisible(false)}
-                                    type="number"
-                                    style={styles.input}
+                                    type="text"
+                                    style={{ ...styles.input, color: '#000', borderColor: '#999' }}
                                 />
                             </div>
                         </div>
                     ) : null}
                     <div style={{ flexDirection: "row", marginTop: 25, display: 'flex', gap: 10 }}>
                         <div style={{ flex: 1 }}>
-                            <label style={{ display: 'block', marginBottom: 5 }}>Date*</label>
+                            <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Date*</label>
                             <input
-                                type="date"
+                                type={newDate ? "date" : "text"}
+                                onFocus={(e) => e.target.type = 'date'}
+                                onBlur={(e) => { if (!newDate) e.target.type = 'text' }}
                                 value={newDate}
                                 onChange={e => setNewDate(e.target.value)}
-                                style={styles.input}
+                                placeholder="DD/MM/YYYY"
+                                style={{ ...styles.input, color: '#000', borderColor: '#999' }}
                             />
                         </div>
                         <div style={{ flex: 1 }}>
-                            <label style={{ display: 'block', marginBottom: 5 }}>Time*</label>
+                            <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Time*</label>
                             <input
-                                type="time"
+                                readOnly
                                 value={newTime}
-                                onChange={e => setNewTime(e.target.value)}
-                                style={styles.input}
+                                onClick={() => setModalVisibleTemp(true)}
+                                placeholder="Select Time"
+                                style={{ ...styles.input, color: '#000', borderColor: '#999' }}
                             />
                         </div>
                     </div>
@@ -335,36 +364,30 @@ const Meeting = props => {
             {modalVisible && (
                 <div style={styles.centeredView1}>
                     <div style={styles.modalView}>
-                        <div style={{ flexDirection: "row", display: 'flex', gap: 10 }}>
-                            <div style={{ width: 80 }}>
-                                <label style={{ display: 'block', marginBottom: 5 }}>Hour*</label>
-                                <input
-                                    type="number"
-                                    value={hour}
-                                    onChange={e => checkHourValidation(e.target.value)}
-                                    style={{ ...styles.input, textAlign: 'center' }}
-                                    placeholder="Hour"
-                                />
-                            </div>
-                            <div style={{ width: 90 }}>
-                                <label style={{ display: 'block', marginBottom: 5 }}>Minute*</label>
-                                <input
-                                    type="number"
-                                    value={minutes}
-                                    onChange={e => checkMinutesValidation(e.target.value)}
-                                    style={{ ...styles.input, textAlign: 'center' }}
-                                    placeholder="Minute"
-                                />
-                            </div>
+                        <div style={{ flexDirection: "row", display: 'flex', gap: 15, alignItems: 'center' }}>
+                            <input
+                                type="number"
+                                value={hour}
+                                onChange={e => checkHourValidation(e.target.value)}
+                                style={styles.timeInput}
+                                placeholder="Hour*"
+                            />
+                            <input
+                                type="number"
+                                value={minutes}
+                                onChange={e => checkMinutesValidation(e.target.value)}
+                                style={styles.timeInput}
+                                placeholder="Minute*"
+                            />
 
                             <CustomButtonGroup
-                                selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
+                                selectedButtonStyle={{ backgroundColor: "#00BFFF" }}
                                 onButtonPress={(index) => selectAMPMIndex(index)}
                                 selectedIndices={[ampmIndex]}
                                 buttons={ampmArray}
                                 buttonTextStyle={{ textAlign: "center" }}
                                 selectedButtonTextStyle={{ color: "#fff" }}
-                                containerStyle={{ borderRadius: 5, width: 70, height: 80 }}
+                                containerStyle={{ borderRadius: 5, width: 70, height: 82, borderColor: '#757575', borderWidth: 1 }}
                                 vertical={true}
                             />
                         </div>
@@ -372,28 +395,28 @@ const Meeting = props => {
                         <div
                             style={{
                                 flexDirection: "row",
-                                marginTop: 20,
-                                marginBottom: 15,
+                                marginTop: 25,
+                                marginBottom: 5,
                                 display: 'flex',
                                 justifyContent: 'flex-end',
                                 width: '100%'
                             }}
                         >
                             <div
-                                style={{ ...styles.cancelButton, cursor: 'pointer' }}
+                                style={styles.textButton}
                                 onClick={() => {
                                     setModalVisibleTemp(!modalVisible);
                                 }}
                             >
-                                <span style={styles.textStyle}>Cancel</span>
+                                <span style={styles.textButtonLabel}>Cancel</span>
                             </div>
                             <div
-                                style={{ ...styles.applyButton, cursor: 'pointer' }}
+                                style={styles.textButton}
                                 onClick={() => {
                                     onApply(!modalVisible);
                                 }}
                             >
-                                <span style={styles.textStyle}>Apply</span>
+                                <span style={styles.textButtonLabel}>Apply</span>
                             </div>
                         </div>
                     </div>
@@ -444,33 +467,37 @@ const styles = {
         display: 'flex',
         flexDirection: 'column'
     },
-    applyButton: {
+    timeInput: {
+        width: 80,
+        height: 80,
+        textAlign: 'center',
+        fontSize: 16,
+        borderRadius: 5,
+        border: '1px solid #757575',
+        backgroundColor: "#ffffff",
+        outline: 'none',
+        color: '#000'
+    },
+    textButton: {
         marginLeft: 10,
         marginRight: 10,
         padding: 10,
-        backgroundColor: '#2196F3',
-        borderRadius: 5,
-        color: 'white'
+        backgroundColor: 'transparent',
+        cursor: 'pointer'
     },
-    cancelButton: {
-        marginLeft: 10,
-        marginRight: 30,
-        padding: 10,
-        backgroundColor: '#f44336',
-        borderRadius: 5,
-        color: 'white'
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
+    textButtonLabel: {
+        color: "#000",
+        fontWeight: "500",
+        textAlign: "center",
+        fontSize: 16
     }
 };
 
 const mapStateToProps = state => ({
     userDetails: state.AppReducer.userDetails,
     propReminderList: state.AppReducer.propReminderList,
-    customerDetailsForMeeting: state.AppReducer.customerDetailsForMeeting
+    customerDetailsForMeeting: state.AppReducer.customerDetailsForMeeting,
+    meetingFormState: state.AppReducer.meetingFormState
 });
 
 const mapDispatchToProps = {
@@ -478,7 +505,8 @@ const mapDispatchToProps = {
     setUserDetails,
     setPropReminderList,
     setPropListForMeeting,
-    setCustomerDetailsForMeeting
+    setCustomerDetailsForMeeting,
+    setMeetingFormState
 };
 export default connect(
     mapStateToProps,

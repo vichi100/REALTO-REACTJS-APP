@@ -65,7 +65,7 @@ const CustomerDetailsResidentialRentFromList = props => {
                     title={
                         item.customer_details.name && item.customer_details.name.slice(0, 1)
                     }
-                    titleStyle={{ color: "rgba(105,105,105, .9)" }}
+                    titleStyle={{ color: "#000" }}
                     avatarStyle={{
                         borderWidth: 1,
                         borderColor: "rgba(127,255,212, .9)",
@@ -141,7 +141,7 @@ const CustomerDetailsResidentialRentFromList = props => {
                     <div
                         style={{ justifyContent: "space-between", flexDirection: "row", display: 'flex' }}
                     >
-                        <span>Details</span>
+                        <span style={{ color: '#000', fontWeight: '500' }}>Details</span>
                     </div>
                     <div style={styles.horizontalLine}></div>
                 </div>
@@ -206,9 +206,7 @@ const CustomerDetailsResidentialRentFromList = props => {
 
 const styles = {
     container: {
-        flex: 1,
-        height: '100vh',
-        overflowY: 'auto'
+        flex: 1
     },
     card: {
         boxShadow: '0px 2px 4px rgba(0,0,0,0.25)',
@@ -231,12 +229,13 @@ const styles = {
     title: {
         fontSize: 16,
         fontWeight: "600",
-        display: 'block'
+        display: 'block',
+        color: '#000'
     },
     subTitle: {
         fontSize: 14,
         fontWeight: "400",
-        color: "rgba(0,0,0, 0.87)"
+        color: "#333"
     },
     detailsContainer: {
         height: 60
@@ -252,11 +251,13 @@ const styles = {
     },
     subDetailsTitle: {
         fontSize: 12,
-        fontWeight: "400"
+        fontWeight: "400",
+        color: '#666'
     },
     subDetailsValue: {
         fontSize: 14,
-        fontWeight: "600"
+        fontWeight: "600",
+        color: '#000'
     },
     verticalLine: {
         height: "70%",

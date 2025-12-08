@@ -20,6 +20,8 @@ const initialState = {
     anyItemDetails: null,
     propertyDetails: null,
     startNavigationPoint: null,
+    meetingFormState: null,
+    customerMeetingFormState: null,
 };
 const AppReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -125,6 +127,18 @@ const AppReducer = (state = initialState, action) => {
             return {
                 ...state,
                 startNavigationPoint: action.payload
+            };
+
+        case ACTION_TYPES.SET_MEETING_FORM_STATE:
+            return {
+                ...state,
+                meetingFormState: action.payload
+            };
+
+        case ACTION_TYPES.SET_CUSTOMER_MEETING_FORM_STATE:
+            return {
+                ...state,
+                customerMeetingFormState: action.payload
             };
 
         default:
