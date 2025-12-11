@@ -162,7 +162,7 @@ const CustomerCommercialBuyCard = props => {
     const gotoEmployeeList = itemForAddEmplyee => {
         // console.log("gotoEmployeeList: ", itemForAddEmplyee);
         // props.setPropertyDetails(itemForAddEmplyee);
-        navigation.navigate("EmployeeListOfListing", {
+        navigation.navigate("/contacts/EmployeeListOfListing", {
             itemForAddEmplyee: itemForAddEmplyee,
             disableDrawer: true,
             displayCheckBox: true,

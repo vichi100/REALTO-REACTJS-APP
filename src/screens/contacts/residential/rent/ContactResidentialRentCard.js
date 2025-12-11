@@ -119,7 +119,7 @@ const ContactResidentialRentCard = props => {
 
     const gotoEmployeeList = itemForAddEmplyee => {
         console.log("gotoEmployeeList: ", itemForAddEmplyee);
-        navigation.navigate("EmployeeListOfListing", {
+        navigation.navigate("/contacts/EmployeeListOfListing", {
             itemForAddEmplyee: itemForAddEmplyee,
             disableDrawer: true,
             displayCheckBox: true,

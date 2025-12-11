@@ -73,7 +73,7 @@ const Card = props => {
 
     const gotoEmployeeList = itemForAddEmplyee => {
         props.setPropertyDetails(itemForAddEmplyee);
-        navigation.navigate("EmployeeListOfListing", {
+        navigation.navigate("/listing/EmployeeListOfListing", {
             itemForAddEmplyee: itemForAddEmplyee,
             disableDrawer: true,
             displayCheckBox: true,
