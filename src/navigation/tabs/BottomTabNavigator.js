@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { MdWeb, MdViewModule, MdContacts, MdNotifications, MdAccountCircle } from "react-icons/md";
+import { MdPublic, MdViewModule, MdContacts, MdNotifications, MdAccountCircle } from "react-icons/md";
 import ListingStack from "../stacks/ListingStack";
 import ContactsStack from "../stacks/ContactsStack";
 import NotificationStack from "../stacks/NotificationStack";
@@ -29,7 +29,7 @@ const BottomTabScreen = () => {
 
             <div className="fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around items-center h-16 z-50">
                 <Link to="/search" className="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-500">
-                    <MdWeb size={26} color={isActive('/search') ? '#ff5733' : '#828282'} />
+                    <MdPublic size={26} color={isActive('/search') ? '#ff5733' : '#828282'} />
                 </Link>
 
                 <Link to="/listing" className="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-500">

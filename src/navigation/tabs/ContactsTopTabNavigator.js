@@ -2,7 +2,8 @@ import React from "react";
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import ContactsResidential from "./../../screens/contacts/residential/ContactsResidential";
 import CustomersCommercial from "./../../screens/contacts/commercial/CustomersCommercial";
-import { MdAccountCircle, MdBusiness } from "react-icons/md";
+import { MdPerson, MdBusiness } from "react-icons/md";
+import { FaUserTie } from "react-icons/fa";
 
 const ContactsTopTab = () => {
     const location = useLocation();
@@ -23,19 +24,19 @@ const ContactsTopTab = () => {
                 <Link
                     to={`${basePath}/residential`}
                     state={location.state}
-                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'residential' || currentPath === 'Contacts' || currentPath === '' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-500'
+                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'residential' || currentPath === 'Contacts' || currentPath === '' ? 'text-black border-b-2 border-green-600' : 'text-gray-500'
                         }`}
                 >
-                    <MdAccountCircle size={20} />
+                    <MdPerson size={20} />
                     RESIDENTIAL CUSTOMER
                 </Link>
                 <Link
                     to={`${basePath}/commercial`}
                     state={location.state}
-                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'commercial' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-500'
+                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'commercial' ? 'text-black border-b-2 border-green-600' : 'text-gray-500'
                         }`}
                 >
-                    <MdBusiness size={20} />
+                    <FaUserTie size={20} />
                     COMMERCIAL CUSTOMER
                 </Link>
             </div>

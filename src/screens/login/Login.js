@@ -3,12 +3,15 @@ import { setUserMobile, setUserDetails } from "./../../reducers/Action";
 import { connect } from "react-redux";
 // import { EntypoControllerPlay } from "react-icons/entypo"; // Assuming you have react-icons installed, or use a similar icon
 import { FaPlay } from "react-icons/fa";
+import Snackbar from "./../../components/SnackbarComponent";
 
 import { useNavigate } from "react-router-dom";
 
 const Login = props => {
     const navigate = useNavigate();
     const [mobileNumber, setMobileNumber] = useState("");
+    const [isVisible, setIsVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const setMobileNumberX = (text) => {
         setMobileNumber(text)
@@ -19,12 +22,26 @@ const Login = props => {
     };
 
     const onNext = () => {
+        if (mobileNumber.length !== 10) {
+            setErrorMessage("Please enter a valid 10-digit mobile number");
+            setIsVisible(true);
+            return;
+        }
         props.setUserMobile(mobileNumber);
         navigate("/otp", {
             state: {
                 needToEnterOTP: true
             }
         });
+    };
+
+    const getBorderColor = () => {
+        if (mobileNumber.length === 0) return "lightgrey";
+        return mobileNumber.length === 10 ? "green" : "red";
+    };
+
+    const dismissSnackBar = () => {
+        setIsVisible(false);
     };
 
     return (
@@ -62,13 +79,15 @@ const Login = props => {
                     />
                     <div>
                         <p style={{
-                            paddingLeft: 10,
-                            width: "80%",
+                            width: "100%",
                             // height: 45,
                             color: "#ffffff",
                             fontWeight: "500",
                             fontSize: 18,
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            margin: 0,
+                            marginTop: 10,
+                            marginBottom: 10
                         }}>Supercharge Your Property Broking</p>
                     </div>
 
@@ -88,7 +107,7 @@ const Login = props => {
                         <input
                             style={{
                                 borderWidth: 1,
-                                borderColor: "lightgrey",
+                                borderColor: getBorderColor(),
                                 paddingLeft: 10,
                                 width: "80%",
                                 height: 45,
@@ -96,12 +115,17 @@ const Login = props => {
                                 fontSize: 16,
                                 textAlign: 'center',
                                 borderRadius: 5,
-                                border: '1px solid lightgrey',
+                                border: `1px solid ${getBorderColor()}`,
                                 backgroundColor: 'rgba(255, 255, 255, 0.8)'
                             }}
                             onChange={e => setMobileNumberX(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    onNext();
+                                }
+                            }}
                             placeholder="Enter Mobile Number"
-                            type="number"
+                            type="tel"
                         />
                         <div
                             onClick={() => onNext()}
@@ -117,6 +141,13 @@ const Login = props => {
                             />
                         </div>
                     </div>
+                    <Snackbar
+                        visible={isVisible}
+                        textMessage={errorMessage}
+                        position={"top"}
+                        actionHandler={() => dismissSnackBar()}
+                        actionText="OK"
+                    />
                 </div>
 
                 <div
@@ -137,7 +168,6 @@ const Login = props => {
                     </span>
                 </div>
             </div>
-
         </div>
     );
 };

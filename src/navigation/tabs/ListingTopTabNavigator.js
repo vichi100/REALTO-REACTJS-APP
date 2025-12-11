@@ -24,7 +24,7 @@ const ListingTopTab = () => {
                 <Link
                     to={`${basePath}/residential`}
                     state={location.state}
-                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'residential' || currentPath === 'Listing' || currentPath === '' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-500'
+                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'residential' || currentPath === 'Listing' || currentPath === '' ? 'text-black border-b-2 border-green-600' : 'text-gray-500'
                         }`}
                 >
                     <MdHome size={20} />
@@ -33,7 +33,7 @@ const ListingTopTab = () => {
                 <Link
                     to={`${basePath}/commercial`}
                     state={location.state}
-                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'commercial' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-500'
+                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'commercial' ? 'text-black border-b-2 border-green-600' : 'text-gray-500'
                         }`}
                 >
                     <MdBusiness size={20} />

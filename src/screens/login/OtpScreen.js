@@ -148,6 +148,7 @@ const OtpScreen = (props) => {
                     }}
                 >
                     <OtpInput
+                        shouldAutoFocus={true}
                         value={otpValue}
                         onChange={(val) => {
                             setOtpValue(val);
