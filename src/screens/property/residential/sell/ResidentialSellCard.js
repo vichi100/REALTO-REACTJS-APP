@@ -363,7 +363,10 @@ const Card = props => {
                     </p>
 
                     {/* Employee Info */}
-                    <div className="flex flex-row items-center mt-2 justify-center">
+                    <div
+                        className="flex flex-row items-center mt-2 justify-center cursor-pointer"
+                        onClick={(e) => { e.stopPropagation(); gotoEmployeeList(item); }}
+                    >
                         <MdPersonAdd size={18} className="text-black mr-2" />
                         <span className="text-sm text-gray-900">
                             {Array.isArray(item.assigned_to_employee_name) && item.assigned_to_employee_name.length > 0
