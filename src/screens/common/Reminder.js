@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { connect } from "react-redux";
 import { IoCall } from "react-icons/io5";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -20,6 +20,7 @@ const Reminder = props => {
     const [loading, setLoading] = useState(false);
     const [dbCall, setDbCall] = useState(didDbCall);
     const [search, setSearch] = useState("");
+    const isFetching = useRef(false);
 
     const updateDbCall = useCallback((value) => {
         setDbCall(value);
@@ -62,6 +63,9 @@ const Reminder = props => {
 
         setLoading(true);
 
+        if (isFetching.current) return;
+        isFetching.current = true;
+
         axios
             .post(
                 SERVER_URL + "/getReminderListByCustomerId",
@@ -87,9 +91,11 @@ const Reminder = props => {
                     setPastReminderList(past);
                     setReminderList(response.data);
                     setLoading(false);
+                    isFetching.current = false;
                 },
                 error => {
                     setLoading(false);
+                    isFetching.current = false;
                     console.log(error);
                 }
             );
@@ -111,6 +117,9 @@ const Reminder = props => {
         };
         console.log("Reminder Debug: Sending request to:", SERVER_URL + "/getReminderList", "with data:", userData);
         setLoading(true);
+
+        if (isFetching.current) return;
+        isFetching.current = true;
 
         axios
             .post(
@@ -182,9 +191,11 @@ const Reminder = props => {
                         console.error("Reminder Debug: Error processing data:", error);
                     }
                     setLoading(false);
+                    isFetching.current = false;
                 },
                 error => {
                     setLoading(false);
+                    isFetching.current = false;
                     console.log(error);
                 }
             );

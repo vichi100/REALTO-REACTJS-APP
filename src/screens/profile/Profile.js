@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { connect } from "react-redux";
 import Button from "./../../components/Button";
 import {
@@ -29,6 +29,7 @@ const Profile = props => {
     const [userData, setUserData] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [isVisible, setIsVisible] = useState(false);
+    const isFetching = useRef(false);
 
     useEffect(() => {
         setUserDetails(props.userDetails);
@@ -50,6 +51,9 @@ const Profile = props => {
             mobile: props.userDetails.mobile,
         };
 
+        if (isFetching.current) return;
+        isFetching.current = true;
+
         axios(SERVER_URL + "/getUserProfileDeatails", {
             method: "post",
             headers: {
@@ -62,9 +66,11 @@ const Profile = props => {
                 if (response.status === 200) {
                     setUserData(response.data);
                     updateDbCall(true);
+                    isFetching.current = false;
                 }
             },
             error => {
+                isFetching.current = false;
             }
         );
     };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { setUserDetails } from "./../../reducers/Action";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -9,6 +9,7 @@ const Home = props => {
     const [modalVisible, setModalVisible] = useState(false);
     const [listingData, setListingData] = useState(null); // for chart
     const [isLoading, setIsLoading] = useState(true);
+    const isFetching = useRef(false);
 
     useEffect(() => {
         getTotalListingSummary();
@@ -36,6 +37,10 @@ const Home = props => {
             return;
         }
         setIsLoading(true); // Set loading to true
+
+        if (isFetching.current) return;
+        isFetching.current = true;
+
         const agent = {
             req_user_id: props.userDetails.works_for,
             agent_id: props.userDetails.id
@@ -53,12 +58,14 @@ const Home = props => {
                     console.log("getTotalListingSummary: " + JSON.stringify(response.data));
                     setListingData(response.data);
                     setIsLoading(false); // Set loading to false
+                    isFetching.current = false;
 
                 }
             },
             error => {
                 console.error(error);
                 setIsLoading(false); // Set loading to false
+                isFetching.current = false;
             }
         );
     };

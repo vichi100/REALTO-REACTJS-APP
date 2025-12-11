@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { connect, useSelector, useDispatch } from "react-redux";
 import {
@@ -79,6 +79,7 @@ const ContactsResidential = props => {
     const [lookingForIndexSortBy, setLookingForIndexSortBy] = useState(-1);
 
     const [loading, setLoading] = useState(false);
+    const isFetching = useRef(false);
 
     // filter
     const [selectedBHK, setSelectedBHK] = useState([]);
@@ -403,6 +404,10 @@ const ContactsResidential = props => {
             agent_id: props.userDetails.works_for
         };
         console.log("ContactsResidential: Fetching data with user:", user);
+
+        if (isFetching.current) return;
+        isFetching.current = true;
+
         setLoading(true);
         axios(SERVER_URL + "/residentialCustomerList", {
             method: "post",
@@ -413,12 +418,14 @@ const ContactsResidential = props => {
             data: user
         }).then(
             response => {
+                isFetching.current = false;
                 console.log("ContactsResidential: Data fetched successfully:", response.data.length);
                 setData(response.data);
                 props.setResidentialCustomerList(response.data);
                 setLoading(false);
             },
             error => {
+                isFetching.current = false;
                 console.error("ContactsResidential: Error fetching data:", error);
                 setLoading(false);
             }

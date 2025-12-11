@@ -6,13 +6,22 @@ import { MdAccountCircle, MdBusiness } from "react-icons/md";
 
 const ContactsTopTab = () => {
     const location = useLocation();
-    const currentPath = location.pathname.split('/').pop();
+
+    let pathname = location.pathname;
+    if (pathname.endsWith("/")) pathname = pathname.slice(0, -1);
+    const segments = pathname.split("/");
+    const currentPath = segments[segments.length - 1];
+
+    let basePath = pathname;
+    if (currentPath === "residential" || currentPath === "commercial") {
+        basePath = pathname.substring(0, pathname.lastIndexOf("/"));
+    }
 
     return (
         <div className="flex flex-col h-full">
             <div className="flex bg-white border-b border-gray-200">
                 <Link
-                    to="../residential"
+                    to={`${basePath}/residential`}
                     state={location.state}
                     className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'residential' || currentPath === 'Contacts' || currentPath === '' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-500'
                         }`}
@@ -21,7 +30,7 @@ const ContactsTopTab = () => {
                     RESIDENTIAL CUSTOMER
                 </Link>
                 <Link
-                    to="../commercial"
+                    to={`${basePath}/commercial`}
                     state={location.state}
                     className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'commercial' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-500'
                         }`}

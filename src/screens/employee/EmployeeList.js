@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { MdSort, MdFilterList, MdSearch } from "react-icons/md";
@@ -24,6 +24,7 @@ const EmployeeList = props => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [refresh, setRefresh] = useState(false);
+    const isFetching = useRef(false);
 
     const dispatch = useDispatch();
 
@@ -42,6 +43,9 @@ const EmployeeList = props => {
             agent_id: props.userDetails.works_for
         };
         setLoading(true);
+
+        if (isFetching.current) return;
+        isFetching.current = true;
         axios(SERVER_URL + "/employeeList", {
             method: "post",
             headers: {
@@ -54,10 +58,12 @@ const EmployeeList = props => {
                 setData(response.data);
                 props.setEmployeeList(response.data);
                 setLoading(false);
+                isFetching.current = false;
             },
             error => {
                 console.log(error);
                 setLoading(false);
+                isFetching.current = false;
             }
         );
     };
