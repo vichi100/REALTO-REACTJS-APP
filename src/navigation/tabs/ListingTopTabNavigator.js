@@ -13,7 +13,7 @@ const ListingTopTab = () => {
         <div className="flex flex-col h-full">
             <div className="flex bg-white border-b border-gray-200">
                 <Link
-                    to="/profile/PropertyListing/residential"
+                    to="../residential"
                     state={location.state}
                     className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'residential' || currentPath === 'Listing' || currentPath === '' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-500'
                         }`}
@@ -22,7 +22,7 @@ const ListingTopTab = () => {
                     RESIDENTIAL PROPERTY
                 </Link>
                 <Link
-                    to="/profile/PropertyListing/commercial"
+                    to="../commercial"
                     state={location.state}
                     className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'commercial' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-500'
                         }`}

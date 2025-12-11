@@ -26,7 +26,11 @@ const OtpScreen = (props) => {
         }
     }, [userDetails, needToEnterOTP]);
 
+    const hasFetchedOtp = useRef(false);
+
     useEffect(() => {
+        if (hasFetchedOtp.current) return;
+        hasFetchedOtp.current = true;
         setLoading(true);
         const otpX = "999999";
         const mobileX = props.userMobileNumber;

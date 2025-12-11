@@ -128,18 +128,10 @@ const ListingResidential = props => {
     }, [dispatch, props.userDetails, employeeObj]);
 
     useEffect(() => {
-        fetchData();
-    }, [fetchData, props.userDetails, employeeObj]);
-
-    useEffect(() => {
-        if (shouldRefresh || didDbCall) {
+        if (shouldRefresh || didDbCall || (props.userDetails && props.userDetails.works_for !== null)) {
             fetchData();
         }
-    }, [shouldRefresh, fetchData, didDbCall]);
-
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+    }, [fetchData, shouldRefresh, didDbCall]);
 
     const resetSortBy = () => {
         setLookingForIndexSortBy(-1);
@@ -305,14 +297,9 @@ const ListingResidential = props => {
         setIsVisible(false);
     };
 
-    useEffect(() => {
-        if (
-            props.userDetails &&
-            props.userDetails.works_for !== null
-        ) {
-            getListing();
-        }
-    }, [props.userDetails]);
+
+
+    const isFetching = React.useRef(false);
 
     const getListing = () => {
         if (props.userDetails === null) {
@@ -320,6 +307,10 @@ const ListingResidential = props => {
             props.setResidentialPropertyList([]);
             return;
         }
+
+        if (isFetching.current) return;
+        isFetching.current = true;
+
         const user = {
             req_user_id: props.userDetails.id,
             agent_id: props.userDetails.works_for,
@@ -334,6 +325,7 @@ const ListingResidential = props => {
             data: user
         }).then(
             response => {
+                isFetching.current = false;
                 response.data.map(item => {
                     item.image_urls.map(image => {
                         image.url = SERVER_URL + image.url
@@ -345,6 +337,7 @@ const ListingResidential = props => {
                 dispatch(resetRefresh());
             },
             error => {
+                isFetching.current = false;
                 setLoading(false);
                 console.error("ListingResidential: Error fetching data:", error);
             }
