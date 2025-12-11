@@ -471,6 +471,31 @@ const Card = props => {
                 )}
             </div>
 
+            {/* Bottom Stats Row */}
+            <div className="border-t border-gray-200 py-3 px-2">
+                <div className="flex flex-row justify-between items-center text-center">
+                    {/* BHK */}
+                    <div className="flex-1 border-r border-gray-300">
+                        <span className="text-sm font-bold block text-black">{item.property_details.bhk_type}</span>
+                    </div>
+                    {/* Price */}
+                    <div className="flex-1 border-r border-gray-300">
+                        <span className="text-sm font-bold block text-black">{numDifferentiation(item.rent_details.expected_rent)}</span>
+                        <span className="text-xs text-gray-500 block">Rent</span>
+                    </div>
+                    {/* Builtup */}
+                    <div className="flex-1 border-r border-gray-300">
+                        <span className="text-sm font-bold block text-black">{item.rent_details.expected_deposit}</span>
+                        <span className="text-xs text-gray-500 block">Deposit</span>
+                    </div>
+                    {/* Furnishing */}
+                    <div className="flex-1">
+                        <span className="text-sm font-bold block text-black">{item.property_details.furnishing_status}</span>
+                        <span className="text-xs text-gray-500 block">Furnishing</span>
+                    </div>
+                </div>
+            </div>
+
             {
                 modalVisible && (
                     <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={(e) => { e.stopPropagation(); }}>
