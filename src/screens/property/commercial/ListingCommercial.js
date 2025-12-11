@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -63,6 +63,7 @@ const ListingCommercial = props => {
     const [loading, setLoading] = useState(false);
     const [visibleSorting, setVisibleSorting] = useState(false);
     const [visible, setVisible] = useState(false);
+    const isFetching = useRef(false);
 
     const [reqWithin, setReqWithin] = useState("");
     const [purpose, setPurpose] = useState("");
@@ -106,6 +107,9 @@ const ListingCommercial = props => {
         };
         setLoading(true);
 
+        if (isFetching.current) return;
+        isFetching.current = true;
+
         axios(SERVER_URL + "/commercialPropertyListings", {
             method: "post",
             headers: {
@@ -123,9 +127,11 @@ const ListingCommercial = props => {
                 setData(response.data);
                 props.setCommercialPropertyList(response.data);
                 setLoading(false);
+                isFetching.current = false;
             },
             error => {
                 setLoading(false);
+                isFetching.current = false;
                 console.log(error);
             }
         );

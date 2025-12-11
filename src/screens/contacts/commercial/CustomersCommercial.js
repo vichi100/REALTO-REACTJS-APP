@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { MdSearch, MdSort, MdFilterList, MdRestartAlt, MdAddCircleOutline } from "react-icons/md";
 import { useNavigate, useLocation } from "react-router-dom";
 // import {
@@ -138,6 +138,7 @@ const CustomersCommercial = props => {
     const [sortByPostedDateIndex, setSortByPostedDateIndex] = useState(-1);
     const [lookingForIndexSortBy, setLookingForIndexSortBy] = useState(-1);
     const [loading, setLoading] = useState(false);
+    const isFetching = useRef(false);
 
     const [reqWithin, setReqWithin] = useState("");
     const [purpose, setPurpose] = useState("");
@@ -561,6 +562,9 @@ const CustomersCommercial = props => {
 
         setLoading(true);
 
+        if (isFetching.current) return;
+        isFetching.current = true;
+
         axios(SERVER_URL + "/commercialCustomerList", {
             method: "post",
             headers: {
@@ -574,10 +578,12 @@ const CustomersCommercial = props => {
                 props.setCommercialCustomerList(response.data);
                 setData(response.data);
                 setLoading(false);
+                isFetching.current = false;
             },
             error => {
                 console.log(error);
                 setLoading(false);
+                isFetching.current = false;
             }
         );
     };
