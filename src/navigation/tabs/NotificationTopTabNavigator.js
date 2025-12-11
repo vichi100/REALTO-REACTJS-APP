@@ -13,7 +13,7 @@ const NotificationTopTab = () => {
             <div className="flex bg-white border-b border-gray-200">
                 <Link
                     to="/notifications/reminders"
-                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'reminders' || currentPath === 'NotificationTopTab' || currentPath === '' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-500'
+                    className={`flex-1 py-3 text-center font-medium flex items-center justify-center gap-2 ${currentPath === 'reminders' || currentPath === 'NotificationTopTab' || currentPath === '' ? 'text-black border-b-2 border-green-600' : 'text-gray-500'
                         }`}
                 >
                     Reminders
