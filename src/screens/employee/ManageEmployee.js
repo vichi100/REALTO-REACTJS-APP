@@ -208,8 +208,8 @@ const ManageEmployee = props => {
     }, [empData.employee_role]);
 
     useEffect(() => {
-        setEmployeeName(empData.name || "");
-        setEmployeeMobile(empData.mobile || "");
+        setEmployeeName(empData.name || empData.emp_name || "");
+        setEmployeeMobile(empData.mobile || empData.emp_mobile || "");
         getEmployeeList();
     }, []);
 
@@ -235,7 +235,7 @@ const ManageEmployee = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff", color: "#000000", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.container}>
                 <div>
                     <p style={{ marginTop: 10, marginBottom: 10, fontSize: 14, fontWeight: 500 }}>
@@ -260,7 +260,7 @@ const ManageEmployee = props => {
                             value={employeeMobile}
                             onChange={e => setEmployeeMobile(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            type="number"
+                            type="tel"
                             style={styles.input}
                         />
                     </div>

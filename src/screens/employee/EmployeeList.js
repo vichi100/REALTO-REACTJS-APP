@@ -78,7 +78,7 @@ const EmployeeList = props => {
             setData(newData);
             setSearch(text);
         } else {
-            setData(props.residentialCustomerList);
+            setData(props.employeeList);
             setSearch(text);
         }
     };
@@ -114,7 +114,7 @@ const EmployeeList = props => {
     }
 
     const navigateTo = () => {
-        navigate("ManageEmployee");
+        navigate("/profile/ManageEmployee");
     };
 
     useEffect(() => {
@@ -136,7 +136,7 @@ const EmployeeList = props => {
         >
             <div>Loading...</div>
         </div> :
-            <div style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
                 <div style={styles.searchBar}>
                     <MdSearch size={20} color="#999" style={{ marginRight: 5, }} />
                     <input
@@ -221,7 +221,7 @@ const EmployeeList = props => {
                             ...styles.addButton,
                             cursor: 'pointer'
                         }}
-                        onClick={() => navigate("ManageEmployee")}
+                        onClick={() => navigate("/profile/ManageEmployee")}
                     >
                         <AiOutlinePlusCircle size={40} color="#ffffff" />
                     </div> : null}
@@ -296,7 +296,8 @@ const styles = {
         paddingLeft: 10,
         border: 'none',
         outline: 'none',
-        fontSize: 16
+        fontSize: 16,
+        color: '#000'
     },
 };
 

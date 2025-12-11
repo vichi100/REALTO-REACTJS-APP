@@ -180,7 +180,7 @@ const EmployeeCard = props => {
 
     const editEmployee = async (empData) => {
         try {
-            navigate("ManageEmployee", { empData: empData, editEmp: true },);
+            navigate("/profile/ManageEmployee", { state: { empData: empData, editEmp: true } });
         } catch (error) {
             alert(error.message);
         }
@@ -373,7 +373,7 @@ const EmployeeCard = props => {
                             item.employee_role == "master" ?
                                 <span style={{ fontSize: 15, fontWeight: 500, color: "rgba(249, 105, 14, .8)" }}>{camalize(item.employee_role)} </span> :
                                 item.employee_role == "add" ?
-                                    <span style={{ fontSize: 15, fontWeight: 500, color: "rgba(25, 181, 254, 1))" }}>{camalize(item.employee_role)} </span> :
+                                    <span style={{ fontSize: 15, fontWeight: 500, color: "rgba(3, 147, 237, 1)" }}>{camalize(item.employee_role)} </span> :
                                     <span style={{ fontSize: 15, fontWeight: 500, color: "rgba(22, 160, 133, 1)" }}>{camalize(item.employee_role)} </span>}
                     </div>
                     <div
@@ -384,7 +384,7 @@ const EmployeeCard = props => {
                             flex: 1
                         }}
                     >
-                        <div style={{ paddingLeft: 20, paddingTop: 20 }}>
+                        <div style={{ paddingLeft: 20, paddingTop: 20, display: 'flex', flexDirection: 'column' }}>
                             <span style={styles.title}>{item.name} </span>
                             <span style={styles.subTitle}>
                                 {item.mobile}
@@ -418,13 +418,12 @@ const EmployeeCard = props => {
                     <div
                         style={{
                             ...styles.drawer,
-                            transform: drawerOpen ? "translateX(0)" : "translateX(100%)",
-                            transition: "transform 0.3s ease-in-out",
+                            ...styles.drawer,
                             position: 'absolute',
                             right: 0,
                             top: 0,
                             bottom: 0,
-                            height: '100%',
+                            height: '50%',
                             display: 'flex',
                             flexDirection: 'row',
                             zIndex: 100
@@ -434,10 +433,12 @@ const EmployeeCard = props => {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            paddingRight: 10,
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            backgroundColor: '#545454',
+                            height: '67%',
+                            width: 40
                         }} onClick={ShowSlidingDrawer}>
-                            <MdChevronLeft color={"#000"} size={30} style={{ transform: drawerOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
+                            <MdChevronLeft color={"#ffffff"} size={30} style={{ transform: drawerOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
                         </div>
                         {drawerOpen && (
                             <div style={styles.Main_Sliding_Drawer_Container}>
@@ -647,7 +648,8 @@ const styles = {
     modalText: {
         fontSize: 18,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: '#000'
     },
     modalTextSub: {
         fontSize: 14,
