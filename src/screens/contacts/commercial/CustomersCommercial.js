@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { MdSearch, MdSort, MdFilterList, MdRestartAlt, MdAddCircleOutline } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 // import {
 //   FlatList,
 //   View,
@@ -113,7 +113,8 @@ const buildingTypeOption = [
 
 const CustomersCommercial = props => {
     const { navigation } = props;
-    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false } = props.route?.params || {};
+    const location = useLocation();
+    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false } = location.state || {};
     const [search, setSearch] = useState("");
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");

@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import {
 //   StyleSheet,
 //   View,
@@ -24,7 +25,7 @@ import {
 
 
 const AddNewCustomerBuyResidentialFinalDetails = props => {
-    const { navigation } = props;
+    const navigate = useNavigate();
     const [customerFinalDetails, setCustomerFinalDetails] = useState(null);
     const [bhk, setBHK] = useState(null);
     const [possessionDate, setPossessionDate] = useState(null);
@@ -85,7 +86,7 @@ const AddNewCustomerBuyResidentialFinalDetails = props => {
     };
 
     const login = async () => {
-        navigation.navigate("Login");
+        navigate("/login");
         setModalVisible(false);
     }
 
@@ -113,10 +114,10 @@ const AddNewCustomerBuyResidentialFinalDetails = props => {
                         props.setResidentialCustomerList([...props.residentialCustomerList, response.data]);
 
                         if (props.startNavigationPoint === null) {
-                            navigation.navigate("Contacts", { didDbCall: true });
+                            navigate("/contacts", { state: { didDbCall: true } });
 
                         } else {
-                            navigation.navigate("CustomerListForMeeting");
+                            navigate("/contacts/CustomerListForMeeting");
                         }
                         props.setStartNavigationPoint(null)
 
@@ -146,12 +147,12 @@ const AddNewCustomerBuyResidentialFinalDetails = props => {
                         // paddingBottom: 16,
                         // paddingTop: 16,
                         width: "100%",
-                        backgroundColor: "#d1d1d1"
+                        backgroundColor: "#ffffff"
                     }}
                 >
                     <div style={{
                         width: 80, height: 80, display: 'flex', justifyContent: 'center', alignItems: 'center',
-                        backgroundColor: '#ccc', color: "rgba(105,105,105, .9)", border: '1px solid rgba(127,255,212, .9)',
+                        backgroundColor: '#ffffff', color: "#000000", border: '1px solid #000000',
                         fontSize: 32, fontWeight: 'bold'
                     }}>
                         {customerFinalDetails.customer_details.name &&
@@ -219,7 +220,7 @@ const AddNewCustomerBuyResidentialFinalDetails = props => {
             {/* property details */}
             <div style={styles.overviewContainer}>
                 <div style={styles.overview}>
-                    <p>Details</p>
+                    <p style={{ fontSize: 16, fontWeight: "600", color: "#000000", margin: 0 }}>Details</p>
                     <div style={styles.horizontalLine}></div>
                 </div>
                 <div style={styles.overviewColumnWrapper}>
@@ -394,20 +395,21 @@ const styles = {
     title: {
         fontSize: 16,
         fontWeight: "600",
-        margin: 0
+        margin: 0,
+        color: "#000000"
     },
     subTitle: {
         fontSize: 14,
         fontWeight: "400",
-        color: "rgba(0 ,0 ,0 , 0.87)",
+        color: "#000000",
         margin: 0
     },
     detailsContainer: {
         // borderBottomWidth: 1,
         height: 60,
         borderTopWidth: 1,
-        borderTopColor: "#C0C0C0",
-        backgroundColor: "rgba(220,220,220, 0.80)"
+        borderTopColor: "#000000",
+        backgroundColor: "#ffffff"
     },
 
     details: {
@@ -422,21 +424,23 @@ const styles = {
     subDetailsTitle: {
         fontSize: 12,
         fontWeight: "400",
-        margin: 0
+        margin: 0,
+        color: "#000000"
     },
     subDetailsValue: {
         fontSize: 14,
         fontWeight: "600",
-        margin: 0
+        margin: 0,
+        color: "#000000"
     },
     verticalLine: {
         height: "70%",
         width: 1,
-        backgroundColor: "#909090"
+        backgroundColor: "#000000"
     },
 
     horizontalLine: {
-        borderBottomColor: "#E0E0E0",
+        borderBottomColor: "#000000",
         borderBottomWidth: 1,
         marginLeft: 5,
         marginRight: 5,

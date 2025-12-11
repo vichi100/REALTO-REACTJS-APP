@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "./../../components/Button";
 import Snackbar from "./../../components/SnackbarComponent";
 import { connect } from "react-redux";
 import { setPropertyType, setPropertyDetails, setCustomerDetails } from "./../../reducers/Action";
 
 const AddNewCustomer = props => {
-    const { navigation } = props;
+    const navigate = useNavigate();
     const [ownerName, setOwnerName] = useState("");
     const [ownerMobile, setOwnerMobile] = useState("");
     const [ownerAddress, setOwnerAddress] = useState("");
@@ -37,24 +38,24 @@ const AddNewCustomer = props => {
         };
         console.log("customer: ", JSON.stringify(customer));
         props.setCustomerDetails(customer);
-        navigation.navigate("ContactLocalityDetailsForm");
+        navigate("ContactLocalityDetailsForm");
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "rgba(254,254,250, 0.1)", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.container}>
                 <div>
-                    <p>
+                    <p style={{ color: '#000000' }}>
                         Add new customer details who is looking to rent or buy a property
                     </p>
                 </div>
 
                 <div style={{ ...styles.header, marginTop: 30 }}>
-                    <p>Customer Details</p>
+                    <p style={{ color: '#000000', fontWeight: 'bold', fontSize: 18 }}>Customer Details</p>
                 </div>
                 <div style={styles.propSection}>
                     <div style={{ marginBottom: 15 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: 'rgba(0,191,255, .9)' }}>Name*</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: '#000000', fontWeight: '500' }}>Name*</label>
                         <input
                             value={ownerName}
                             onChange={e => setOwnerName(e.target.value)}
@@ -63,7 +64,7 @@ const AddNewCustomer = props => {
                         />
                     </div>
                     <div style={{ marginBottom: 15 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: 'rgba(0,191,255, .9)' }}>Mobile*</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: '#000000', fontWeight: '500' }}>Mobile*</label>
                         <input
                             value={ownerMobile}
                             onChange={e => setOwnerMobile(e.target.value)}
@@ -73,7 +74,7 @@ const AddNewCustomer = props => {
                         />
                     </div>
                     <div style={{ marginBottom: 15 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: 'rgba(0,191,255, .9)' }}>Address*</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: '#000000', fontWeight: '500' }}>Address*</label>
                         <input
                             value={ownerAddress}
                             onChange={e => setOwnerAddress(e.target.value)}
@@ -119,8 +120,9 @@ const styles = {
         padding: 10,
         borderRadius: 5,
         border: '1px solid #ccc',
-        backgroundColor: "rgba(245,245,245, 0.1)",
-        outline: 'none'
+        backgroundColor: "#f9f9f9",
+        outline: 'none',
+        color: '#000000'
     }
 };
 

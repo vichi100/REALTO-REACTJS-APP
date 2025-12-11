@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // import {
 //   StyleSheet,
 //   View,
@@ -27,7 +28,7 @@ const preferredTenantsArray = ["Family", "Bachelors", "Any"];
 const nonvegAllowedArray = ["Veg", "Non-Veg"];
 
 const CustomerCommercialRentDetailsForm = props => {
-    const { navigation } = props;
+    const navigate = useNavigate();
     const date = new Date();
     const [newDate, setNewDate] = React.useState("");
 
@@ -131,15 +132,15 @@ const CustomerCommercialRentDetailsForm = props => {
         props.setCustomerDetails(customer)
         // console.log(JSON.stringify(customer));
 
-        navigation.navigate("AddNewCustomerCommercialRentFinalDetails");
+        navigate("../AddNewCustomerCommercialRentFinalDetails");
     };
     return (
         <div
-            style={{ flex: 1, backgroundColor: "rgba(245,245,245, 0.2)", height: '100vh', overflowY: 'auto' }}
+            style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}
         >
             <div style={styles.container}>
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'rgba(0,191,255, .9)' }}>
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
                         {expectedRent.trim() === "" ? "Max Rent*" : numDifferentiation(expectedRent) + " Max Rent"}
                     </label>
                     <input
@@ -153,13 +154,14 @@ const CustomerCommercialRentDetailsForm = props => {
                             padding: 10,
                             borderRadius: 4,
                             border: '1px solid #ccc',
-                            backgroundColor: "rgba(245,245,245, 0.2)"
+                            backgroundColor: "#f9f9f9",
+                            color: '#000000'
                         }}
                     />
                 </div>
 
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'rgba(0,191,255, .9)' }}>
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
                         {expectedDeposit.trim() === "" ? "Max Deposit*" : numDifferentiation(expectedDeposit) + " Max Deposit"}
                     </label>
                     <input
@@ -173,27 +175,30 @@ const CustomerCommercialRentDetailsForm = props => {
                             padding: 10,
                             borderRadius: 4,
                             border: '1px solid #ccc',
-                            backgroundColor: "rgba(245,245,245, 0.2)"
+                            backgroundColor: "#f9f9f9",
+                            color: '#000000'
                         }}
                     />
                 </div>
 
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'rgba(0,191,255, .9)' }}>
-                        Required From *
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
+                        Required From (DD/MM/YYYY) *
                     </label>
                     <input
-                        type="date"
-                        placeholder="Required From *"
+                        type={visible || newDate ? "date" : "text"}
+                        placeholder="DD/MM/YYYY"
                         value={newDate}
                         onChange={onChange}
                         onFocus={() => setVisible(true)}
+                        onBlur={() => setVisible(false)}
                         style={{
                             width: '100%',
                             padding: 10,
                             borderRadius: 4,
                             border: '1px solid #ccc',
-                            backgroundColor: "rgba(245,245,245, 0.2)"
+                            backgroundColor: "#f9f9f9",
+                            color: '#000000'
                         }}
                     />
                 </div>
@@ -202,7 +207,7 @@ const CustomerCommercialRentDetailsForm = props => {
                     customerDetailsX.customer_locality.property_type ===
                     "Residential" ? (
                     <div>
-                        <p>Type of Tenants*</p>
+                        <p style={{ color: '#000000', fontWeight: 'bold' }}>Type of Tenants*</p>
                         <div style={styles.propSubSection}>
                             <div style={{ display: 'flex', borderRadius: 10, overflow: 'hidden', border: '1px solid #ccc' }}>
                                 {preferredTenantsArray.map((item, index) => (
@@ -223,7 +228,7 @@ const CustomerCommercialRentDetailsForm = props => {
                                 ))}
                             </div>
                         </div>
-                        <p>Tenants is veg / non veg*</p>
+                        <p style={{ color: '#000000', fontWeight: 'bold' }}>Tenants is veg / non veg*</p>
                         <div style={styles.propSubSection}>
                             <div style={{ display: 'flex', borderRadius: 10, overflow: 'hidden', border: '1px solid #ccc' }}>
                                 {nonvegAllowedArray.map((item, index) => (

@@ -18,18 +18,18 @@ const AddNewContactsStack = () => {
     return (
         <Routes>
             <Route path="/" element={<ScreenWrapper Component={AddNewCustomer} />} />
-            <Route path="/AddCustomer" element={<ScreenWrapper Component={AddNewCustomer} />} />
-            <Route path="/ContactLocalityDetailsForm" element={<ScreenWrapper Component={ContactLocalityDetailsForm} />} />
-            <Route path="/ContactResidentialPropertyDetailsForm" element={<ScreenWrapper Component={ContactResidentialPropertyDetailsForm} />} />
-            <Route path="/ContactRentDetailsForm" element={<ScreenWrapper Component={ContactRentDetailsForm} />} />
-            <Route path="/AddNewCustomerRentResidentialFinalDetails" element={<ScreenWrapper Component={AddNewCustomerRentResidentialFinalDetails} />} />
-            <Route path="/ContactBuyResidentialDetailsForm" element={<ScreenWrapper Component={ContactBuyResidentialDetailsForm} />} />
-            <Route path="/AddNewCustomerBuyResidentialFinalDetails" element={<ScreenWrapper Component={AddNewCustomerBuyResidentialFinalDetails} />} />
-            <Route path="/CustomerCommercialPropertyDetailsForm" element={<ScreenWrapper Component={CustomerCommercialPropertyDetailsForm} />} />
-            <Route path="/AddNewCustomerCommercialRentFinalDetails" element={<ScreenWrapper Component={AddNewCustomerCommercialRentFinalDetails} />} />
-            <Route path="/CustomerCommercialRentDetailsForm" element={<ScreenWrapper Component={CustomerCommercialRentDetailsForm} />} />
-            <Route path="/CustomerCommercialBuyDetailsForm" element={<ScreenWrapper Component={CustomerCommercialBuyDetailsForm} />} />
-            <Route path="/AddNewCustomerCommercialBuyFinalDetails" element={<ScreenWrapper Component={AddNewCustomerCommercialBuyFinalDetails} />} />
+            <Route path="AddCustomer" element={<ScreenWrapper Component={AddNewCustomer} />} />
+            <Route path="ContactLocalityDetailsForm" element={<ScreenWrapper Component={ContactLocalityDetailsForm} />} />
+            <Route path="ContactResidentialPropertyDetailsForm" element={<ScreenWrapper Component={ContactResidentialPropertyDetailsForm} />} />
+            <Route path="ContactRentDetailsForm" element={<ScreenWrapper Component={ContactRentDetailsForm} />} />
+            <Route path="AddNewCustomerRentResidentialFinalDetails" element={<ScreenWrapper Component={AddNewCustomerRentResidentialFinalDetails} />} />
+            <Route path="ContactBuyResidentialDetailsForm" element={<ScreenWrapper Component={ContactBuyResidentialDetailsForm} />} />
+            <Route path="AddNewCustomerBuyResidentialFinalDetails" element={<ScreenWrapper Component={AddNewCustomerBuyResidentialFinalDetails} />} />
+            <Route path="CustomerCommercialPropertyDetailsForm" element={<ScreenWrapper Component={CustomerCommercialPropertyDetailsForm} />} />
+            <Route path="AddNewCustomerCommercialRentFinalDetails" element={<ScreenWrapper Component={AddNewCustomerCommercialRentFinalDetails} />} />
+            <Route path="CustomerCommercialRentDetailsForm" element={<ScreenWrapper Component={CustomerCommercialRentDetailsForm} />} />
+            <Route path="CustomerCommercialBuyDetailsForm" element={<ScreenWrapper Component={CustomerCommercialBuyDetailsForm} />} />
+            <Route path="AddNewCustomerCommercialBuyFinalDetails" element={<ScreenWrapper Component={AddNewCustomerCommercialBuyFinalDetails} />} />
         </Routes>
     );
 };

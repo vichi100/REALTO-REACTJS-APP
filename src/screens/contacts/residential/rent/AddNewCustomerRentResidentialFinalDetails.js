@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "./../../../../components/Button";
 import axios from "axios";
 import { SERVER_URL } from "./../../../../utils/Constant";
@@ -16,7 +17,7 @@ const Avatar = ({ title, size, avatarStyle, titleStyle }) => (
             width: size,
             height: size,
             borderRadius: size / 2,
-            backgroundColor: "#ccc",
+            backgroundColor: "#ffffff",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -28,7 +29,7 @@ const Avatar = ({ title, size, avatarStyle, titleStyle }) => (
 );
 
 const AddNewCustomerRentResidentialFinalDetails = props => {
-    const { navigation } = props;
+    const navigate = useNavigate();
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [customerFinalDetails, setCustomerFinalDetails] = useState(null);
@@ -88,7 +89,7 @@ const AddNewCustomerRentResidentialFinalDetails = props => {
     };
 
     const login = async () => {
-        navigation.navigate("Login");
+        navigate("/login");
         setModalVisible(false);
     }
 
@@ -101,6 +102,7 @@ const AddNewCustomerRentResidentialFinalDetails = props => {
         }
         setLoading(true);
         customerFinalDetails.agent_id = props.userDetails.works_for;
+        console.log("Sending customer details:", JSON.stringify(customerFinalDetails));
 
         axios
             .post(
@@ -113,10 +115,10 @@ const AddNewCustomerRentResidentialFinalDetails = props => {
                         props.setCustomerDetails(null);
                         props.setResidentialCustomerList([...props.residentialCustomerList, response.data])
                         if (props.startNavigationPoint === null) {
-                            navigation.navigate("Contacts", { didDbCall: true });
+                            navigate("/contacts", { state: { didDbCall: true } });
 
                         } else {
-                            navigation.navigate("CustomerListForMeeting");
+                            navigate("/contacts/CustomerListForMeeting");
                         }
                         props.setStartNavigationPoint(null)
                         setLoading(false);
@@ -143,7 +145,7 @@ const AddNewCustomerRentResidentialFinalDetails = props => {
                         alignItems: "flex-start",
                         paddingRight: 16,
                         width: "100%",
-                        backgroundColor: "#d1d1d1",
+                        backgroundColor: "#ffffff",
                         display: 'flex',
                         padding: 10
                     }}
@@ -155,10 +157,10 @@ const AddNewCustomerRentResidentialFinalDetails = props => {
                             customerFinalDetails.customer_details.name &&
                             customerFinalDetails.customer_details.name.slice(0, 1)
                         }
-                        titleStyle={{ color: "rgba(105,105,105, .9)" }}
+                        titleStyle={{ color: "#000000" }}
                         avatarStyle={{
                             borderWidth: 1,
-                            borderColor: "rgba(127,255,212, .9)",
+                            borderColor: "#000000",
                             borderStyle: "solid"
                         }}
                     />
@@ -218,7 +220,7 @@ const AddNewCustomerRentResidentialFinalDetails = props => {
             {/* property details */}
             <div style={styles.overviewContainer}>
                 <div style={styles.overview}>
-                    <span>Details</span>
+                    <span style={{ fontSize: 16, fontWeight: "600", color: "#000000", display: 'block' }}>Details</span>
                     <div style={styles.horizontalLine}></div>
                 </div>
                 <div style={styles.overviewColumnWrapper}>
@@ -332,18 +334,19 @@ const styles = {
     },
     title: {
         fontSize: 16,
-        fontWeight: "600"
+        fontWeight: "600",
+        color: "#000000"
     },
     subTitle: {
         fontSize: 14,
         fontWeight: "400",
-        color: "rgba(0,0,0, 0.87)"
+        color: "#000000"
     },
     detailsContainer: {
         height: 60,
         borderTopWidth: 1,
-        borderTopColor: "#C0C0C0",
-        backgroundColor: "rgba(220,220,220, 0.80)"
+        borderTopColor: "#000000",
+        backgroundColor: "#ffffff"
     },
     details: {
         padding: 10,
@@ -356,19 +359,21 @@ const styles = {
     },
     subDetailsTitle: {
         fontSize: 12,
-        fontWeight: "400"
+        fontWeight: "400",
+        color: "#000000"
     },
     subDetailsValue: {
         fontSize: 14,
-        fontWeight: "600"
+        fontWeight: "600",
+        color: "#000000"
     },
     verticalLine: {
         height: "70%",
         width: 1,
-        backgroundColor: "#909090"
+        backgroundColor: "#000000"
     },
     horizontalLine: {
-        borderBottomColor: "#E0E0E0",
+        borderBottomColor: "#000000",
         borderBottomWidth: 1,
         marginLeft: 5,
         marginRight: 5,

@@ -99,7 +99,7 @@ const Home = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff", height: props.disableScroll ? 'auto' : '100vh', overflowY: props.disableScroll ? 'visible' : 'auto' }}>
             {isLoading ? <div
                 style={{
                     flex: 1,
@@ -138,13 +138,13 @@ const Home = props => {
                                     </div>
                                     <div style={styles.cardContent}>
                                         <div style={styles.innerCard}>
-                                            <p>{listingData?.residentialPropertyRentCount || 0}</p>
-                                            <p>Rent</p>
+                                            <p style={{ color: '#000000' }}>{listingData?.residentialPropertyRentCount || 0}</p>
+                                            <p style={{ color: '#000000' }}>Rent</p>
                                         </div>
                                         <div style={styles.space} />
                                         <div style={styles.innerCard}>
-                                            <p>{listingData?.residentialPropertySellCount || 0}</p>
-                                            <p>Sell</p>
+                                            <p style={{ color: '#000000' }}>{listingData?.residentialPropertySellCount || 0}</p>
+                                            <p style={{ color: '#000000' }}>Sell</p>
                                         </div>
                                     </div>
                                 </div>
@@ -155,13 +155,13 @@ const Home = props => {
                                     </div>
                                     <div style={styles.cardContent}>
                                         <div style={styles.innerCard}>
-                                            <p>{listingData?.residentialPropertyCustomerRentCount || 0}</p>
-                                            <p>Rent</p>
+                                            <p style={{ color: '#000000' }}>{listingData?.residentialPropertyCustomerRentCount || 0}</p>
+                                            <p style={{ color: '#000000' }}>Rent</p>
                                         </div>
                                         <div style={styles.space} />
                                         <div style={styles.innerCard}>
-                                            <p>{listingData?.residentialPropertyCustomerBuyCount || 0}</p>
-                                            <p>Sell</p>
+                                            <p style={{ color: '#000000' }}>{listingData?.residentialPropertyCustomerBuyCount || 0}</p>
+                                            <p style={{ color: '#000000' }}>Sell</p>
                                         </div>
                                     </div>
                                 </div>
@@ -192,13 +192,13 @@ const Home = props => {
                                     </div>
                                     <div style={styles.cardContent}>
                                         <div style={styles.innerCard}>
-                                            <p>{listingData?.commercialPropertyRentCount || 0}</p>
-                                            <p>Rent</p>
+                                            <p style={{ color: '#000000' }}>{listingData?.commercialPropertyRentCount || 0}</p>
+                                            <p style={{ color: '#000000' }}>Rent</p>
                                         </div>
                                         <div style={styles.space} />
                                         <div style={styles.innerCard}>
-                                            <p>{listingData?.commercialPropertySellCount || 0}</p>
-                                            <p>Sell</p>
+                                            <p style={{ color: '#000000' }}>{listingData?.commercialPropertySellCount || 0}</p>
+                                            <p style={{ color: '#000000' }}>Sell</p>
                                         </div>
                                     </div>
                                 </div>
@@ -209,13 +209,13 @@ const Home = props => {
                                     </div>
                                     <div style={styles.cardContent}>
                                         <div style={styles.innerCard}>
-                                            <p>{listingData?.commercialPropertyCustomerRentCount || 0}</p>
-                                            <p>Rent</p>
+                                            <p style={{ color: '#000000' }}>{listingData?.commercialPropertyCustomerRentCount || 0}</p>
+                                            <p style={{ color: '#000000' }}>Rent</p>
                                         </div>
                                         <div style={styles.space} />
                                         <div style={styles.innerCard}>
-                                            <p>{listingData?.commercialPropertyCustomerBuyCount || 0}</p>
-                                            <p>Sell</p>
+                                            <p style={{ color: '#000000' }}>{listingData?.commercialPropertyCustomerBuyCount || 0}</p>
+                                            <p style={{ color: '#000000' }}>Sell</p>
                                         </div>
                                     </div>
                                 </div>
@@ -276,7 +276,7 @@ const styles = {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 20,
+        marginTop: 10,
         display: 'flex',
         flexDirection: 'column'
     },
@@ -284,11 +284,14 @@ const styles = {
         marginTop: 10
     },
     componentContainer: {
-        marginBottom: 20
+        marginBottom: 10
     },
     cardContainer: {
         flexDirection: "row",
-        margin: 10,
+        marginTop: 2,
+        marginBottom: 2,
+        marginLeft: 2,
+        marginRight: 2,
         display: 'flex'
     },
     bar: {
@@ -299,33 +302,35 @@ const styles = {
         fontSize: 16,
         fontWeight: "600",
         alignContent: "center",
-        padding: 5,
+        padding: 3,
         width: "100%",
         textAlign: "center",
-        margin: 0
+        margin: 0,
+        color: "#000000"
     },
     card: {
-        padding: 15,
+        padding: 10,
         boxShadow: '0px 3px 9px rgba(0, 0, 0, 0.18)',
         backgroundColor: "#ffffff",
         marginRight: 10
     },
     cardContent: {
         flexDirection: "row",
-        margin: 10,
+        margin: 5,
         display: 'flex'
     },
     innerCard: {
         boxShadow: '0px 3px 9px rgba(0, 0, 0, 0.18)',
         backgroundColor: "#ffffff",
-        padding: 20
+        padding: 12
     },
     cardHeader1: {
         fontSize: 16,
         fontWeight: "600",
         alignContent: "center",
         textAlign: "left",
-        margin: 0
+        margin: 0,
+        color: "#000000"
     },
     cardHeader2: {
         fontSize: 16,
@@ -333,7 +338,8 @@ const styles = {
         alignContent: "center",
         justifyContent: "center",
         textAlign: "right",
-        margin: 0
+        margin: 0,
+        color: "#000000"
     },
     text: {
         color: "#101010",

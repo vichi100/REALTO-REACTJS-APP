@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import {
 //   StyleSheet,
 //   View,
@@ -57,7 +58,7 @@ const propertyAgeArray = ["1-5", "6-10", "11-15", "20+"];
 const powerBackupkArray = ["Yes", "No"];
 
 const CustomerCommercialPropertyDetailsForm = props => {
-    const { navigation } = props;
+    const navigate = useNavigate();
 
     const [propertyTypeIndex, setHouseTypeIndex] = useState(-1);
     const [buildingIndex, setBuildingIndex] = useState(-1);
@@ -106,19 +107,19 @@ const CustomerCommercialPropertyDetailsForm = props => {
         props.setCustomerDetails(customer);
         // // console.log(property);
         if (propertyFor.toLowerCase() === "Rent".toLowerCase()) {
-            navigation.navigate("CustomerCommercialRentDetailsForm");
+            navigate("../CustomerCommercialRentDetailsForm");
         } else if (propertyFor.toLowerCase() === "Buy".toLowerCase()) {
-            navigation.navigate("CustomerCommercialBuyDetailsForm");
+            navigate("../CustomerCommercialBuyDetailsForm");
         }
     };
 
 
 
     return (
-        <div style={{ flex: 1, backgroundColor: "rgba(245,245,245, 0.2)", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.container}>
                 <div style={{ paddingTop: 30, marginLeft: 20, marginRight: 0 }}>
-                    <p>Property Type*</p>
+                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Property Type*</p>
                     <div style={styles.propSubSection}>
                         <CustomButtonGroup
                             buttons={AppConstant.COMMERCIAL_PROPERTY_TYPE_OPTION}
@@ -137,7 +138,7 @@ const CustomerCommercialPropertyDetailsForm = props => {
                         />
 
                     </div>
-                    <p>Building Type*</p>
+                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Building Type*</p>
                     <div style={styles.propSubSection}>
 
                         <CustomButtonGroup
@@ -158,10 +159,10 @@ const CustomerCommercialPropertyDetailsForm = props => {
 
                     </div>
 
-                    <p>Looking For Size In SQFT*</p>
+                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Looking For Size In SQFT*</p>
 
                     <div style={styles.inputContainerStyle}>
-                        <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'rgba(0,191,255, .9)' }}>
+                        <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000' }}>
                             Property Size*
                         </label>
                         <input
@@ -175,12 +176,13 @@ const CustomerCommercialPropertyDetailsForm = props => {
                                 padding: 10,
                                 borderRadius: 4,
                                 border: '1px solid #ccc',
-                                backgroundColor: "#ffffff"
+                                backgroundColor: "#f9f9f9",
+                                color: '#000000'
                             }}
                         />
                     </div>
 
-                    <p style={{ marginTop: 10 }}>Parkings*</p>
+                    <p style={{ marginTop: 10, color: '#000000', fontWeight: 'bold' }}>Parkings*</p>
                     <div style={styles.doubleColSection}>
                         <CustomButtonGroup
                             buttons={AppConstant.PARKING_REQUIRED_OPTION}

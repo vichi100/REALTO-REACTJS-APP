@@ -315,7 +315,8 @@ const Reminder = props => {
                             <div style={styles.searchBar}>
                                 <AiOutlineSearch size={20} color="#999" style={{ marginRight: 5 }} />
                                 <input
-                                    style={styles.textInputStyle}
+                                    className="search-input"
+                                    style={{ ...styles.textInputStyle, color: '#000' }}
                                     onChange={(e) => searchFilterFunction(e.target.value)}
                                     value={search}
                                     placeholder="Search By Name, Mobile"
@@ -441,9 +442,9 @@ const styles = {
         paddingRight: 10,
         paddingTop: 5,
         paddingBottom: 5,
-        boxShadow: '0 2px 2px rgba(0,0,0,0.2)',
+        boxShadow: '0 2px 5px rgba(0,0,0,0.15)',
         marginTop: 10,
-        border: '1px solid #eee'
+        border: '1px solid #ccc'
     },
     textInputStyle: {
         width: "98%",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import {
     MdSort,
@@ -64,6 +64,7 @@ const furnishingStatusOptions = [
 
 const ListingResidential = props => {
     const navigate = useNavigate();
+    const location = useLocation();
     const navigation = {
         navigate: (path, params) => {
             if (!path.startsWith('/')) {
@@ -74,7 +75,8 @@ const ListingResidential = props => {
         },
         goBack: () => navigate(-1)
     };
-    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false } = props.route?.params || {};
+    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, item, didDbCall = false } = location.state || {};
+    const employeeObj = item;
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [search, setSearch] = useState("");
@@ -115,7 +117,6 @@ const ListingResidential = props => {
 
     const fetchData = useCallback(async () => {
         try {
-            console.log('ScreenA: Fetching latest data...');
             getListing();
         } catch (error) {
             console.error('Failed to fetch data for ScreenA:', error);
@@ -123,15 +124,22 @@ const ListingResidential = props => {
         } finally {
             setLoading(false);
             dispatch(resetRefresh());
-            console.log('ScreenA: Data fetched and refresh flag reset.');
         }
-    }, [dispatch]);
+    }, [dispatch, props.userDetails, employeeObj]);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData, props.userDetails, employeeObj]);
 
     useEffect(() => {
         if (shouldRefresh || didDbCall) {
             fetchData();
         }
     }, [shouldRefresh, fetchData, didDbCall]);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     const resetSortBy = () => {
         setLookingForIndexSortBy(-1);
@@ -307,10 +315,7 @@ const ListingResidential = props => {
     }, [props.userDetails]);
 
     const getListing = () => {
-        console.log("ListingResidential: getListing called");
-        console.log("ListingResidential: userDetails:", props.userDetails);
         if (props.userDetails === null) {
-            console.log("ListingResidential: userDetails is null, returning");
             setData([]);
             props.setResidentialPropertyList([]);
             return;
@@ -319,7 +324,6 @@ const ListingResidential = props => {
             req_user_id: props.userDetails.id,
             agent_id: props.userDetails.works_for,
         };
-        console.log("ListingResidential: Fetching data with user:", user);
         setLoading(true);
         axios(SERVER_URL + "/residentialPropertyListings", {
             method: "post",
@@ -330,7 +334,6 @@ const ListingResidential = props => {
             data: user
         }).then(
             response => {
-                console.log("ListingResidential: Data fetched successfully:", response.data.length);
                 response.data.map(item => {
                     item.image_urls.map(image => {
                         image.url = SERVER_URL + image.url

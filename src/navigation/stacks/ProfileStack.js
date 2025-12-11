@@ -23,12 +23,12 @@ const ProfileStack = () => {
             <Route path="/Profile" element={<ScreenWrapper Component={Profile} />} />
             <Route path="/ManageEmployee" element={<ScreenWrapper Component={ManageEmployee} />} />
             <Route path="/EmployeeList" element={<ScreenWrapper Component={EmployeeList} />} />
-            <Route path="/PropertyListing" element={<ScreenWrapper Component={ListingTopTab} />} />
+            <Route path="/PropertyListing/*" element={<ScreenWrapper Component={ListingTopTab} />} />
             <Route path="/PropDetailsFromListing" element={<ScreenWrapper Component={PropDetailsFromListing} />} />
             <Route path="/PropDetailsFromListingForSell" element={<ScreenWrapper Component={PropDetailsFromListingForSell} />} />
             <Route path="/CommercialRentPropDetails" element={<ScreenWrapper Component={CommercialRentPropDetails} />} />
             <Route path="/CommercialSellPropDetails" element={<ScreenWrapper Component={CommercialSellPropDetails} />} />
-            <Route path="/ContactsListing" element={<ScreenWrapper Component={ContactsTopTab} />} />
+            <Route path="/ContactsListing/*" element={<ScreenWrapper Component={ContactsTopTab} />} />
             <Route path="/CustomerDetailsResidentialRentFromList" element={<ScreenWrapper Component={CustomerDetailsResidentialRentFromList} />} />
             <Route path="/CustomerDetailsResidentialBuyFromList" element={<ScreenWrapper Component={CustomerDetailsResidentialBuyFromList} />} />
             <Route path="/CustomerDetailsCommercialRentFromList" element={<ScreenWrapper Component={CustomerDetailsCommercialRentFromList} />} />

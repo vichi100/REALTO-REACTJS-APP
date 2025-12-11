@@ -130,7 +130,7 @@ const EmployeeList = props => {
         >
             <div>Loading...</div>
         </div> :
-            <div style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <div style={styles.searchBar}>
                     <MdSearch size={20} color="#999" style={{ marginRight: 5, }} />
                     <input

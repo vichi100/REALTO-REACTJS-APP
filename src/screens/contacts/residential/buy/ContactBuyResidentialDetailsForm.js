@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import {
 //   StyleSheet,
 //   View,
@@ -6,6 +7,7 @@ import React, { useState } from "react";
 //   TouchableOpacity,
 //   Platform,
 //   KeyboardAvoidingView,
+//   SafeAreaView,
 //   SafeAreaView,
 //   ScrollView,
 //   Keyboard,
@@ -29,7 +31,7 @@ import * as  AppConstant from "./../../../../utils/AppConstant";
 const negotiableArray = ["Yes", "No"];
 
 const ContactBuyResidentialDetailsForm = props => {
-    const { navigation } = props;
+    const navigate = useNavigate();
     const date = new Date();
     const [newDate, setNewDate] = React.useState("");
 
@@ -90,15 +92,15 @@ const ContactBuyResidentialDetailsForm = props => {
         // AsyncStorage.setItem("customer", JSON.stringify(customer));
         props.setCustomerDetails(customer)
 
-        navigation.navigate("AddNewCustomerBuyResidentialFinalDetails");
+        navigate("../AddNewCustomerBuyResidentialFinalDetails");
     };
 
 
     return (
-        <div style={{ flex: 1, backgroundColor: "rgba(245,245,245, 0.2)", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.container}>
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'rgba(0,191,255, .9)' }}>
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
                         {expectedBuyPrice.trim() === "" ? "Expected Buy Price*" : numDifferentiation(expectedBuyPrice) + " Expected Buy Price"}
                     </label>
                     <input
@@ -112,32 +114,35 @@ const ContactBuyResidentialDetailsForm = props => {
                             padding: 10,
                             borderRadius: 4,
                             border: '1px solid #ccc',
-                            backgroundColor: "#ffffff"
+                            backgroundColor: "#f9f9f9",
+                            color: '#000000'
                         }}
                     />
                 </div>
 
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'rgba(0,191,255, .9)' }}>
-                        Required From *
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
+                        Required From (DD/MM/YYYY) *
                     </label>
                     <input
-                        type="date"
-                        placeholder="Required From *"
+                        type={visible || newDate ? "date" : "text"}
+                        placeholder="DD/MM/YYYY"
                         value={newDate}
                         onChange={onChange}
                         onFocus={() => setVisible(true)}
+                        onBlur={() => setVisible(false)}
                         style={{
                             width: '100%',
                             padding: 10,
                             borderRadius: 4,
                             border: '1px solid #ccc',
-                            backgroundColor: "#ffffff"
+                            backgroundColor: "#f9f9f9",
+                            color: '#000000'
                         }}
                     />
                 </div>
 
-                <p>Negotiable*</p>
+                <p style={{ color: '#000000', fontWeight: 'bold' }}>Negotiable*</p>
                 <div style={styles.propSubSection}>
                     <CustomButtonGroup
                         buttons={AppConstant.NEGOTIABLE_OPTION}

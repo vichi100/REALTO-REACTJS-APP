@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import {
     MdSort,
@@ -31,6 +31,7 @@ const sortByPostedDateArray = ["Recent First", "Oldest Fist"];
 
 const ListingCommercial = props => {
     const navigate = useNavigate();
+    const location = useLocation();
     const navigation = {
         navigate: (path, params) => {
             if (!path.startsWith('/')) {
@@ -41,7 +42,8 @@ const ListingCommercial = props => {
         },
         goBack: () => navigate(-1)
     };
-    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false } = props.route?.params || {};
+    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, item, didDbCall = false } = location.state || {};
+    const employeeObj = item;
     const [search, setSearch] = useState("");
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -80,7 +82,7 @@ const ListingCommercial = props => {
             setLoading(false);
             dispatch(resetRefresh());
         }
-    }, [dispatch]);
+    }, [dispatch, employeeObj, props.userDetails]);
 
     useEffect(() => {
         if (shouldRefresh || didDbCall) {
@@ -89,13 +91,8 @@ const ListingCommercial = props => {
     }, [shouldRefresh, fetchData, didDbCall]);
 
     useEffect(() => {
-        if (
-            props.userDetails &&
-            props.userDetails.works_for !== null
-        ) {
-            getListing();
-        }
-    }, []);
+        fetchData();
+    }, [fetchData, props.userDetails, employeeObj]);
 
     const getListing = () => {
         if (props.userDetails === null) {

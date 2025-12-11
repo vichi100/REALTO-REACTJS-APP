@@ -228,7 +228,7 @@ const Profile = props => {
     return (
         <div style={styles.container}>
             <div style={styles.userInfoSection}>
-                <div style={{ flexDirection: "row", marginTop: 15, display: 'flex' }}>
+                <div style={{ flexDirection: "row", marginTop: 10, display: 'flex' }}>
                     <div style={{
                         width: 80,
                         height: 80,
@@ -239,7 +239,7 @@ const Profile = props => {
                         justifyContent: 'center',
                         border: '2px solid rgba(127,255,212, .9)'
                     }}>
-                        <span style={{ color: "rgba(105,105,105, .9)", fontSize: 30 }}>
+                        <span style={{ color: "#000000", fontSize: 30 }}>
                             {props.userDetails && props.userDetails.name
                                 ? props.userDetails.name.slice(0, 1)
                                 : "G"}
@@ -248,11 +248,12 @@ const Profile = props => {
                     <div style={{ marginLeft: 20 }}>
                         <h3
                             style={{
-                                marginTop: 15,
-                                marginBottom: 5,
+                                marginTop: 5,
+                                marginBottom: 2,
                                 fontSize: 24,
                                 fontWeight: "bold",
-                                margin: 0
+                                margin: 0,
+                                color: "#000000"
                             }}
                         >
                             {props.userDetails &&
@@ -260,7 +261,7 @@ const Profile = props => {
                                 ? props.userDetails.name
                                 : "Guest"}
                         </h3>
-                        <span style={styles.caption}>
+                        <span style={{ ...styles.caption, color: "#000000" }}>
                             {props.userDetails &&
                                 props.userDetails.company_name
                                 ? props.userDetails.company_name
@@ -272,8 +273,8 @@ const Profile = props => {
 
             <div style={styles.userInfoSection}>
                 <div style={styles.row}>
-                    <MdMap color="#777777" size={20} />
-                    <span style={{ color: "#777777", marginLeft: 20 }}>
+                    <MdMap color="#000000" size={20} />
+                    <span style={{ color: "#000000", marginLeft: 20 }}>
                         {props.userDetails &&
                             props.userDetails.city
                             ? props.userDetails.city
@@ -281,8 +282,8 @@ const Profile = props => {
                     </span>
                 </div>
                 <div style={styles.row}>
-                    <MdPhone color="#777777" size={20} />
-                    <span style={{ color: "#777777", marginLeft: 20 }}>
+                    <MdPhone color="#000000" size={20} />
+                    <span style={{ color: "#000000", marginLeft: 20 }}>
 
                         {props.userDetails && props.userDetails.mobile
                             ? props.userDetails.mobile
@@ -303,10 +304,10 @@ const Profile = props => {
                     }}
                 >
                     <div onClick={() => setModalVisible(true)} style={{ cursor: 'pointer' }}>
-                        <MdPersonOff color="#777777" size={20} />
+                        <MdPersonOff color="#000000" size={20} />
                     </div>
                     <div onClick={() => openEditProfile()} style={{ cursor: 'pointer' }}>
-                        <MdEdit color="#777777" size={20} />
+                        <MdEdit color="#000000" size={20} />
                     </div>
                 </div>
             ) : null}
@@ -324,7 +325,7 @@ const Profile = props => {
                     }}
                 >
                     <div onClick={() => setModalVisible(true)} style={{ cursor: 'pointer' }}>
-                        <MdPersonOff color="#777777" size={20} />
+                        <MdPersonOff color="#000000" size={20} />
                     </div>
 
                 </div>
@@ -333,7 +334,7 @@ const Profile = props => {
             {props.userDetails &&
                 ((props.userDetails.works_for === props.userDetails.id) ||
                     (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE_DELETE.includes(props.userDetails.employee_role))) ? (
-                <div style={[{ flexDirection: "column", marginTop: 20, display: 'flex' }]}>
+                <div style={{ flexDirection: "column", marginTop: 20, display: 'flex' }}>
                     <div
                         style={{
                             marginTop: 10,
@@ -350,7 +351,7 @@ const Profile = props => {
                     style={{
                         borderBottomColor: "rgba(211,211,211, 0.5)",
                         borderBottomWidth: 1,
-                        marginTop: 30,
+                        marginTop: 10,
                         marginLeft: 10,
                         marginRight: 10
                     }}
@@ -358,21 +359,17 @@ const Profile = props => {
             )}
 
             <div style={styles.menuWrapper}>
-                <div onClick={() => onShare()} style={{ cursor: 'pointer' }}>
-                    <div style={styles.menuItem}>
-                        <MdShare color="rgb(183, 113, 229)" size={25} />
-                        <span style={styles.menuItemText}>Tell Your Friends</span>
-                    </div>
+                <div onClick={() => onShare()} style={{ ...styles.menuItem, cursor: 'pointer' }}>
+                    <MdShare color="rgb(183, 113, 229)" size={25} />
+                    <span style={styles.menuItemText}>Tell Your Friends</span>
                 </div>
-                <div onClick={() => makeCall("+919833097595")} style={{ cursor: 'pointer' }}>
-                    <div style={styles.menuItem}>
-                        <AiOutlineCustomerService color="rgb(103, 174, 110)" size={25} />
-                        <span style={styles.menuItemText}>Support</span>
-                    </div>
+                <div onClick={() => makeCall("+919833097595")} style={{ ...styles.menuItem, cursor: 'pointer' }}>
+                    <AiOutlineCustomerService color="rgb(103, 174, 110)" size={25} />
+                    <span style={styles.menuItemText}>Support</span>
                 </div>
                 {(props.userDetails &&
                     props.userDetails.user_type === "agent") && (props.userDetails &&
-                        props.userDetails.id === props.userDetails.works_for) ? <div onClick={() => { sendMail() }} style={{ cursor: 'pointer' }}>
+                        props.userDetails.id === props.userDetails.works_for) ? <div onClick={() => { sendMail() }} style={{ cursor: 'pointer', display: 'flex' }}>
                     <div style={{ flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "space-between", marginRight: 15, display: 'flex' }}>
                         <div style={styles.menuItem}>
                             <div style={{ flexDirection: "column", alignItems: "center", display: 'flex' }}>
@@ -380,7 +377,7 @@ const Profile = props => {
                                     <MdEmail color="rgb(61, 144, 215)" size={25} />
                                     <span style={styles.menuItemText}>Email your data to you</span>
                                 </div>
-                                <span style={{}}>{userData && userData.email ? userData.email : "email@gmail.com"}</span>
+                                <span style={{ color: "#000000" }}>{userData && userData.email ? userData.email : "email@gmail.com"}</span>
                             </div>
 
                         </div>
@@ -390,14 +387,12 @@ const Profile = props => {
                     </div>
                 </div> : null}
 
-                <div onClick={() => { }} style={{ cursor: 'pointer' }}>
-                    <div style={styles.menuItem}>
-                        <MdSecurity color="rgba(255, 99, 99, .9)" size={25} />
-                        <span style={styles.menuItemText}>Privacy Policy</span>
-                    </div>
+                <div onClick={() => { }} style={{ ...styles.menuItem, cursor: 'pointer' }}>
+                    <MdSecurity color="rgba(255, 99, 99, .9)" size={25} />
+                    <span style={styles.menuItemText}>Privacy Policy</span>
                 </div>
             </div>
-            <Home />
+            <Home disableScroll={true} />
             {modalVisible && (
                 <div style={styles.centeredView1}>
                     <div style={styles.modalView}>
@@ -447,12 +442,12 @@ const styles = {
         flex: 1,
         backgroundColor: "#ffffff",
         marginTop: 0,
-        height: '100vh',
-        overflowY: 'auto'
+        minHeight: '100vh',
     },
     userInfoSection: {
-        paddingHorizontal: 30,
-        marginBottom: 25
+        paddingLeft: 20,
+        paddingRight: 20,
+        marginBottom: 15
     },
     caption: {
         fontSize: 14,
@@ -461,21 +456,30 @@ const styles = {
     },
     row: {
         flexDirection: "row",
-        marginBottom: 10,
+        marginBottom: 5,
         display: 'flex'
     },
     menuWrapper: {
-        marginTop: 10
+        marginTop: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 0,
+        margin: 0,
+        gap: 0,
+        alignItems: 'stretch' // this is important
     },
     menuItem: {
         flexDirection: "row",
-        paddingVertical: 15,
-        paddingHorizontal: 30,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderBottom: '1px solid #f0f0f0',
     },
     menuItemText: {
-        color: "#777777",
+        color: "#000000",
         marginLeft: 20,
         fontWeight: "600",
         fontSize: 16,

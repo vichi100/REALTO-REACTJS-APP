@@ -134,17 +134,25 @@ const EmployeeCard = props => {
     };
 
     const openPropertiesList = item => {
-        navigate("PropertyListing", {
-            item: item,
-            displayMatchCount: true,
-            displayMatchPercent: false
+        navigate("/profile/PropertyListing", {
+            state: {
+                item: item,
+                displayMatchCount: true,
+                displayMatchPercent: false,
+                displayCheckBoxForEmployee: true,
+                disableDrawer: true
+            }
         });
     };
     const openCustomerList = item => {
-        navigate("ContactsListing", {
-            item: item,
-            displayMatchCount: true,
-            displayMatchPercent: false
+        navigate("/profile/ContactsListing", {
+            state: {
+                employeeObj: item,
+                displayMatchCount: true,
+                displayMatchPercent: false,
+                displayCheckBoxForEmployee: true,
+                disableDrawer: true
+            }
         });
     };
 
@@ -479,19 +487,19 @@ const EmployeeCard = props => {
                 style={styles.detailsContainer}
             >
                 <div style={{ ...styles.details, marginLeft: 10, marginRight: 10, marginBottom: 10 }}>
-                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                    <div
+                        style={{ display: "flex", flexDirection: "row", alignItems: "center", cursor: 'pointer' }}
+                        onClick={() => {
+                            openPropertiesList(item);
+                        }}
+                    >
                         <div style={styles.subDetails}>
                             <span style={{ ...styles.subDetailsValue, marginTop: 0 }}>
                                 Properties
                             </span>
                             <span style={styles.subDetailsTitle}>{totalAssignedProperties}</span>
                         </div>
-                        <div
-                            onClick={() => {
-                                openPropertiesList(item);
-                            }}
-                            style={{ cursor: 'pointer' }}
-                        >
+                        <div>
                             <MdAddBusiness
                                 color={"rgba(108, 122, 137, 1)"}
                                 size={25}
@@ -501,13 +509,13 @@ const EmployeeCard = props => {
                     </div>
 
                     <div style={styles.verticalLine}></div>
-                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                        <div
-                            onClick={() => {
-                                openCustomerList(item);
-                            }}
-                            style={{ cursor: 'pointer' }}
-                        >
+                    <div
+                        style={{ display: "flex", flexDirection: "row", alignItems: "center", cursor: 'pointer' }}
+                        onClick={() => {
+                            openCustomerList(item);
+                        }}
+                    >
+                        <div>
                             <MdPersonAdd
                                 color={"rgba(63, 195, 128, .6)"}
                                 size={27}

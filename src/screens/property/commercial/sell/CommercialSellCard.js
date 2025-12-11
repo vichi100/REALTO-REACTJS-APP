@@ -394,7 +394,32 @@ const Card = props => {
                     </div>
                 )}
 
-                {!displayCheckBox && !disableDrawer && (
+                {displayCheckBoxForEmployee && (
+                    <div
+                        className="w-10 flex items-center justify-center absolute right-0 top-0 bottom-0 cursor-pointer z-30 bg-white"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClickCheckBoxForEmployee(item);
+                        }}
+                    >
+                        <input
+                            type="checkbox"
+                            onChange={(e) => {
+                                e.stopPropagation();
+                                onClickCheckBoxForEmployee(item);
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                            checked={isAssetChecked(item)}
+                            style={{
+                                margin: 10,
+                                transform: 'scale(1.5)',
+                                cursor: 'pointer'
+                            }}
+                        />
+                    </div>
+                )}
+
+                {!displayCheckBox && !displayCheckBoxForEmployee && !disableDrawer && (
                     <div
                         className="w-10 bg-gray-600 flex items-center justify-center absolute right-0 top-0 bottom-0 cursor-pointer z-20"
                         onClick={(e) => {

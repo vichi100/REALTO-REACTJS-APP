@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { connect, useSelector, useDispatch } from "react-redux";
 import {
     MdSort,
@@ -62,7 +62,8 @@ const furnishingStatusOptions = [
 
 const ContactsResidential = props => {
     const { navigation } = props;
-    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false } = props.route?.params || {};
+    const location = useLocation();
+    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false } = location.state || {};
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [search, setSearch] = useState("");
@@ -553,7 +554,7 @@ const ContactsResidential = props => {
     };
 
     const navigateTo = () => {
-        navigation.navigate("AddNewCustomerStack");
+        navigate("/contacts/AddNewCustomerStack");
     };
 
     const setRentRange = values => {
@@ -613,14 +614,14 @@ const ContactsResidential = props => {
                             <button onClick={resetFilter} className="p-2 hover:bg-gray-100 rounded-full">
                                 <MdRestartAlt size={24} color="#000000" />
                             </button>
-                            <button onClick={() => navigation.navigate("AddNewCustomerStack")} className="p-2 hover:bg-gray-100 rounded-full">
+                            <button onClick={() => navigate("/contacts/AddNewCustomerStack")} className="p-2 hover:bg-gray-100 rounded-full">
                                 <MdAddCircleOutline size={24} color="#000000" />
                             </button>
                         </div>
                     </div>
                     {data.length > 0 ? (
                         <div style={styles.container}>
-                            <div style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
+                            <div style={{ flex: 1, overflowY: 'auto' }}>
                                 {data.map((item, index) => {
                                     if (item.customer_locality.property_type === "Residential") {
                                         if (item.customer_locality.property_for === "Rent") {
@@ -943,7 +944,7 @@ const ContactsResidential = props => {
                                 width: 40,
                                 height: 40
                             }}
-                            onClick={() => navigation.navigate("AddNewCustomerStack")}
+                            onClick={() => navigate("/contacts/AddNewCustomerStack")}
                         >
                             <AiOutlinePlusCircle size={40} color="#ffffff" />
                         </div> : null}

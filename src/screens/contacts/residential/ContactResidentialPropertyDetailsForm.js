@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "./../../../components/Button";
 import Snackbar from "./../../../components/SnackbarComponent";
 import { connect } from "react-redux";
@@ -7,7 +8,7 @@ import CustomButtonGroup from "./../../../components/CustomButtonGroup";
 import * as  AppConstant from "./../../../utils/AppConstant";
 
 const ContactResidentialPropertyDetailsForm = props => {
-    const { navigation } = props;
+    const navigate = useNavigate();
 
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -38,20 +39,20 @@ const ContactResidentialPropertyDetailsForm = props => {
         customer["customer_property_details"] = customer_property_details;
         props.setCustomerDetails(customer);
         if (propertyFor.toLowerCase() === "Rent".toLowerCase()) {
-            navigation.navigate("ContactRentDetailsForm");
+            navigate("../ContactRentDetailsForm");
         } else if (propertyFor.toLowerCase() === "Buy".toLowerCase()) {
-            navigation.navigate("ContactBuyResidentialDetailsForm");
+            navigate("../ContactBuyResidentialDetailsForm");
         }
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "rgba(245,245,245, 0.2)", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.container}>
                 <div style={{ paddingTop: 30, marginLeft: 15, marginRight: 0 }}>
-                    <p style={{ marginBottom: 30 }}>
+                    <p style={{ marginBottom: 30, color: '#000000' }}>
                         Provide property details of which customer is looking for
                     </p>
-                    <p>House Type*</p>
+                    <p style={{ color: '#000000', fontWeight: 'bold' }}>House Type*</p>
                     <div style={styles.propSubSection}>
                         <CustomButtonGroup
                             buttons={AppConstant.HOUSE_TYPE_OPTION}
@@ -62,7 +63,7 @@ const ContactResidentialPropertyDetailsForm = props => {
                             }}
                         />
                     </div>
-                    <p>Size of BHK*</p>
+                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Size of BHK*</p>
                     <div style={{ ...styles.propSubSection, marginTop: 10 }}>
                         <CustomButtonGroup
                             buttons={AppConstant.BHK_OPTION}
@@ -74,7 +75,7 @@ const ContactResidentialPropertyDetailsForm = props => {
                         />
                     </div>
 
-                    <p>Furnishing*</p>
+                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Furnishing*</p>
                     <div style={styles.propSubSection}>
                         <CustomButtonGroup
                             buttons={AppConstant.FURNISHING_STATUS_OPTION}
@@ -86,7 +87,7 @@ const ContactResidentialPropertyDetailsForm = props => {
                         />
                     </div>
 
-                    <p>Parkings*</p>
+                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Parkings*</p>
                     <div style={styles.doubleColSection}>
                         <CustomButtonGroup
                             buttons={AppConstant.PARKING_OPTION}
@@ -98,7 +99,7 @@ const ContactResidentialPropertyDetailsForm = props => {
                         />
                     </div>
 
-                    <p>Lift Mandatory*</p>
+                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Lift Mandatory*</p>
                     <div style={styles.propSubSection}>
                         <CustomButtonGroup
                             buttons={AppConstant.LIFT_AVAILBLE_OPTION}

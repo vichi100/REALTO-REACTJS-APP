@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "./../../../../components/Button";
 import Snackbar from "./../../../../components/SnackbarComponent";
 import { numDifferentiation } from "./../../../../utils/methods";
@@ -18,7 +19,7 @@ const nonvegAllowedArray = [
 ];
 
 const ContactRentDetailsForm = props => {
-    const { navigation } = props;
+    const navigate = useNavigate();
     const [newDate, setNewDate] = React.useState("");
 
     const [customerDetailsX, setCustomerDetailsX] = useState(null);
@@ -26,8 +27,8 @@ const ContactRentDetailsForm = props => {
     const [expectedDeposit, setExpectedDeposit] = useState("");
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [preferredTenantsIndex, setPreferredTenantsIndex] = useState(-1);
-    const [nonvegAllowedIndex, setNonvegAllowedIndex] = useState(-1);
+    const [preferredTenantsIndex, setPreferredTenantsIndex] = useState(0);
+    const [nonvegAllowedIndex, setNonvegAllowedIndex] = useState(0);
     const [visible, setVisible] = React.useState(false);
 
     useEffect(() => {
@@ -103,18 +104,18 @@ const ContactRentDetailsForm = props => {
 
         props.setCustomerDetails(customer)
 
-        navigation.navigate("AddNewCustomerRentResidentialFinalDetails");
+        navigate("../AddNewCustomerRentResidentialFinalDetails");
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "rgba(245,245,245, 0.2)", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.container}>
-                <p style={{ marginBottom: 30 }}>
+                <p style={{ marginBottom: 30, color: '#000000' }}>
                     Provide rent details what max customer can afford
                 </p>
 
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'rgba(0,191,255, .9)' }}>
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
                         {expectedRent.trim() === "" ? "Max Rent*" : numDifferentiation(expectedRent) + " Max Rent"}
                     </label>
                     <input
@@ -128,13 +129,14 @@ const ContactRentDetailsForm = props => {
                             padding: 10,
                             borderRadius: 4,
                             border: '1px solid #ccc',
-                            backgroundColor: "#ffffff"
+                            backgroundColor: "#f9f9f9",
+                            color: '#000000'
                         }}
                     />
                 </div>
 
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'rgba(0,191,255, .9)' }}>
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
                         {expectedDeposit.trim() === "" ? "Max Deposit*" : numDifferentiation(expectedDeposit) + " Max Deposit"}
                     </label>
                     <input
@@ -148,27 +150,30 @@ const ContactRentDetailsForm = props => {
                             padding: 10,
                             borderRadius: 4,
                             border: '1px solid #ccc',
-                            backgroundColor: "#ffffff"
+                            backgroundColor: "#f9f9f9",
+                            color: '#000000'
                         }}
                     />
                 </div>
 
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'rgba(0,191,255, .9)' }}>
-                        Required From *
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
+                        Required From (DD/MM/YYYY) *
                     </label>
                     <input
-                        type="date"
-                        placeholder="Required From *"
+                        type={visible || newDate ? "date" : "text"}
+                        placeholder="DD/MM/YYYY"
                         value={newDate}
                         onChange={onChange}
                         onFocus={() => setVisible(true)}
+                        onBlur={() => setVisible(false)}
                         style={{
                             width: '100%',
                             padding: 10,
                             borderRadius: 4,
                             border: '1px solid #ccc',
-                            backgroundColor: "#ffffff"
+                            backgroundColor: "#f9f9f9",
+                            color: '#000000'
                         }}
                     />
                 </div>
@@ -177,7 +182,7 @@ const ContactRentDetailsForm = props => {
                     customerDetailsX.customer_locality.property_type ===
                     "Residential" ? (
                     <div>
-                        <p>Type of Tenants*</p>
+                        <p style={{ color: '#000000', fontWeight: 'bold' }}>Type of Tenants*</p>
                         <div style={styles.propSubSection}>
                             <CustomButtonGroup
                                 buttons={preferredTenantsArray}
@@ -186,7 +191,7 @@ const ContactRentDetailsForm = props => {
                                 onButtonPress={(index) => selectedPreferredTenantsIndex(index)}
                             />
                         </div>
-                        <p>Tenants is veg / non veg*</p>
+                        <p style={{ color: '#000000', fontWeight: 'bold' }}>Tenants is veg / non veg*</p>
                         <div style={styles.propSubSection}>
                             <CustomButtonGroup
                                 buttons={nonvegAllowedArray}
