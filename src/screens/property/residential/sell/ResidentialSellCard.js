@@ -314,7 +314,10 @@ const Card = props => {
                             <span className="text-sm font-bold text-black">{item.match_count || 0}</span>
                         </div>
                         {/* Green Match Strip */}
-                        <div className="bg-green-400 w-8 h-24 flex items-center justify-center absolute top-4 left-0 pt-6">
+                        <div
+                            className="w-8 h-24 flex items-center justify-center absolute top-4 left-0 pt-6"
+                            style={{ backgroundColor: 'rgba(80, 200, 120, 0.7)' }}
+                        >
                             <span className="text-xs font-medium text-black transform -rotate-90 whitespace-nowrap">Match</span>
                         </div>
                     </div>
