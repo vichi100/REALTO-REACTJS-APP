@@ -75,7 +75,7 @@ const ListingResidential = props => {
         },
         goBack: () => navigate(-1)
     };
-    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, item, didDbCall = false } = location.state || {};
+    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, item, didDbCall = false, displayFilterButton = true } = location.state || {};
     const employeeObj = item;
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -654,7 +654,7 @@ const ListingResidential = props => {
                         className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-500 text-base"
                     />
                 </div>
-                <div className="ml-2 flex flex-row">
+                {displayFilterButton && <div className="ml-2 flex flex-row">
                     <button onClick={toggleSortingBottomNavigationView} className="p-2 hover:bg-gray-100 rounded-full">
                         <MdSort size={24} color="#000000" />
                     </button>
@@ -667,7 +667,7 @@ const ListingResidential = props => {
                     <button onClick={navigateTo} className="p-2 hover:bg-gray-100 rounded-full">
                         <MdAddCircleOutline size={24} color="#000000" />
                     </button>
-                </div>
+                </div>}
             </div>
 
             <div className="flex-1 overflow-y-auto p-4">

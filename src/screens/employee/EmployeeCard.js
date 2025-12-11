@@ -140,7 +140,8 @@ const EmployeeCard = props => {
                 displayMatchCount: true,
                 displayMatchPercent: false,
                 displayCheckBoxForEmployee: true,
-                disableDrawer: true
+                disableDrawer: true,
+                displayFilterButton: false
             }
         });
     };
@@ -151,7 +152,8 @@ const EmployeeCard = props => {
                 displayMatchCount: true,
                 displayMatchPercent: false,
                 displayCheckBoxForEmployee: true,
-                disableDrawer: true
+                disableDrawer: true,
+                displayFilterButton: false
             }
         });
     };

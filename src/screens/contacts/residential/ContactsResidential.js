@@ -63,7 +63,7 @@ const furnishingStatusOptions = [
 const ContactsResidential = props => {
     const { navigation } = props;
     const location = useLocation();
-    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false } = location.state || {};
+    const { displayCheckBox, disableDrawer, displayCheckBoxForEmployee, employeeObj, didDbCall = false, displayFilterButton = true } = location.state || {};
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [search, setSearch] = useState("");
@@ -611,7 +611,7 @@ const ContactsResidential = props => {
                                 className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-500 text-base"
                             />
                         </div>
-                        <div className="ml-2 flex flex-row items-center">
+                        {displayFilterButton && <div className="ml-2 flex flex-row items-center">
                             <button onClick={toggleSortingBottomNavigationView} className="p-2 hover:bg-gray-100 rounded-full">
                                 <MdSort size={24} color="#000000" />
                             </button>
@@ -624,7 +624,7 @@ const ContactsResidential = props => {
                             <button onClick={() => navigate("/contacts/AddNewCustomerStack")} className="p-2 hover:bg-gray-100 rounded-full">
                                 <MdAddCircleOutline size={24} color="#000000" />
                             </button>
-                        </div>
+                        </div>}
                     </div>
                     {data.length > 0 ? (
                         <div style={styles.container}>
