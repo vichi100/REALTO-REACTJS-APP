@@ -10,7 +10,8 @@ import {
     MdShare,
     MdAlarm,
     MdCall,
-    MdLocationOn
+    MdLocationOn,
+    MdPersonAdd,
 } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlineMessage, AiOutlineShareAlt } from "react-icons/ai";
@@ -739,8 +740,8 @@ const ContactResidentialSellCard = props => {
                 {props.userDetails.works_for === props.userDetails.id && item.agent_id === props.userDetails.id &&
                     <div onClick={(e) => { e.stopPropagation(); gotoEmployeeList(item); }} style={{ cursor: 'pointer' }}>
                         <div style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 10, marginTop: 10, marginLeft: 20, display: 'flex' }}>
-                            <span style={{ fontSize: 20, color: "black" }}>👤+</span>
-                            <span style={{ fontSize: 14, fontWeight: '400', color: '#000', marginLeft: 20, marginRight: 20 }}>
+                            <MdPersonAdd size={18} className="text-black mr-2" />
+                            <span style={{ fontSize: 14, fontWeight: '400', color: '#000', marginLeft: 0, marginRight: 0 }}>
                                 {Array.isArray(item.assigned_to_employee_name) && item.assigned_to_employee_name.length > 0
                                     ? item.assigned_to_employee_name.join(", ")
                                     : "No Employees Assigned"}
