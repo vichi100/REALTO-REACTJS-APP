@@ -233,207 +233,151 @@ const Profile = props => {
 
     return (
         <div style={styles.container}>
-            <div style={styles.userInfoSection}>
-                <div style={{ flexDirection: "row", marginTop: 10, display: 'flex' }}>
-                    <div style={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: 40,
-                        backgroundColor: '#ccc',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        border: '2px solid rgba(127,255,212, .9)'
-                    }}>
-                        <span style={{ color: "#000000", fontSize: 30 }}>
-                            {props.userDetails && props.userDetails.name
-                                ? props.userDetails.name.slice(0, 1)
-                                : "G"}
+            {/* Profile Header */}
+            <div style={styles.header}>
+                <div style={styles.profileSection}>
+                    <div style={styles.avatarContainer}>
+                        <div style={styles.avatar}>
+                            <span style={styles.avatarText}>
+                                {props.userDetails && props.userDetails.name
+                                    ? props.userDetails.name.slice(0, 1)
+                                    : "G"}
+                            </span>
+                        </div>
+                        <div style={styles.profileInfo}>
+                            <h3 style={styles.userName}>
+                                {props.userDetails && props.userDetails.name
+                                    ? props.userDetails.name
+                                    : "Guest"}
+                            </h3>
+                            <span style={styles.companyName}>
+                                {props.userDetails && props.userDetails.company_name
+                                    ? props.userDetails.company_name
+                                    : "Company"}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Contact Information */}
+                <div style={styles.contactSection}>
+                    <div style={styles.contactRow}>
+                        <MdMap color="#000000" size={20} />
+                        <span style={styles.contactText}>
+                            {props.userDetails && props.userDetails.city
+                                ? props.userDetails.city
+                                : "Guest City"}
                         </span>
                     </div>
-                    <div style={{ marginLeft: 20 }}>
-                        <h3
-                            style={{
-                                marginTop: 5,
-                                marginBottom: 2,
-                                fontSize: 24,
-                                fontWeight: "bold",
-                                margin: 0,
-                                color: "#000000"
-                            }}
-                        >
-                            {props.userDetails &&
-                                props.userDetails.name
-                                ? props.userDetails.name
-                                : "Guest"}
-                        </h3>
-                        <span style={{ ...styles.caption, color: "#000000" }}>
-                            {props.userDetails &&
-                                props.userDetails.company_name
-                                ? props.userDetails.company_name
-                                : "Company"}
+                    <div style={styles.contactRow}>
+                        <MdPhone color="#000000" size={20} />
+                        <span style={styles.contactText}>
+                            {props.userDetails && props.userDetails.mobile
+                                ? props.userDetails.mobile
+                                : "Add Mobile Number"}
                         </span>
                     </div>
                 </div>
+
+                {/* Action Buttons for Agent/Employee */}
+                {(props.userDetails && props.userDetails.user_type === "agent") && (
+                    <div style={styles.actionButtons}>
+                        <div onClick={() => setModalVisible(true)} style={styles.actionButton}>
+                            <MdPersonOff color="#000000" size={20} />
+                        </div>
+                        <div onClick={() => openEditProfile()} style={styles.actionButton}>
+                            <MdEdit color="#000000" size={20} />
+                        </div>
+                    </div>
+                )}
+
+                {(props.userDetails && props.userDetails.user_type === "employee") && (
+                    <div style={styles.actionButtons}>
+                        <div onClick={() => setModalVisible(true)} style={styles.actionButton}>
+                            <MdPersonOff color="#000000" size={20} />
+                        </div>
+                    </div>
+                )}
             </div>
 
-            <div style={styles.userInfoSection}>
-                <div style={styles.row}>
-                    <MdMap color="#000000" size={20} />
-                    <span style={{ color: "#000000", marginLeft: 20 }}>
-                        {props.userDetails &&
-                            props.userDetails.city
-                            ? props.userDetails.city
-                            : "Guest City"}
-                    </span>
-                </div>
-                <div style={styles.row}>
-                    <MdPhone color="#000000" size={20} />
-                    <span style={{ color: "#000000", marginLeft: 20 }}>
-
-                        {props.userDetails && props.userDetails.mobile
-                            ? props.userDetails.mobile
-                            : "Add Mobile Number"}
-                    </span>
-                </div>
-            </div>
-            {props.userDetails &&
-                props.userDetails.user_type === "agent" ? (
-                <div
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        marginLeft: 40,
-                        marginRight: 40,
-                        marginBottom: 10,
-                        display: 'flex'
-                    }}
-                >
-                    <div onClick={() => setModalVisible(true)} style={{ cursor: 'pointer' }}>
-                        <MdPersonOff color="#000000" size={20} />
-                    </div>
-                    <div onClick={() => openEditProfile()} style={{ cursor: 'pointer' }}>
-                        <MdEdit color="#000000" size={20} />
-                    </div>
-                </div>
-            ) : null}
-
-            {props.userDetails &&
-                props.userDetails.user_type === "employee" ? (
-                <div
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        marginLeft: 40,
-                        marginRight: 40,
-                        marginBottom: 10,
-                        display: 'flex'
-                    }}
-                >
-                    <div onClick={() => setModalVisible(true)} style={{ cursor: 'pointer' }}>
-                        <MdPersonOff color="#000000" size={20} />
-                    </div>
-
-                </div>
-            ) : null}
-
+            {/* Employee Management Section */}
             {props.userDetails &&
                 ((props.userDetails.works_for === props.userDetails.id) ||
                     (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE_DELETE.includes(props.userDetails.employee_role))) ? (
-                <div style={{ flexDirection: "column", marginTop: 20, display: 'flex' }}>
-                    <div
-                        style={{
-                            marginTop: 10,
-                            marginBottom: 10,
-                            marginLeft: 10,
-                            marginRight: 10
-                        }}
-                    >
+                <div style={styles.employeeSection}>
+                    <div style={styles.buttonContainer}>
                         <Button title="MY EMPLOYEE" onPress={() => openEmployeeList()} />
                     </div>
                 </div>
             ) : (
-                <div
-                    style={{
-                        borderBottomColor: "rgba(211,211,211, 0.5)",
-                        borderBottomWidth: 1,
-                        marginTop: 10,
-                        marginLeft: 10,
-                        marginRight: 10
-                    }}
-                />
+                <div style={styles.divider} />
             )}
 
-            <div style={styles.menuWrapper}>
-                <div onClick={() => onShare()} style={{ ...styles.menuItem, cursor: 'pointer' }}>
+            {/* Menu Items */}
+            <div style={styles.menuContainer}>
+                <div onClick={() => onShare()} style={styles.menuItem}>
                     <MdShare color="rgb(183, 113, 229)" size={25} />
                     <span style={styles.menuItemText}>Tell Your Friends</span>
                 </div>
-                <div onClick={() => makeCall("+919833097595")} style={{ ...styles.menuItem, cursor: 'pointer' }}>
+
+                <div onClick={() => makeCall("+919833097595")} style={styles.menuItem}>
                     <AiOutlineCustomerService color="rgb(103, 174, 110)" size={25} />
                     <span style={styles.menuItemText}>Support</span>
                 </div>
-                {(props.userDetails &&
-                    props.userDetails.user_type === "agent") && (props.userDetails &&
-                        props.userDetails.id === props.userDetails.works_for) ? <div onClick={() => { sendMail() }} style={{ cursor: 'pointer', display: 'flex' }}>
-                    <div style={{ flexDirection: "row", alignContent: "center", alignItems: "center", justifyContent: "space-between", marginRight: 15, display: 'flex' }}>
-                        <div style={styles.menuItem}>
-                            <div style={{ flexDirection: "column", alignItems: "center", display: 'flex' }}>
-                                <div style={{ flexDirection: "row", alignItems: "center", display: 'flex' }}>
+
+                {(props.userDetails && props.userDetails.user_type === "agent") &&
+                    (props.userDetails && props.userDetails.id === props.userDetails.works_for) && (
+                        <div onClick={() => { sendMail() }} style={styles.emailDataItem}>
+                            <div style={styles.emailDataContent}>
+                                <div style={styles.menuItem}>
                                     <MdEmail color="rgb(61, 144, 215)" size={25} />
                                     <span style={styles.menuItemText}>Email your data to you</span>
                                 </div>
-                                <span style={{ color: "#000000" }}>{userData && userData.email ? userData.email : "email@gmail.com"}</span>
+                                <span style={styles.emailText}>
+                                    {userData && userData.email ? userData.email : "email@gmail.com"}
+                                </span>
                             </div>
-
+                            <span style={styles.lastBackupDate}>
+                                {userData && userData.last_backup_date ? userData.last_backup_date : "29/Feb/2025"}
+                            </span>
                         </div>
-                        <span style={{ color: "#0f1a20", marginLeft: 0, fontSize: 16 }}>
-                            {userData && userData.last_backup_date ? userData.last_backup_date : "29/Feb/2025"}
-                        </span>
-                    </div>
-                </div> : null}
+                    )}
 
-                <div onClick={() => { }} style={{ ...styles.menuItem, cursor: 'pointer' }}>
+                <div onClick={() => { }} style={styles.menuItem}>
                     <MdSecurity color="rgba(255, 99, 99, .9)" size={25} />
                     <span style={styles.menuItemText}>Privacy Policy</span>
                 </div>
             </div>
+
             <Home disableScroll={true} />
+
+            {/* Delete Account Modal */}
             {modalVisible && (
-                <div style={styles.centeredView1}>
-                    <div style={styles.modalView}>
-                        <span style={{ color: "rgba(255,0,0, .9)", marginBottom: 10, fontSize: 17, fontWeight: "500" }}>
+                <div style={styles.modalOverlay}>
+                    <div style={styles.modalContent}>
+                        <span style={styles.modalWarning}>
                             Do you really want to DELETE your account ?
                         </span>
-                        <span style={{ marginTop: 10, fontSize: 15, textAlign: 'center' }}>
+                        <span style={styles.modalDescription}>
                             Please note once its removed, it can not be recovered.
                         </span>
 
-                        <div
-                            style={{
-                                flexDirection: "row",
-                                marginBottom: 20,
-                                padding: 20,
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                                width: '100%'
-                            }}
-                        >
+                        <div style={styles.modalActions}>
                             <div
-                                style={{ ...styles.cancelButton, cursor: 'pointer' }}
+                                style={styles.cancelButton}
                                 onClick={() => {
                                     setModalVisible(!modalVisible);
                                 }}
                             >
-                                <span style={styles.textStyle}>No</span>
+                                <span style={styles.buttonText}>No</span>
                             </div>
                             <div
-                                style={{ ...styles.applyButton, cursor: 'pointer' }}
+                                style={styles.deleteButton}
                                 onClick={() => {
                                     deleteMe();
                                 }}
                             >
-                                <span style={styles.textStyle}>YES, DELETE NOW</span>
+                                <span style={styles.buttonText}>YES, DELETE NOW</span>
                             </div>
                         </div>
                     </div>
@@ -449,90 +393,216 @@ const styles = {
         backgroundColor: "#ffffff",
         marginTop: 0,
         minHeight: '100vh',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     },
-    userInfoSection: {
-        paddingLeft: 20,
-        paddingRight: 20,
-        marginBottom: 15
+    header: {
+        padding: '20px 20px 15px',
+        borderBottom: '1px solid #f0f0f0',
     },
-    caption: {
+    profileSection: {
+        marginBottom: 20,
+    },
+    avatarContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    avatar: {
+        width: 80,
+        height: 80,
+        borderRadius: '50%',
+        backgroundColor: '#f0f0f0',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '2px solid rgba(127, 255, 212, 0.9)',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    },
+    avatarText: {
+        color: "#333",
+        fontSize: 32,
+        fontWeight: "600",
+    },
+    profileInfo: {
+        marginLeft: 20,
+    },
+    userName: {
+        margin: '0 0 5px 0',
+        fontSize: 24,
+        fontWeight: "700",
+        color: "#000000",
+        lineHeight: 1.2,
+    },
+    companyName: {
         fontSize: 14,
-        lineHeight: 14,
-        fontWeight: "500"
+        color: "#666",
+        fontWeight: "500",
     },
-    row: {
-        flexDirection: "row",
-        marginBottom: 5,
-        display: 'flex'
+    contactSection: {
+        padding: '15px 0',
     },
-    menuWrapper: {
+    contactRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    contactText: {
+        color: "#000000",
+        marginLeft: 15,
+        fontSize: 16,
+    },
+    actionButtons: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: '0 30px 10px',
+        marginTop: 10,
+    },
+    actionButton: {
+        cursor: 'pointer',
+        padding: '8px',
+        borderRadius: '8px',
+        transition: 'background-color 0.2s',
+    },
+    actionButtonHover: {
+        backgroundColor: '#f5f5f5',
+    },
+    employeeSection: {
+        marginTop: 20,
+        padding: '0 20px',
+    },
+    buttonContainer: {
+        margin: '10px 0',
+    },
+    divider: {
+        borderBottom: "1px solid rgba(211, 211, 211, 0.5)",
+        margin: '10px 20px 0',
+    },
+    menuContainer: {
         marginTop: 10,
         display: 'flex',
         flexDirection: 'column',
-        padding: 0,
-        margin: 0,
-        gap: 0,
-        alignItems: 'stretch' // this is important
+        backgroundColor: '#fff',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
+        margin: '20px',
     },
     menuItem: {
-        flexDirection: "row",
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 20,
-        paddingRight: 20,
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'center',
+        padding: '16px 20px',
+        cursor: 'pointer',
         borderBottom: '1px solid #f0f0f0',
+        transition: 'background-color 0.2s',
+    },
+    menuItemHover: {
+        backgroundColor: '#f9f9f9',
     },
     menuItemText: {
-        color: "#000000",
+        color: "#333",
         marginLeft: 20,
         fontWeight: "600",
         fontSize: 16,
-        lineHeight: 26
+        lineHeight: 1.5,
+        flex: 1,
     },
-    centeredView1: {
+    emailDataItem: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '16px 20px',
+        cursor: 'pointer',
+        borderBottom: '1px solid #f0f0f0',
+        transition: 'background-color 0.2s',
+    },
+    emailDataContent: {
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+    },
+    emailText: {
+        color: "#666",
+        fontSize: 14,
+        marginTop: 4,
+        marginLeft: 45,
+    },
+    lastBackupDate: {
+        color: "#0f1a20",
+        fontSize: 14,
+        fontWeight: "500",
+    },
+    modalOverlay: {
         position: 'fixed',
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        zIndex: 1000,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         display: 'flex',
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1000,
+        padding: '20px',
     },
-    modalView: {
-        backgroundColor: "white",
+    modalContent: {
+        backgroundColor: 'white',
         borderRadius: 20,
         padding: 35,
-        alignItems: "center",
-        boxShadow: "0px 2px 4px rgba(0,0,0,0.25)",
+        maxWidth: 450,
+        width: '100%',
+        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
     },
-    applyButton: {
-        marginLeft: 10,
-        marginRight: 10,
-        padding: 10,
-        backgroundColor: '#f44336',
-        borderRadius: 5,
-        color: 'white'
+    modalWarning: {
+        color: "#e53935",
+        marginBottom: 12,
+        fontSize: 18,
+        fontWeight: "600",
+        lineHeight: 1.4,
+    },
+    modalDescription: {
+        color: "#666",
+        fontSize: 15,
+        lineHeight: 1.5,
+        marginBottom: 25,
+    },
+    modalActions: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        width: '100%',
+        gap: '15px',
     },
     cancelButton: {
-        marginLeft: 10,
-        marginRight: 30,
-        padding: 10,
+        padding: '12px 24px',
         backgroundColor: '#2196F3',
-        borderRadius: 5,
-        color: 'white'
+        borderRadius: 8,
+        color: 'white',
+        cursor: 'pointer',
+        fontWeight: "600",
+        transition: 'background-color 0.2s',
     },
-    textStyle: {
+    deleteButton: {
+        padding: '12px 24px',
+        backgroundColor: '#f44336',
+        borderRadius: 8,
+        color: 'white',
+        cursor: 'pointer',
+        fontWeight: "600",
+        transition: 'background-color 0.2s',
+    },
+    buttonText: {
         color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    }
+        fontWeight: "600",
+        fontSize: 14,
+    },
 };
 
 const mapStateToProps = state => ({
