@@ -42,7 +42,7 @@ const Profile = props => {
         return () => {
             setDbCall(true);
         };
-    }, [dbCall]);
+    }, [dbCall, props.userDetails]);
 
     const getUserProfileDeatails = () => {
         if (!props.userDetails) return;
@@ -80,9 +80,7 @@ const Profile = props => {
     }, []);
 
     const openEditProfile = () => {
-        navigation.navigate("ProfileForm", {
-            updateDbCall: updateDbCall
-        });
+        navigation.navigate("/profile-form");
     };
 
     const sendMail = () => {
@@ -112,9 +110,7 @@ const Profile = props => {
                     }
                 );
             } else if (!email || email.trim() === "") {
-                navigation.navigate("ProfileForm", {
-                    updateDbCall: updateDbCall
-                });
+                navigation.navigate("/profile-form");
             }
         } catch (error) {
             console.log("Error => ", error);
@@ -329,7 +325,7 @@ const Profile = props => {
                     (props.userDetails && props.userDetails.id === props.userDetails.works_for) && (
                         <div onClick={() => { sendMail() }} style={styles.emailDataItem}>
                             <div style={styles.emailDataContent}>
-                                <div style={styles.menuItem}>
+                                <div style={styles.menuItemInner}>
                                     <MdEmail color="rgb(61, 144, 215)" size={25} />
                                     <span style={styles.menuItemText}>Email your data to you</span>
                                 </div>
@@ -500,6 +496,11 @@ const styles = {
     },
     menuItemHover: {
         backgroundColor: '#f9f9f9',
+    },
+    menuItemInner: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     menuItemText: {
         color: "#333",

@@ -11,7 +11,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const ProfileForm = props => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { updateDbCall } = location.state || {};
+    const { } = location.state || {};
 
     const [name, setName] = useState(props.userDetails.name || "");
     const [city, setCity] = useState(props.userDetails.city || "");
@@ -66,7 +66,7 @@ const ProfileForm = props => {
                     props.userDetails["email"] = profileDetails.email;
                     props.setUserDetails({ ...props.userDetails });
 
-                    if (updateDbCall) updateDbCall(true);
+
                     navigate("/profile");
                 }
             },
@@ -80,7 +80,7 @@ const ProfileForm = props => {
             <div style={styles.container}>
                 <div style={styles.propSection}>
                     <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5 }}>Name*</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: '#000' }}>Name*</label>
                         <input
                             value={name}
                             onChange={e => setName(e.target.value)}
@@ -89,7 +89,7 @@ const ProfileForm = props => {
                         />
                     </div>
                     <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5 }}>City*</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: '#000' }}>City*</label>
                         <input
                             value={city}
                             onChange={e => setCity(e.target.value)}
@@ -98,7 +98,7 @@ const ProfileForm = props => {
                         />
                     </div>
                     <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5 }}>Company</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: '#000' }}>Company</label>
                         <input
                             value={company}
                             onChange={e => setCompany(e.target.value)}
@@ -107,7 +107,7 @@ const ProfileForm = props => {
                         />
                     </div>
                     <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5 }}>Email</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: '#000' }}>Email</label>
                         <input
                             value={email}
                             onChange={e => setEmail(e.target.value)}
@@ -148,7 +148,8 @@ const styles = {
         padding: 10,
         borderRadius: 5,
         border: '1px solid #ccc',
-        fontSize: 16
+        fontSize: 16,
+        color: '#000'
     }
 };
 
