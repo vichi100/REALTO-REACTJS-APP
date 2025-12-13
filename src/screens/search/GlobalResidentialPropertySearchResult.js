@@ -358,7 +358,6 @@ const GlobalResidentialPropertySearchResult = props => {
 
     const selectLookingForIndex = index => {
         setLookingForIndex(index);
-        setIsVisible(false);
     };
 
     const selectLookingForIndexSortBy = index => {
@@ -554,12 +553,14 @@ const GlobalResidentialPropertySearchResult = props => {
 
                     <div className="absolute bottom-5 right-5 flex flex-col items-center space-y-2">
                         <button
+                            data-testid="sort-button"
                             onClick={() => setVisibleSorting(!visibleSorting)}
                             className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
                         >
                             <MdSort size={24} />
                         </button>
                         <button
+                            data-testid="filter-button"
                             onClick={() => setVisible(!visible)}
                             className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
                         >
@@ -677,6 +678,7 @@ const GlobalResidentialPropertySearchResult = props => {
                         </div>
 
                         <button
+                            data-testid="apply-filter-button"
                             onClick={() => onFilter()}
                             className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
                         >
@@ -734,6 +736,7 @@ const GlobalResidentialPropertySearchResult = props => {
                         </div>
 
                         <button
+                            data-testid="apply-sort-button"
                             onClick={() => setVisibleSorting(false)}
                             className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
                         >

@@ -1,0 +1,661 @@
+
+> realto-app@0.1.0 test
+> jest src/screens/search/__tests__/ --runInBand
+
+(node:57559) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL src/screens/search/__tests__/GlobalCommercialPropertySearchResult.test.js
+  ● Console
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:92:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:92:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:92:17)
+
+    console.log
+      onFilter:      [
+        {
+          property_id: 'prop1',
+          property_type: 'Commercial',
+          property_for: 'Rent',
+          property_address: {
+            building_name: 'Tech Park',
+            landmark_or_street: 'Main Road',
+            location_area: 'Business District'
+          },
+          owner_details: { name: 'Jane Smith', mobile1: '1122334455' },
+          property_details: {
+            property_used_for: 'Office',
+            ideal_for: [Array],
+            building_type: 'Businesses park ',
+            property_size: 1000
+          },
+          rent_details: { expected_rent: 50000, available_from: '2023-12-15' },
+          sell_details: { expected_sell_price: 10000000 },
+          create_date_time: '2023-11-10T10:00:00Z',
+          property_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:282:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:92:17)
+
+    console.log
+      onFilter:      [
+        {
+          property_id: 'prop1',
+          property_type: 'Commercial',
+          property_for: 'Rent',
+          property_address: {
+            building_name: 'Tech Park',
+            landmark_or_street: 'Main Road',
+            location_area: 'Business District'
+          },
+          owner_details: { name: 'Jane Smith', mobile1: '1122334455' },
+          property_details: {
+            property_used_for: 'Office',
+            ideal_for: [Array],
+            building_type: 'Businesses park ',
+            property_size: 1000
+          },
+          rent_details: { expected_rent: 50000, available_from: '2023-12-15' },
+          sell_details: { expected_sell_price: 10000000 },
+          create_date_time: '2023-11-10T10:00:00Z',
+          property_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:205:17)
+
+    console.log
+      filterList:    [
+        {
+          property_id: 'prop1',
+          property_type: 'Commercial',
+          property_for: 'Rent',
+          property_address: {
+            building_name: 'Tech Park',
+            landmark_or_street: 'Main Road',
+            location_area: 'Business District'
+          },
+          owner_details: { name: 'Jane Smith', mobile1: '1122334455' },
+          property_details: {
+            property_used_for: 'Office',
+            ideal_for: [Array],
+            building_type: 'Businesses park ',
+            property_size: 1000
+          },
+          rent_details: { expected_rent: 50000, available_from: '2023-12-15' },
+          sell_details: { expected_sell_price: 10000000 },
+          create_date_time: '2023-11-10T10:00:00Z',
+          property_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:219:21)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:92:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialPropertySearchResult.js:92:17)
+
+  ● GlobalCommercialPropertySearchResult Component › opens sort modal and applies sort
+
+    TestingLibraryElementError: Unable to find an element with the text: Apply. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col h-full bg-gray-100"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex flex-row items-center bg-white p-2 shadow-sm"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"relative flex-1"[39m
+            [36m>[39m
+              [36m<input[39m
+                [33mclass[39m=[32m"w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500"[39m
+                [33mplaceholder[39m=[32m"GLocal Search..."[39m
+                [33mtype[39m=[32m"text"[39m
+                [33mvalue[39m=[32m""[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"absolute left-3 top-2.5 text-gray-400"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33mfill[39m=[32m"currentColor"[39m
+                  [33mheight[39m=[32m"20"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-width[39m=[32m"0"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"20"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M0 0h24v24H0z"[39m
+                    [33mfill[39m=[32m"none"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex-1 overflow-y-auto p-2"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<div[39m
+                [33mdata-testid[39m=[32m"rent-card"[39m
+              [36m>[39m
+                [36m<span>[39m
+                  [0mTech Park[0m
+                [36m</span>[39m
+                [36m<button>[39m
+                  [0mDelete[0m
+                [36m</button>[39m
+                [36m<button>[39m
+                  [0mClose[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"absolute bottom-5 right-5 flex flex-col items-center space-y-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33mfill[39m=[32m"currentColor"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-width[39m=[32m"0"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M0 0h24v24H0z"[39m
+                    [33mfill[39m=[32m"none"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33mfill[39m=[32m"currentColor"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-width[39m=[32m"0"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M0 0h24v24H0z"[39m
+                    [33mfill[39m=[32m"none"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      149 |
+      150 |         // Apply
+    > 151 |         fireEvent.click(screen.getByText('Apply'));
+          |                                ^
+      152 |
+      153 |         expect(screen.getByText(mockCommercialProperty.property_address.building_name)).toBeInTheDocument();
+      154 |     });
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:37:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+      at Object.getByText (src/screens/search/__tests__/GlobalCommercialPropertySearchResult.test.js:151:32)
+
+PASS src/screens/search/__tests__/GlobalResidentialContactsSearchResult.test.js
+  ● Console
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:60:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:80:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:60:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:80:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:60:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:80:17)
+
+    console.log
+      onFilter:      [
+        {
+          customer_id: 'cust2',
+          customer_details: { name: 'Alice Brown', address: '456 Lane', mobile1: '5556667777' },
+          customer_locality: {
+            property_type: 'Residential',
+            property_for: 'Buy',
+            location_area: 'Suburb'
+          },
+          customer_property_details: {
+            house_type: 'Apartment',
+            bhk_type: '2BHK',
+            furnishing_status: 'Semi'
+          },
+          customer_rent_details: { expected_rent: 15000, available_from: '2023-12-05' },
+          customer_buy_details: { expected_buy_price: 6000000 },
+          create_date_time: '2023-11-05T10:00:00Z',
+          customer_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:212:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:60:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:80:17)
+
+    console.log
+      sortByName [
+        {
+          customer_id: 'cust2',
+          customer_details: { name: 'Alice Brown', address: '456 Lane', mobile1: '5556667777' },
+          customer_locality: {
+            property_type: 'Residential',
+            property_for: 'Buy',
+            location_area: 'Suburb'
+          },
+          customer_property_details: {
+            house_type: 'Apartment',
+            bhk_type: '2BHK',
+            furnishing_status: 'Semi'
+          },
+          customer_rent_details: { expected_rent: 15000, available_from: '2023-12-05' },
+          customer_buy_details: { expected_buy_price: 6000000 },
+          create_date_time: '2023-11-05T10:00:00Z',
+          customer_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:147:17)
+
+    console.log
+      lookingForIndexSortBy:  1
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:157:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:60:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:80:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:60:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialContactsSearchResult.js:80:17)
+
+PASS src/screens/search/__tests__/GlobalSearch.test.js
+PASS src/screens/search/__tests__/GlobalResidentialPropertySearchResult.test.js
+  ● Console
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:59:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:79:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:59:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:79:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:59:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:79:17)
+
+    console.log
+      onFilter:      [
+        {
+          property_id: 'prop2',
+          property_type: 'Residential',
+          property_for: 'Rent',
+          property_address: {
+            building_name: 'Green Valley',
+            landmark_or_street: 'Park Ave',
+            location_area: 'Green Zone'
+          },
+          owner_details: { name: 'Bob White', mobile1: '9988776655' },
+          property_details: {
+            house_type: 'Apartment',
+            bhk_type: '3BHK',
+            furnishing_status: 'Full',
+            property_size: 1500
+          },
+          rent_details: { expected_rent: 25000, available_from: '2023-12-20' },
+          sell_details: { expected_sell_price: 8000000 },
+          create_date_time: '2023-11-15T10:00:00Z',
+          property_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:260:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:59:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:79:17)
+
+    console.log
+      onFilter:      [
+        {
+          property_id: 'prop2',
+          property_type: 'Residential',
+          property_for: 'Rent',
+          property_address: {
+            building_name: 'Green Valley',
+            landmark_or_street: 'Park Ave',
+            location_area: 'Green Zone'
+          },
+          owner_details: { name: 'Bob White', mobile1: '9988776655' },
+          property_details: {
+            house_type: 'Apartment',
+            bhk_type: '3BHK',
+            furnishing_status: 'Full',
+            property_size: 1500
+          },
+          rent_details: { expected_rent: 25000, available_from: '2023-12-20' },
+          sell_details: { expected_sell_price: 8000000 },
+          create_date_time: '2023-11-15T10:00:00Z',
+          property_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:191:17)
+
+    console.log
+      filterList:    [
+        {
+          property_id: 'prop2',
+          property_type: 'Residential',
+          property_for: 'Rent',
+          property_address: {
+            building_name: 'Green Valley',
+            landmark_or_street: 'Park Ave',
+            location_area: 'Green Zone'
+          },
+          owner_details: { name: 'Bob White', mobile1: '9988776655' },
+          property_details: {
+            house_type: 'Apartment',
+            bhk_type: '3BHK',
+            furnishing_status: 'Full',
+            property_size: 1500
+          },
+          rent_details: { expected_rent: 25000, available_from: '2023-12-20' },
+          sell_details: { expected_sell_price: 8000000 },
+          create_date_time: '2023-11-15T10:00:00Z',
+          property_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:205:21)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:59:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:79:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:59:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalResidentialPropertySearchResult.js:79:17)
+
+PASS src/screens/search/__tests__/GlobalCommercialCustomersSearchResult.test.js
+  ● Console
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:92:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:92:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:92:17)
+
+    console.log
+      onFilter:      [
+        {
+          customer_id: 'cust1',
+          customer_details: { name: 'John Doe', address: '123 Main St', mobile1: '9876543210' },
+          customer_locality: {
+            property_type: 'Commercial',
+            property_for: 'Rent',
+            location_area: 'Downtown'
+          },
+          customer_property_details: { property_used_for: 'Shop', building_type: 'Mall' },
+          customer_rent_details: { expected_rent: 20000, available_from: '2023-12-01' },
+          customer_buy_details: { expected_buy_price: 5000000 },
+          rent_details: { available_from: '2023-12-01' },
+          create_date_time: '2023-11-01T10:00:00Z',
+          customer_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:223:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:92:17)
+
+    console.log
+      sortByName [
+        {
+          customer_id: 'cust1',
+          customer_details: { name: 'John Doe', address: '123 Main St', mobile1: '9876543210' },
+          customer_locality: {
+            property_type: 'Commercial',
+            property_for: 'Rent',
+            location_area: 'Downtown'
+          },
+          customer_property_details: { property_used_for: 'Shop', building_type: 'Mall' },
+          customer_rent_details: { expected_rent: 20000, available_from: '2023-12-01' },
+          customer_buy_details: { expected_buy_price: 5000000 },
+          rent_details: { available_from: '2023-12-01' },
+          create_date_time: '2023-11-01T10:00:00Z',
+          customer_status: 0
+        }
+      ]
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:158:17)
+
+    console.log
+      lookingForIndexSortBy:  0
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:168:17)
+
+    console.log
+      lookingForIndexSortBy:  A First
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:173:21)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:92:17)
+
+    console.log
+      Screen focused - refreshing data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:72:17)
+
+    console.log
+      globalSearchResult updated, setting data
+
+      at log (src/screens/search/GlobalCommercialCustomersSearchResult.js:92:17)
+
+PASS src/screens/search/__tests__/mockData.js
+
+Test Suites: 1 failed, 5 passed, 6 total
+Tests:       1 failed, 38 passed, 39 total
+Snapshots:   0 total
+Time:        1.372 s, estimated 2 s
+Ran all test suites matching /src\/screens\/search\/__tests__\//i.

@@ -16,7 +16,6 @@ const PropertyReminder = props => {
 
 
     useEffect(() => {
-        // console.log("props.propReminderList: ", props.propReminderList);
         const dataArr = reminderListX || [];
         const future = [];
         const past = [];
@@ -36,9 +35,6 @@ const PropertyReminder = props => {
             const meetingDateTime = new Date(meetingDate);
             meetingDateTime.setHours(hours, minutes, 0, 0);
 
-            console.log("todayDateTime:", todayDateTime);
-            console.log("meetingDateTime:", meetingDateTime);
-
             if (meetingDateTime > todayDateTime) {
                 future.push(value);
             } else {
@@ -46,7 +42,6 @@ const PropertyReminder = props => {
             }
 
         }
-        // console.log("getReminderList:   ", response.data);
         setFutureReminderList(future);
         setPastReminderList(past);
         setReminderList(props.propReminderList);

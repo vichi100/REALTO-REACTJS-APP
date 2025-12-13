@@ -29,6 +29,9 @@ const LocalityDetailsForm = props => {
     }, []);
 
     const onSubmit = async () => {
+        const property = props.propertyDetails || {};
+        const propertyType = property.property_type || "";
+
         if (city.trim() === "") {
             setErrorMessage("City is missing");
             setIsVisible(true);
@@ -38,9 +41,7 @@ const LocalityDetailsForm = props => {
             setIsVisible(true);
             return;
         } else if (
-            props.propertyDetails &&
-            props.propertyDetails.property_type &&
-            props.propertyDetails.property_type.toLowerCase() === "residential" &&
+            propertyType.toLowerCase() === "residential" &&
             flatNumber.trim() === ""
         ) {
             setErrorMessage("Flat Number is missing");
@@ -56,9 +57,7 @@ const LocalityDetailsForm = props => {
             return;
         }
 
-        const property = props.propertyDetails || {};
-        const propertyType = property.property_type || "";
-        console.log("gLocation: ", gLocation);
+
 
         const property_address = {
             city: city.trim(),

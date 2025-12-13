@@ -119,14 +119,16 @@ const ListingCommercial = props => {
             data: user
         }).then(
             response => {
-                response.data.map(item => {
-                    item.image_urls.map(image => {
-                        image.url = SERVER_URL + image.url
+                if (response.data !== null) {
+                    response.data.map(item => {
+                        item.image_urls.map(image => {
+                            image.url = SERVER_URL + image.url
+                        })
                     })
-                })
-                setData(response.data);
-                props.setCommercialPropertyList(response.data);
-                setLoading(false);
+                    setData(response.data);
+                    props.setCommercialPropertyList(response.data);
+                    setLoading(false);
+                }
                 isFetching.current = false;
             },
             error => {
