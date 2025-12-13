@@ -339,7 +339,7 @@ const Profile = props => {
                         </div>
                     )}
 
-                <div onClick={() => { }} style={styles.menuItem}>
+                <div onClick={() => navigation.navigate("/privacy-policy")} style={styles.menuItem}>
                     <MdSecurity color="rgba(255, 99, 99, .9)" size={25} />
                     <span style={styles.menuItemText}>Privacy Policy</span>
                 </div>
