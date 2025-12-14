@@ -673,7 +673,7 @@ const ListingResidential = props => {
             </div>
 
             {visible && (
-                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }} onClick={toggleBottomNavigationView}>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={toggleBottomNavigationView}>
                     <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
                         <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
                             <h3 className="text-lg font-bold text-black">Filter</h3>

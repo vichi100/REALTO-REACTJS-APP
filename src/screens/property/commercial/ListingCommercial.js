@@ -10,10 +10,18 @@ import {
 } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Button from "./../../../components/Button";
+import Slider from "./../../../components/Slider";
+import SliderCr from "./../../../components/SliderCr";
 import CardRent from "./rent/CommercialRentCard";
 import CardSell from "./sell/CommercialSellCard";
 import axios from "axios";
 import { SERVER_URL } from "./../../../utils/Constant";
+import {
+    EMPLOYEE_ROLE,
+    COMMERCIAL_PROPERTY_BUILDING_TYPE_OPTION,
+    COMMERCIAL_PROPERTY_TYPE_OPTION,
+    FURNISHING_STATUS_OPTION
+} from "./../../../utils/AppConstant";
 import {
     setCommercialPropertyList,
     setAnyItemDetails,
@@ -25,9 +33,29 @@ import CustomButtonGroup from "./../../../components/CustomButtonGroup";
 import { resetRefresh } from "./../../../reducers/dataRefreshReducer";
 import { useSelector, useDispatch } from 'react-redux';
 
+const lookingForArraySortBy = ["Rent", "Sell"];
 const sortByRentArray = ["Lowest First", "Highest First"];
 const sortByAvailabilityArray = ["Earliest First", "Oldest First"];
-const sortByPostedDateArray = ["Recent First", "Oldest Fist"];
+const sortByPostedDateArray = ["Recent First", "Oldest First"];
+
+const reqWithinOptions = [
+    { text: '7 Days' },
+    { text: '15 Days' },
+    { text: '30 Days' },
+    { text: '60 Days' },
+    { text: '60+ Days' },
+];
+
+const porposeForOptions = [
+    { text: 'Rent' },
+    { text: 'Sell' },
+];
+
+const furnishingStatusOptions = [
+    { text: 'Full' },
+    { text: 'Semi' },
+    { text: 'Empty' },
+];
 
 const ListingCommercial = props => {
     const navigate = useNavigate();
@@ -69,9 +97,220 @@ const ListingCommercial = props => {
     const [purpose, setPurpose] = useState("");
     const [selectedProperties, setSelectedProperties] = useState([]);
     const [selectedBuildingType, setSelectedBuildingType] = useState([]);
+    const [selectedFunishing, setSelectedFunishing] = useState([]);
 
     const shouldRefresh = useSelector((state) => state.dataRefresh.shouldRefresh);
     const dispatch = useDispatch();
+
+    const resetFilter = () => {
+        setReqWithin("");
+        setPurpose("");
+        setSelectedFunishing([]);
+        setSelectedBuildingType([]);
+        setSelectedProperties([]);
+        setData(props.commercialPropertyList);
+        setVisible(false);
+        setMinRent(5000);
+        setMaxRent(500000);
+        setMinSell(1000000);
+        setMaxSell(100000000);
+        setMinBuildupArea(50);
+        setMaxBuildupArea(15000);
+    };
+
+    const toggleBottomNavigationView = () => {
+        setVisible(!visible);
+    };
+
+    const toggleSortingBottomNavigationView = () => {
+        setVisibleSorting(!visibleSorting);
+    };
+
+    const setRentRange = values => {
+        setMinRent(values[0]);
+        setMaxRent(values[1]);
+    };
+
+    const setSellRange = values => {
+        setMinSell(values[0]);
+        setMaxSell(values[1]);
+    };
+
+    const selectFurnishings = (index, button) => {
+        let newSelectedIndicesFurnishing;
+        newSelectedIndicesFurnishing = [...selectedFunishing];
+        if (newSelectedIndicesFurnishing.includes(button.text)) {
+            newSelectedIndicesFurnishing.splice(newSelectedIndicesFurnishing.indexOf(button.text), 1);
+        } else {
+            newSelectedIndicesFurnishing.push(button.text);
+        }
+        setSelectedFunishing(newSelectedIndicesFurnishing);
+    }
+
+    const selectBuildingType = (index, button) => {
+        let newSelectedBuildingType;
+        newSelectedBuildingType = [...selectedBuildingType];
+        if (newSelectedBuildingType.includes(button.text)) {
+            newSelectedBuildingType.splice(newSelectedBuildingType.indexOf(button.text), 1);
+        } else {
+            newSelectedBuildingType.push(button.text);
+        }
+        setSelectedBuildingType(newSelectedBuildingType);
+    }
+
+    const selectProperties = (index, button) => {
+        let newSelectedProperties;
+        newSelectedProperties = [...selectedProperties];
+        if (newSelectedProperties.includes(button.text)) {
+            newSelectedProperties.splice(newSelectedProperties.indexOf(button.text), 1);
+        } else {
+            newSelectedProperties.push(button.text);
+        }
+        setSelectedProperties(newSelectedProperties);
+    }
+
+    const setBuildupAreaRange = values => {
+        setMinBuildupArea(values[0]);
+        setMaxBuildupArea(values[1]);
+    };
+
+    const selectLookingForIndexSortBy = index => {
+        setLookingForIndexSortBy(index);
+        setSortByRentIndex(-1);
+        setSortByAvailabilityIndex(-1);
+        setSortByPostedDateIndex(-1);
+        setVisibleSorting(false); // Close sort menu after selection if desired, or keep open? Residential closes it logic says setIsVisible(false) which is for snackbar? No, check original.
+        // Original residential selectLookingForIndexSortBy does setIsVisible(false) which is error snackbar. It DOES NOT close the sort menu.
+    };
+
+    const onFilter = () => {
+        if (purpose.trim() === "") {
+            setErrorMessage("Looking for is missing in filter");
+            setIsVisible(true);
+            return;
+        }
+        let filterList = props.commercialPropertyList;
+        if (purpose.trim() !== "") {
+            filterList = filterList.filter(
+                item => item.property_for === purpose
+            );
+        }
+
+        if (purpose === "Rent" && reqWithin !== "") {
+            const today = new Date();
+            let possessionDate;
+
+            if (reqWithin === "7 Days") {
+                possessionDate = addDays(today, 7);
+                filterList = filterList.filter(
+                    item => new Date(item.rent_details.available_from) <= possessionDate
+                );
+            } else if (reqWithin === "15 Days") {
+                possessionDate = addDays(today, 15);
+                filterList = filterList.filter(
+                    item => new Date(item.rent_details.available_from) <= possessionDate
+                );
+            } else if (reqWithin === "30 Days") {
+                possessionDate = addDays(today, 30);
+                filterList = filterList.filter(
+                    item => new Date(item.rent_details.available_from) <= possessionDate
+                );
+            } else if (reqWithin === "60 Days") {
+                possessionDate = addDays(today, 60);
+                filterList = filterList.filter(
+                    item => new Date(item.rent_details.available_from) <= possessionDate
+                );
+            } else if (reqWithin === "60+ Days") {
+                possessionDate = addDays(today, 60);
+                filterList = filterList.filter(
+                    item => new Date(item.rent_details.available_from) > possessionDate
+                );
+            }
+        }
+
+        else if (purpose === "Sell" && reqWithin !== "") {
+            const today = new Date();
+            let possessionDate;
+
+            if (reqWithin === "7 Days") {
+                possessionDate = addDays(today, 7);
+                filterList = filterList.filter(
+                    item => new Date(item.sell_details.available_from) <= possessionDate
+                );
+            } else if (reqWithin === "15 Days") {
+                possessionDate = addDays(today, 15);
+                filterList = filterList.filter(
+                    item => new Date(item.sell_details.available_from) <= possessionDate
+                );
+            } else if (reqWithin === "30 Days") {
+                possessionDate = addDays(today, 30);
+                filterList = filterList.filter(
+                    item => new Date(item.sell_details.available_from) <= possessionDate
+                );
+            } else if (reqWithin === "60 Days") {
+                possessionDate = addDays(today, 60);
+                filterList = filterList.filter(
+                    item => new Date(item.sell_details.available_from) <= possessionDate
+                );
+            } else if (reqWithin === "60+ Days") {
+                possessionDate = addDays(today, 60);
+                filterList = filterList.filter(
+                    item => new Date(item.sell_details.available_from) > possessionDate
+                );
+            }
+        }
+
+        if (selectedFunishing.length > 0) {
+            filterList = filterList.filter(
+                item => selectedFunishing.includes(item.property_details.furnishing_status)
+            );
+        }
+
+        if (selectedBuildingType.length > 0) {
+            filterList = filterList.filter(
+                item => selectedBuildingType.includes(item.property_details.building_type)
+            );
+        }
+
+        if (selectedProperties.length > 0) {
+            filterList = filterList.filter(
+                item => selectedProperties.includes(item.property_details.property_used_for)
+            );
+        }
+
+        if (minBuildupArea > 50 || maxBuildupArea < 15000) {
+            filterList = filterList.filter(
+                item =>
+                    item.property_details.property_size >= minBuildupArea &&
+                    item.property_details.property_size <= maxBuildupArea
+            );
+        }
+
+        if (purpose === "Rent") {
+            if (minRent > 5000 || maxRent < 500000) {
+                filterList = filterList.filter(
+                    item =>
+                        item.rent_details.expected_rent >= minRent &&
+                        item.rent_details.expected_rent <= maxRent
+                );
+            }
+        } else if (purpose === "Sell") {
+            if (minSell > 1000000 || maxSell < 100000000) {
+                filterList = filterList.filter(
+                    item =>
+                        item.sell_details.expected_sell_price >= minSell &&
+                        item.sell_details.expected_sell_price <= maxSell
+                );
+            }
+        }
+
+        setData(filterList);
+        setVisible(false);
+    };
+
+    const dismissSnackBar = () => {
+        setIsVisible(false);
+    };
 
     const fetchData = useCallback(async () => {
         try {
@@ -431,11 +670,11 @@ const ListingCommercial = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-white">
+        <div className="flex flex-col h-full bg-white relative">
             <div className="flex flex-row items-center p-4 border-b border-gray-200">
                 <div className="flex-1 flex items-center bg-white rounded-lg border border-gray-300 px-3 py-2 shadow-sm">
                     <MdSearch size={24} className="text-gray-400" />
-                    <div className="h-6 w-0.5 bg-blue-500 mx-3"></div>
+
                     <input
                         type="text"
                         placeholder="Search By Name, Address, Id, Mobile"
@@ -444,54 +683,306 @@ const ListingCommercial = props => {
                         className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-500 text-base"
                     />
                 </div>
-                {displayFilterButton && <div className="ml-2 flex flex-row">
-                    <button onClick={() => setVisibleSorting(true)} className="p-2 hover:bg-gray-100 rounded-full">
-                        <MdSort size={24} color="#000000" />
-                    </button>
-                    <button onClick={() => setVisible(true)} className="p-2 hover:bg-gray-100 rounded-full">
-                        <MdFilterList size={24} color="#000000" />
-                    </button>
-                    <button onClick={() => {
-                        setSearch("");
-                        setData(props.commercialPropertyList);
-                    }} className="p-2 hover:bg-gray-100 rounded-full">
-                        <MdRestartAlt size={24} color="#000000" />
-                    </button>
-                    <button onClick={navigateTo} className="p-2 hover:bg-gray-100 rounded-full">
-                        <MdAddCircleOutline size={24} color="#000000" />
-                    </button>
-                </div>}
             </div>
 
-            {loading ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                    <span>Loading...</span>
-                </div>
-            ) : (
-                <div style={{ flex: 1, overflowY: 'auto' }}>
-                    {data.map((item, index) => (
+            <div className="flex-1 overflow-y-auto">
+                {loading ? (
+                    <div className="flex justify-center items-center h-full">
+                        Loading...
+                    </div>
+                ) : (
+                    data.map((item, index) => (
                         <ItemView key={index} item={item} />
-                    ))}
+                    ))
+                )}
+            </div>
+
+            {visible && (
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }} onClick={toggleBottomNavigationView}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
+                            <h3 className="text-lg font-bold text-black">Filter</h3>
+                            <div
+                                onClick={toggleBottomNavigationView}
+                                className="absolute top-0 right-0 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                    onClick={resetFilter}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
+                            <CustomButtonGroup
+                                buttons={porposeForOptions}
+                                onButtonPress={(index, button) => setPurpose(button.text)}
+                                selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
+                                isMultiSelect={false}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#fff' }}
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Property Type</h4>
+                            <CustomButtonGroup
+                                buttons={COMMERCIAL_PROPERTY_TYPE_OPTION}
+                                isMultiSelect={true}
+                                selectedIndices={selectedProperties.map((item) =>
+                                    COMMERCIAL_PROPERTY_TYPE_OPTION.findIndex((option) => option.text === item)
+                                )}
+                                onButtonPress={(index, button) => {
+                                    selectProperties(index, button);
+                                }}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#fff' }}
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Building Type</h4>
+                            <CustomButtonGroup
+                                buttons={COMMERCIAL_PROPERTY_BUILDING_TYPE_OPTION}
+                                isMultiSelect={true}
+                                selectedIndices={selectedBuildingType.map((item) =>
+                                    COMMERCIAL_PROPERTY_BUILDING_TYPE_OPTION.findIndex((option) => option.text === item)
+                                )}
+                                onButtonPress={(index, button) => {
+                                    selectBuildingType(index, button);
+                                }}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#fff' }}
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Buildup Area Range</h4>
+                            <Slider
+                                min={50}
+                                max={15000}
+                                onSlide={setBuildupAreaRange}
+                            />
+                        </div>
+
+                        {purpose === "" ? null : purpose === "Rent" ? (
+                            <div className="mb-4">
+                                <h4 className="font-semibold mb-2 text-black">Rent Range</h4>
+                                <Slider
+                                    min={5000}
+                                    max={500000}
+                                    onSlide={setRentRange}
+                                />
+                            </div>
+                        ) : (
+                            <div className="mb-4">
+                                <h4 className="font-semibold mb-2 text-black">Sell Price Range</h4>
+                                <SliderCr
+                                    min={1000000}
+                                    max={100000000}
+                                    onSlide={setSellRange}
+                                />
+                            </div>
+                        )}
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Availability</h4>
+                            <CustomButtonGroup
+                                buttons={reqWithinOptions}
+                                onButtonPress={(index, button) => setReqWithin(button.text)}
+                                selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
+                                isMultiSelect={false}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#fff' }}
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Furnishing</h4>
+                            <CustomButtonGroup
+                                buttons={furnishingStatusOptions}
+                                isMultiSelect={true}
+                                selectedIndices={selectedFunishing.map((item) =>
+                                    furnishingStatusOptions.findIndex((option) => option.text === item)
+                                )}
+                                onButtonPress={(index, button) => {
+                                    selectFurnishings(index, button);
+                                }}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#fff' }}
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <Button title="Apply" onPress={onFilter} />
+                        </div>
+                    </div>
                 </div>
             )}
 
-            {!displayCheckBox && (
-                <div style={styles.fab} onClick={() => navigate("AddNewCustomer")}>
-                    <AiOutlinePlusCircle size={50} color="#00A36C" />
+            {visibleSorting && (
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }} onClick={toggleSortingBottomNavigationView}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
+                            <h3 className="text-lg font-bold text-black">Sort By</h3>
+                            <div
+                                onClick={resetSortBy}
+                                className="absolute top-0 right-0 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
+                            <CustomButtonGroup
+                                buttons={lookingForArraySortBy.map(text => ({ text }))}
+                                onButtonPress={(index) => selectLookingForIndexSortBy(index)}
+                                selectedIndices={[lookingForIndexSortBy]}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Rent</h4>
+                            <CustomButtonGroup
+                                buttons={sortByRentArray.map(text => ({ text }))}
+                                onButtonPress={(index) => sortByRent(index)}
+                                selectedIndices={[sortByRentIndex]}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Availability</h4>
+                            <CustomButtonGroup
+                                buttons={sortByAvailabilityArray.map(text => ({ text }))}
+                                onButtonPress={(index) => sortByAvailability(index)}
+                                selectedIndices={[sortByAvailabilityIndex]}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Posted date</h4>
+                            <CustomButtonGroup
+                                buttons={sortByPostedDateArray.map(text => ({ text }))}
+                                onButtonPress={(index) => sortByPostedDate(index)}
+                                selectedIndices={[sortByPostedDateIndex]}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
+                            />
+                        </div>
+
+                    </div>
                 </div>
             )}
-        </div>
+
+            {
+                !visible && !visibleSorting && props.commercialPropertyList && props.commercialPropertyList.length > 0 && (
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: "row",
+                            position: "fixed",
+                            width: '130px',
+                            height: '35px',
+                            alignItems: "center",
+                            justifyContent: "center",
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            bottom: '70px',
+                            backgroundColor: "#00a36c",
+                            borderRadius: '30px',
+                            zIndex: 100,
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'
+                        }}
+                    >
+                        <div
+                            onClick={() => toggleSortingBottomNavigationView()}
+                            style={{ paddingRight: '20px', cursor: 'pointer' }}
+                        >
+                            <MdSort color={"#ffffff"} size={26} />
+                        </div>
+                        <div style={{ height: "100%", width: '2px', backgroundColor: "#ffffff" }}></div>
+                        <div
+                            onClick={() => toggleBottomNavigationView()}
+                            style={{ paddingLeft: '20px', cursor: 'pointer' }}
+                        >
+                            <MdFilterList
+                                color={"#ffffff"}
+                                size={26}
+                            />
+                        </div>
+                    </div>
+                )}
+            {
+                props.userDetails && ((props.userDetails.works_for === props.userDetails.id) ||
+                    (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE.includes(props.userDetails.employee_role) // Note: EMPLOYEE_ROLE might need import if not present. Commercial didn't import it? ListingResidential imports it from utils/AppConstant. I missed adding that import!
+                    )) ?
+                    <div
+                        style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            position: "fixed", // Updated to fixed
+                            bottom: '70px', // Updated to 70px
+                            right: '25px', // Updated to 25px
+                            backgroundColor: "rgba(50, 195, 77, 0.59)",
+                            borderRadius: 100,
+                            cursor: 'pointer',
+                            zIndex: 100 // Updated zIndex
+                        }}
+                        onClick={() => navigateTo()}
+                    >
+                        <AiOutlinePlusCircle size={40} color="#ffffff" />
+                    </div> : null
+            }
+
+            <Snackbar
+                visible={isVisible}
+                textMessage={errorMessage}
+                actionHandler={dismissSnackBar}
+                actionText="OK"
+            />
+        </div >
     );
 };
 
-const styles = {
-    fab: {
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-        cursor: 'pointer'
-    }
-};
+
 
 const mapStateToProps = state => ({
     commercialPropertyList: state.AppReducer.commercialPropertyList,

@@ -611,52 +611,35 @@ const ContactsResidential = props => {
                                 className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-500 text-base"
                             />
                         </div>
-                        {displayFilterButton && <div className="ml-2 flex flex-row items-center">
-                            <button onClick={toggleSortingBottomNavigationView} className="p-2 hover:bg-gray-100 rounded-full">
-                                <MdSort size={24} color="#000000" />
-                            </button>
-                            <button onClick={toggleBottomNavigationView} className="p-2 hover:bg-gray-100 rounded-full">
-                                <MdFilterList size={24} color="#000000" />
-                            </button>
-                            <button onClick={resetFilter} className="p-2 hover:bg-gray-100 rounded-full">
-                                <MdRestartAlt size={24} color="#000000" />
-                            </button>
-                            <button onClick={() => navigate("/contacts/AddNewCustomerStack")} className="p-2 hover:bg-gray-100 rounded-full">
-                                <MdAddCircleOutline size={24} color="#000000" />
-                            </button>
-                        </div>}
+
                     </div>
                     {data.length > 0 ? (
-                        <div style={styles.container}>
-                            <div style={{ flex: 1, overflowY: 'auto' }}>
-                                {data.map((item, index) => {
-                                    if (item.customer_locality.property_type === "Residential") {
-                                        if (item.customer_locality.property_for === "Rent") {
-                                            return (
-                                                <div key={index} onClick={() => navigateToDetails(item, "Rent")} style={{ cursor: 'pointer' }}>
-                                                    <ContactResidentialRentCard navigation={navigation} item={item} deleteMe={deleteMe} closeMe={closeMe} displayCheckBox={displayCheckBox}
-                                                        disableDrawer={disableDrawer} displayCheckBoxForEmployee={displayCheckBoxForEmployee} employeeObj={employeeObj} />
-                                                    <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
-                                                </div>
-                                            );
-                                        } else if (item.customer_locality.property_for === "Buy") {
-                                            return (
-                                                <div key={index} onClick={() => navigateToDetails(item, "Buy")} style={{ cursor: 'pointer' }}>
-                                                    <ContactResidentialSellCard navigation={navigation} item={item} deleteMe={deleteMe} closeMe={closeMe} displayCheckBox={displayCheckBox}
-                                                        disableDrawer={disableDrawer} displayCheckBoxForEmployee={displayCheckBoxForEmployee} employeeObj={employeeObj} />
-                                                    <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
-                                                </div>
-                                            );
-                                        }
+                        <div className="flex-1 overflow-y-auto">
+                            {data.map((item, index) => {
+                                if (item.customer_locality.property_type === "Residential") {
+                                    if (item.customer_locality.property_for === "Rent") {
+                                        return (
+                                            <div key={index} onClick={() => navigateToDetails(item, "Rent")} style={{ cursor: 'pointer' }}>
+                                                <ContactResidentialRentCard navigation={navigation} item={item} deleteMe={deleteMe} closeMe={closeMe} displayCheckBox={displayCheckBox}
+                                                    disableDrawer={disableDrawer} displayCheckBoxForEmployee={displayCheckBoxForEmployee} employeeObj={employeeObj} />
+                                                <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
+                                            </div>
+                                        );
+                                    } else if (item.customer_locality.property_for === "Buy") {
+                                        return (
+                                            <div key={index} onClick={() => navigateToDetails(item, "Buy")} style={{ cursor: 'pointer' }}>
+                                                <ContactResidentialSellCard navigation={navigation} item={item} deleteMe={deleteMe} closeMe={closeMe} displayCheckBox={displayCheckBox}
+                                                    disableDrawer={disableDrawer} displayCheckBoxForEmployee={displayCheckBoxForEmployee} employeeObj={employeeObj} />
+                                                <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
+                                            </div>
+                                        );
                                     }
-                                    return null;
-                                })}
-                                <div style={{ padding: 10, alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-                                    <span style={{ color: '#000' }}>End</span>
-                                </div>
+                                }
+                                return null;
+                            })}
+                            <div style={{ padding: 10, alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
+                                <span style={{ color: '#000' }}>End</span>
                             </div>
-
-
                         </div>
                     ) : (
                         <div style={styles.container}>
@@ -673,67 +656,18 @@ const ContactsResidential = props => {
                                 <span style={{ textAlign: "center" }}>
                                     You have no customer
                                 </span>
-                                {props.userDetails && ((props.userDetails.works_for === props.userDetails.id) ||
-                                    (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE.includes(props.userDetails.employee_role)
-                                    )) ?
-                                    <div onClick={() => navigateTo()} style={{ cursor: 'pointer' }}>
-                                        <span
-                                            style={{ color: "#00BFFF", textAlign: "center", marginTop: 20, display: 'block' }}
-                                        >
-                                            Add New Customer
-                                        </span>
-                                    </div> : null}
-                            </div>
-                            <div style={styles.fab}>
-                                <div
-                                    onClick={() => toggleSortingBottomNavigationView()}
-                                    style={{ ...styles.fabIcon1, cursor: 'pointer' }}
-                                >
-                                    <MdSort color={"#ffffff"} size={26} />
-                                </div>
-                                <div style={styles.verticalLine}></div>
-                                <div
-                                    onClick={() => toggleBottomNavigationView()}
-                                    style={{ ...styles.fabIcon2, cursor: 'pointer' }}
-                                >
-                                    <MdFilterList
-                                        color={"#ffffff"}
-                                        size={26}
-                                    />
-                                </div>
                             </div>
                         </div>)}
 
-                    {/* Bottom for filters */}
+                    {/* Filter Modal */}
                     {visible && (
-                        <div style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(0,0,0,0.5)',
-                            zIndex: 1000,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'flex-end'
-                        }} onClick={toggleBottomNavigationView}>
-                            <div style={{
-                                backgroundColor: "#fff",
-                                width: "100%",
-                                height: "70%",
-                                borderTopLeftRadius: 20,
-                                borderTopRightRadius: 20,
-                                padding: 20,
-                                overflowY: 'auto'
-                            }} onClick={e => e.stopPropagation()}>
-                                <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                                    <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600" }}>
-                                        Filter
-                                    </span>
+                        <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={toggleBottomNavigationView}>
+                            <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                                <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
+                                    <h3 className="text-lg font-bold text-black">Filter</h3>
                                     <div
-                                        onClick={() => resetFilter()}
-                                        style={{ position: "absolute", top: 10, right: 10, cursor: 'pointer' }}
+                                        onClick={resetFilter}
+                                        className="absolute top-0 right-0 cursor-pointer"
                                     >
                                         <MdRestartAlt
                                             color={"#000000"}
@@ -742,96 +676,98 @@ const ContactsResidential = props => {
                                     </div>
                                 </div>
 
-                                <div style={{ marginTop: 20, marginBottom: 20 }}>
-                                    <p style={styles.marginBottom10}>Looking For</p>
-                                    <div style={styles.propSubSection}>
-                                        <CustomButtonGroup
-                                            buttons={porposeForOptions}
-                                            selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
-                                            isMultiSelect={false}
-                                            buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                            selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                                            buttonTextStyle={{ color: '#000' }}
-                                            selectedButtonTextStyle={{ color: '#000' }}
-                                            onButtonPress={(index, button) => {
-                                                setPurpose(button.text);
-                                            }}
+                                <div className="mb-4">
+                                    <h4 className="font-semibold mb-2 text-black">Looking For</h4>
+                                    <CustomButtonGroup
+                                        buttons={porposeForOptions}
+                                        selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
+                                        isMultiSelect={false}
+                                        buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                        selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                        buttonTextStyle={{ color: '#000' }}
+                                        selectedButtonTextStyle={{ color: '#fff' }}
+                                        onButtonPress={(index, button) => {
+                                            setPurpose(button.text);
+                                        }}
+                                    />
+                                </div>
+
+                                <div className="mb-4">
+                                    <h4 className="font-semibold mb-2 text-black">BHK Type</h4>
+                                    <CustomButtonGroup
+                                        buttons={bhkOption}
+                                        isMultiSelect={true}
+                                        buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                        selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                        buttonTextStyle={{ color: '#000' }}
+                                        selectedButtonTextStyle={{ color: '#fff' }}
+                                        selectedIndices={selectedBHK.map((item) =>
+                                            bhkOption.findIndex((option) => option.text === item)
+                                        )}
+                                        onButtonPress={(index, button) => {
+                                            selectBHK(index, button);
+                                        }}
+                                    />
+                                </div>
+
+                                {purpose === "" ? null : purpose === "Rent" ? (
+                                    <div className="mb-4">
+                                        <h4 className="font-semibold mb-2 text-black">Rent Range</h4>
+                                        <Slider
+                                            min={10000}
+                                            max={500000}
+                                            onSlide={handlePriceRangeChange}
                                         />
                                     </div>
-
-                                    <p style={styles.marginBottom10}>BHK Type</p>
-                                    <div style={styles.propSubSection}>
-                                        <CustomButtonGroup
-                                            buttons={bhkOption}
-                                            isMultiSelect={true}
-                                            buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                            selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                                            buttonTextStyle={{ color: '#000' }}
-                                            selectedButtonTextStyle={{ color: '#000' }}
-                                            selectedIndices={selectedBHK.map((item) =>
-                                                bhkOption.findIndex((option) => option.text === item)
-                                            )}
-                                            onButtonPress={(index, button) => {
-                                                selectBHK(index, button);
-                                            }}
+                                ) : (
+                                    <div className="mb-4">
+                                        <h4 className="font-semibold mb-2 text-black">Sell Price Range</h4>
+                                        <SliderCr
+                                            min={1000000}
+                                            max={100000000}
+                                            onSlide={handlePriceRangeChangeCr}
                                         />
                                     </div>
-                                    {purpose === "" ? null : purpose === "Rent" ? (
-                                        <div>
-                                            <p style={{ marginBottom: 15 }}>Rent Range</p>
-                                            <Slider
-                                                min={10000}
-                                                max={500000}
-                                                onSlide={handlePriceRangeChange}
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <p style={{ marginBottom: 10 }}>Sell Price Range</p>
+                                )}
 
-                                            <SliderCr
-                                                min={1000000}
-                                                max={100000000}
-                                                onSlide={handlePriceRangeChangeCr}
-                                            />
-                                        </div>
-                                    )}
-                                    <p style={styles.marginBottom10}>Availability</p>
-                                    <div style={styles.propSubSection}>
+                                <div className="mb-4">
+                                    <h4 className="font-semibold mb-2 text-black">Availability</h4>
+                                    <CustomButtonGroup
+                                        buttons={reqWithinOptions}
+                                        selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
+                                        isMultiSelect={false}
+                                        buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                        selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                        buttonTextStyle={{ color: '#000' }}
+                                        selectedButtonTextStyle={{ color: '#fff' }}
+                                        onButtonPress={(index, button) => {
+                                            setReqWithin(button.text);
+                                        }}
+                                    />
+                                </div>
 
-                                        <CustomButtonGroup
-                                            buttons={reqWithinOptions}
-                                            selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
-                                            isMultiSelect={false}
-                                            buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                            selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                                            buttonTextStyle={{ color: '#000' }}
-                                            selectedButtonTextStyle={{ color: '#000' }}
-                                            onButtonPress={(index, button) => {
-                                                setReqWithin(button.text);
-                                            }}
-                                        />
-                                    </div>
-                                    <p style={styles.marginBottom10}>Furnishing</p>
-                                    <div style={styles.propSubSection}>
+                                <div className="mb-4">
+                                    <h4 className="font-semibold mb-2 text-black">Furnishing</h4>
+                                    <CustomButtonGroup
+                                        buttons={furnishingStatusOptions}
+                                        isMultiSelect={true}
+                                        buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                        selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                        buttonTextStyle={{ color: '#000' }}
+                                        selectedButtonTextStyle={{ color: '#fff' }}
+                                        selectedIndices={selectedFunishing.map((item) =>
+                                            furnishingStatusOptions.findIndex((option) => option.text === item)
+                                        )}
+                                        onButtonPress={(index, button) => {
+                                            selectFurnishings(index, button);
+                                        }}
+                                    />
+                                </div>
 
-                                        <CustomButtonGroup
-                                            buttons={furnishingStatusOptions}
-                                            isMultiSelect={true}
-                                            buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                            selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                                            buttonTextStyle={{ color: '#000' }}
-                                            selectedButtonTextStyle={{ color: '#000' }}
-                                            selectedIndices={selectedFunishing.map((item) =>
-                                                furnishingStatusOptions.findIndex((option) => option.text === item)
-                                            )}
-                                            onButtonPress={(index, button) => {
-                                                selectFurnishings(index, button);
-                                            }}
-                                        />
-                                    </div>
+                                <div className="mb-4">
                                     <Button title="Apply" onPress={() => onFilter()} />
                                 </div>
+
                                 <Snackbar
                                     visible={isVisible}
                                     textMessage={errorMessage}
@@ -843,36 +779,15 @@ const ContactsResidential = props => {
                         </div>
                     )}
 
-                    {/* Bottom sheet for sorting */}
+                    {/* Sort Modal */}
                     {visibleSorting && (
-                        <div style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(0,0,0,0.5)',
-                            zIndex: 1000,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'flex-end'
-                        }} onClick={toggleSortingBottomNavigationView}>
-                            <div style={{
-                                backgroundColor: "#fff",
-                                width: "100%",
-                                height: "50%",
-                                borderTopLeftRadius: 20,
-                                borderTopRightRadius: 20,
-                                padding: 20,
-                                overflowY: 'auto'
-                            }} onClick={e => e.stopPropagation()}>
-                                <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                                    <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600" }}>
-                                        Sort By
-                                    </span>
+                        <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }} onClick={toggleSortingBottomNavigationView}>
+                            <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                                <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
+                                    <h3 className="text-lg font-bold text-black">Sort By</h3>
                                     <div
-                                        onClick={() => resetSortBy()}
-                                        style={{ position: "absolute", top: 10, right: 10, cursor: 'pointer' }}
+                                        onClick={resetSortBy}
+                                        className="absolute top-0 right-0 cursor-pointer"
                                     >
                                         <MdRestartAlt
                                             color={"#000000"}
@@ -881,48 +796,48 @@ const ContactsResidential = props => {
                                     </div>
                                 </div>
 
-                                <div style={{ marginTop: 10, marginBottom: 20 }}>
-                                    <p style={styles.marginBottom10}>Customer Looking For</p>
-                                    <div style={styles.propSubSection}>
-                                        <ButtonGroup
-                                            selectedBackgroundColor="rgba(27, 106, 158, 0.85)"
-                                            onPress={selectLookingForIndexSortBy}
-                                            selectedIndex={lookingForIndexSortBy}
-                                            buttons={lookingForArraySortBy}
-                                            textStyle={{ textAlign: "center" }}
-                                            selectedTextStyle={{ color: "#fff" }}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
-                                            containerBorderRadius={10}
-                                        />
-                                    </div>
-                                    <p style={styles.marginBottom10}>Name</p>
-                                    <div style={styles.propSubSection}>
-                                        <ButtonGroup
-                                            selectedBackgroundColor="rgba(27, 106, 158, 0.85)"
-                                            onPress={sortByName}
-                                            selectedIndex={sortByNameIndex}
-                                            buttons={sortByNameArray}
-                                            textStyle={{ textAlign: "center" }}
-                                            selectedTextStyle={{ color: "#fff" }}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
-                                            containerBorderRadius={10}
-                                        />
-                                    </div>
-
-                                    <p style={styles.marginBottom10}>Posted date</p>
-                                    <div style={styles.propSubSection}>
-                                        <ButtonGroup
-                                            selectedBackgroundColor="rgba(27, 106, 158, 0.85)"
-                                            onPress={sortByPostedDate}
-                                            selectedIndex={sortByPostedDateIndex}
-                                            buttons={sortByPostedDateArray}
-                                            textStyle={{ textAlign: "center" }}
-                                            selectedTextStyle={{ color: "#fff" }}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
-                                            containerBorderRadius={10}
-                                        />
-                                    </div>
+                                <div className="mb-4">
+                                    <h4 className="font-semibold mb-2 text-black">Customer Looking For</h4>
+                                    <CustomButtonGroup
+                                        buttons={lookingForArraySortBy.map(text => ({ text }))}
+                                        onButtonPress={(index) => selectLookingForIndexSortBy(index)}
+                                        selectedIndices={[lookingForIndexSortBy]}
+                                        isMultiSelect={false}
+                                        buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                        selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                        buttonTextStyle={{ color: '#000' }}
+                                        selectedButtonTextStyle={{ color: '#fff' }}
+                                    />
                                 </div>
+
+                                <div className="mb-4">
+                                    <h4 className="font-semibold mb-2 text-black">Name</h4>
+                                    <CustomButtonGroup
+                                        buttons={sortByNameArray.map(text => ({ text }))}
+                                        onButtonPress={(index) => sortByName(index)}
+                                        selectedIndices={[sortByNameIndex]}
+                                        isMultiSelect={false}
+                                        buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                        selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                        buttonTextStyle={{ color: '#000' }}
+                                        selectedButtonTextStyle={{ color: '#fff' }}
+                                    />
+                                </div>
+
+                                <div className="mb-4">
+                                    <h4 className="font-semibold mb-2 text-black">Posted date</h4>
+                                    <CustomButtonGroup
+                                        buttons={sortByPostedDateArray.map(text => ({ text }))}
+                                        onButtonPress={(index) => sortByPostedDate(index)}
+                                        selectedIndices={[sortByPostedDateIndex]}
+                                        isMultiSelect={false}
+                                        buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                        selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                        buttonTextStyle={{ color: '#000' }}
+                                        selectedButtonTextStyle={{ color: '#fff' }}
+                                    />
+                                </div>
+
                                 <Snackbar
                                     visible={isVisible}
                                     textMessage={errorMessage}
@@ -934,6 +849,46 @@ const ContactsResidential = props => {
                         </div>
                     )}
 
+                    {/* Filter/Sort FAB */}
+                    {!visible && !visibleSorting && (
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: "row",
+                                position: "fixed",
+                                width: '130px',
+                                height: '35px',
+                                alignItems: "center",
+                                justifyContent: "center",
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                bottom: '70px',
+                                backgroundColor: "#00a36c",
+                                borderRadius: '30px',
+                                zIndex: 100,
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'
+                            }}
+                        >
+                            <div
+                                onClick={() => toggleSortingBottomNavigationView()}
+                                style={{ paddingRight: '20px', cursor: 'pointer' }}
+                            >
+                                <MdSort color={"#ffffff"} size={26} />
+                            </div>
+                            <div style={{ height: "100%", width: '2px', backgroundColor: "#ffffff" }}></div>
+                            <div
+                                onClick={() => toggleBottomNavigationView()}
+                                style={{ paddingLeft: '20px', cursor: 'pointer' }}
+                            >
+                                <MdFilterList
+                                    color={"#ffffff"}
+                                    size={26}
+                                />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Add Fab */}
                     {props.userDetails && ((props.userDetails.works_for === props.userDetails.id) ||
                         (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE.includes(props.userDetails.employee_role)
                         )) ?
@@ -941,23 +896,22 @@ const ContactsResidential = props => {
                             style={{
                                 alignItems: "center",
                                 justifyContent: "center",
-                                position: "absolute",
-                                bottom: 15,
-                                right: 10,
-                                backgroundColor: "rgba(0,191,255, .5)",
+                                position: "fixed",
+                                bottom: '70px',
+                                right: '25px',
+                                backgroundColor: "rgba(50, 195, 77, 0.59)",
                                 borderRadius: 100,
                                 cursor: 'pointer',
-                                display: 'flex',
-                                width: 40,
-                                height: 40
+                                zIndex: 100
                             }}
-                            onClick={() => navigate("/contacts/AddNewCustomerStack")}
+                            onClick={() => navigateTo()}
                         >
                             <AiOutlinePlusCircle size={40} color="#ffffff" />
                         </div> : null}
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 };
 
