@@ -12,6 +12,11 @@ const ScreenWrapper = ({ Component, ...props }) => {
             // Handle React Native style params: navigate('Screen', { param: value })
             // React Router: navigate('Screen', { state: { param: value } })
 
+            if (typeof path === 'number') {
+                navigate(path);
+                return;
+            }
+
             if (routesMap[path]) {
                 navigate(routesMap[path], { state: state });
                 return;

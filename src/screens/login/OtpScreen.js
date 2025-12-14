@@ -170,6 +170,9 @@ const OtpScreen = (props) => {
                                     textAlign: 'center'
                                 }}
                                 className="border border-gray-300 focus:border-green-600 focus:border-2 text-black"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
+                                type="tel"
                             />
                         )}
                     />

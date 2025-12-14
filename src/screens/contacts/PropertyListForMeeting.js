@@ -5,7 +5,8 @@ import {
     MdFilterList,
     MdRestartAlt,
     MdSearch,
-    MdAddCircleOutline
+    MdAddCircleOutline,
+    MdArrowBack
 } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 // import { ButtonGroup } from "@rneui/themed";
@@ -113,8 +114,18 @@ const PropertyListForMeeting = props => {
         navigation.navigate("Add");
     };
 
+    const handleBack = () => {
+        navigation.navigate(-1);
+    }
+
     return (
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm" style={{ height: 60, width: '100%', marginBottom: 10 }}>
+                <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 className="text-lg font-semibold text-gray-800">Property List For Meeting</h1>
+            </div>
             <div style={styles.searchBarContainer}>
                 <input
                     style={styles.textInputStyle}

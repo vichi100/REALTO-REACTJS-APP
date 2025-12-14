@@ -11,7 +11,7 @@ import ContactResidentialSellCard from "../contacts/residential/buy/ContactResid
 import CustomerCommercialRentCard from "../contacts/commercial/rent/CustomerCommercialRentCard";
 import CustomerCommercialBuyCard from "../contacts/commercial/buy/CustomerCommercialBuyCard";
 
-import { MdSearch, MdSort, MdFilterList, MdRestartAlt } from "react-icons/md";
+import { MdSearch, MdSort, MdFilterList, MdRestartAlt, MdArrowBack } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 import axios from "axios";
@@ -159,6 +159,10 @@ const CustomerListForMeeting = props => {
         navigation.navigate("AddNewCustomerStack");
     };
 
+    const handleBack = () => {
+        navigation.navigate(-1);
+    }
+
     const searchFilterFunction = text => {
         if (text) {
             const newData = props.customerListForMeeting.filter(function (item) {
@@ -188,6 +192,12 @@ const CustomerListForMeeting = props => {
 
     return (
         <div style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm" style={{ height: 60, width: '100%' }}>
+                <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 className="text-lg font-semibold text-gray-800">Customer List For Meeting</h1>
+            </div>
             <div style={styles.searchBarContainer}>
                 <div style={styles.searchBar}>
                     <MdSearch size={20} color="#999" style={{ marginRight: 5, }} />
