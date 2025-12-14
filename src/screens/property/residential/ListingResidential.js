@@ -10,6 +10,8 @@ import {
 } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Button from "./../../../components/Button";
+import Slider from "./../../../components/Slider";
+import SliderCr from "./../../../components/SliderCr";
 import CardResidentialRent from "./rent/ResidentialRentCard";
 import CardResidentialSell from "./sell/ResidentialSellCard";
 import axios from "axios";
@@ -34,7 +36,7 @@ const furnishingStatusArray = ["Full", "Semi", "Empty"];
 const lookingForArraySortBy = ["Rent", "Sell"];
 const sortByRentArray = ["Lowest First", "Highest First"];
 const sortByAvailabilityArray = ["Earliest First", "Oldest First"];
-const sortByPostedDateArray = ["Recent First", "Oldest Fist"];
+const sortByPostedDateArray = ["Recent First", "Oldest First"];
 
 const bhkOption = [
     { text: '1RK' },
@@ -646,7 +648,7 @@ const ListingResidential = props => {
             <div className="flex flex-row items-center p-4 border-b border-gray-200">
                 <div className="flex-1 flex items-center bg-white rounded-lg border border-gray-300 px-3 py-2 shadow-sm">
                     <MdSearch size={24} className="text-gray-400" />
-                    <div className="h-6 w-0.5 bg-blue-500 mx-3"></div>
+
                     <input
                         type="text"
                         placeholder="Search By Name, Address, Id, Mobile"
@@ -655,23 +657,10 @@ const ListingResidential = props => {
                         className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-500 text-base"
                     />
                 </div>
-                {displayFilterButton && <div className="ml-2 flex flex-row">
-                    <button onClick={toggleSortingBottomNavigationView} className="p-2 hover:bg-gray-100 rounded-full">
-                        <MdSort size={24} color="#000000" />
-                    </button>
-                    <button onClick={toggleBottomNavigationView} className="p-2 hover:bg-gray-100 rounded-full">
-                        <MdFilterList size={24} color="#000000" />
-                    </button>
-                    <button onClick={resetFilter} className="p-2 hover:bg-gray-100 rounded-full">
-                        <MdRestartAlt size={24} color="#000000" />
-                    </button>
-                    <button onClick={navigateTo} className="p-2 hover:bg-gray-100 rounded-full">
-                        <MdAddCircleOutline size={24} color="#000000" />
-                    </button>
-                </div>}
+
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4">
+            <div className="flex-1 overflow-y-auto">
                 {loading ? (
                     <div className="flex justify-center items-center h-full">
                         Loading...
@@ -684,143 +673,253 @@ const ListingResidential = props => {
             </div>
 
             {visible && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50">
-                    <div className="bg-white w-full p-4 rounded-t-lg max-h-[80vh] overflow-y-auto">
-                        <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-lg font-bold">Filter</h3>
-                            <button onClick={toggleBottomNavigationView}>Close</button>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }} onClick={toggleBottomNavigationView}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
+                            <h3 className="text-lg font-bold text-black">Filter</h3>
+                            <div
+                                onClick={toggleBottomNavigationView}
+                                className="absolute top-0 right-0 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                    onClick={resetFilter}
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2">Purpose</h4>
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={porposeForOptions}
-                                onPress={(index) => setPurpose(porposeForOptions[index].text)}
-                                selectedIndex={porposeForOptions.findIndex(opt => opt.text === purpose)}
+                                onButtonPress={(index, button) => setPurpose(button.text)}
+                                selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
+                                isMultiSelect={false}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#fff' }}
                             />
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2">BHK Type</h4>
-                            <div className="flex flex-wrap gap-2">
-                                {bhkOption.map((option, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => selectBHK(index, option)}
-                                        className={`p-2 border rounded ${selectedBHK.includes(option.text) ? 'bg-blue-500 text-white' : 'bg-white text-black'}`}
-                                    >
-                                        {option.text}
-                                    </button>
-                                ))}
-                            </div>
+                            <h4 className="font-semibold mb-2 text-black">BHK Type</h4>
+                            <CustomButtonGroup
+                                buttons={bhkOption}
+                                isMultiSelect={true}
+                                selectedIndices={selectedBHK.map((item) =>
+                                    bhkOption.findIndex((option) => option.text === item)
+                                )}
+                                onButtonPress={(index, button) => {
+                                    selectBHK(index, button);
+                                }}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#fff' }}
+                            />
                         </div>
 
+                        {purpose === "" ? null : purpose === "Rent" ? (
+                            <div className="mb-4">
+                                <h4 className="font-semibold mb-2 text-black">Rent Range</h4>
+                                <Slider
+                                    min={5000}
+                                    max={500000}
+                                    onSlide={setRentRange}
+                                />
+                            </div>
+                        ) : (
+                            <div className="mb-4">
+                                <h4 className="font-semibold mb-2 text-black">Sell Price Range</h4>
+                                <SliderCr
+                                    min={1000000}
+                                    max={100000000}
+                                    onSlide={setSellRange}
+                                />
+                            </div>
+                        )}
+
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2">Required Within</h4>
+                            <h4 className="font-semibold mb-2 text-black">Availability</h4>
                             <CustomButtonGroup
                                 buttons={reqWithinOptions}
-                                onPress={(index) => setReqWithin(reqWithinOptions[index].text)}
-                                selectedIndex={reqWithinOptions.findIndex(opt => opt.text === reqWithin)}
+                                onButtonPress={(index, button) => setReqWithin(button.text)}
+                                selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
+                                isMultiSelect={false}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#fff' }}
                             />
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2">Furnishing Status</h4>
-                            <div className="flex flex-wrap gap-2">
-                                {furnishingStatusOptions.map((option, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => selectFurnishings(index, option)}
-                                        className={`p-2 border rounded ${selectedFunishing.includes(option.text) ? 'bg-blue-500 text-white' : 'bg-white text-black'}`}
-                                    >
-                                        {option.text}
-                                    </button>
-                                ))}
-                            </div>
+                            <h4 className="font-semibold mb-2 text-black">Furnishing</h4>
+                            <CustomButtonGroup
+                                buttons={furnishingStatusOptions}
+                                isMultiSelect={true}
+                                selectedIndices={selectedFunishing.map((item) =>
+                                    furnishingStatusOptions.findIndex((option) => option.text === item)
+                                )}
+                                onButtonPress={(index, button) => {
+                                    selectFurnishings(index, button);
+                                }}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#fff' }}
+                            />
                         </div>
 
                         <div className="mb-4">
-                            <Button title="Apply Filter" onPress={onFilter} />
-                            <Button title="Reset" onPress={resetFilter} type="outline" />
+                            <Button title="Apply" onPress={onFilter} />
                         </div>
                     </div>
                 </div>
             )}
 
             {visibleSorting && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50">
-                    <div className="bg-white w-full p-4 rounded-t-lg">
-                        <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-lg font-bold">Sort By</h3>
-                            <button onClick={toggleSortingBottomNavigationView}>Close</button>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={toggleSortingBottomNavigationView}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
+                            <h3 className="text-lg font-bold text-black">Sort By</h3>
+                            <div
+                                onClick={resetSortBy}
+                                className="absolute top-0 right-0 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2">Looking For</h4>
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
                             <CustomButtonGroup
-                                buttons={[{ text: "Rent" }, { text: "Sell" }]}
-                                onPress={selectLookingForIndexSortBy}
-                                selectedIndex={lookingForIndexSortBy}
+                                buttons={lookingForArraySortBy.map(text => ({ text }))}
+                                onButtonPress={(index) => selectLookingForIndexSortBy(index)}
+                                selectedIndices={[lookingForIndexSortBy]}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
-                        {lookingForIndexSortBy !== -1 && (
-                            <>
-                                <div className="mb-4">
-                                    <h4 className="font-semibold mb-2">Price</h4>
-                                    <CustomButtonGroup
-                                        buttons={[{ text: "Lowest First" }, { text: "Highest First" }]}
-                                        onPress={sortByRent}
-                                        selectedIndex={sortByRentIndex}
-                                    />
-                                </div>
-
-                                <div className="mb-4">
-                                    <h4 className="font-semibold mb-2">Availability</h4>
-                                    <CustomButtonGroup
-                                        buttons={[{ text: "Earliest First" }, { text: "Oldest First" }]}
-                                        onPress={sortByAvailability}
-                                        selectedIndex={sortByAvailabilityIndex}
-                                    />
-                                </div>
-
-                                <div className="mb-4">
-                                    <h4 className="font-semibold mb-2">Posted Date</h4>
-                                    <CustomButtonGroup
-                                        buttons={[{ text: "Recent First" }, { text: "Oldest First" }]}
-                                        onPress={sortByPostedDate}
-                                        selectedIndex={sortByPostedDateIndex}
-                                    />
-                                </div>
-                            </>
-                        )}
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Rent</h4>
+                            <CustomButtonGroup
+                                buttons={sortByRentArray.map(text => ({ text }))}
+                                onButtonPress={(index) => sortByRent(index)}
+                                selectedIndices={[sortByRentIndex]}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
+                            />
+                        </div>
 
                         <div className="mb-4">
-                            <Button title="Reset" onPress={resetSortBy} type="outline" />
+                            <h4 className="font-semibold mb-2 text-black">Availability</h4>
+                            <CustomButtonGroup
+                                buttons={sortByAvailabilityArray.map(text => ({ text }))}
+                                onButtonPress={(index) => sortByAvailability(index)}
+                                selectedIndices={[sortByAvailabilityIndex]}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
+                            />
                         </div>
+
+                        <div className="mb-4">
+                            <h4 className="font-semibold mb-2 text-black">Posted date</h4>
+                            <CustomButtonGroup
+                                buttons={sortByPostedDateArray.map(text => ({ text }))}
+                                onButtonPress={(index) => sortByPostedDate(index)}
+                                selectedIndices={[sortByPostedDateIndex]}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
+                            />
+                        </div>
+
                     </div>
                 </div>
             )}
 
-            {props.userDetails && ((props.userDetails.works_for === props.userDetails.id) ||
-                (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE.includes(props.userDetails.employee_role)
-                )) ?
-                <div
-                    style={{
-                        alignItems: "center",
-                        justifyContent: "center",
-                        position: "absolute",
-                        bottom: 15,
-                        right: 10,
-                        backgroundColor: "rgba(50, 195, 77, 0.59)",
-                        borderRadius: 100,
-                        cursor: 'pointer',
-                        zIndex: 20
-                    }}
-                    onClick={() => navigateTo()}
-                >
-                    <AiOutlinePlusCircle size={40} color="#ffffff" />
-                </div> : null}
+
+            {
+                !visible && !visibleSorting && props.residentialPropertyList && props.residentialPropertyList.length > 0 && (
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: "row",
+                            position: "fixed",
+                            width: '130px',
+                            height: '35px',
+                            alignItems: "center",
+                            justifyContent: "center",
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            bottom: '70px',
+                            backgroundColor: "#00a36c",
+                            borderRadius: '30px',
+                            zIndex: 100,
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'
+                        }}
+                    >
+                        <div
+                            onClick={() => toggleSortingBottomNavigationView()}
+                            style={{ paddingRight: '20px', cursor: 'pointer' }}
+                        >
+                            <MdSort color={"#ffffff"} size={26} />
+                        </div>
+                        <div style={{ height: "100%", width: '2px', backgroundColor: "#ffffff" }}></div>
+                        <div
+                            onClick={() => toggleBottomNavigationView()}
+                            style={{ paddingLeft: '20px', cursor: 'pointer' }}
+                        >
+                            <MdFilterList
+                                color={"#ffffff"}
+                                size={26}
+                            />
+                        </div>
+                    </div>
+                )}
+            {
+                props.userDetails && ((props.userDetails.works_for === props.userDetails.id) ||
+                    (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE.includes(props.userDetails.employee_role)
+                    )) ?
+                    <div
+                        style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            position: "fixed",
+                            bottom: '70px',
+                            right: '25px',
+                            backgroundColor: "rgba(50, 195, 77, 0.59)",
+                            borderRadius: 100,
+                            cursor: 'pointer',
+                            zIndex: 100
+                        }}
+                        onClick={() => navigateTo()}
+                    >
+                        <AiOutlinePlusCircle size={40} color="#ffffff" />
+                    </div> : null
+            }
 
             <Snackbar
                 visible={isVisible}
@@ -828,7 +927,7 @@ const ListingResidential = props => {
                 actionHandler={dismissSnackBar}
                 actionText="OK"
             />
-        </div>
+        </div >
     );
 };
 
