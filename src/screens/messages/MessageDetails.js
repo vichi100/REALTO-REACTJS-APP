@@ -9,14 +9,51 @@ import CustomerDetailsResidentialBuyFromList from "../contacts/residential/buy/C
 import CustomerDetailsCommercialRentFromList from "../contacts/commercial/rent/CustomerDetailsCommercialRentFromList";
 import CustomerDetailsCommercialBuyFromList from "../contacts/commercial/buy/CustomerDetailsCommercialBuyFromList";
 
+import { MdArrowBack } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 const MessageDetails = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const item = location.state?.item;
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/messages');
+        }
+    };
 
     if (!item) return null;
 
     return (
         <div className="flex flex-col h-full bg-white overflow-y-auto">
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '15px 20px',
+                borderBottom: '1px solid #d0d0d0',
+                backgroundColor: '#fff',
+                position: 'sticky',
+                top: 0,
+                zIndex: 10,
+            }}>
+                <div onClick={handleBack} style={{
+                    cursor: 'pointer',
+                    marginRight: '15px',
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 style={{
+                    fontSize: '20px',
+                    fontWeight: '600',
+                    color: '#333',
+                    margin: 0,
+                }}>Message Details</h1>
+            </div>
             <div className="p-2.5 text-base pt-4">
                 <p className="text-base text-gray-700">
                     I have customer for your {item.subject.location_area},
@@ -32,29 +69,29 @@ const MessageDetails = () => {
             {item.subject.subject_category === "property" ? (
                 item.subject.subject_type === "Residential" ? (
                     item.subject.subject_for === "Rent" ? (
-                        <PropDetailsFromListing />
+                        <PropDetailsFromListing item={item.subject} showHeader={false} />
                     ) : (
-                        <PropDetailsFromListingForSell />
+                        <PropDetailsFromListingForSell item={item.subject} showHeader={false} />
                     )
                 ) : item.subject.subject_type === "Commercial" ? (
                     item.subject.subject_for === "Rent" ? (
-                        <CommercialRentPropDetails />
+                        <CommercialRentPropDetails item={item.subject} showHeader={false} />
                     ) : (
-                        <CommercialSellPropDetails />
+                        <CommercialSellPropDetails item={item.subject} showHeader={false} />
                     )
                 ) : null
             ) : item.subject.subject_category === "customer" ? (
                 item.subject.subject_type === "Residential" ? (
                     item.subject.subject_for === "Rent" ? (
-                        <CustomerDetailsResidentialRentFromList />
+                        <CustomerDetailsResidentialRentFromList item={item.subject} showHeader={false} />
                     ) : (
-                        <CustomerDetailsResidentialBuyFromList />
+                        <CustomerDetailsResidentialBuyFromList item={item.subject} showHeader={false} />
                     )
                 ) : item.subject.subject_type === "Commercial" ? (
                     item.subject.subject_for === "Rent" ? (
-                        <CustomerDetailsCommercialRentFromList />
+                        <CustomerDetailsCommercialRentFromList item={item.subject} showHeader={false} />
                     ) : (
-                        <CustomerDetailsCommercialBuyFromList />
+                        <CustomerDetailsCommercialBuyFromList item={item.subject} showHeader={false} />
                     )
                 ) : null
             ) : null}

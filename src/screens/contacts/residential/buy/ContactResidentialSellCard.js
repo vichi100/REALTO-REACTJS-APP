@@ -13,6 +13,7 @@ import {
     MdLocationOn,
     MdPersonAdd,
 } from "react-icons/md";
+import { VscLocation } from "react-icons/vsc";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlineMessage, AiOutlineShareAlt } from "react-icons/ai";
 import { FiUserPlus } from "react-icons/fi";
@@ -731,7 +732,7 @@ const ContactResidentialSellCard = props => {
                         paddingLeft: 30, backgroundColor: "rgba(220,220,220, .2)",
                         display: 'flex'
                     }}>
-                    <span style={{ marginLeft: 10, marginTop: 10, color: "#000" }}>📍</span>
+                    <span style={{ marginLeft: 10, marginTop: 10, color: "#000" }}><VscLocation /></span>
                     <span style={{ ...styles.subTitleA, marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
                         {item.customer_locality.location_area.map(item => item.main_text).join(', ')}
                     </span>

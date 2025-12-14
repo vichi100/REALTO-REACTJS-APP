@@ -8,10 +8,20 @@ import axios from "axios";
 
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import { MdArrowBack } from "react-icons/md";
+
 const ProfileForm = props => {
     const navigate = useNavigate();
     const location = useLocation();
     const { } = location.state || {};
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/profile');
+        }
+    };
 
     const [name, setName] = useState(props.userDetails.name || "");
     const [city, setCity] = useState(props.userDetails.city || "");
@@ -77,6 +87,12 @@ const ProfileForm = props => {
 
     return (
         <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+            <div style={styles.header}>
+                <div onClick={handleBack} style={styles.backButton}>
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 style={styles.title}>Edit Profile</h1>
+            </div>
             <div style={styles.container}>
                 <div style={styles.propSection}>
                     <div style={{ marginTop: 8 }}>
@@ -139,6 +155,28 @@ const styles = {
         marginRight: 20,
         display: 'flex',
         flexDirection: 'column'
+    },
+    header: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '15px 20px',
+        borderBottom: '1px solid #f0f0f0',
+        backgroundColor: '#fff',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10,
+    },
+    backButton: {
+        cursor: 'pointer',
+        marginRight: '15px',
+        display: 'flex',
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: '20px',
+        fontWeight: '600',
+        color: '#333',
+        margin: 0,
     },
     propSection: {
         marginTop: 20

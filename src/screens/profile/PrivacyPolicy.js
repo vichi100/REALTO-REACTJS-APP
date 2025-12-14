@@ -5,10 +5,18 @@ import { useNavigate } from 'react-router-dom';
 const PrivacyPolicy = () => {
     const navigate = useNavigate();
 
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/profile');
+        }
+    };
+
     return (
         <div style={styles.container}>
             <div style={styles.header}>
-                <div onClick={() => navigate(-1)} style={styles.backButton}>
+                <div onClick={handleBack} style={styles.backButton}>
                     <MdArrowBack size={24} color="#333" />
                 </div>
                 <h1 style={styles.title}>Privacy Policy</h1>

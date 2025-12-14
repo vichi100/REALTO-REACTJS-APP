@@ -6,17 +6,26 @@ import AccordionListItem from './../../../../components/AccordionListItem';
 import PropertyReminder from "../../PropertyReminder";
 import { SERVER_URL } from "./../../../../utils/Constant";
 import axios from "axios";
-import { MdPersonAdd, MdPhone } from "react-icons/md";
+import { MdPersonAdd, MdPhone, MdArrowBack } from "react-icons/md";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const PropDetailsFromListingForSell = props => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/listing');
+        }
+    };
     const { navigation } = props;
-    let { item,
-        displayMatchCount = true,
-        displayMatchPercent = true
-    } = props.route?.params || {};
-    if (!item) {
-        item = props.propertyDetails;
-    }
+
+    let item = props.item || location.state?.item || props.route?.params?.item || props.propertyDetails;
+    let showHeader = props.showHeader ?? location.state?.showHeader ?? props.route?.params?.showHeader ?? true;
+    let displayMatchCount = props.displayMatchCount ?? location.state?.displayMatchCount ?? props.route?.params?.displayMatchCount ?? true;
+
     const scrollViewRef = useRef();
     const [reminderListX, setReminderListX] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -74,6 +83,14 @@ const PropDetailsFromListingForSell = props => {
 
     return (
         <div className="flex flex-col h-full bg-white overflow-y-auto" ref={scrollViewRef}>
+            {showHeader && (
+                <div className="sticky top-0 z-50 bg-white border-b border-gray-200 flex items-center p-4 shadow-sm">
+                    <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
+                        <MdArrowBack size={24} color="#333" />
+                    </div>
+                    <h1 className="text-lg font-semibold text-gray-800">Property Details</h1>
+                </div>
+            )}
             <div className="flex flex-row flex-1">
                 <div className="flex-1 min-h-[100px]">
                     <div className="flex flex-col items-start px-4 pt-4">

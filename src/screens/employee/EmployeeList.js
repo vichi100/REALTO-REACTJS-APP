@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { MdSort, MdFilterList, MdSearch } from "react-icons/md";
+import { MdSort, MdFilterList, MdSearch, MdArrowBack } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import axios from "axios";
 import { SERVER_URL } from "./../../utils/Constant";
@@ -36,6 +36,14 @@ const EmployeeList = props => {
             getListing();
         }
     }, [props.userDetails]);
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/profile');
+        }
+    };
 
     const getListing = () => {
         const user = {
@@ -137,6 +145,12 @@ const EmployeeList = props => {
             <div>Loading...</div>
         </div> :
             <div style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+                <div style={styles.header}>
+                    <div onClick={handleBack} style={styles.backButton}>
+                        <MdArrowBack size={24} color="#333" />
+                    </div>
+                    <h1 style={styles.title}>Employee List</h1>
+                </div>
                 <div style={styles.searchBar}>
                     <MdSearch size={20} color="#999" style={{ marginRight: 5, }} />
                     <input
@@ -298,6 +312,28 @@ const styles = {
         outline: 'none',
         fontSize: 16,
         color: '#000'
+    },
+    header: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '15px 20px',
+        borderBottom: '1px solid #f0f0f0',
+        backgroundColor: '#fff',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10,
+    },
+    backButton: {
+        cursor: 'pointer',
+        marginRight: '15px',
+        display: 'flex',
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: '20px',
+        fontWeight: '600',
+        color: '#333',
+        margin: 0,
     },
 };
 

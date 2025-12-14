@@ -4,7 +4,8 @@ import {
     MdSort,
     MdFilterList,
     MdRestartAlt,
-    MdSearch
+    MdSearch,
+    MdArrowBack
 } from "react-icons/md";
 // import { ButtonGroup } from "@rneui/themed";
 import CustomButtonGroup from "./../../components/CustomButtonGroup";
@@ -24,6 +25,7 @@ import {
 import { addDays, numDifferentiation } from "./../../utils/methods";
 import Snackbar from "./../../components/SnackbarComponent";
 import { resetRefresh } from './../../reducers/dataRefreshReducer';
+import { useNavigate } from "react-router-dom";
 
 const lookingForArray = ["Rent", "Buy"];
 const homeTypeArray = ["Apartment", "Villa", "Independent House"];
@@ -36,7 +38,16 @@ const lookingForArraySortBy = ["Rent", "Buy"];
 const sortByPostedDateArray = ["Recent First", "Oldest Fist"];
 
 const MatchedCustomers = props => {
+    const navigate = useNavigate();
     const { navigation, route } = props;
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/listing');
+        }
+    };
     const matchedProprtyItem = route?.params?.matchedProprtyItem || {};
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -458,6 +469,12 @@ const MatchedCustomers = props => {
                 <div>Loading...</div>
             </div> :
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                    <div style={styles.header}>
+                        <div onClick={handleBack} style={styles.backButton}>
+                            <MdArrowBack size={24} color="#333" />
+                        </div>
+                        <h1 style={styles.title}>Matched Customers</h1>
+                    </div>
                     {1 > 0 ? (
                         <div style={styles.container}>
                             <div style={styles.tabContainer}>
@@ -923,10 +940,40 @@ const styles = {
     tabText: {
         color: '#000',
     },
+    input: {
+        width: '100%',
+        padding: 10,
+        borderRadius: 5,
+        border: '1px solid #ccc',
+        fontSize: 16
+    },
+    header: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '15px 20px',
+        borderBottom: '1px solid #f0f0f0',
+        backgroundColor: '#fff',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10,
+    },
+    backButton: {
+        cursor: 'pointer',
+        marginRight: '15px',
+        display: 'flex',
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: '20px',
+        fontWeight: '600',
+        color: '#333',
+        margin: 0,
+    }
 };
 const mapStateToProps = state => ({
     userDetails: state.AppReducer.userDetails,
-    residentialCustomerList: state.AppReducer.residentialCustomerList
+    residentialCustomerList: state.AppReducer.residentialCustomerList,
+    propertyDetails: state.AppReducer.propertyDetails
 });
 const mapDispatchToProps = {
     setResidentialCustomerList,

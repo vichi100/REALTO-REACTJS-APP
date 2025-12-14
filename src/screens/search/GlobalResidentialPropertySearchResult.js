@@ -4,8 +4,10 @@ import {
     MdSort,
     MdFilterList,
     MdRestartAlt,
-    MdSearch
+    MdSearch,
+    MdArrowBack
 } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import Button from "./../../components/Button";
 import CardResidentialRent from "../property/residential/rent/ResidentialRentCard";
 import CardResidentialSell from "../property/residential/sell/ResidentialSellCard";
@@ -528,8 +530,24 @@ const GlobalResidentialPropertySearchResult = props => {
     const [visible, setVisible] = useState(false);
     const [visibleSorting, setVisibleSorting] = useState(false);
 
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/listing');
+        }
+    };
+
     return (
         <div className="flex flex-col h-full bg-gray-100">
+            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm">
+                <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 className="text-lg font-semibold text-gray-800">Search Results</h1>
+            </div>
             <div className="flex flex-row items-center bg-white p-2 shadow-sm">
                 <div className="relative flex-1">
                     <input

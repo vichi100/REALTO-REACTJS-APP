@@ -14,6 +14,7 @@ import {
     MdLocationOn,
     MdPersonAdd,
 } from "react-icons/md";
+import { VscLocation } from "react-icons/vsc";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlineMessage, AiOutlineShareAlt } from "react-icons/ai";
 import { FiUserPlus } from "react-icons/fi";

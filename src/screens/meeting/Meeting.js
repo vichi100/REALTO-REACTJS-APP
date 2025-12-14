@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import { MdArrowBack } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "./../../components/Button";
 // import { ButtonGroup } from "@rneui/themed";
@@ -24,6 +26,15 @@ const reminderForArray = ["Call", "Meeting", "Property Visit"];
 const ampmArray = [{ text: "AM" }, { text: "PM" }];
 
 const Meeting = props => {
+    const navigate = useNavigate();
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/listing');
+        }
+    };
+
     const { navigation } = props;
     const item = props.route?.params?.item || {};
     const category = props.route?.params?.category;
@@ -233,7 +244,32 @@ const Meeting = props => {
     }, [propertyIdX]);
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+        <div style={{ flex: 1, backgroundColor: "#E6E6E6", height: '100%', overflow: 'hidden' }}>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '15px 20px',
+                borderBottom: '1px solid #d0d0d0',
+                backgroundColor: '#fff',
+                position: 'sticky',
+                top: 0,
+                zIndex: 10,
+            }}>
+                <div onClick={handleBack} style={{
+                    cursor: 'pointer',
+                    marginRight: '15px',
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 style={{
+                    fontSize: '20px',
+                    fontWeight: '600',
+                    color: '#333',
+                    margin: 0,
+                }}>Schedule Meeting</h1>
+            </div>
             <div style={styles.container}>
                 <div>
                     <p style={{ marginTop: 10, marginBottom: 10, fontSize: 16, color: '#000', fontWeight: '500' }}>

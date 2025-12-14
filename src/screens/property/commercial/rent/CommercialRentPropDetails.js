@@ -6,17 +6,26 @@ import AccordionListItem from "./../../../../components/AccordionListItem";
 import PropertyReminder from "../../PropertyReminder";
 import { SERVER_URL } from "./../../../../utils/Constant";
 import axios from "axios";
-import { MdPersonAdd, MdPhone } from "react-icons/md";
+import { MdPersonAdd, MdPhone, MdArrowBack } from "react-icons/md";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const CommercialRentPropDetails = props => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/listing');
+        }
+    };
     const { navigation } = props;
-    let { item,
-        displayMatchCount = true,
-        displayMatchPercent = true
-    } = props.route?.params || {};
-    if (!item) {
-        item = props.propertyDetails;
-    }
+
+    let item = props.item || location.state?.item || props.route?.params?.item || props.propertyDetails;
+    let showHeader = props.showHeader ?? location.state?.showHeader ?? props.route?.params?.showHeader ?? true;
+    let displayMatchCount = props.displayMatchCount ?? location.state?.displayMatchCount ?? props.route?.params?.displayMatchCount ?? true;
+
     const scrollViewRef = useRef();
     const [reminderListX, setReminderListX] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -75,6 +84,33 @@ const CommercialRentPropDetails = props => {
 
     return (
         <div style={styles.container} ref={scrollViewRef}>
+            {showHeader && (
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '15px 20px',
+                    borderBottom: '1px solid #f0f0f0',
+                    backgroundColor: '#fff',
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 10,
+                }}>
+                    <div onClick={handleBack} style={{
+                        cursor: 'pointer',
+                        marginRight: '15px',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}>
+                        <MdArrowBack size={24} color="#333" />
+                    </div>
+                    <h1 style={{
+                        fontSize: '20px',
+                        fontWeight: '600',
+                        color: '#333',
+                        margin: 0,
+                    }}>Property Details</h1>
+                </div>
+            )}
             <div style={{ flexDirection: 'row', flex: 1, display: 'flex' }}>
                 <div style={{ flex: 1, minHeight: 100 }}>
                     <div style={{

@@ -16,7 +16,18 @@ import {
     setPropertyDetails
 } from "../../reducers/Action";
 
+import { MdArrowBack } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 const CustomerMeetingDetails = props => {
+    const navigate = useNavigate();
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/notifications'); // Or wherever it should go back to
+        }
+    };
     const { navigation } = props;
     const { item, updateDbCall } = props.route?.params || {};
 
@@ -55,10 +66,68 @@ const CustomerMeetingDetails = props => {
             );
     };
 
-    if (!item) return null;
+    if (!item) {
+        return (
+            <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '15px 20px',
+                    borderBottom: '1px solid #d0d0d0',
+                    backgroundColor: '#fff',
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 10,
+                }}>
+                    <div onClick={handleBack} style={{
+                        cursor: 'pointer',
+                        marginRight: '15px',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}>
+                        <MdArrowBack size={24} color="#333" />
+                    </div>
+                    <h1 style={{
+                        fontSize: '20px',
+                        fontWeight: '600',
+                        color: '#333',
+                        margin: 0,
+                    }}>Meeting Details</h1>
+                </div>
+                <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
+                    No meeting details available.
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '15px 20px',
+                borderBottom: '1px solid #d0d0d0',
+                backgroundColor: '#fff',
+                position: 'sticky',
+                top: 0,
+                zIndex: 10,
+            }}>
+                <div onClick={handleBack} style={{
+                    cursor: 'pointer',
+                    marginRight: '15px',
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 style={{
+                    fontSize: '20px',
+                    fontWeight: '600',
+                    color: '#333',
+                    margin: 0,
+                }}>Meeting Details</h1>
+            </div>
             {customerMeetingDetailsObj ? (
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     {item.category_type === "Residential" ? (

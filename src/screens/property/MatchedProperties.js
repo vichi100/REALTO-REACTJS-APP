@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 
+import { MdArrowBack } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 import Button from "./../../components/Button";
 import CardResidentialRent from '../property/residential/rent/ResidentialRentCard';
 import CardResidentialSell from '../property/residential/sell/ResidentialSellCard';
@@ -22,6 +25,15 @@ import { useDispatch } from 'react-redux';
 
 
 const MatchedProperties = props => {
+    const navigate = useNavigate();
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/contacts');
+        }
+    };
+
     const { navigation, route } = props;
     // route.params might be undefined if not passed correctly, handling gracefully
     const matchedCustomerItem = route?.params?.matchedCustomerItem || {};
@@ -208,6 +220,31 @@ const MatchedProperties = props => {
 
     return (
         <div className="flex flex-col h-full bg-gray-100">
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '15px 20px',
+                borderBottom: '1px solid #d0d0d0',
+                backgroundColor: '#fff',
+                position: 'sticky',
+                top: 0,
+                zIndex: 10,
+            }}>
+                <div onClick={handleBack} style={{
+                    cursor: 'pointer',
+                    marginRight: '15px',
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 style={{
+                    fontSize: '20px',
+                    fontWeight: '600',
+                    color: '#333',
+                    margin: 0,
+                }}>Matched Properties</h1>
+            </div>
             {loading ? (
                 <div className="flex flex-1 justify-center items-center bg-gray-100 bg-opacity-40">
                     <div className="loader">Loading...</div>

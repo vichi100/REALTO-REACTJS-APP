@@ -4,6 +4,8 @@ import { numDifferentiation } from "././../../../../utils/methods";
 // import Feather from "react-native-vector-icons/Feather";
 import Reminder from "../../../common/Reminder";
 import { formatIsoDateToCustomString, camalize } from "../../../../utils/methods";
+import { MdArrowBack } from "react-icons/md";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Mock Avatar component for web
 const Avatar = ({ title, size, avatarStyle, titleStyle }) => (
@@ -25,10 +27,24 @@ const Avatar = ({ title, size, avatarStyle, titleStyle }) => (
 
 const CustomerDetailsResidentialBuyFromList = props => {
     const { navigation } = props;
-    // Handle route params for web (Next.js router or similar)
+    const navigate = useNavigate();
+
+    const routeLocation = useLocation();
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/contacts');
+        }
+    };
+    // Hande route params for web (Next.js router or similar)
     // Assuming props.route.params is passed or we use a hook if it were Next.js pages
     // For now, keeping it similar to RN structure but adding fallback
-    let { item, displayMatchCount = false, displayMatchPercent = true } = props.route?.params || {};
+    let item = props.item || routeLocation.state?.item || props.route?.params?.item || props.anyItemDetails;
+    let displayMatchCount = props.displayMatchCount ?? routeLocation.state?.displayMatchCount ?? props.route?.params?.displayMatchCount ?? false;
+    let displayMatchPercent = props.displayMatchPercent ?? routeLocation.state?.displayMatchPercent ?? props.route?.params?.displayMatchPercent ?? true;
+    let showHeader = props.showHeader ?? routeLocation.state?.showHeader ?? props.route?.params?.showHeader ?? true;
 
     // Fallback if item is not in params (e.g. direct access or different routing)
     if (!item && props.anyItemDetails) {
@@ -56,7 +72,34 @@ const CustomerDetailsResidentialBuyFromList = props => {
     if (!item) return <div>Loading...</div>;
 
     return (
-        <div style={styles.container}>
+        <div style={{ ...styles.container, overflowY: "auto", height: "100vh" }}>
+            {showHeader && (
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '15px 20px',
+                    borderBottom: '1px solid #d0d0d0',
+                    backgroundColor: '#fff',
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 10,
+                }}>
+                    <div onClick={handleBack} style={{
+                        cursor: 'pointer',
+                        marginRight: '15px',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}>
+                        <MdArrowBack size={24} color="#333" />
+                    </div>
+                    <h1 style={{
+                        fontSize: '20px',
+                        fontWeight: '600',
+                        color: '#333',
+                        margin: 0,
+                    }}>Customer Details</h1>
+                </div>
+            )}
             <div
                 style={{
                     display: 'flex',

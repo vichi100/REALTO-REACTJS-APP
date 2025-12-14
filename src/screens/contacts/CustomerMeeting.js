@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import Button from "./../../components/Button";
-import { MdClose, MdAddCircleOutline } from "react-icons/md";
+import { MdClose, MdAddCircleOutline, MdArrowBack } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Snackbar from "./../../components/SnackbarComponent";
 import axios from "axios";
 import { dateFormat } from "./../../utils/methods";
 import { SERVER_URL } from "./../../utils/Constant";
+import { useNavigate } from "react-router-dom";
 import {
     setUserMobile,
     setUserDetails,
@@ -22,6 +23,15 @@ const ampmArray = [{ text: "AM" }, { text: "PM" }];
 
 const CustomerMeeting = props => {
     const { navigation } = props;
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/contacts');
+        }
+    };
     const item = props.route.params.item; // customer item
     const category = props.route.params.category;
 
@@ -224,18 +234,24 @@ const CustomerMeeting = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
-            <div style={styles.container}>
+        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
+            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm sticky top-0 z-10">
+                <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 className="text-lg font-semibold text-gray-800">Schedule Meeting</h1>
+            </div>
+            <div className="p-5 flex-1">
                 <div>
-                    <p style={{ marginTop: 10, marginBottom: 10, fontSize: 14, color: '#000', fontWeight: '500' }}>
+                    <p className="mt-2 mb-2 text-sm font-medium text-black">
                         Create a call/visiting schedule to show property to client and get
                         reminder on time
                     </p>
-                    <div style={{ borderBottom: '1px solid #ccc' }} />
-                    <p style={{ marginTop: 20, marginBottom: 15, fontSize: 14, color: '#000', fontWeight: '500' }}>
+                    <div className="border-b border-gray-300" />
+                    <p className="mt-5 mb-4 text-sm font-medium text-black">
                         Reminder For ?
                     </p>
-                    <div style={styles.propSubSection}>
+                    <div className="mb-2">
                         <CustomButtonGroup
                             buttons={AppConstant.REMINDER_FOR_OPTION}
                             selectedIndices={[AppConstant.REMINDER_FOR_OPTION.findIndex(option => option.text === remiderType)]}
@@ -251,47 +267,41 @@ const CustomerMeeting = props => {
                         />
                     </div>
 
-                    <div style={{ marginBottom: 15, marginTop: 25 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: '#000', fontWeight: '500' }}>Customer Name*</label>
+                    <div className="mb-4 mt-6">
+                        <label className="block mb-1 text-black font-medium">Customer Name*</label>
                         <input
                             disabled={true}
                             value={clientName}
                             onChange={e => setClientName(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            style={{ ...styles.input, backgroundColor: "#ffffff", color: "#000", borderColor: '#999' }}
+                            className="w-full p-2.5 rounded border border-gray-400 bg-white text-black outline-none text-base"
                         />
                     </div>
 
-                    <div style={{ marginBottom: 15 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Customer Mobile*</label>
+                    <div className="mb-4">
+                        <label className="block mb-1 text-gray-800 font-medium">Customer Mobile*</label>
                         <input
                             disabled={true}
                             value={clientMobile}
                             onChange={e => setClientMobile(e.target.value)}
                             onFocus={() => setIsVisible(false)}
                             type="text"
-                            style={{ ...styles.input, backgroundColor: "#ffffff", color: "#000", borderColor: '#999' }}
+                            className="w-full p-2.5 rounded border border-gray-400 bg-white text-black outline-none text-base"
                         />
                     </div>
 
                     {props.propListForMeeting.length > 0 ? (
-                        <div style={{ marginBottom: 10 }}>
-                            <p style={{ marginBottom: 5, marginTop: 10, color: '#000', fontWeight: '500' }}>Property List</p>
+                        <div className="mb-2">
+                            <p className="mb-1 mt-2 text-black font-medium">Property List</p>
                             {props.propListForMeeting.map((item, index) => (
                                 <div
                                     key={index}
-                                    style={{
-                                        backgroundColor: "#eeeeee",
-                                        marginTop: 1,
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        display: 'flex'
-                                    }}
+                                    className="bg-gray-200 mt-px flex flex-row justify-between items-center"
                                 >
-                                    <span style={{ padding: 10, color: '#000' }}>{item.name}</span>
-                                    <div onClick={() => remove(item)} style={{ cursor: 'pointer' }}>
-                                        <div style={{ marginTop: 0, backgroundColor: "#ffffff" }}>
-                                            <div style={{ margin: 9 }}>
+                                    <span className="p-2.5 text-black">{item.name}</span>
+                                    <div onClick={() => remove(item)} className="cursor-pointer">
+                                        <div className="bg-white mt-0">
+                                            <div className="m-2">
                                                 <MdClose color={"#757575"} size={20} />
                                             </div>
                                         </div>
@@ -309,22 +319,20 @@ const CustomerMeeting = props => {
                                 displayMatchCount: false
                             })
                         }
-                        style={{ cursor: 'pointer' }}
+                        className="cursor-pointer"
                     >
-                        <div style={{ flexDirection: "row", marginTop: 10, display: 'flex', alignItems: 'center' }}>
+                        <div className="flex flex-row mt-2 items-center">
                             <AiOutlinePlusCircle color={"#00BFFF"} size={26} />
-                            <span
-                                style={{ color: "#00BFFF", paddingLeft: 10, fontWeight: "500" }}
-                            >
+                            <span className="text-[#00BFFF] pl-2.5 font-medium">
                                 Add {item.customer_locality.property_type} Properties For{" "}
                                 {item.customer_locality.property_for}
                             </span>
                         </div>
                     </div>
 
-                    <div style={{ flexDirection: "row", marginTop: 20, display: 'flex' }}>
-                        <div style={{ flex: 1, marginRight: 10 }}>
-                            <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Date*</label>
+                    <div className="flex flex-row mt-5">
+                        <div className="flex-1 mr-2">
+                            <label className="block mb-1 text-gray-800 font-medium">Date*</label>
                             <input
                                 type={newDate ? "date" : "text"}
                                 onFocus={(e) => e.target.type = 'date'}
@@ -332,40 +340,27 @@ const CustomerMeeting = props => {
                                 value={newDate}
                                 onChange={e => setNewDate(e.target.value)}
                                 placeholder="DD/MM/YYYY"
-                                style={{ ...styles.input, color: '#000', borderColor: '#999' }}
+                                className="w-full p-2.5 rounded border border-gray-400 text-black outline-none text-base"
                             />
                         </div>
-                        <div style={{ flex: 1 }}>
-                            <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Time*</label>
+                        <div className="flex-1">
+                            <label className="block mb-1 text-gray-800 font-medium">Time*</label>
                             <input
                                 readOnly
                                 value={newTime}
                                 onClick={() => setModalVisible(true)}
                                 placeholder="Select Time"
-                                style={{ ...styles.input, color: '#000', borderColor: '#999' }}
+                                className="w-full p-2.5 rounded border border-gray-400 text-black outline-none text-base"
                             />
                         </div>
                     </div>
 
-                    <div
-                        style={{
-                            marginTop: 20,
-                            marginBottom: 20
-                        }}
-                    >
+                    <div className="mt-5 mb-5">
                         <Button title="Save" onPress={() => onSubmit()} />
                     </div>
                 </div>
                 {/* Property releted reminder list */}
-                {loading ? <div
-                    style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(245,245,245, .4)',
-                        display: 'flex'
-                    }}
-                >
+                {loading ? <div className="flex-1 justify-center items-center bg-gray-100 bg-opacity-40 flex h-full">
                     <div>Loading...</div>
                 </div> : <PropertyReminder navigation={navigation} reminderListX={reminderListX} />}
             </div>
@@ -378,32 +373,21 @@ const CustomerMeeting = props => {
             />
 
             {modalVisible && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                    zIndex: 1000,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <div style={styles.modalView}>
-                        <div style={{ flexDirection: "row", display: 'flex', gap: 15, alignItems: 'center' }}>
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+                    <div className="bg-white rounded-2xl p-8 items-center shadow-lg flex flex-col m-5">
+                        <div className="flex flex-row gap-4 items-center">
                             <input
                                 type="number"
                                 value={hour}
                                 onChange={e => checkHourValidation(e.target.value)}
-                                style={styles.timeInput}
+                                className="w-20 h-20 text-center text-base rounded border border-gray-500 bg-white outline-none text-black"
                                 placeholder="Hour*"
                             />
                             <input
                                 type="number"
                                 value={minutes}
                                 onChange={e => checkMinutesValidation(e.target.value)}
-                                style={styles.timeInput}
+                                className="w-20 h-20 text-center text-base rounded border border-gray-500 bg-white outline-none text-black"
                                 placeholder="Minute*"
                             />
 
@@ -419,31 +403,22 @@ const CustomerMeeting = props => {
                             />
                         </div>
 
-                        <div
-                            style={{
-                                flexDirection: "row",
-                                marginTop: 25,
-                                marginBottom: 5,
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                                width: '100%'
-                            }}
-                        >
+                        <div className="flex flex-row mt-6 mb-1 justify-end w-full">
                             <div
-                                style={styles.textButton}
+                                className="mx-2 p-2 bg-transparent cursor-pointer"
                                 onClick={() => {
                                     setModalVisible(false);
                                 }}
                             >
-                                <span style={styles.textButtonLabel}>Cancel</span>
+                                <span className="text-black font-medium text-center text-base">Cancel</span>
                             </div>
                             <div
-                                style={styles.textButton}
+                                className="mx-2 p-2 bg-transparent cursor-pointer"
                                 onClick={() => {
                                     onApply();
                                 }}
                             >
-                                <span style={styles.textButtonLabel}>Apply</span>
+                                <span className="text-black font-medium text-center text-base">Apply</span>
                             </div>
                         </div>
                     </div>
@@ -451,64 +426,6 @@ const CustomerMeeting = props => {
             )}
         </div>
     );
-};
-
-const styles = {
-    container: {
-        flex: 1,
-        marginTop: 20,
-        marginLeft: 5,
-        marginRight: 5
-    },
-    inputContainerStyle: {
-        margin: 8
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        boxShadow: "0px 2px 4px rgba(0,0,0,0.25)",
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    timeInput: {
-        width: 80,
-        height: 80,
-        textAlign: 'center',
-        fontSize: 16,
-        borderRadius: 5,
-        border: '1px solid #757575',
-        backgroundColor: "#ffffff",
-        outline: 'none',
-        color: '#000'
-    },
-    textButton: {
-        marginLeft: 10,
-        marginRight: 10,
-        padding: 10,
-        backgroundColor: 'transparent',
-        cursor: 'pointer'
-    },
-    textButtonLabel: {
-        color: "#000",
-        fontWeight: "500",
-        textAlign: "center",
-        fontSize: 16
-    },
-    input: {
-        width: '100%',
-        padding: 10,
-        borderRadius: 5,
-        border: '1px solid #ccc',
-        backgroundColor: "#ffffff",
-        outline: 'none',
-        fontSize: 16
-    },
-    propSubSection: {
-        marginBottom: 10
-    }
 };
 
 const mapStateToProps = state => ({

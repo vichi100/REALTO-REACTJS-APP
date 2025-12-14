@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { formatIsoDateToCustomString, camalize, numDifferentiation } from "../../../../utils/methods";
 import Reminder from "../../../common/Reminder";
+import { MdArrowBack } from "react-icons/md";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Mock Avatar component for web
 const Avatar = ({ title, size, avatarStyle, titleStyle }) => (
@@ -23,9 +25,22 @@ const Avatar = ({ title, size, avatarStyle, titleStyle }) => (
 
 const CustomerDetailsCommercialRentFromList = props => {
     const { navigation } = props;
+    const navigate = useNavigate();
+
+    const routeLocation = useLocation();
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/contacts');
+        }
+    };
     // Handle route params safely
-    let item = props.item || (props.route && props.route.params && props.route.params.item);
-    let displayMatchCount = props.displayMatchCount !== undefined ? props.displayMatchCount : (props.route && props.route.params && props.route.params.displayMatchCount !== undefined ? props.route.params.displayMatchCount : true);
+    let item = props.item || routeLocation.state?.item || (props.route && props.route.params && props.route.params.item);
+    let displayMatchCount = props.displayMatchCount ?? routeLocation.state?.displayMatchCount ?? (props.route && props.route.params && props.route.params.displayMatchCount);
+    if (displayMatchCount === undefined) displayMatchCount = true;
+    let showHeader = props.showHeader ?? routeLocation.state?.showHeader ?? props.route?.params?.showHeader ?? true;
 
     const [location, setLocation] = useState([])
 
@@ -47,7 +62,34 @@ const CustomerDetailsCommercialRentFromList = props => {
     if (!item) return null;
 
     return (
-        <div style={styles.container}>
+        <div style={{ ...styles.container, overflowY: "auto", height: "100vh" }}>
+            {showHeader && (
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '15px 20px',
+                    borderBottom: '1px solid #d0d0d0',
+                    backgroundColor: '#fff',
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 10,
+                }}>
+                    <div onClick={handleBack} style={{
+                        cursor: 'pointer',
+                        marginRight: '15px',
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}>
+                        <MdArrowBack size={24} color="#333" />
+                    </div>
+                    <h1 style={{
+                        fontSize: '20px',
+                        fontWeight: '600',
+                        color: '#333',
+                        margin: 0,
+                    }}>Customer Details</h1>
+                </div>
+            )}
             <div
                 style={{
                     flex: 1,

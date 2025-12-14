@@ -6,8 +6,20 @@ import { setEmployeeList } from "./../../reducers/Action";
 import { connect } from "react-redux";
 import { SERVER_URL } from "./../../utils/Constant";
 
+import { MdArrowBack } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 const ManageEmployee = props => {
     const { navigation } = props;
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/profile/EmployeeList');
+        }
+    };
     const { empData = {},
         editEmp = false
     } = props.route?.params || {};
@@ -235,128 +247,115 @@ const ManageEmployee = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", color: "#000000", height: '100vh', overflowY: 'auto' }}>
-            <div style={styles.container}>
-                <div>
-                    <p style={{ marginTop: 10, marginBottom: 10, fontSize: 14, fontWeight: 500 }}>
+        <div className="flex flex-col h-full bg-gray-50">
+            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm sticky top-0 z-10">
+                <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 className="text-lg font-semibold text-gray-800">{editEmp ? "Update Employee" : "Add Employee"}</h1>
+            </div>
+            <div className="flex-1 overflow-y-auto p-5">
+                <div className="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+                    <p className="mb-4 text-sm font-medium text-gray-700">
                         Add employees so they can have access/edit rights for your
                         properties listing, you can any time change any employees rights
                     </p>
-                    <div style={{ height: 1, width: '100%', backgroundColor: '#ccc' }} />
+                    <div className="h-px w-full bg-gray-200 mb-6" />
 
-                    <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5 }}>Employee Name*</label>
+                    <div className="mb-4">
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">Employee Name*</label>
                         <input
                             value={employeeName}
                             onChange={e => setEmployeeName(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            style={styles.input}
+                            className="w-full p-2.5 rounded border border-gray-300 focus:border-black focus:ring-1 focus:ring-black outline-none text-base transition-colors"
+                            placeholder="Enter employee name"
                         />
                     </div>
 
-                    <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5 }}>Employee Mobile*</label>
+                    <div className="mb-6">
+                        <label className="block mb-2 text-sm font-semibold text-gray-700">Employee Mobile*</label>
                         <input
                             value={employeeMobile}
                             onChange={e => setEmployeeMobile(e.target.value)}
                             onFocus={() => setIsVisible(false)}
                             type="tel"
-                            style={styles.input}
+                            className="w-full p-2.5 rounded border border-gray-300 focus:border-black focus:ring-1 focus:ring-black outline-none text-base transition-colors"
+                            placeholder="Enter mobile number"
                         />
                     </div>
 
-                    <p style={{ marginTop: 20, marginBottom: 10, fontSize: 14 }}>
-                        Grant access right
+                    <p className="mb-3 text-sm font-semibold text-gray-800">
+                        Grant Access Rights
                     </p>
-                    <div>
-                        <div style={{ display: "flex", flexDirection: "row", marginLeft: 5, flexWrap: "wrap" }}>
-                            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                <span>View</span>
+                    <div className="mb-6">
+                        <div className="flex flex-row flex-wrap gap-6 mb-4">
+                            <label className="flex items-center cursor-pointer">
+                                <span className="text-sm font-medium text-gray-700 mr-2">View</span>
                                 <input
                                     type="checkbox"
                                     checked={true}
                                     readOnly
-                                    style={{ transform: "scale(1.2)", marginLeft: 5 }}
+                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
                                 />
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    marginLeft: 30
-                                }}
-                            >
-                                <span>Add</span>
+                            </label>
+                            <label className="flex items-center cursor-pointer">
+                                <span className="text-sm font-medium text-gray-700 mr-2">Add</span>
                                 <input
                                     type="checkbox"
                                     checked={isAddEnabled}
                                     onChange={toggleAddSwitch}
-                                    style={{ transform: "scale(1.2)", marginLeft: 5, cursor: 'pointer' }}
+                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
                                 />
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    marginLeft: 30
-                                }}
-                            >
-                                <span>Master</span>
+                            </label>
+                            <label className="flex items-center cursor-pointer">
+                                <span className="text-sm font-medium text-gray-700 mr-2">Master</span>
                                 <input
                                     type="checkbox"
                                     checked={isMasterEnabled}
                                     onChange={toggleMasterSwitch}
-                                    style={{ transform: "scale(1.2)", marginLeft: 5, cursor: 'pointer' }}
+                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
                                 />
-                            </div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    marginLeft: 30
-                                }}
-                            >
-                                <span>Admin</span>
+                            </label>
+                            <label className="flex items-center cursor-pointer">
+                                <span className="text-sm font-medium text-gray-700 mr-2">Admin</span>
                                 <input
                                     type="checkbox"
                                     checked={isAdminEnabled}
                                     onChange={toggleAdminSwitch}
-                                    style={{ transform: "scale(1.2)", marginLeft: 5, cursor: 'pointer' }}
+                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
                                 />
-                            </div>
+                            </label>
                         </div>
-                        {<p style={{ marginTop: 10, fontWeight: "normal" }}>
-                            <span style={{ color: "", fontWeight: "bold" }}>View:</span> Enable View will allow employee to see the properties and customers which are assigned to him.
-                        </p>}
-                        {isAddEnabled && <p style={{ marginTop: 10, fontWeight: "normal" }}>
-                            <span style={{ color: "", fontWeight: "bold" }}>Add:</span> Enable Add will allow employee to add the new properties and and customers. Also will allow employee to see the properties and customers which are assigned to him.
-                        </p>}
-                        {isMasterEnabled && <p style={{ marginTop: 10, fontWeight: "normal" }}>
-                            <span style={{ color: "red", fontWeight: "bold" }}>Warning:</span> Enable Master will allow employee to see all the properties, customer and Employees details. Also will allow add the new properties and and customers
-                        </p>}
-                        {isAdminEnabled && <p style={{ marginTop: 10, fontWeight: "normal" }}>
-                            <span style={{ color: "red", fontWeight: "bold" }}>Warning:</span> Enable Admin will allow employee to see and delete all the properties, customers and Employee.
-                        </p>}
+
+                        <div className="space-y-2 text-sm text-gray-600 bg-gray-50 p-4 rounded border border-gray-100">
+                            <p>
+                                <span className="font-semibold text-gray-900">View:</span> Allows employee to see assigned properties and customers.
+                            </p>
+                            {isAddEnabled && <p>
+                                <span className="font-semibold text-gray-900">Add:</span> Allows employee to add new properties/customers and see assigned ones.
+                            </p>}
+                            {isMasterEnabled && <p>
+                                <span className="font-semibold text-red-600">Warning (Master):</span> Allows employee to see/add ALL properties, customers, and employees details.
+                            </p>}
+                            {isAdminEnabled && <p>
+                                <span className="font-semibold text-red-600">Warning (Admin):</span> Full access to see and DELETE all properties, customers, and employees.
+                            </p>}
+                        </div>
                     </div>
 
-                    <div
-                        style={{
-                            marginTop: 20,
-                            marginBottom: 20
-                        }}
-                    >
+                    <div className="mt-8">
                         {!editEmp ? (
                             <Button
-                                title="ADD"
+                                title="ADD EMPLOYEE"
                                 onPress={() => onSubmit()}
+                                style={{ width: '100%' }}
                             />
                         ) : (
                             <Button
-                                title="UPDATE"
+                                title="UPDATE DETAILS"
                                 onPress={() => updateEmployeeDetails()}
+                                style={{ width: '100%' }}
                             />
                         )}
                     </div>
@@ -371,24 +370,6 @@ const ManageEmployee = props => {
             />
         </div>
     );
-};
-
-const styles = {
-    container: {
-        flex: 1,
-        marginTop: 20,
-        marginLeft: 20,
-        marginRight: 20,
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    input: {
-        width: '100%',
-        padding: 10,
-        borderRadius: 5,
-        border: '1px solid #ccc',
-        fontSize: 16
-    }
 };
 
 const mapStateToProps = state => ({

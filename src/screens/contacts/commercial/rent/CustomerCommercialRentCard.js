@@ -22,6 +22,7 @@ import {
     MdCall,
     MdPersonAdd
 } from "react-icons/md";
+import { VscLocation } from "react-icons/vsc";
 import { connect } from "react-redux";
 import DoughnutChart from "./../../../../components/DoughnutChart";
 // import { CheckBox } from "@rneui/themed";
@@ -754,7 +755,7 @@ const CustomerCommercialRentCard = props => {
           size={16}
           style={{ marginLeft: 10, marginTop: 10 }}
         /> */}
-                    <span style={{ marginLeft: 10, marginTop: 10, color: "#000" }}>📍</span>
+                    <span style={{ marginLeft: 10, marginTop: 10, color: "#000" }}><VscLocation /></span>
                     <p style={{ ...styles.subTitleA, marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
                         {item.customer_locality.location_area.map(item => item.main_text).join(', ')}
                     </p>
