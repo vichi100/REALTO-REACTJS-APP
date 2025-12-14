@@ -73,7 +73,7 @@ const PropertyReminder = props => {
                 >
                     <div className="p-2.5 text-base pt-4">
                         <p
-                            className="text-base font-semibold text-black truncate"
+                            className="text-base font-semibold text-black"
                             style={{
                                 display: '-webkit-box',
                                 WebkitLineClamp: 2,
