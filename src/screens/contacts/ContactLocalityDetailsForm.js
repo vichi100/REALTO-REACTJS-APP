@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Button from "./../../components/Button";
 import Snackbar from "./../../components/SnackbarComponent";
@@ -84,7 +85,16 @@ const ContactLocalityDetailsForm = props => {
     }
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+            {/* Header */}
+            <div style={styles.headerContainer}>
+                <div style={styles.backButtonContainer} onClick={() => navigate(-1)}>
+                    <MdArrowBack size={24} color="#000000" />
+                </div>
+                <div style={styles.headerTitleContainer}>
+                    <p style={styles.headerTitle}>Locality Details</p>
+                </div>
+            </div>
             <div style={styles.container}>
                 <p style={{ color: '#000000' }}>Enter city and locations where customer wants the property</p>
                 <div style={{ marginBottom: 15 }}>
@@ -111,6 +121,20 @@ const ContactLocalityDetailsForm = props => {
                                 input: (provided) => ({
                                     ...provided,
                                     height: '38px',
+                                }),
+                                container: (provided) => ({
+                                    ...provided,
+                                    zIndex: 1000,
+                                    position: 'relative'
+                                }),
+                                listView: (provided) => ({
+                                    ...provided,
+                                    zIndex: 1000,
+                                    position: 'absolute',
+                                    top: 40,
+                                    width: '100%',
+                                    backgroundColor: 'white',
+                                    boxShadow: '0px 2px 4px rgba(0,0,0,0.25)',
                                 }),
                                 control: (provided) => ({
                                     ...provided,
@@ -210,6 +234,32 @@ const ContactLocalityDetailsForm = props => {
 };
 
 const styles = {
+    headerContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: '10px 15px',
+        borderBottom: '1px solid #e0e0e0',
+        backgroundColor: '#fff',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+    },
+    backButtonContainer: {
+        cursor: 'pointer',
+        marginRight: 15,
+        display: 'flex',
+        alignItems: 'center',
+    },
+    headerTitleContainer: {
+        flex: 1,
+    },
+    headerTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#1a1a1a',
+        margin: 0,
+    },
     container: {
         flex: 1,
         marginTop: 20,

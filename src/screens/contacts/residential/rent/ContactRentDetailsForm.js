@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Button from "./../../../../components/Button";
 import Snackbar from "./../../../../components/SnackbarComponent";
@@ -108,7 +109,16 @@ const ContactRentDetailsForm = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+            {/* Header */}
+            <div style={styles.headerContainer}>
+                <div style={styles.backButtonContainer} onClick={() => navigate(-1)}>
+                    <MdArrowBack size={24} color="#000000" />
+                </div>
+                <div style={styles.headerTitleContainer}>
+                    <p style={styles.headerTitle}>Rent Details</p>
+                </div>
+            </div>
             <div style={styles.container}>
                 <p style={{ marginBottom: 30, color: '#000000' }}>
                     Provide rent details what max customer can afford
@@ -218,6 +228,32 @@ const ContactRentDetailsForm = props => {
 };
 
 const styles = {
+    headerContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: '10px 15px',
+        borderBottom: '1px solid #e0e0e0',
+        backgroundColor: '#fff',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+    },
+    backButtonContainer: {
+        cursor: 'pointer',
+        marginRight: 15,
+        display: 'flex',
+        alignItems: 'center',
+    },
+    headerTitleContainer: {
+        flex: 1,
+    },
+    headerTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#1a1a1a',
+        margin: 0,
+    },
     container: {
         flex: 1,
         marginTop: 20,

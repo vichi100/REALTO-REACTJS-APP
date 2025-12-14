@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Button from "./../../components/Button";
 import Snackbar from "./../../components/SnackbarComponent";
@@ -42,7 +43,17 @@ const AddNewCustomer = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+            {/* Header */}
+            <div style={styles.headerContainer}>
+                <div style={styles.backButtonContainer} onClick={() => navigate(-1)}>
+                    <MdArrowBack size={24} color="#000000" />
+                </div>
+                <div style={styles.headerTitleContainer}>
+                    <p style={styles.headerTitle}>Customer Details</p>
+                </div>
+            </div>
+
             <div style={styles.container}>
                 <div>
                     <p style={{ color: '#000000' }}>
@@ -50,9 +61,6 @@ const AddNewCustomer = props => {
                     </p>
                 </div>
 
-                <div style={{ ...styles.header, marginTop: 30 }}>
-                    <p style={{ color: '#000000', fontWeight: 'bold', fontSize: 18 }}>Customer Details</p>
-                </div>
                 <div style={styles.propSection}>
                     <div style={{ marginBottom: 15 }}>
                         <label style={{ display: 'block', marginBottom: 5, color: '#000000', fontWeight: '500' }}>Name*</label>
@@ -99,14 +107,34 @@ const AddNewCustomer = props => {
 };
 
 const styles = {
+    headerContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: '10px 15px',
+        borderBottom: '1px solid #e0e0e0', // Light border for separation
+        backgroundColor: '#fff',
+    },
+    backButtonContainer: {
+        cursor: 'pointer',
+        marginRight: 15,
+        display: 'flex',
+        alignItems: 'center',
+    },
+    headerTitleContainer: {
+        flex: 1,
+    },
+    headerTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#1a1a1a', // Darker text color
+        margin: 0,
+    },
     container: {
         flex: 1,
-        marginTop: 30,
+        marginTop: 20,
         marginLeft: 20,
         marginRight: 20
-    },
-    header: {
-        alignContent: "flex-start"
     },
     propSection: {
         marginTop: 20

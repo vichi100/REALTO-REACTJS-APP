@@ -440,7 +440,7 @@ const ContactsResidential = props => {
                     item.customer_details.address +
                     item.customer_details.mobile1 +
                     item.customer_id +
-                    item.customer_locality.location_area.map(item => item.main_text).join(', ')
+                    item.customer_locality?.location_area?.map(item => item.main_text).join(', ')
 
                 const textData = text.toUpperCase();
                 return itemData.toUpperCase().indexOf(textData) > -1;
@@ -616,8 +616,8 @@ const ContactsResidential = props => {
                     {data.length > 0 ? (
                         <div className="flex-1 overflow-y-auto">
                             {data.map((item, index) => {
-                                if (item.customer_locality.property_type === "Residential") {
-                                    if (item.customer_locality.property_for === "Rent") {
+                                if (item.customer_locality?.property_type === "Residential") {
+                                    if (item.customer_locality?.property_for === "Rent") {
                                         return (
                                             <div key={index} onClick={() => navigateToDetails(item, "Rent")} style={{ cursor: 'pointer' }}>
                                                 <ContactResidentialRentCard navigation={navigation} item={item} deleteMe={deleteMe} closeMe={closeMe} displayCheckBox={displayCheckBox}
@@ -625,7 +625,7 @@ const ContactsResidential = props => {
                                                 <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
                                             </div>
                                         );
-                                    } else if (item.customer_locality.property_for === "Buy") {
+                                    } else if (item.customer_locality?.property_for === "Buy") {
                                         return (
                                             <div key={index} onClick={() => navigateToDetails(item, "Buy")} style={{ cursor: 'pointer' }}>
                                                 <ContactResidentialSellCard navigation={navigation} item={item} deleteMe={deleteMe} closeMe={closeMe} displayCheckBox={displayCheckBox}

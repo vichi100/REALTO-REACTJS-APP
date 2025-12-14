@@ -606,7 +606,7 @@ const CustomersCommercial = props => {
                     item.customer_details.address +
                     item.customer_details.mobile1 +
                     item.customer_id +
-                    item.customer_locality.location_area.map(item => item.main_text).join(', ')
+                    item.customer_locality?.location_area?.map(item => item.main_text).join(', ')
                 // item.customer_locality.location_area;
 
                 const textData = text.toUpperCase();
@@ -754,15 +754,15 @@ const CustomersCommercial = props => {
     // }
 
     const ItemView = ({ item }) => {
-        if (item.customer_locality.property_type === "Commercial") {
-            if (item.customer_locality.property_for === "Rent") {
+        if (item.customer_locality?.property_type === "Commercial") {
+            if (item.customer_locality?.property_for === "Rent") {
                 return (
                     <div onClick={() => navigateToDetails(item, "Rent")} style={{ cursor: 'pointer' }}>
                         <CustomerCommercialRentCard navigation={navigation} item={item} deleteMe={deleteMe} closeMe={closeMe} displayCheckBox={displayCheckBox}
                             disableDrawer={disableDrawer} displayCheckBoxForEmployee={displayCheckBoxForEmployee} employeeObj={employeeObj} />
                     </div>
                 );
-            } else if (item.customer_locality.property_for === "Buy") {
+            } else if (item.customer_locality?.property_for === "Buy") {
                 return (
                     <div onClick={() => navigateToDetails(item, "Buy")} style={{ cursor: 'pointer' }}>
                         <CustomerCommercialBuyCard navigation={navigation} item={item} deleteMe={deleteMe} closeMe={closeMe} displayCheckBox={displayCheckBox}
@@ -785,7 +785,7 @@ const CustomersCommercial = props => {
     };
 
     const navigateTo = () => {
-        navigation.navigate("AddNewCustomerStack");
+        navigate("/contacts/AddNewCustomerStack");
     };
 
     const [visible, setVisible] = useState(false);
