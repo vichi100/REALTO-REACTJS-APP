@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Button from "./../../components/Button";
 import Snackbar from "./../../components/SnackbarComponent";
@@ -126,101 +127,113 @@ const LocalityDetailsForm = props => {
     }
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto p-5">
-            <p className="text-gray-600 text-lg font-medium mb-5">Enter property address details</p>
-
-            <div className="mb-5">
-                <label className="block text-gray-700 text-sm font-bold mb-2">City*</label>
-                <input
-                    type="text"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={city}
-                    onChange={e => setCity(e.target.value)}
-                    onFocus={() => setIsVisible(false)}
-                />
+        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
+            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    aria-label="Go back"
+                >
+                    <MdArrowBack className="text-gray-700 text-xl" />
+                </button>
+                <h1 className="text-lg font-medium text-gray-900">Locality Details</h1>
             </div>
+            <div className="p-5">
+                <p className="text-gray-600 text-lg font-medium mb-5">Enter property address details</p>
 
-            <div className="mb-5">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Area / Location*</label>
-                <div className="w-full">
-                    <GooglePlacesAutocomplete
-                        apiKey={GOOGLE_PLACES_API_KEY}
-                        selectProps={{
-                            placeholder: 'Add multiple locations within city',
-                            onChange: (val) => onSelectPlace(val),
-                            styles: {
-                                input: (provided) => ({
-                                    ...provided,
-                                    height: '38px',
-                                }),
-                                control: (provided) => ({
-                                    ...provided,
-                                    borderColor: '#e2e8f0',
-                                    boxShadow: 'none',
-                                    '&:hover': {
-                                        borderColor: '#cbd5e0',
-                                    },
-                                }),
-                                option: (provided, state) => ({
-                                    ...provided,
-                                    color: '#374151', // text-gray-700
-                                    backgroundColor: state.isFocused ? '#e2e8f0' : '#ffffff',
-                                }),
-                                singleValue: (provided) => ({
-                                    ...provided,
-                                    color: '#374151',
-                                }),
-                            },
-                        }}
-                    />
-                </div>
-            </div>
-
-            {props.propertyDetails && props.propertyDetails.property_type && props.propertyDetails.property_type.toLowerCase() === "residential" ? (
                 <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Flat No and Wing*</label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">City*</label>
                     <input
                         type="text"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        value={flatNumber}
-                        onChange={e => setFlatNumber(e.target.value)}
+                        value={city}
+                        onChange={e => setCity(e.target.value)}
                         onFocus={() => setIsVisible(false)}
                     />
                 </div>
-            ) : null}
 
-            <div className="mb-5">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Building Name / Society*</label>
-                <input
-                    type="text"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={buildingName}
-                    onChange={e => setBuildingName(e.target.value)}
-                    onFocus={() => setIsVisible(false)}
+                <div className="mb-5">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Area / Location*</label>
+                    <div className="w-full">
+                        <GooglePlacesAutocomplete
+                            apiKey={GOOGLE_PLACES_API_KEY}
+                            selectProps={{
+                                placeholder: 'Add multiple locations within city',
+                                onChange: (val) => onSelectPlace(val),
+                                styles: {
+                                    input: (provided) => ({
+                                        ...provided,
+                                        height: '38px',
+                                    }),
+                                    control: (provided) => ({
+                                        ...provided,
+                                        borderColor: '#e2e8f0',
+                                        boxShadow: 'none',
+                                        '&:hover': {
+                                            borderColor: '#cbd5e0',
+                                        },
+                                    }),
+                                    option: (provided, state) => ({
+                                        ...provided,
+                                        color: '#374151', // text-gray-700
+                                        backgroundColor: state.isFocused ? '#e2e8f0' : '#ffffff',
+                                    }),
+                                    singleValue: (provided) => ({
+                                        ...provided,
+                                        color: '#374151',
+                                    }),
+                                },
+                            }}
+                        />
+                    </div>
+                </div>
+
+                {props.propertyDetails && props.propertyDetails.property_type && props.propertyDetails.property_type.toLowerCase() === "residential" ? (
+                    <div className="mb-5">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Flat No and Wing*</label>
+                        <input
+                            type="text"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            value={flatNumber}
+                            onChange={e => setFlatNumber(e.target.value)}
+                            onFocus={() => setIsVisible(false)}
+                        />
+                    </div>
+                ) : null}
+
+                <div className="mb-5">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Building Name / Society*</label>
+                    <input
+                        type="text"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={buildingName}
+                        onChange={e => setBuildingName(e.target.value)}
+                        onFocus={() => setIsVisible(false)}
+                    />
+                </div>
+
+                <div className="mb-5">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Street / Landmark*</label>
+                    <input
+                        type="text"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={landmark}
+                        onChange={e => setLandmark(e.target.value)}
+                        onFocus={() => setIsVisible(false)}
+                    />
+                </div>
+
+                <div className="mt-5">
+                    <Button title="NEXT" onPress={() => onSubmit()} />
+                </div>
+
+                <Snackbar
+                    visible={isVisible}
+                    textMessage={errorMessage}
+                    actionHandler={dismissSnackBar}
+                    actionText="OK"
                 />
             </div>
-
-            <div className="mb-5">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Street / Landmark*</label>
-                <input
-                    type="text"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={landmark}
-                    onChange={e => setLandmark(e.target.value)}
-                    onFocus={() => setIsVisible(false)}
-                />
-            </div>
-
-            <div className="mt-5">
-                <Button title="NEXT" onPress={() => onSubmit()} />
-            </div>
-
-            <Snackbar
-                visible={isVisible}
-                textMessage={errorMessage}
-                actionHandler={dismissSnackBar}
-                actionText="OK"
-            />
         </div>
     );
 };

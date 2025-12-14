@@ -31,6 +31,19 @@ const PropertyListForMeeting = props => {
     const [data, setData] = useState([]);
     const [index, setIndex] = useState(null);
 
+    // Filter States
+    const [filterForIndex, setFilterForIndex] = useState(-1);
+    const [filterTypeIndex, setFilterTypeIndex] = useState(-1);
+    const [filterBHKIndex, setFilterBHKIndex] = useState(-1);
+    const [filterRange, setFilterRange] = useState([10000, 400000]);
+    const [filterAvailabilityIndex, setFilterAvailabilityIndex] = useState(-1);
+    const [filterFurnishingIndex, setFilterFurnishingIndex] = useState(-1);
+
+    // Sort States
+    const [sortRentIndex, setSortRentIndex] = useState(-1);
+    const [sortAvailabilityIndex, setSortAvailabilityIndex] = useState(-1);
+    const [sortDateIndex, setSortDateIndex] = useState(-1);
+
     const [visible, setVisible] = useState(false);
     const [visibleSorting, setVisibleSorting] = useState(false);
 
@@ -81,6 +94,115 @@ const PropertyListForMeeting = props => {
         setIndex(index);
     };
 
+    const applyFilter = () => {
+        let filteredData = props.propertyListingForMeeting;
+
+        // Filter by Property For (Rent/Sell)
+        if (filterForIndex !== -1) {
+            const forType = ["Rent", "Sell"][filterForIndex];
+            filteredData = filteredData.filter(item => item.property_for === forType);
+        }
+
+        // Filter by Home Type
+        if (filterTypeIndex !== -1) {
+            const types = ["Apartment", "Villa", "Independent House", "Any"];
+            const selectedType = types[filterTypeIndex];
+            if (selectedType !== "Any") {
+                filteredData = filteredData.filter(item => item.property_details.property_type === selectedType || item.property_type === selectedType);
+            }
+        }
+
+        // Filter by BHK
+        if (filterBHKIndex !== -1) {
+            const bhkTypes = ["1RK", "1BHK", "2BHK", "3BHK", "4BHK", "4+BHK"];
+            const selectedBHK = bhkTypes[filterBHKIndex];
+            filteredData = filteredData.filter(item => {
+                // Adjust matching logic based on your data structure
+                const itemBHK = item.property_details.bhk_type || item.bhk_type;
+                return itemBHK === selectedBHK;
+            });
+        }
+
+        // Filter by Rent/Price Range
+        if (filterRange) {
+            filteredData = filteredData.filter(item => {
+                const price = parseFloat(item.property_details.expected_rent || item.property_details.expected_price || 0);
+                return price >= filterRange[0] && price <= filterRange[1];
+            });
+        }
+
+        // Filter by Availability (Simplified logic - assumes availability_date or similar field)
+        // This might need adjustment based on actual data structure for offsets
+        if (filterAvailabilityIndex !== -1) {
+            const now = new Date();
+            filteredData = filteredData.filter(item => {
+                const dateStr = item.property_details.available_from;
+                if (!dateStr) return true; // Keep if unknown
+                const availDate = new Date(dateStr);
+                const diffTime = Math.abs(availDate - now);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                // ["Immediate", "15 Days", "30 Days", "30+ Days"]
+                if (filterAvailabilityIndex === 0) return diffDays <= 0; // Immediate (past or today)
+                if (filterAvailabilityIndex === 1) return diffDays <= 15;
+                if (filterAvailabilityIndex === 2) return diffDays <= 30;
+                if (filterAvailabilityIndex === 3) return diffDays > 30;
+                return true;
+            });
+        }
+
+        // Filter by Furnishing
+        if (filterFurnishingIndex !== -1) {
+            const types = ["Fully Furnished", "Semi Furnished", "Unfurnished", "Any"]; // Mapped to match data usually
+            // UI says ["Full", "Semi", "Empty", "Any"]
+            const mapStats = ["Fully Furnished", "Semi Furnished", "Unfurnished", "Any"];
+            const selectedFurnishing = mapStats[filterFurnishingIndex];
+            if (selectedFurnishing !== "Any") {
+                filteredData = filteredData.filter(item => (item.property_details.furnishing_status || "") === selectedFurnishing);
+            }
+        }
+
+        setData(filteredData);
+        toggleBottomNavigationView();
+    };
+
+    const applySort = (type, index) => {
+        let sortedData = [...data];
+
+        // Reset other sort indices
+        if (type === 'rent') { setSortAvailabilityIndex(-1); setSortDateIndex(-1); setSortRentIndex(index); }
+        if (type === 'avail') { setSortRentIndex(-1); setSortDateIndex(-1); setSortAvailabilityIndex(index); }
+        if (type === 'date') { setSortRentIndex(-1); setSortAvailabilityIndex(-1); setSortDateIndex(index); }
+
+
+        if (type === 'rent') {
+            // 0: Lowest First, 1: Highest First
+            sortedData.sort((a, b) => {
+                const priceA = parseFloat(a.property_details.expected_rent || a.property_details.expected_price || 0);
+                const priceB = parseFloat(b.property_details.expected_rent || b.property_details.expected_price || 0);
+                return index === 0 ? priceA - priceB : priceB - priceA;
+            });
+        } else if (type === 'avail') {
+            // 0: Earliest First, 1: Oldest First (Late?) -> Assuming Earliest = closest date, Oldest = furthest
+            sortedData.sort((a, b) => {
+                const dateA = new Date(a.property_details.available_from || 0);
+                const dateB = new Date(b.property_details.available_from || 0);
+                return index === 0 ? dateA - dateB : dateB - dateA;
+            });
+        } else if (type === 'date') {
+            // 0: Recent First (Newest), 1: Oldest First
+            sortedData.sort((a, b) => {
+                const dateA = new Date(a.created_at || 0); // Assuming created_at exists
+                const dateB = new Date(b.created_at || 0);
+                return index === 0 ? dateB - dateA : dateA - dateB;
+            });
+        }
+        setData(sortedData);
+        // Optional: Close modal automatically or keep open? User usually expects immediate feedback or close.
+        // Let's close it for better UX on mobile
+        toggleSortingBottomNavigationView();
+    };
+
     const searchFilterFunction = text => {
         if (text) {
             const newData = props.propertyListingForMeeting.filter(function (item) {
@@ -119,7 +241,7 @@ const PropertyListForMeeting = props => {
     }
 
     return (
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
             <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm" style={{ height: 60, width: '100%', marginBottom: 10 }}>
                 <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
                     <MdArrowBack size={24} color="#333" />
@@ -240,24 +362,6 @@ const PropertyListForMeeting = props => {
                             return null;
                         })}
                     </div>
-                    <div style={styles.fab}>
-                        <div
-                            onClick={() => toggleSortingBottomNavigationView()}
-                            style={{ ...styles.fabIcon1, cursor: 'pointer' }}
-                        >
-                            <MdSort color={"#ffffff"} size={26} />
-                        </div>
-                        <div style={styles.verticalLine}></div>
-                        <div
-                            onClick={() => toggleBottomNavigationView()}
-                            style={{ ...styles.fabIcon2, cursor: 'pointer' }}
-                        >
-                            <MdFilterList
-                                color={"#ffffff"}
-                                size={26}
-                            />
-                        </div>
-                    </div>
                 </div>
             ) : (
                 <div
@@ -285,6 +389,26 @@ const PropertyListForMeeting = props => {
                         </div> : null}
                 </div>
             )}
+            {props.propertyListingForMeeting && props.propertyListingForMeeting.length > 0 && (
+                <div style={styles.fab}>
+                    <div
+                        onClick={() => toggleSortingBottomNavigationView()}
+                        style={{ ...styles.fabIcon1, cursor: 'pointer' }}
+                    >
+                        <MdSort color={"#ffffff"} size={26} />
+                    </div>
+                    <div style={styles.verticalLine}></div>
+                    <div
+                        onClick={() => toggleBottomNavigationView()}
+                        style={{ ...styles.fabIcon2, cursor: 'pointer' }}
+                    >
+                        <MdFilterList
+                            color={"#ffffff"}
+                            size={26}
+                        />
+                    </div>
+                </div>
+            )}
             {/* Bottom for filters */}
             {visible && (
                 <div style={{
@@ -309,7 +433,7 @@ const PropertyListForMeeting = props => {
                         overflowY: 'auto'
                     }} onClick={e => e.stopPropagation()}>
                         <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600" }}>
+                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: "#000" }}>
                                 Filter
                             </span>
                             <div
@@ -324,71 +448,71 @@ const PropertyListForMeeting = props => {
                         </div>
 
                         <div style={{ marginTop: 10, marginBottom: 20 }}>
-                            <p style={styles.marginBottom10}>Looking For</p>
+                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Looking For</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
                                     selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
-                                    onButtonPress={(index) => updateIndex(index)}
-                                    selectedIndices={[index]}
-                                    buttons={["RENT", "Sell"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center" }}
+                                    onButtonPress={(i) => setFilterForIndex(i)}
+                                    selectedIndices={[filterForIndex]}
+                                    buttons={["Rent", "Sell"].map(item => ({ text: item }))}
+                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
                                     selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p style={styles.marginBottom10}>Home type</p>
+                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Home type</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
                                     selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
-                                    onButtonPress={(index) => updateIndex(index)}
-                                    selectedIndices={[index]}
+                                    onButtonPress={(i) => setFilterTypeIndex(i)}
+                                    selectedIndices={[filterTypeIndex]}
                                     buttons={["Apartment", "Villa", "Independent House", "Any"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center" }}
+                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
                                     selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p style={styles.marginBottom10}>BHK type</p>
+                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>BHK type</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
                                     selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
-                                    onButtonPress={(index) => updateIndex(index)}
-                                    selectedIndices={[index]}
+                                    onButtonPress={(i) => setFilterBHKIndex(i)}
+                                    selectedIndices={[filterBHKIndex]}
                                     buttons={["1RK", "1BHK", "2BHK", "3BHK", "4BHK", "4+BHK"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center" }}
+                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
                                     selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p>Rent Range</p>
-                            <Slider />
-                            <p style={styles.marginBottom10}>Availability</p>
+                            <p style={{ color: '#000', fontWeight: '500' }}>Rent Range</p>
+                            <Slider min={10000} max={400000} onSlide={(values) => setFilterRange(values)} />
+                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Availability</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
                                     selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
-                                    onButtonPress={(index) => updateIndex(index)}
-                                    selectedIndices={[index]}
+                                    onButtonPress={(i) => setFilterAvailabilityIndex(i)}
+                                    selectedIndices={[filterAvailabilityIndex]}
                                     buttons={["Immediate", "15 Days", "30 Days", "30+ Days"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center" }}
+                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
                                     selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p style={styles.marginBottom10}>Furnishing</p>
+                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Furnishing</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
                                     selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
-                                    onButtonPress={(index) => updateIndex(index)}
-                                    selectedIndices={[index]}
+                                    onButtonPress={(i) => setFilterFurnishingIndex(i)}
+                                    selectedIndices={[filterFurnishingIndex]}
                                     buttons={["Full", "Semi", "Empty", "Any"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center" }}
+                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
                                     selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
                             <Button
                                 title="Apply"
-                                onPress={() => navigation.navigate("AddImages")}
+                                onPress={() => applyFilter()}
                             />
                         </div>
                     </div>
@@ -419,45 +543,45 @@ const PropertyListForMeeting = props => {
                         overflowY: 'auto'
                     }} onClick={e => e.stopPropagation()}>
                         <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600" }}>
+                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: "#000" }}>
                                 Sort By
                             </span>
                         </div>
 
                         <div style={{ marginTop: 10, marginBottom: 20 }}>
-                            <p style={styles.marginBottom10}>Rent</p>
+                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Rent</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
                                     selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
-                                    onButtonPress={(index) => updateIndex(index)}
-                                    selectedIndices={[index]}
+                                    onButtonPress={(index) => applySort('rent', index)}
+                                    selectedIndices={[sortRentIndex]}
                                     buttons={["Lowest First", "Highest First"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center" }}
+                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
                                     selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p style={styles.marginBottom10}>Availability</p>
+                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Availability</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
                                     selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
-                                    onButtonPress={(index) => updateIndex(index)}
-                                    selectedIndices={[index]}
+                                    onButtonPress={(index) => applySort('avail', index)}
+                                    selectedIndices={[sortAvailabilityIndex]}
                                     buttons={["Earliest First", "Oldest First"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center" }}
+                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
                                     selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
 
-                            <p style={styles.marginBottom10}>Posted date</p>
+                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Posted date</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
                                     selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
-                                    onButtonPress={(index) => updateIndex(index)}
-                                    selectedIndices={[index]}
+                                    onButtonPress={(index) => applySort('date', index)}
+                                    selectedIndices={[sortDateIndex]}
                                     buttons={["Recent First", "Oldest Fist"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center" }}
+                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
                                     selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
@@ -498,17 +622,19 @@ const styles = {
     },
     fab: {
         flexDirection: "row",
-        position: "absolute",
+        position: "fixed",
         width: 130,
         height: 35,
         alignItems: "center",
         justifyContent: "center",
-        right: "33%",
-        bottom: 10,
-        backgroundColor: "rgba(128,128,128, 0.8)",
+        left: "50%",
+        transform: "translateX(-50%)",
+        bottom: 80,
+        backgroundColor: "rgba(128,128,128, 0.9)",
         borderRadius: 30,
         boxShadow: '0px 4px 8px rgba(0,0,0,0.3)',
-        display: 'flex'
+        display: 'flex',
+        zIndex: 1000
     },
     verticalLine: {
         height: "100%",

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Button from "./../../../components/Button";
 import Snackbar from "./../../../components/SnackbarComponent";
@@ -130,6 +131,16 @@ const ResidentialPropertyDetailsForm = props => {
 
     return (
         <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
+            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    aria-label="Go back"
+                >
+                    <MdArrowBack className="text-gray-700 text-xl" />
+                </button>
+                <h1 className="text-lg font-medium text-gray-900">Property Details</h1>
+            </div>
             <div className="p-4">
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-2">House Type*</label>
@@ -256,13 +267,14 @@ const ResidentialPropertyDetailsForm = props => {
                     <Button title="NEXT" onPress={onSubmit} />
                 </div>
             </div>
+
             <Snackbar
                 visible={isVisible}
                 textMessage={errorMessage}
                 actionHandler={dismissSnackBar}
                 actionText="OK"
             />
-        </div>
+        </div >
     );
 };
 

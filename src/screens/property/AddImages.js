@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { MdArrowBack } from "react-icons/md";
 import Button from "./../../components/Button";
 import { connect } from "react-redux";
 import { setPropertyDetails } from "./../../reducers/Action";
@@ -50,8 +51,18 @@ const AddImages = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 p-4 overflow-y-auto">
-            <div className="flex-1">
+        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
+            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    aria-label="Go back"
+                >
+                    <MdArrowBack className="text-gray-700 text-xl" />
+                </button>
+                <h1 className="text-lg font-medium text-gray-900">Add Photos</h1>
+            </div>
+            <div className="p-4 flex-1">
                 <div className="mb-4">
                     <input
                         type="file"
@@ -81,6 +92,7 @@ const AddImages = props => {
                 <Button title="NEXT" onPress={() => onSubmit()} />
             </div>
         </div>
+
     );
 };
 

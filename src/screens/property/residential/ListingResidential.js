@@ -14,6 +14,7 @@ import CardResidentialRent from "./rent/ResidentialRentCard";
 import CardResidentialSell from "./sell/ResidentialSellCard";
 import axios from "axios";
 import { SERVER_URL } from "./../../../utils/Constant";
+import { EMPLOYEE_ROLE } from "./../../../utils/AppConstant";
 import {
     setResidentialPropertyList,
     setAnyItemDetails,
@@ -641,7 +642,7 @@ const ListingResidential = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-white">
+        <div className="flex flex-col h-full bg-white relative">
             <div className="flex flex-row items-center p-4 border-b border-gray-200">
                 <div className="flex-1 flex items-center bg-white rounded-lg border border-gray-300 px-3 py-2 shadow-sm">
                     <MdSearch size={24} className="text-gray-400" />
@@ -800,6 +801,26 @@ const ListingResidential = props => {
                     </div>
                 </div>
             )}
+
+            {props.userDetails && ((props.userDetails.works_for === props.userDetails.id) ||
+                (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE.includes(props.userDetails.employee_role)
+                )) ?
+                <div
+                    style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        position: "absolute",
+                        bottom: 15,
+                        right: 10,
+                        backgroundColor: "rgba(50, 195, 77, 0.59)",
+                        borderRadius: 100,
+                        cursor: 'pointer',
+                        zIndex: 20
+                    }}
+                    onClick={() => navigateTo()}
+                >
+                    <AiOutlinePlusCircle size={40} color="#ffffff" />
+                </div> : null}
 
             <Snackbar
                 visible={isVisible}

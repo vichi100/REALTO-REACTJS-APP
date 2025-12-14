@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { MdArrowBack } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import Slideshow from "./../../../../components/Slideshow";
 import Button from "./../../../../components/Button";
 import axios from "axios";
@@ -9,7 +11,9 @@ import { setPropertyDetails, setResidentialPropertyList, setStartNavigationPoint
 import { connect } from "react-redux";
 
 const AddNewPropFinalDetails = props => {
-    const { navigation } = props;
+    // const { navigation } = props; // Using useNavigate instead for consistency
+    const navigation = useNavigate(); // Mapping to logical name used in component, or just use 'navigate'
+    const navigate = useNavigate();
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [propertyFinalDetails, setPropertyFinalDetails] = useState(null);
@@ -64,7 +68,7 @@ const AddNewPropFinalDetails = props => {
     };
 
     const login = async () => {
-        navigation.navigate("Login");
+        navigate("Login");
         setModalVisible(false);
     }
 
@@ -120,10 +124,10 @@ const AddNewPropFinalDetails = props => {
                         props.setPropertyDetails(null);
                         props.setResidentialPropertyList([...props.residentialPropertyList, responseData])
                         if (props.startNavigationPoint === null) {
-                            navigation.navigate("Listing", { didDbCall: true });
+                            navigate("Listing", { didDbCall: true });
 
                         } else {
-                            navigation.navigate("PropertyListForMeeting");
+                            navigate("PropertyListForMeeting");
                         }
                         props.setStartNavigationPoint(null);
                         setLoading(false);
@@ -151,6 +155,16 @@ const AddNewPropFinalDetails = props => {
 
     return (propertyFinalDetails ? (
         <div className="flex flex-col h-full bg-white overflow-y-auto">
+            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    aria-label="Go back"
+                >
+                    <MdArrowBack className="text-gray-700 text-xl" />
+                </button>
+                <h1 className="text-lg font-medium text-gray-900">Preview Property</h1>
+            </div>
             <div className="bg-gray-200 p-4">
                 <h2 className="text-xl font-bold text-black">
                     {"Rent In "}{propertyFinalDetails.property_address.flat_number},

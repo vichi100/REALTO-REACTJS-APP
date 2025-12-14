@@ -25,6 +25,7 @@ const CustomSlider = (props) => {
 
     // Format numbers as "10k", "20k", etc., or "1L", "2.5L", etc.
     const formatValue = (value) => {
+        if (value === undefined || value === null) return "";
         if (value >= 100000) {
             return `${(value / 100000).toFixed(value % 100000 === 0 ? 0 : 1)}L`; // Convert to "L" format
         } else if (value >= 1000) {
@@ -34,7 +35,8 @@ const CustomSlider = (props) => {
     };
 
     const getScaledValue = (val) => {
-        const scaledValue = maxValue * Math.pow(minValue / maxValue, 1 - val);
+        const effectiveMin = minValue <= 0 ? 1 : minValue;
+        const scaledValue = maxValue * Math.pow(effectiveMin / maxValue, 1 - val);
         if (scaledValue > 300000) {
             return Math.round(scaledValue / 20000) * 20000;
         } else if (scaledValue > 100000) {
