@@ -92,6 +92,8 @@ const ListingCommercial = props => {
     const [visibleSorting, setVisibleSorting] = useState(false);
     const [visible, setVisible] = useState(false);
     const isFetching = useRef(false);
+    const scrollRef = useRef(null);
+    const lastScrollY = useRef(0);
 
     const [reqWithin, setReqWithin] = useState("");
     const [purpose, setPurpose] = useState("");
@@ -135,6 +137,14 @@ const ListingCommercial = props => {
         setMinSell(values[0]);
         setMaxSell(values[1]);
     };
+
+    // Save scroll position on unmount (navigating away)
+    useEffect(() => {
+        return () => {
+            console.log("ListingCommercial: Unmounting - Saving scroll pos:", lastScrollY.current);
+            sessionStorage.setItem('commercial_scroll_pos', lastScrollY.current);
+        };
+    }, []);
 
     const selectFurnishings = (index, button) => {
         let newSelectedIndicesFurnishing;
@@ -318,11 +328,40 @@ const ListingCommercial = props => {
         } catch (error) {
             console.error('Failed to fetch data:', error);
             setData([]);
-        } finally {
-            setLoading(false);
             dispatch(resetRefresh());
         }
     }, [dispatch, employeeObj, props.userDetails]);
+
+    // Restore scroll position when data loads
+    useEffect(() => {
+        if (props.commercialPropertyList && props.commercialPropertyList.length > 0) {
+
+            // Restore scroll position with polling
+            const scrollPos = sessionStorage.getItem('commercial_scroll_pos');
+            if (scrollPos && parseInt(scrollPos) > 0) {
+                const pos = parseInt(scrollPos, 10);
+                console.log("ListingCommercial: Attempting to restore scroll to:", pos);
+
+                const attemptRestore = () => {
+                    if (scrollRef.current) {
+                        // Only set if not already close
+                        if (Math.abs(scrollRef.current.scrollTop - pos) > 10) {
+                            scrollRef.current.scrollTop = pos;
+                            console.log("ListingCommercial: Restore attempt applied:", scrollRef.current.scrollTop);
+                        }
+                    }
+                };
+
+                // Try a few times to ensure it catches the rendered height
+                requestAnimationFrame(() => {
+                    attemptRestore();
+                    setTimeout(attemptRestore, 50);
+                    setTimeout(attemptRestore, 150);
+                    setTimeout(attemptRestore, 300);
+                });
+            }
+        }
+    }, [props.commercialPropertyList]);
 
     useEffect(() => {
         if (shouldRefresh || didDbCall) {
@@ -403,6 +442,10 @@ const ListingCommercial = props => {
 
 
     const navigateToDetails = (item, propertyFor) => {
+        // Save scroll position from the tracked ref
+        console.log("ListingCommercial: Saving scroll pos (Tracked):", lastScrollY.current);
+        sessionStorage.setItem('commercial_scroll_pos', lastScrollY.current);
+
         props.setPropertyDetails(item);
         if (propertyFor === "Rent") {
             navigate("/listing/CommercialRentPropDetails", {
@@ -685,7 +728,15 @@ const ListingCommercial = props => {
                 </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto">
+            <div
+                id="listing-commercial-scroll-container"
+                ref={scrollRef}
+                className="flex-1 overflow-y-auto"
+                onScroll={(e) => {
+                    lastScrollY.current = e.currentTarget.scrollTop;
+                    // console.log("ListingCommercial: Scrolled to", e.currentTarget.scrollTop);
+                }}
+            >
                 {loading ? (
                     <div className="flex justify-center items-center h-full">
                         Loading...

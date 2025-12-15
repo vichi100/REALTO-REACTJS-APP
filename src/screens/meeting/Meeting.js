@@ -41,6 +41,7 @@ const Meeting = props => {
 
     const [newDate, setNewDate] = React.useState("");
     const [newTime, setNewTime] = React.useState("");
+    const dateInputRef = useRef(null);
     const [clientName, setClientName] = useState("");
     const [clientMobile, setClientMobile] = useState("");
     const [clientId, setClientId] = useState("");
@@ -244,7 +245,7 @@ const Meeting = props => {
     }, [propertyIdX]);
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#E6E6E6", height: '100%', overflow: 'hidden' }}>
+        <div style={{ flex: 1, backgroundColor: "#E6E6E6" }}>
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -344,13 +345,29 @@ const Meeting = props => {
                     ) : null}
                     <div style={{ flexDirection: "row", marginTop: 25, display: 'flex', gap: 10 }}>
                         <div style={{ flex: 1 }}>
-                            <label style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500' }}>Date*</label>
+                            <label
+                                htmlFor="meeting-date"
+                                style={{ display: 'block', marginBottom: 5, color: '#333', fontWeight: '500', cursor: 'pointer' }}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    if (dateInputRef.current) {
+                                        dateInputRef.current.showPicker();
+                                    }
+                                }}
+                            >
+                                Date*
+                            </label>
                             <input
-                                type={newDate ? "date" : "text"}
-                                onFocus={(e) => e.target.type = 'date'}
-                                onBlur={(e) => { if (!newDate) e.target.type = 'text' }}
+                                id="meeting-date"
+                                ref={dateInputRef}
+                                type="date"
                                 value={newDate}
                                 onChange={e => setNewDate(e.target.value)}
+                                onClick={(e) => {
+                                    if (e.target.showPicker) {
+                                        e.target.showPicker();
+                                    }
+                                }}
                                 placeholder="DD/MM/YYYY"
                                 style={{ ...styles.input, color: '#000', borderColor: '#999' }}
                             />
@@ -366,17 +383,20 @@ const Meeting = props => {
                             />
                         </div>
                     </div>
-                    <div
-                        style={{
-                            marginTop: 20,
-                            marginBottom: 20
-                        }}
-                    >
-                        <Button title="Save" onPress={() => onSubmit()} />
-                    </div>
                 </div>
-                {/* Property releted reminder list */}
-                {loading ? <div
+                <div
+                    style={{
+                        marginTop: 20,
+                        marginBottom: 20
+                    }}
+                >
+                    <Button title="Save" onPress={() => onSubmit()} />
+                </div>
+            </div>
+
+            {/* Property releted reminder list */}
+            {
+                loading ? <div
                     style={{
                         flex: 1,
                         justifyContent: 'center',
@@ -386,8 +406,9 @@ const Meeting = props => {
                     }}
                 >
                     <div>Loading...</div>
-                </div> : <PropertyReminder navigation={navigation} reminderListX={reminderListX} />}
-            </div>
+                </div> : <PropertyReminder navigation={navigation} reminderListX={reminderListX} />
+            }
+
 
             <Snackbar
                 visible={isVisible}
@@ -397,77 +418,79 @@ const Meeting = props => {
                 actionText="OK"
             />
 
-            {modalVisible && (
-                <div style={styles.centeredView1}>
-                    <div style={styles.modalView}>
-                        <div style={{ flexDirection: "row", display: 'flex', gap: 15, alignItems: 'center' }}>
-                            <input
-                                type="number"
-                                value={hour}
-                                onChange={e => checkHourValidation(e.target.value)}
-                                style={styles.timeInput}
-                                placeholder="Hour*"
-                            />
-                            <input
-                                type="number"
-                                value={minutes}
-                                onChange={e => checkMinutesValidation(e.target.value)}
-                                style={styles.timeInput}
-                                placeholder="Minute*"
-                            />
+            {
+                modalVisible && (
+                    <div style={styles.centeredView1}>
+                        <div style={styles.modalView}>
+                            <div style={{ flexDirection: "row", display: 'flex', gap: 15, alignItems: 'center' }}>
+                                <input
+                                    type="number"
+                                    value={hour}
+                                    onChange={e => checkHourValidation(e.target.value)}
+                                    style={styles.timeInput}
+                                    placeholder="Hour*"
+                                />
+                                <input
+                                    type="number"
+                                    value={minutes}
+                                    onChange={e => checkMinutesValidation(e.target.value)}
+                                    style={styles.timeInput}
+                                    placeholder="Minute*"
+                                />
 
-                            <CustomButtonGroup
-                                selectedButtonStyle={{ backgroundColor: "#00BFFF" }}
-                                onButtonPress={(index) => selectAMPMIndex(index)}
-                                selectedIndices={[ampmIndex]}
-                                buttons={ampmArray}
-                                buttonTextStyle={{ textAlign: "center" }}
-                                selectedButtonTextStyle={{ color: "#fff" }}
-                                containerStyle={{ borderRadius: 5, width: 70, height: 82, borderColor: '#757575', borderWidth: 1 }}
-                                vertical={true}
-                            />
-                        </div>
-
-                        <div
-                            style={{
-                                flexDirection: "row",
-                                marginTop: 25,
-                                marginBottom: 5,
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                                width: '100%'
-                            }}
-                        >
-                            <div
-                                style={styles.textButton}
-                                onClick={() => {
-                                    setModalVisibleTemp(!modalVisible);
-                                }}
-                            >
-                                <span style={styles.textButtonLabel}>Cancel</span>
+                                <CustomButtonGroup
+                                    selectedButtonStyle={{ backgroundColor: "#00BFFF" }}
+                                    onButtonPress={(index) => selectAMPMIndex(index)}
+                                    selectedIndices={[ampmIndex]}
+                                    buttons={ampmArray}
+                                    buttonTextStyle={{ textAlign: "center" }}
+                                    selectedButtonTextStyle={{ color: "#fff" }}
+                                    containerStyle={{ borderRadius: 5, width: 70, height: 82, borderColor: '#757575', borderWidth: 1 }}
+                                    vertical={true}
+                                />
                             </div>
+
                             <div
-                                style={styles.textButton}
-                                onClick={() => {
-                                    onApply(!modalVisible);
+                                style={{
+                                    flexDirection: "row",
+                                    marginTop: 25,
+                                    marginBottom: 5,
+                                    display: 'flex',
+                                    justifyContent: 'flex-end',
+                                    width: '100%'
                                 }}
                             >
-                                <span style={styles.textButtonLabel}>Apply</span>
+                                <div
+                                    style={styles.textButton}
+                                    onClick={() => {
+                                        setModalVisibleTemp(!modalVisible);
+                                    }}
+                                >
+                                    <span style={styles.textButtonLabel}>Cancel</span>
+                                </div>
+                                <div
+                                    style={styles.textButton}
+                                    onClick={() => {
+                                        onApply(!modalVisible);
+                                    }}
+                                >
+                                    <span style={styles.textButtonLabel}>Apply</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 
 const styles = {
     container: {
         flex: 1,
-        marginTop: 20,
-        marginLeft: 20,
-        marginRight: 20,
+        marginTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
         display: 'flex',
         flexDirection: 'column'
     },
@@ -476,11 +499,13 @@ const styles = {
     },
     input: {
         width: '100%',
+        height: '45px',
         padding: 10,
         borderRadius: 5,
         border: '1px solid #ccc',
         fontSize: 16,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        boxSizing: 'border-box'
     },
     centeredView1: {
         position: 'fixed',

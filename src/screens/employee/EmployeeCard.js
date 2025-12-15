@@ -358,11 +358,11 @@ const EmployeeCard = props => {
                         <div style={{
                             width: 55,
                             height: 55,
-                            backgroundColor: '#ccc',
+                            // backgroundColor: '#ccc', // Removed
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            border: '1px solid rgba(127,255,212, .9)'
+                            // border: '1px solid rgba(127,255,212, .9)' // Removed
                         }}>
                             <span style={{ color: "rgba(105,105,105, .9)", fontSize: 20 }}>
                                 {item.name && item.name.slice(0, 1)}
@@ -560,9 +560,10 @@ const EmployeeCard = props => {
 const styles = {
     card: {
         backgroundColor: "#ffffff",
-        borderRadius: 10,
-        margin: 10,
-        boxShadow: "0px 2px 4px rgba(0,0,0,0.2)",
+        // borderRadius: 10, // Removed for edge-to-edge
+        // margin: 10, // Removed for edge-to-edge
+        // boxShadow: "0px 2px 4px rgba(0,0,0,0.2)", // Optional: Remove shadow for flat list
+        borderBottom: '1px solid #eee', // Add separator
         overflow: 'hidden',
         position: 'relative'
     },

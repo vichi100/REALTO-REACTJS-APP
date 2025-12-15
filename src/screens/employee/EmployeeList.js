@@ -25,6 +25,8 @@ const EmployeeList = props => {
     const [loading, setLoading] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const isFetching = useRef(false);
+    const scrollRef = useRef(null);
+    const lastScrollY = useRef(0);
 
     const dispatch = useDispatch();
 
@@ -36,6 +38,43 @@ const EmployeeList = props => {
             getListing();
         }
     }, [props.userDetails]);
+
+    // Save scroll position on unmount (navigating away)
+    useEffect(() => {
+        return () => {
+            console.log("EmployeeList: Unmounting - Saving scroll pos:", lastScrollY.current);
+            sessionStorage.setItem('employee_list_scroll_pos', lastScrollY.current);
+        };
+    }, []);
+
+    // Restore scroll position with polling (only when data is loaded)
+    useEffect(() => {
+        if (!loading && data.length > 0) {
+            const scrollPos = sessionStorage.getItem('employee_list_scroll_pos');
+            if (scrollPos && parseInt(scrollPos) > 0) {
+                const pos = parseInt(scrollPos, 10);
+                console.log("EmployeeList: Attempting to restore scroll to:", pos);
+
+                const attemptRestore = () => {
+                    if (scrollRef.current) {
+                        // Only set if not already close
+                        if (Math.abs(scrollRef.current.scrollTop - pos) > 10) {
+                            scrollRef.current.scrollTop = pos;
+                            console.log("EmployeeList: Restore attempt applied:", scrollRef.current.scrollTop);
+                        }
+                    }
+                };
+
+                // Try a few times to ensure it catches the rendered height
+                requestAnimationFrame(() => {
+                    attemptRestore();
+                    setTimeout(attemptRestore, 50);
+                    setTimeout(attemptRestore, 150);
+                    setTimeout(attemptRestore, 300);
+                });
+            }
+        }
+    }, [loading, data]);
 
     const handleBack = () => {
         if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
@@ -122,6 +161,8 @@ const EmployeeList = props => {
     }
 
     const navigateTo = () => {
+        console.log("EmployeeList: Saving scroll pos (navigateTo):", lastScrollY.current);
+        sessionStorage.setItem('employee_list_scroll_pos', lastScrollY.current);
         navigate("/profile/ManageEmployee");
     };
 
@@ -144,29 +185,43 @@ const EmployeeList = props => {
         >
             <div>Loading...</div>
         </div> :
-            <div style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-                <div style={styles.header}>
-                    <div onClick={handleBack} style={styles.backButton}>
-                        <MdArrowBack size={24} color="#333" />
+            <div className="flex flex-col h-full bg-white relative">
+                <div className="flex flex-col bg-white z-10 border-b border-gray-200">
+                    <div className="flex flex-row items-center p-4">
+                        <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
+                            <MdArrowBack size={24} color="#333" />
+                        </div>
+                        <h1 className="text-xl font-semibold text-gray-800 m-0">Employee List</h1>
                     </div>
-                    <h1 style={styles.title}>Employee List</h1>
+
+                    <div className="flex flex-row items-center px-4 pb-4 bg-white">
+                        <div className="flex-1 flex items-center bg-white rounded-lg border border-gray-300 px-3 py-2 shadow-sm">
+                            <MdSearch size={24} className="text-gray-400" />
+                            <div className="h-6 w-0.5 bg-blue-500 mx-3"></div>
+                            <input
+                                type="text"
+                                placeholder="Search By Name, Mobile"
+                                value={search}
+                                onChange={(e) => searchFilterFunction(e.target.value)}
+                                className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-500 text-base"
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div style={styles.searchBar}>
-                    <MdSearch size={20} color="#999" style={{ marginRight: 5, }} />
-                    <input
-                        style={styles.textInputStyle}
-                        onChange={e => searchFilterFunction(e.target.value)}
-                        value={search}
-                        placeholder="Search By Name, Mobile"
-                    />
-                </div>
+
                 {data.length > 0 ? (
-                    <div style={styles.container}>
-                        <div style={{ overflowY: 'auto', flex: 1 }}>
+                    <div className="flex-1 relative flex flex-col overflow-hidden">
+                        <div
+                            className="flex-1 overflow-y-auto"
+                            ref={scrollRef}
+                            id="employee-list-scroll-container"
+                            onScroll={(e) => {
+                                lastScrollY.current = e.currentTarget.scrollTop;
+                            }}
+                        >
                             {data.map((item, index) => (
                                 <div key={index}>
                                     <EmployeeCard
-                                        // navigation={navigation}
                                         item={item}
                                         itemForAddEmplyee={itemForAddEmplyee}
                                         deleteMe={deleteMe}
@@ -180,7 +235,8 @@ const EmployeeList = props => {
                                 <span style={{ color: '#000' }}>End</span>
                             </div>
                         </div>
-                        <div style={styles.fab}>
+
+                        {/* <div style={styles.fab}>
                             <div
                                 onClick={() => console.log("Sort")}
                                 style={{ ...styles.fabIcon1, cursor: 'pointer' }}
@@ -197,7 +253,7 @@ const EmployeeList = props => {
                                     size={26}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 ) : (
                     <div style={styles.container}>
@@ -235,7 +291,11 @@ const EmployeeList = props => {
                             ...styles.addButton,
                             cursor: 'pointer'
                         }}
-                        onClick={() => navigate("/profile/ManageEmployee")}
+                        onClick={() => {
+                            console.log("EmployeeList: Saving scroll pos (FAB):", lastScrollY.current);
+                            sessionStorage.setItem('employee_list_scroll_pos', lastScrollY.current);
+                            navigate("/profile/ManageEmployee");
+                        }}
                     >
                         <AiOutlinePlusCircle size={40} color="#ffffff" />
                     </div> : null}
@@ -246,22 +306,9 @@ const EmployeeList = props => {
 const styles = {
     container: {
         flex: 1,
-        margin: 5,
         display: 'flex',
         flexDirection: 'column',
-        position: 'relative',
-        height: '100%'
-    },
-    searchBar: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
-        display: 'flex',
-        margin: 10
+        position: 'relative'
     },
     fab: {
         flexDirection: "row",
@@ -316,11 +363,11 @@ const styles = {
     header: {
         display: 'flex',
         alignItems: 'center',
-        padding: '15px 20px',
+        padding: '10px 15px', // Reduced padding from 15px 20px
         borderBottom: '1px solid #f0f0f0',
         backgroundColor: '#fff',
-        position: 'sticky',
-        top: 0,
+        // position: 'sticky', // Removed sticky, using flex layout
+        // top: 0,
         zIndex: 10,
     },
     backButton: {

@@ -140,6 +140,8 @@ const CustomersCommercial = props => {
     const [lookingForIndexSortBy, setLookingForIndexSortBy] = useState(-1);
     const [loading, setLoading] = useState(false);
     const isFetching = useRef(false);
+    const scrollRef = useRef(null);
+    const lastScrollY = useRef(0);
 
     const [reqWithin, setReqWithin] = useState("");
     const [purpose, setPurpose] = useState("");
@@ -316,6 +318,14 @@ const CustomersCommercial = props => {
 
     const handlePriceRangeChangeCr = useCallback((values) => {
         setSellRange(values);
+    }, []);
+
+    // Save scroll position on unmount (navigating away)
+    useEffect(() => {
+        return () => {
+            console.log("CustomersCommercial: Unmounting - Saving scroll pos:", lastScrollY.current);
+            sessionStorage.setItem('customers_commercial_scroll_pos', lastScrollY.current);
+        };
     }, []);
 
     const handleBuildupAreaRange = useCallback((values) => {
@@ -625,6 +635,10 @@ const CustomersCommercial = props => {
     const navigate = useNavigate();
 
     const navigateToDetails = (item, propertyFor) => {
+        // Save scroll position from the tracked ref
+        console.log("CustomersCommercial: Saving scroll pos (Tracked):", lastScrollY.current);
+        sessionStorage.setItem('customers_commercial_scroll_pos', lastScrollY.current);
+
         props.setAnyItemDetails(item);
         if (propertyFor === "Rent") {
             navigate("/contacts/CustomerDetailsCommercialRentFromList", {
@@ -804,6 +818,31 @@ const CustomersCommercial = props => {
     useEffect(() => {
         if (props.commercialCustomerList.length > 0) {
             setData(props.commercialCustomerList)
+
+            // Restore scroll position with polling
+            const scrollPos = sessionStorage.getItem('customers_commercial_scroll_pos');
+            if (scrollPos && parseInt(scrollPos) > 0) {
+                const pos = parseInt(scrollPos, 10);
+                console.log("CustomersCommercial: Attempting to restore scroll to:", pos);
+
+                const attemptRestore = () => {
+                    if (scrollRef.current) {
+                        // Only set if not already close
+                        if (Math.abs(scrollRef.current.scrollTop - pos) > 10) {
+                            scrollRef.current.scrollTop = pos;
+                            console.log("CustomersCommercial: Restore attempt applied:", scrollRef.current.scrollTop);
+                        }
+                    }
+                };
+
+                // Try a few times to ensure it catches the rendered height
+                requestAnimationFrame(() => {
+                    attemptRestore();
+                    setTimeout(attemptRestore, 50);
+                    setTimeout(attemptRestore, 150);
+                    setTimeout(attemptRestore, 300);
+                });
+            }
         }
     }, [props.commercialCustomerList]);
 
@@ -816,13 +855,13 @@ const CustomersCommercial = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#fff", height: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <div className="flex flex-col h-full bg-white relative">
             {loading ? (
-                <div style={{ flex: 1, justifyContent: "center", alignItems: "center", display: 'flex' }}>
+                <div className="flex justify-center items-center h-full">
                     <span>Loading...</span>
                 </div>
             ) : (
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                <>
                     <div className="flex flex-row items-center p-4 border-b border-gray-200">
                         <div className="flex-1 flex items-center bg-white rounded-lg border border-gray-300 px-3 py-2 shadow-sm">
                             <MdSearch size={24} className="text-gray-400" />
@@ -837,7 +876,14 @@ const CustomersCommercial = props => {
                     </div>
 
                     {data.length > 0 ? (
-                        <div style={{ flex: 1, overflowY: 'auto' }}>
+                        <div
+                            className="flex-1 overflow-y-auto"
+                            ref={scrollRef}
+                            id="customers-commercial-scroll-container"
+                            onScroll={(e) => {
+                                lastScrollY.current = e.currentTarget.scrollTop;
+                            }}
+                        >
                             {data.map((item, index) => (
                                 <div key={index}>
                                     <ItemView item={item} />
@@ -863,7 +909,7 @@ const CustomersCommercial = props => {
                     )}
 
 
-                </div>
+                </>
             )}
 
             {visible && (

@@ -17,12 +17,37 @@ const PropertyReminder = props => {
 
     useEffect(() => {
         const dataArr = reminderListX || [];
+        console.log("PropertyReminder: Processing dataArr", dataArr);
+
         const future = [];
         const past = [];
         for (const value of dataArr) {
             const todayDateTime = new Date();
-            // Convert stored date to a proper local date with meeting time
-            const meetingDate = new Date(value.meeting_date);
+
+            let meetingDateStr = value.meeting_date;
+            let meetingDate;
+
+            // Handle DD/MM/YYYY format if necessary
+            if (typeof meetingDateStr === 'string') {
+                if (meetingDateStr.includes('/')) {
+                    const part = meetingDateStr.split('/');
+                    if (part.length === 3) {
+                        // Assume DD/MM/YYYY -> YYYY-MM-DD
+                        meetingDateStr = `${part[2]}-${part[1]}-${part[0]}`;
+                    }
+                } else if (meetingDateStr.includes('-')) {
+                    // Check if it is DD-MM-YYYY (first part is day, > 1000 means year)
+                    const part = meetingDateStr.split('-');
+                    if (part.length === 3 && part[0].length <= 2 && part[2].length === 4) {
+                        meetingDateStr = `${part[2]}-${part[1]}-${part[0]}`;
+                    }
+                }
+            }
+
+            meetingDate = new Date(meetingDateStr);
+
+            console.log(`Item: ${value.client_name}, Raw: ${value.meeting_date}, ParsedStr: ${meetingDateStr}, Obj: ${meetingDate}, Valid: ${!isNaN(meetingDate.getTime())}`);
+
             const meetingTime = value.meeting_time || "12:00 AM";
 
             // Parse "11:30 AM" → hours/minutes
@@ -33,15 +58,19 @@ const PropertyReminder = props => {
 
             // Combine local date + time
             const meetingDateTime = new Date(meetingDate);
-            meetingDateTime.setHours(hours, minutes, 0, 0);
+            if (!isNaN(hours) && !isNaN(minutes)) {
+                meetingDateTime.setHours(hours, minutes, 0, 0);
+            }
+
+            console.log(` > Time: ${meetingTime}, FinalDate: ${meetingDateTime}, IsFuture: ${meetingDateTime > todayDateTime}`);
 
             if (meetingDateTime > todayDateTime) {
                 future.push(value);
             } else {
                 past.push(value);
             }
-
         }
+        console.log(`PropertyReminder: DONE. Future Count: ${future.length}, Past Count: ${past.length}`);
         setFutureReminderList(future);
         setPastReminderList(past);
         setReminderList(props.propReminderList);
@@ -108,7 +137,7 @@ const PropertyReminder = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-white overflow-y-auto">
+        <div className="flex flex-col bg-white">
             <p className="text-center text-base font-semibold mt-2.5 mb-2.5 text-black">
                 Upcoming Meetings
             </p>

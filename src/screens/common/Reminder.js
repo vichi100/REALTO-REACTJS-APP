@@ -21,10 +21,22 @@ const Reminder = props => {
     const [dbCall, setDbCall] = useState(didDbCall);
     const [search, setSearch] = useState("");
     const isFetching = useRef(false);
+    const scrollRef = useRef(null);
+    const lastScrollY = useRef(0);
 
     const updateDbCall = useCallback((value) => {
         setDbCall(value);
     }, []);
+
+    // Save scroll position on unmount (navigating away)
+    useEffect(() => {
+        return () => {
+            if (!isSpecificRemider) { // Only save global scroll if not a specific specific component
+                console.log("Reminder: Unmounting - Saving scroll pos:", lastScrollY.current);
+                sessionStorage.setItem('reminder_scroll_pos', lastScrollY.current);
+            }
+        };
+    }, [isSpecificRemider]);
 
     useEffect(() => {
         console.log("Reminder Debug: Effect triggered.", {
@@ -45,6 +57,35 @@ const Reminder = props => {
             getReminderList();
         }
     }, [props.userDetails, customerData, isSpecificRemider, dbCall]);
+
+    // Restore scroll position with polling (only for main list)
+    useEffect(() => {
+        if (!isSpecificRemider && !loading && reminderList.length > 0) {
+            const scrollPos = sessionStorage.getItem('reminder_scroll_pos');
+            if (scrollPos && parseInt(scrollPos) > 0) {
+                const pos = parseInt(scrollPos, 10);
+                console.log("Reminder: Attempting to restore scroll to:", pos);
+
+                const attemptRestore = () => {
+                    if (scrollRef.current) {
+                        // Only set if not already close
+                        if (Math.abs(scrollRef.current.scrollTop - pos) > 10) {
+                            scrollRef.current.scrollTop = pos;
+                            console.log("Reminder: Restore attempt applied:", scrollRef.current.scrollTop);
+                        }
+                    }
+                };
+
+                // Try a few times to ensure it catches the rendered height
+                requestAnimationFrame(() => {
+                    attemptRestore();
+                    setTimeout(attemptRestore, 50);
+                    setTimeout(attemptRestore, 150);
+                    setTimeout(attemptRestore, 300);
+                });
+            }
+        }
+    }, [loading, reminderList, isSpecificRemider]);
 
     const getReminderListById = (customerData) => {
         if (props.userDetails === null) {
@@ -243,12 +284,18 @@ const Reminder = props => {
                 }}
             >
                 <div
-                    onClick={() =>
+                    onClick={() => {
+                        // Explicitly save scroll before navigation
+                        if (!isSpecificRemider) {
+                            console.log("Reminder: Saving scroll pos (navigating):", lastScrollY.current);
+                            sessionStorage.setItem('reminder_scroll_pos', lastScrollY.current);
+                        }
+
                         props.navigation.navigate("CustomerMeetingDetails", {
                             item: item,
                             category: "property"
-                        })
-                    }
+                        });
+                    }}
                     style={{
                         display: 'flex',
                         flexDirection: "row",
@@ -319,7 +366,14 @@ const Reminder = props => {
                 <div className="loader">Loading...</div>
             </div>
         ) : (
-            <div style={{ flex: 1, overflowY: 'auto', backgroundColor: "#ffffff", height: '100%' }}>
+            <div
+                style={{ flex: 1, overflowY: 'auto', backgroundColor: "#ffffff", height: '100%' }}
+                ref={scrollRef}
+                id="reminder-scroll-container"
+                onScroll={(e) => {
+                    lastScrollY.current = e.currentTarget.scrollTop;
+                }}
+            >
                 {reminderList.length > 0 ? (
                     <div style={{ flex: 1, backgroundColor: "#ffffff", marginTop: 0, padding: 10 }}>
                         {!isSpecificRemider && (

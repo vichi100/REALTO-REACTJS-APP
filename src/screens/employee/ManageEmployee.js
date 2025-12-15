@@ -263,24 +263,24 @@ const ManageEmployee = props => {
                     <div className="h-px w-full bg-gray-200 mb-6" />
 
                     <div className="mb-4">
-                        <label className="block mb-2 text-sm font-semibold text-gray-700">Employee Name*</label>
+                        <label className="block mb-2 text-sm font-semibold text-gray-900">Employee Name*</label>
                         <input
                             value={employeeName}
                             onChange={e => setEmployeeName(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            className="w-full p-2.5 rounded border border-gray-300 focus:border-black focus:ring-1 focus:ring-black outline-none text-base transition-colors"
+                            className="w-full p-2.5 rounded border border-gray-300 focus:border-black focus:ring-1 focus:ring-black outline-none text-base text-gray-900 transition-colors"
                             placeholder="Enter employee name"
                         />
                     </div>
 
                     <div className="mb-6">
-                        <label className="block mb-2 text-sm font-semibold text-gray-700">Employee Mobile*</label>
+                        <label className="block mb-2 text-sm font-semibold text-gray-900">Employee Mobile*</label>
                         <input
                             value={employeeMobile}
                             onChange={e => setEmployeeMobile(e.target.value)}
                             onFocus={() => setIsVisible(false)}
                             type="tel"
-                            className="w-full p-2.5 rounded border border-gray-300 focus:border-black focus:ring-1 focus:ring-black outline-none text-base transition-colors"
+                            className="w-full p-2.5 rounded border border-gray-300 focus:border-black focus:ring-1 focus:ring-black outline-none text-base text-gray-900 transition-colors"
                             placeholder="Enter mobile number"
                         />
                     </div>

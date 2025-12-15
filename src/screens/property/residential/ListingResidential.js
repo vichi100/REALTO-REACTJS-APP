@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -82,8 +82,15 @@ const ListingResidential = props => {
     const employeeObj = item;
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [showButton, setShowButton] = useState(false);
     const [search, setSearch] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+    const [originalData, setOriginalData] = useState([]); // Store original data
+    const dateInputRef = useRef(null);
+    const scrollRef = useRef(null);
+    const lastScrollY = useRef(0);
     const [visible, setVisible] = useState(false);
+
     const [visibleSorting, setVisibleSorting] = useState(false);
     const [data, setData] = useState([]);
     const [minRent, setMinRent] = useState(5000);
@@ -318,7 +325,10 @@ const ListingResidential = props => {
             req_user_id: props.userDetails.id,
             agent_id: props.userDetails.works_for,
         };
-        setLoading(true);
+        // Only show full-screen loading if we don't have existing data
+        if (props.residentialPropertyList.length === 0) {
+            setLoading(true);
+        }
         axios(SERVER_URL + "/residentialPropertyListings", {
             method: "post",
             headers: {
@@ -372,6 +382,10 @@ const ListingResidential = props => {
 
 
     const navigateToDetails = (item, propertyFor) => {
+        // Save scroll position from the tracked ref
+        console.log("ListingResidential: Saving scroll pos (Tracked):", lastScrollY.current);
+        sessionStorage.setItem('residential_scroll_pos', lastScrollY.current);
+
         props.setPropertyDetails(item);
         if (propertyFor === "Rent") {
             navigate("/listing/PropDetailsFromListing", {
@@ -505,11 +519,54 @@ const ListingResidential = props => {
         setMaxSell(values[1]);
     };
 
+    // Save scroll position on unmount (navigating away)
     useEffect(() => {
-        if (props.residentialPropertyList.length > 0) {
-            setData(props.residentialPropertyList)
+        return () => {
+            console.log("ListingResidential: Unmounting - Saving scroll pos:", lastScrollY.current);
+            sessionStorage.setItem('residential_scroll_pos', lastScrollY.current);
+        };
+    }, []);
+
+    // Restore scroll position when data loads
+    useEffect(() => {
+        if (props.residentialPropertyList && props.residentialPropertyList.length > 0) {
+            setData(props.residentialPropertyList);
+
+            // Restore scroll position with polling
+            const scrollPos = sessionStorage.getItem('residential_scroll_pos');
+            if (scrollPos && parseInt(scrollPos) > 0) {
+                const pos = parseInt(scrollPos, 10);
+                console.log("ListingResidential: Attempting to restore scroll to:", pos);
+
+                const attemptRestore = () => {
+                    if (scrollRef.current) {
+                        // Only set if not already close (user might be within a few pixels)
+                        if (Math.abs(scrollRef.current.scrollTop - pos) > 10) {
+                            scrollRef.current.scrollTop = pos;
+                            console.log("ListingResidential: Restore attempt applied:", scrollRef.current.scrollTop);
+                        }
+                    }
+                };
+
+                // Try a few times to ensure it catches the rendered height
+                requestAnimationFrame(() => {
+                    attemptRestore();
+                    setTimeout(attemptRestore, 50);
+                    setTimeout(attemptRestore, 150);
+                    setTimeout(attemptRestore, 300);
+                });
+            }
         }
-    }, [props.residentialPropertyList])
+    }, [props.residentialPropertyList]);
+
+    useEffect(() => {
+        if (props.residentialPropertyList && props.residentialPropertyList.length > 0) {
+            setLoading(false);
+        } else {
+            // If we have no data in redux, we might need to fetch or wait
+            if (loading && data.length > 0) setLoading(false);
+        }
+    }, [props.residentialPropertyList, data]);
 
     const selectBHK = (index, button) => {
         let newSelectedIndicesBHK;
@@ -660,7 +717,15 @@ const ListingResidential = props => {
 
             </div>
 
-            <div className="flex-1 overflow-y-auto">
+            <div
+                id="listing-scroll-container"
+                ref={scrollRef}
+                className="flex-1 overflow-y-auto"
+                onScroll={(e) => {
+                    lastScrollY.current = e.currentTarget.scrollTop;
+                    // console.log("ListingResidential: Scrolled to", e.currentTarget.scrollTop); // Comment out spam
+                }}
+            >
                 {loading ? (
                     <div className="flex justify-center items-center h-full">
                         Loading...
