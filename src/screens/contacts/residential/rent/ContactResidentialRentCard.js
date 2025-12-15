@@ -551,12 +551,12 @@ const ContactResidentialRentCard = props => {
                             </>
                         )}
 
-                        <div style={{ marginLeft: !displayMatchPercent ? 40 : 0, }}>
+                        <div style={{ marginLeft: !displayMatchPercent ? 5 : 0, }}>
                             {!displayMatchPercent &&
                                 <div style={{
                                     width: 60, height: 60, display: 'flex', justifyContent: 'center', alignItems: 'center',
-                                    color: "rgba(105,105,105, .9)", border: '1px solid rgba(127,255,212, .9)',
-                                    fontSize: 24, fontWeight: 'bold', borderRadius: 30
+                                    color: "rgba(105,105,105, .9)",
+                                    fontSize: 24, fontWeight: 'bold'
                                 }}>
                                     {item.customer_details.name && item.customer_details.name.slice(0, 1)}
                                 </div>

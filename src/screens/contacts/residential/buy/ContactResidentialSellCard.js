@@ -537,7 +537,7 @@ const ContactResidentialSellCard = props => {
                             </div>
                         )}
 
-                        <div style={{ marginLeft: !displayMatchPercent ? 40 : 0 }}>
+                        <div style={{ marginLeft: !displayMatchPercent ? 5 : 0 }}>
                             {!displayMatchPercent && <Avatar
                                 size={60}
                                 title={
@@ -546,9 +546,6 @@ const ContactResidentialSellCard = props => {
                                 }
                                 titleStyle={{ color: "rgba(105,105,105, .9)" }}
                                 avatarStyle={{
-                                    borderWidth: 1,
-                                    borderColor: "rgba(127,255,212, .9)",
-                                    borderStyle: "solid"
                                 }}
                             />}
                         </div>
