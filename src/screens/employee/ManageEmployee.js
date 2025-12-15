@@ -247,15 +247,15 @@ const ManageEmployee = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-50">
+        <div className="flex flex-col h-full bg-white">
             <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm sticky top-0 z-10">
                 <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
                     <MdArrowBack size={24} color="#333" />
                 </div>
                 <h1 className="text-lg font-semibold text-gray-800">{editEmp ? "Update Employee" : "Add Employee"}</h1>
             </div>
-            <div className="flex-1 overflow-y-auto p-5">
-                <div className="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+            <div className="flex-1 overflow-y-auto">
+                <div className="p-4">
                     <p className="mb-4 text-sm font-medium text-gray-700">
                         Add employees so they can have access/edit rights for your
                         properties listing, you can any time change any employees rights
@@ -263,25 +263,25 @@ const ManageEmployee = props => {
                     <div className="h-px w-full bg-gray-200 mb-6" />
 
                     <div className="mb-4">
-                        <label className="block mb-2 text-sm font-semibold text-gray-900">Employee Name*</label>
+                        <label className="block mb-1 text-xs text-gray-500 font-bold">Employee Name*</label>
                         <input
                             value={employeeName}
                             onChange={e => setEmployeeName(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            className="w-full p-2.5 rounded border border-gray-300 focus:border-black focus:ring-1 focus:ring-black outline-none text-base text-gray-900 transition-colors"
+                            className="w-full py-2 border-b border-gray-300 focus:border-teal-500 outline-none text-lg text-gray-800 transition-colors bg-transparent placeholder-gray-400"
                             placeholder="Enter employee name"
                         />
                     </div>
 
                     <div className="mb-6">
-                        <label className="block mb-2 text-sm font-semibold text-gray-900">Employee Mobile*</label>
+                        <label className="block mb-1 text-xs text-gray-500 font-bold">Employee Mobile*</label>
                         <input
                             value={employeeMobile}
                             onChange={e => setEmployeeMobile(e.target.value)}
                             onFocus={() => setIsVisible(false)}
                             type="tel"
-                            className="w-full p-2.5 rounded border border-gray-300 focus:border-black focus:ring-1 focus:ring-black outline-none text-base text-gray-900 transition-colors"
-                            placeholder="Enter mobile number"
+                            className="w-full py-2 border-b border-gray-300 focus:border-teal-500 outline-none text-lg text-gray-800 transition-colors bg-transparent placeholder-gray-400"
+                            placeholder="+91"
                         />
                     </div>
 
@@ -289,85 +289,109 @@ const ManageEmployee = props => {
                         Grant Access Rights
                     </p>
                     <div className="mb-6">
-                        <div className="flex flex-row flex-wrap gap-6 mb-4">
-                            <label className="flex items-center cursor-pointer">
-                                <span className="text-sm font-medium text-gray-700 mr-2">View</span>
-                                <input
-                                    type="checkbox"
-                                    checked={true}
-                                    readOnly
-                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                                />
-                            </label>
-                            <label className="flex items-center cursor-pointer">
-                                <span className="text-sm font-medium text-gray-700 mr-2">Add</span>
-                                <input
-                                    type="checkbox"
-                                    checked={isAddEnabled}
-                                    onChange={toggleAddSwitch}
-                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                                />
-                            </label>
-                            <label className="flex items-center cursor-pointer">
-                                <span className="text-sm font-medium text-gray-700 mr-2">Master</span>
-                                <input
-                                    type="checkbox"
-                                    checked={isMasterEnabled}
-                                    onChange={toggleMasterSwitch}
-                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                                />
-                            </label>
-                            <label className="flex items-center cursor-pointer">
-                                <span className="text-sm font-medium text-gray-700 mr-2">Admin</span>
-                                <input
-                                    type="checkbox"
-                                    checked={isAdminEnabled}
-                                    onChange={toggleAdminSwitch}
-                                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                                />
-                            </label>
+                        <div className="mb-6">
+                            <div className="flex flex-row flex-wrap items-center gap-x-8 gap-y-4 mb-4">
+                                {/* View Toggle - Always On */}
+                                <label className="flex items-center cursor-pointer">
+                                    <span className="text-sm font-medium text-gray-700 mr-3 w-12">View</span>
+                                    <div className="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" className="sr-only peer" checked={true} readOnly />
+                                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                    </div>
+                                </label>
+
+                                {/* Add Toggle */}
+                                <label className="flex items-center cursor-pointer">
+                                    <span className="text-sm font-medium text-gray-700 mr-3 w-12">Add</span>
+                                    <div className="relative inline-flex items-center cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            className="sr-only peer"
+                                            checked={isAddEnabled}
+                                            onChange={toggleAddSwitch}
+                                        />
+                                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
+                                    </div>
+                                </label>
+
+                                {/* Master Toggle */}
+                                <label className="flex items-center cursor-pointer">
+                                    <span className="text-sm font-medium text-gray-700 mr-3 w-12">Master</span>
+                                    <div className="relative inline-flex items-center cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            className="sr-only peer"
+                                            checked={isMasterEnabled}
+                                            onChange={toggleMasterSwitch}
+                                        />
+                                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-400"></div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            {/* Admin Toggle - Separate Row */}
+                            <div className="flex flex-row items-center gap-4 mb-4">
+                                <label className="flex items-center cursor-pointer">
+                                    <span className="text-sm font-medium text-gray-700 mr-3 w-12">Admin</span>
+                                    <div className="relative inline-flex items-center cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            className="sr-only peer"
+                                            checked={isAdminEnabled}
+                                            onChange={toggleAdminSwitch}
+                                        />
+                                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div className="space-y-2 text-sm text-gray-600 p-0">
+                                <p>
+                                    <span className="font-bold text-gray-900">View:</span> Enable View will allow employee to see the properties and customers which are assigned to him.
+                                </p>
+                                {isAddEnabled && (
+                                    <p>
+                                        <span className="font-bold text-gray-900">Add:</span> Enable Add will allow employee to add the new properties and customers. Also will allow employee to see the properties and customers which are assigned to him.
+                                    </p>
+                                )}
+                                {isMasterEnabled && (
+                                    <p>
+                                        <span className="font-bold text-red-600">Warning:</span> Enable Master will allow employee to see all the properties, customer and Employees details. Also will allow add the new properties and customers
+                                    </p>
+                                )}
+                                {isAdminEnabled && (
+                                    <p>
+                                        <span className="font-bold text-red-600">Warning:</span> Enable Admin will allow employee to see and delete all the properties, customers and Employee.
+                                    </p>
+                                )}
+                            </div>
                         </div>
 
-                        <div className="space-y-2 text-sm text-gray-600 bg-gray-50 p-4 rounded border border-gray-100">
-                            <p>
-                                <span className="font-semibold text-gray-900">View:</span> Allows employee to see assigned properties and customers.
-                            </p>
-                            {isAddEnabled && <p>
-                                <span className="font-semibold text-gray-900">Add:</span> Allows employee to add new properties/customers and see assigned ones.
-                            </p>}
-                            {isMasterEnabled && <p>
-                                <span className="font-semibold text-red-600">Warning (Master):</span> Allows employee to see/add ALL properties, customers, and employees details.
-                            </p>}
-                            {isAdminEnabled && <p>
-                                <span className="font-semibold text-red-600">Warning (Admin):</span> Full access to see and DELETE all properties, customers, and employees.
-                            </p>}
+                        <div className="mt-8">
+                            {!editEmp ? (
+                                <Button
+                                    title="ADD"
+                                    onPress={() => onSubmit()}
+                                    style={{ width: '100%', backgroundColor: '#009688' }} // Teal color
+                                />
+                            ) : (
+                                <Button
+                                    title="UPDATE"
+                                    onPress={() => updateEmployeeDetails()}
+                                    style={{ width: '100%', backgroundColor: '#009688' }} // Teal color
+                                />
+                            )}
                         </div>
-                    </div>
-
-                    <div className="mt-8">
-                        {!editEmp ? (
-                            <Button
-                                title="ADD EMPLOYEE"
-                                onPress={() => onSubmit()}
-                                style={{ width: '100%' }}
-                            />
-                        ) : (
-                            <Button
-                                title="UPDATE DETAILS"
-                                onPress={() => updateEmployeeDetails()}
-                                style={{ width: '100%' }}
-                            />
-                        )}
                     </div>
                 </div>
+                <Snackbar
+                    visible={isVisible}
+                    textMessage={errorMessage}
+                    position={"top"}
+                    actionHandler={() => dismissSnackBar()}
+                    actionText="OK"
+                />
             </div>
-            <Snackbar
-                visible={isVisible}
-                textMessage={errorMessage}
-                position={"top"}
-                actionHandler={() => dismissSnackBar()}
-                actionText="OK"
-            />
         </div>
     );
 };
