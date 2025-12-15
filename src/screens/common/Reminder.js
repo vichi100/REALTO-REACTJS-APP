@@ -451,7 +451,7 @@ const Reminder = props => {
                                     </React.Fragment>
                                 ))}
                                 <div style={{ padding: 10, alignItems: 'center', textAlign: 'center' }}>
-                                    <span style={{ color: '#000' }}>End</span>
+                                    <span style={{ color: '#ffffffff' }}>End</span>
                                 </div>
                             </>
                         ) : (

@@ -674,7 +674,7 @@ const ContactsResidential = props => {
                                 return null;
                             })}
                             <div style={{ padding: 10, alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-                                <span style={{ color: '#000' }}>End</span>
+                                <span style={{ color: '#ffffffff' }}>End</span>
                             </div>
                         </div>
                     ) : (
@@ -901,7 +901,7 @@ const ContactsResidential = props => {
                         left: '50%',
                         transform: 'translateX(-50%)',
                         bottom: '70px',
-                        backgroundColor: "#00a36c",
+                        backgroundColor: "rgba(128,128,128, 0.8)",//"#00a36c",
                         borderRadius: '30px',
                         zIndex: 100,
                         boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'

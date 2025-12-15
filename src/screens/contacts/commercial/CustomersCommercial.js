@@ -849,7 +849,7 @@ const CustomersCommercial = props => {
     const FlatListFooter = () => {
         return (
             <div style={{ padding: 10, alignItems: 'center', textAlign: 'center' }}>
-                <p style={{ color: '#000' }} data-testid="end_of_list">End</p>
+                <p style={{ color: '#ffffffff' }} data-testid="end_of_list">End</p>
             </div>
         );
     };
@@ -1097,7 +1097,7 @@ const CustomersCommercial = props => {
                         left: '50%',
                         transform: 'translateX(-50%)',
                         bottom: '70px',
-                        backgroundColor: "#00a36c",
+                        backgroundColor: "rgba(128,128,128, 0.8)",//"#00a36c",
                         borderRadius: '30px',
                         zIndex: 100,
                         boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'

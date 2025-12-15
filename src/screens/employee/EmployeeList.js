@@ -232,7 +232,7 @@ const EmployeeList = props => {
                                 </div>
                             ))}
                             <div style={{ padding: 10, alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-                                <span style={{ color: '#000' }}>End</span>
+                                <span style={{ color: '#ffffffff' }}>End</span>
                             </div>
                         </div>
 
