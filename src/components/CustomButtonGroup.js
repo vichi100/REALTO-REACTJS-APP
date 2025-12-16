@@ -52,7 +52,7 @@ const CustomButtonGroup = ({
               ${getButtonRoundedClass(index, buttons.length)}
               ${isSegmented && index > 0 ? '-ml-px' : ''}
               ${isSelected
-                                ? 'bg-green-100 border-green-500 text-black z-10'
+                                ? 'bg-teal-200 border-teal-500 text-black z-10'
                                 : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 z-0'}
             `}
                         style={{

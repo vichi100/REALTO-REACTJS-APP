@@ -275,9 +275,9 @@ const GlobalSearch = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
+        <div className="flex flex-col h-full bg-gray-100">
             {/* Sticky Header */}
-            <div className="sticky top-0 z-10 bg-white shadow-sm">
+            <div className="z-10 bg-white shadow-sm flex-shrink-0">
                 <div className="flex justify-center items-center p-2 relative">
                     <img
                         src="/assets/images/home.png"
@@ -294,207 +294,218 @@ const GlobalSearch = props => {
                 </div>
             </div>
 
-            <div className="p-4 flex flex-col gap-4">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">City where you want to search*</label>
-                    <input
-                        type="text"
-                        placeholder="Enter city where customer wants property"
-                        value={city}
-                        onChange={e => setCity(e.target.value)}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-black"
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Add multiple locations within city</label>
-                    <GooglePlacesAutocomplete
-                        apiKey={GOOGLE_PLACES_API_KEY}
-                        selectProps={{
-                            value: address,
-                            placeholder: 'Add multiple locations within city',
-                            onChange: (val) => onSelectPlace(val),
-                            styles: {
-                                input: (provided) => ({
-                                    ...provided,
-                                    height: '38px',
-                                }),
-                                control: (provided) => ({
-                                    ...provided,
-                                    borderColor: '#e2e8f0',
-                                    boxShadow: 'none',
-                                    '&:hover': {
-                                        borderColor: '#cbd5e0',
-                                    },
-                                }),
-                                option: (provided, state) => ({
-                                    ...provided,
-                                    color: '#374151', // text-gray-700
-                                    backgroundColor: state.isFocused ? '#e2e8f0' : '#ffffff',
-                                }),
-                                singleValue: (provided) => ({
-                                    ...provided,
-                                    color: '#374151',
-                                }),
-                            },
-                        }}
-                    />
-                </div>
-                {/* Re-injecting the logic to call onSelectPlace correctly */}
-                <div style={{ display: 'none' }}>
-                    {/* Hidden logic to trigger selection handling if needed, but better to do it in the component props */}
-                </div>
-                {/* Correcting the component usage above in the next step if this block is just replacement */}
-                <div className="flex flex-row flex-wrap gap-2 mt-2">
-                    {selectedLocationArray.map((item, index) => (
-                        <div key={index} className="flex items-center bg-teal-400 rounded-full px-3 py-1 text-white">
-                            <span className="mr-2 truncate max-w-[100px]">{item.main_text}</span>
-                            <button onClick={() => removeLocation(item)} className="text-red-600 font-bold">x</button>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <div>
-                <p className="p-2 bg-gray-200 font-bold text-black">What you are looking for</p>
-                <div className="mt-2">
-                    <CustomButtonGroup
-                        buttons={lookingForOptions}
-                        selectedIndices={[lookingForOptions.findIndex(option => option.text === lookingFor)]}
-                        onButtonPress={selectWhatYouLookingFor}
-                    />
-                </div>
-            </div>
-
-            <div>
-                <p className="p-2 bg-gray-200 font-bold text-black">What type</p>
-                <div className="mt-2">
-                    <CustomButtonGroup
-                        buttons={whatTypeOptions}
-                        selectedIndices={[whatTypeOptions.findIndex(option => option.text === whatType)]}
-                        onButtonPress={selectWhatType}
-                    />
-                </div>
-            </div>
-
-            <div>
-                <p className="p-2 bg-gray-200 font-bold text-black">What is purpose</p>
-                <div className="mt-2">
-                    <CustomButtonGroup
-                        buttons={porposeForOptions}
-                        selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
-                        onButtonPress={(index, button) => setPurpose(button.text)}
-                    />
-                </div>
-            </div>
-
-            {whatType.toLowerCase() === "residential" ? (
-                <div>
-                    <p className="p-2 bg-gray-200 font-bold text-black">BHK Size</p>
-                    <div className="mt-2">
-                        <CustomButtonGroup
-                            buttons={bhkOption}
-                            isMultiSelect={true}
-                            selectedIndices={selectedBHK.map(item => bhkOption.findIndex(option => option.text === item))}
-                            onButtonPress={selectBHK}
-                        />
-                    </div>
-                </div>
-            ) : (
-                <>
+            <div className="flex-1 overflow-y-auto">
+                <div className="p-4 flex flex-col gap-4">
                     <div>
-                        <p className="p-2 bg-gray-200 font-bold text-black">Required For</p>
-                        <div className="mt-2">
-                            <CustomButtonGroup
-                                buttons={requiredForOption}
-                                isMultiSelect={true}
-                                selectedIndices={selectedRequiredFor.map(item => requiredForOption.findIndex(option => option.text === item))}
-                                onButtonPress={(index, button) => {
-                                    let newSelected = [...selectedRequiredFor];
-                                    if (newSelected.includes(button.text)) {
-                                        newSelected.splice(newSelected.indexOf(button.text), 1);
-                                    } else {
-                                        newSelected.push(button.text);
-                                    }
-                                    setSelectedRequiredFor(newSelected);
-                                }}
-                            />
-                        </div>
-                    </div>
-                    <div className="mt-4">
-                        <p className="p-2 bg-gray-200 font-bold text-black">Building type</p>
-                        <div className="mt-2">
-                            <CustomButtonGroup
-                                buttons={buildingTypeOption}
-                                isMultiSelect={true}
-                                selectedIndices={selectedBuildingType.map(item => buildingTypeOption.findIndex(option => option.text === item))}
-                                onButtonPress={(index, button) => {
-                                    let newSelected = [...selectedBuildingType];
-                                    if (newSelected.includes(button.text)) {
-                                        newSelected.splice(newSelected.indexOf(button.text), 1);
-                                    } else {
-                                        newSelected.push(button.text);
-                                    }
-                                    setSelectedBuildingType(newSelected);
-                                }}
-                            />
-                        </div>
-                    </div>
-                </>
-            )}
-
-            <div>
-                <p className="p-2 bg-gray-200 font-bold text-black">Price Range</p>
-                <div className="mt-2 px-2">
-                    {purpose === "Rent" ? (
-                        <Slider
-                            min={10000}
-                            max={400000}
-                            initialValues={priceRange}
-                            onSlide={handlePriceRangeChange}
+                        <label className="block text-sm font-medium text-gray-700">City where you want to search*</label>
+                        <input
+                            type="text"
+                            placeholder="Enter city where customer wants property"
+                            value={city}
+                            onChange={e => setCity(e.target.value)}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-black"
                         />
-                    ) : (
-                        <SliderCr
-                            min={1000000}
-                            max={50000000}
-                            initialValues={priceRangeCr}
-                            onSlide={handlePriceRangeChangeCr}
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Add multiple locations within city</label>
+                        <GooglePlacesAutocomplete
+                            apiKey={GOOGLE_PLACES_API_KEY}
+                            selectProps={{
+                                value: address,
+                                placeholder: 'Add multiple locations within city',
+                                onChange: (val) => onSelectPlace(val),
+                                styles: {
+                                    container: (provided) => ({
+                                        ...provided,
+                                        zIndex: 1000,
+                                        position: 'relative',
+                                    }),
+                                    menu: (provided) => ({
+                                        ...provided,
+                                        zIndex: 9999,
+                                    }),
+                                    input: (provided) => ({
+                                        ...provided,
+                                        height: '38px',
+                                    }),
+                                    control: (provided) => ({
+                                        ...provided,
+                                        borderColor: '#e2e8f0',
+                                        boxShadow: 'none',
+                                        '&:hover': {
+                                            borderColor: '#cbd5e0',
+                                        },
+                                    }),
+                                    option: (provided, state) => ({
+                                        ...provided,
+                                        color: '#374151', // text-gray-700
+                                        backgroundColor: state.isFocused ? '#e2e8f0' : '#ffffff',
+                                    }),
+                                    singleValue: (provided) => ({
+                                        ...provided,
+                                        color: '#374151',
+                                    }),
+                                },
+                            }}
                         />
-                    )}
+                    </div>
+                    {/* Re-injecting the logic to call onSelectPlace correctly */}
+                    <div style={{ display: 'none' }}>
+                        {/* Hidden logic to trigger selection handling if needed, but better to do it in the component props */}
+                    </div>
+                    {/* Correcting the component usage above in the next step if this block is just replacement */}
+                    <div className="flex flex-row flex-wrap gap-2 mt-2">
+                        {selectedLocationArray.map((item, index) => (
+                            <div key={index} className="flex items-center bg-teal-400 rounded-full px-3 py-1 text-white">
+                                <span className="mr-2 truncate max-w-[100px]">{item.main_text}</span>
+                                <button onClick={() => removeLocation(item)} className="text-red-600 font-bold">x</button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <p className="p-2 bg-gray-200 font-bold text-black">Required with in</p>
-                <div className="mt-2">
-                    <CustomButtonGroup
-                        buttons={reqWithinOptions}
-                        selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
-                        onButtonPress={(index, button) => setReqWithin(button.text)}
-                    />
-                </div>
-            </div>
-
-            {whatType.toLowerCase() === "residential" && (
                 <div>
-                    <p className="p-2 bg-gray-200 font-bold text-black">Preferd Tenants</p>
+                    <p className="p-2 bg-gray-200 font-bold text-black">What you are looking for</p>
                     <div className="mt-2">
                         <CustomButtonGroup
-                            buttons={tenantOptions}
-                            selectedIndices={[tenantOptions.findIndex(option => option.text === tenant)]}
-                            onButtonPress={(index, button) => setTenant(button.text)}
+                            buttons={lookingForOptions}
+                            selectedIndices={[lookingForOptions.findIndex(option => option.text === lookingFor)]}
+                            onButtonPress={selectWhatYouLookingFor}
                         />
                     </div>
                 </div>
-            )}
 
-            <div className="mt-5 mb-10">
-                <button
-                    onClick={onSubmit}
-                    className="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600 font-bold"
-                >
-                    Search
-                </button>
+                <div>
+                    <p className="p-2 bg-gray-200 font-bold text-black">What type</p>
+                    <div className="mt-2">
+                        <CustomButtonGroup
+                            buttons={whatTypeOptions}
+                            selectedIndices={[whatTypeOptions.findIndex(option => option.text === whatType)]}
+                            onButtonPress={selectWhatType}
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <p className="p-2 bg-gray-200 font-bold text-black">What is purpose</p>
+                    <div className="mt-2">
+                        <CustomButtonGroup
+                            buttons={porposeForOptions}
+                            selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
+                            onButtonPress={(index, button) => setPurpose(button.text)}
+                        />
+                    </div>
+                </div>
+
+                {whatType.toLowerCase() === "residential" ? (
+                    <div>
+                        <p className="p-2 bg-gray-200 font-bold text-black">BHK Size</p>
+                        <div className="mt-2">
+                            <CustomButtonGroup
+                                buttons={bhkOption}
+                                isMultiSelect={true}
+                                selectedIndices={selectedBHK.map(item => bhkOption.findIndex(option => option.text === item))}
+                                onButtonPress={selectBHK}
+                            />
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <div>
+                            <p className="p-2 bg-gray-200 font-bold text-black">Required For</p>
+                            <div className="mt-2">
+                                <CustomButtonGroup
+                                    buttons={requiredForOption}
+                                    isMultiSelect={true}
+                                    selectedIndices={selectedRequiredFor.map(item => requiredForOption.findIndex(option => option.text === item))}
+                                    onButtonPress={(index, button) => {
+                                        let newSelected = [...selectedRequiredFor];
+                                        if (newSelected.includes(button.text)) {
+                                            newSelected.splice(newSelected.indexOf(button.text), 1);
+                                        } else {
+                                            newSelected.push(button.text);
+                                        }
+                                        setSelectedRequiredFor(newSelected);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-4">
+                            <p className="p-2 bg-gray-200 font-bold text-black">Building type</p>
+                            <div className="mt-2">
+                                <CustomButtonGroup
+                                    buttons={buildingTypeOption}
+                                    isMultiSelect={true}
+                                    selectedIndices={selectedBuildingType.map(item => buildingTypeOption.findIndex(option => option.text === item))}
+                                    onButtonPress={(index, button) => {
+                                        let newSelected = [...selectedBuildingType];
+                                        if (newSelected.includes(button.text)) {
+                                            newSelected.splice(newSelected.indexOf(button.text), 1);
+                                        } else {
+                                            newSelected.push(button.text);
+                                        }
+                                        setSelectedBuildingType(newSelected);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </>
+                )}
+
+                <div>
+                    <p className="p-2 bg-gray-200 font-bold text-black">Price Range</p>
+                    <div className="mt-2 px-2">
+                        {purpose === "Rent" ? (
+                            <Slider
+                                min={10000}
+                                max={400000}
+                                initialValues={priceRange}
+                                onSlide={handlePriceRangeChange}
+                            />
+                        ) : (
+                            <SliderCr
+                                min={1000000}
+                                max={50000000}
+                                initialValues={priceRangeCr}
+                                onSlide={handlePriceRangeChangeCr}
+                            />
+                        )}
+                    </div>
+                </div>
+
+                <div>
+                    <p className="p-2 bg-gray-200 font-bold text-black">Required with in</p>
+                    <div className="mt-2">
+                        <CustomButtonGroup
+                            buttons={reqWithinOptions}
+                            selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
+                            onButtonPress={(index, button) => setReqWithin(button.text)}
+                        />
+                    </div>
+                </div>
+
+                {whatType.toLowerCase() === "residential" && (
+                    <div>
+                        <p className="p-2 bg-gray-200 font-bold text-black">Preferd Tenants</p>
+                        <div className="mt-2">
+                            <CustomButtonGroup
+                                buttons={tenantOptions}
+                                selectedIndices={[tenantOptions.findIndex(option => option.text === tenant)]}
+                                onButtonPress={(index, button) => setTenant(button.text)}
+                            />
+                        </div>
+                    </div>
+                )}
+
+                <div className="mt-5 mb-10">
+                    <button
+                        onClick={onSubmit}
+                        className="w-full bg-teal-700 text-white p-3 rounded hover:bg-teal-800 font-bold"
+                    >
+                        SEARCH
+                    </button>
+                </div>
             </div>
 
 
