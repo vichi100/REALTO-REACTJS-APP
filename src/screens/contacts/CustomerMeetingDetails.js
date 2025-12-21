@@ -141,27 +141,18 @@ const CustomerMeetingDetails = props => {
                                     displayMatchCount={false}
                                     displayMatchPercent={false}
                                 />
-                                <div
-                                    style={{
-                                        backgroundColor: "#ffffff",
-                                        marginBottom: 1,
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        display: 'flex',
-                                        borderBottom: '1px solid #e0e0e0',
-                                        color: '#000',
-                                        fontWeight: '600'
-                                    }}
-                                >
-                                    <span style={{ padding: 10 }}>
+                                <div className="bg-white border-b border-gray-300 flex flex-col sm:flex-row justify-between p-3 text-black font-semibold text-sm sm:text-base gap-2">
+                                    <div className="flex-1 break-words">
                                         {reminderObj.reminder_for}
-                                    </span>
-                                    <span style={{ padding: 10 }}>
-                                        {formatIsoDateToCustomString(reminderObj.meeting_date)}
-                                    </span>
-                                    <span style={{ padding: 10 }}>
-                                        {reminderObj.meeting_time}
-                                    </span>
+                                    </div>
+                                    <div className="flex items-center gap-4 text-gray-800 whitespace-nowrap">
+                                        <span>
+                                            {formatIsoDateToCustomString(reminderObj.meeting_date)}
+                                        </span>
+                                        <span>
+                                            {reminderObj.meeting_time}
+                                        </span>
+                                    </div>
                                 </div>
                                 <div
                                     style={{
@@ -185,7 +176,7 @@ const CustomerMeetingDetails = props => {
                                             })
 
                                         }}
-                                        style={{ cursor: 'pointer' }}
+                                        style={{ cursor: 'pointer', borderBottom: '1px solid #e0e0e0', marginBottom: '10px', paddingBottom: '10px' }}
                                     >
                                         <div>
                                             <CardResidentialRent
@@ -209,27 +200,18 @@ const CustomerMeetingDetails = props => {
                                     displayCheckBox={false}
                                     displayMatchCount={false}
                                 />
-                                <div
-                                    style={{
-                                        backgroundColor: "#ffffff",
-                                        marginBottom: 1,
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        display: 'flex',
-                                        borderBottom: '1px solid #e0e0e0',
-                                        color: '#000',
-                                        fontWeight: '600'
-                                    }}
-                                >
-                                    <span style={{ padding: 10 }}>
+                                <div className="bg-white border-b border-gray-300 flex flex-col sm:flex-row justify-between p-3 text-black font-semibold text-sm sm:text-base gap-2">
+                                    <div className="flex-1 break-words">
                                         {reminderObj.reminder_for}
-                                    </span>
-                                    <span style={{ padding: 10 }}>
-                                        {formatIsoDateToCustomString(reminderObj.meeting_date)}
-                                    </span>
-                                    <span style={{ padding: 10 }}>
-                                        {reminderObj.meeting_time}
-                                    </span>
+                                    </div>
+                                    <div className="flex items-center gap-4 text-gray-800 whitespace-nowrap">
+                                        <span>
+                                            {formatIsoDateToCustomString(reminderObj.meeting_date)}
+                                        </span>
+                                        <span>
+                                            {reminderObj.meeting_time}
+                                        </span>
+                                    </div>
                                 </div>
                                 <div
                                     style={{
@@ -255,7 +237,7 @@ const CustomerMeetingDetails = props => {
                                         }
 
                                         }
-                                        style={{ cursor: 'pointer' }}
+                                        style={{ cursor: 'pointer', borderBottom: '1px solid #e0e0e0', marginBottom: '10px', paddingBottom: '10px' }}
                                     >
                                         <div>
                                             <CardResidentialSell
@@ -281,27 +263,18 @@ const CustomerMeetingDetails = props => {
                                     displayCheckBox={false}
                                     displayMatchCount={false}
                                 />
-                                <div
-                                    style={{
-                                        backgroundColor: "#ffffff",
-                                        marginBottom: 1,
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        display: 'flex',
-                                        borderBottom: '1px solid #e0e0e0',
-                                        color: '#000',
-                                        fontWeight: '600'
-                                    }}
-                                >
-                                    <span style={{ padding: 10 }}>
+                                <div className="bg-white border-b border-gray-300 flex flex-col sm:flex-row justify-between p-3 text-black font-semibold text-sm sm:text-base gap-2">
+                                    <div className="flex-1 break-words">
                                         {reminderObj.reminder_for}
-                                    </span>
-                                    <span style={{ padding: 10 }}>
-                                        {formatIsoDateToCustomString(reminderObj.meeting_date)}
-                                    </span>
-                                    <span style={{ padding: 10 }}>
-                                        {reminderObj.meeting_time}
-                                    </span>
+                                    </div>
+                                    <div className="flex items-center gap-4 text-gray-800 whitespace-nowrap">
+                                        <span>
+                                            {formatIsoDateToCustomString(reminderObj.meeting_date)}
+                                        </span>
+                                        <span>
+                                            {reminderObj.meeting_time}
+                                        </span>
+                                    </div>
                                 </div>
                                 <div
                                     style={{
@@ -325,7 +298,7 @@ const CustomerMeetingDetails = props => {
                                             })
                                         }
                                         }
-                                        style={{ cursor: 'pointer' }}
+                                        style={{ cursor: 'pointer', borderBottom: '1px solid #e0e0e0', marginBottom: '10px', paddingBottom: '10px' }}
                                     >
                                         <div>
                                             <CardCommercialRent
@@ -350,27 +323,18 @@ const CustomerMeetingDetails = props => {
                                     displayCheckBox={false}
                                     displayMatchCount={false}
                                 />
-                                <div
-                                    style={{
-                                        backgroundColor: "#ffffff",
-                                        marginBottom: 1,
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        display: 'flex',
-                                        borderBottom: '1px solid #e0e0e0',
-                                        color: '#000',
-                                        fontWeight: '600'
-                                    }}
-                                >
-                                    <span style={{ padding: 10 }}>
+                                <div className="bg-white border-b border-gray-300 flex flex-col sm:flex-row justify-between p-3 text-black font-semibold text-sm sm:text-base gap-2">
+                                    <div className="flex-1 break-words">
                                         {reminderObj.reminder_for}
-                                    </span>
-                                    <span style={{ padding: 10 }}>
-                                        {formatIsoDateToCustomString(reminderObj.meeting_date)}
-                                    </span>
-                                    <span style={{ padding: 10 }}>
-                                        {reminderObj.meeting_time}
-                                    </span>
+                                    </div>
+                                    <div className="flex items-center gap-4 text-gray-800 whitespace-nowrap">
+                                        <span>
+                                            {formatIsoDateToCustomString(reminderObj.meeting_date)}
+                                        </span>
+                                        <span>
+                                            {reminderObj.meeting_time}
+                                        </span>
+                                    </div>
                                 </div>
                                 <div
                                     style={{
@@ -394,7 +358,7 @@ const CustomerMeetingDetails = props => {
                                             })
                                         }
                                         }
-                                        style={{ cursor: 'pointer' }}
+                                        style={{ cursor: 'pointer', borderBottom: '1px solid #e0e0e0', marginBottom: '10px', paddingBottom: '10px' }}
                                     >
                                         <div>
                                             <CardCommercialSell

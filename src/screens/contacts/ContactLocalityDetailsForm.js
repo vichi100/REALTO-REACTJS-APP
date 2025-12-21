@@ -13,6 +13,7 @@ import { GOOGLE_PLACES_API_KEY } from "./../../utils/Constant";
 const ContactLocalityDetailsForm = props => {
     const navigate = useNavigate();
     const [city, setCity] = useState("");
+    const [focusedField, setFocusedField] = useState(null);
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -85,7 +86,7 @@ const ContactLocalityDetailsForm = props => {
     }
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+        <div style={{ flex: 1, backgroundColor: "#F9FAFB", minHeight: "100vh" }}>
             {/* Header */}
             <div style={styles.headerContainer}>
                 <div style={styles.backButtonContainer} onClick={() => navigate(-1)}>
@@ -97,14 +98,14 @@ const ContactLocalityDetailsForm = props => {
             </div>
             <div style={styles.container}>
                 <p style={{ color: '#000000' }}>Enter city and locations where customer wants the property</p>
-                <div style={{ marginBottom: 15 }}>
-                    <label style={{ display: 'block', marginBottom: 5, color: '#000000', fontWeight: '500' }}>City*</label>
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'city' ? 'text-teal-500' : 'text-gray-500'}`}>City*</label>
                     <input
                         value={city}
                         onChange={e => setCity(e.target.value)}
-                        onFocus={() => setIsVisible(false)}
-                        placeholder="Enter city where customer wants property"
-                        style={styles.input}
+                        onFocus={() => { setIsVisible(false); setFocusedField('city'); }}
+                        onBlur={() => setFocusedField(null)}
+                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'city' ? 'border-teal-500' : 'border-gray-200'}`}
                     />
                 </div>
                 <div style={{ marginTop: 20 }} />
@@ -115,12 +116,15 @@ const ContactLocalityDetailsForm = props => {
                         apiKey={GOOGLE_PLACES_API_KEY}
                         selectProps={{
                             value: address,
-                            placeholder: 'Add multiple locations within city',
                             onChange: (val) => onSelectPlace(val),
+                            onFocus: () => setFocusedField('location'),
+                            onBlur: () => setFocusedField(null),
                             styles: {
                                 input: (provided) => ({
                                     ...provided,
                                     height: '38px',
+                                    color: '#111827',
+                                    paddingLeft: 0,
                                 }),
                                 container: (provided) => ({
                                     ...provided,
@@ -136,14 +140,27 @@ const ContactLocalityDetailsForm = props => {
                                     backgroundColor: 'white',
                                     boxShadow: '0px 2px 4px rgba(0,0,0,0.25)',
                                 }),
-                                control: (provided) => ({
+                                control: (provided, state) => ({
                                     ...provided,
-                                    borderColor: '#ccc',
-                                    backgroundColor: "#f9f9f9",
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    borderBottom: focusedField === 'location' ? '2px solid #14b8a6' : '2px solid #e5e7eb',
+                                    borderRadius: 0,
                                     boxShadow: 'none',
+                                    paddingLeft: 0,
                                     '&:hover': {
-                                        borderColor: '#aaa',
+                                        borderBottom: focusedField === 'location' ? '2px solid #14b8a6' : '2px solid #e5e7eb',
                                     },
+                                    transition: 'border-color 0.2s',
+                                }),
+                                valueContainer: (provided) => ({
+                                    ...provided,
+                                    paddingLeft: 0,
+                                }),
+                                placeholder: (provided) => ({
+                                    ...provided,
+                                    color: '#9ca3af',
+                                    marginLeft: 0,
                                 }),
                                 option: (provided, state) => ({
                                     ...provided,
@@ -152,7 +169,8 @@ const ContactLocalityDetailsForm = props => {
                                 }),
                                 singleValue: (provided) => ({
                                     ...provided,
-                                    color: '#000000',
+                                    color: '#111827',
+                                    marginLeft: 0,
                                 }),
                             },
                         }}
@@ -168,10 +186,8 @@ const ContactLocalityDetailsForm = props => {
                     ))}
                 </div>
 
-                <div style={styles.header}>
-                    <p style={{ color: '#000000', fontWeight: 'bold', fontSize: 16 }}>Select Property Type</p>
-                </div>
-                <div style={styles.propSection}>
+                <div className="mt-6">
+                    <p className="text-sm font-medium text-gray-700 mb-3">Select Property Type</p>
                     <CustomButtonGroup
                         buttons={AppConstant.PROPERTY_TYPE_OPTION}
                         selectedIndices={[AppConstant.PROPERTY_TYPE_OPTION.findIndex(option => option.text === selectedPropType)]}
@@ -179,15 +195,13 @@ const ContactLocalityDetailsForm = props => {
                         onButtonPress={(index, button) => {
                             setSelectedPropType(button.text);
                         }}
+                        containerStyle={{ gap: '12px' }}
+                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
+                </div>
 
-                </div>
-                <div style={{ alignContent: "flex-start", marginTop: 20 }}>
-                    <p style={{ color: '#000000', fontWeight: 'bold', fontSize: 16 }}>Select Property For</p>
-                </div>
-                <div
-                    style={{ marginBottom: 10, marginTop: 15 }}
-                >
+                <div className="mt-6">
+                    <p className="text-sm font-medium text-gray-700 mb-3">Select Property For</p>
                     <CustomButtonGroup
                         buttons={AppConstant.CUSTOMER_PROPERTY_FOR_OPTION}
                         selectedIndices={[AppConstant.CUSTOMER_PROPERTY_FOR_OPTION.findIndex(option => option.text === selectedPropFor)]}
@@ -195,27 +209,24 @@ const ContactLocalityDetailsForm = props => {
                         onButtonPress={(index, button) => {
                             setSelectedPropFor(button.text);
                         }}
+                        containerStyle={{ gap: '12px' }}
+                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
-
                 </div>
 
                 {selectedPropType.toLowerCase() == "Residential".toLowerCase() && selectedPropFor === "Rent" ?
-                    <div>
-                        <div style={{ alignContent: "flex-start", marginTop: 20 }}>
-                            <p style={{ color: '#000000', fontWeight: 'bold', fontSize: 16 }}>Required for</p>
-                        </div>
-                        <div
-                            style={{ marginBottom: 10, marginTop: 15 }}
-                        >
-                            <CustomButtonGroup
-                                buttons={AppConstant.CUSTOMER_PREFERRED_TENANTS_OPTION}
-                                selectedIndices={[AppConstant.CUSTOMER_PREFERRED_TENANTS_OPTION.findIndex(option => option.text === requiredFor)]}
-                                isMultiSelect={false}
-                                onButtonPress={(index, button) => {
-                                    setRequiredFor(button.text);
-                                }}
-                            />
-                        </div>
+                    <div className="mt-6">
+                        <p className="text-sm font-medium text-gray-700 mb-3">Required for</p>
+                        <CustomButtonGroup
+                            buttons={AppConstant.CUSTOMER_PREFERRED_TENANTS_OPTION}
+                            selectedIndices={[AppConstant.CUSTOMER_PREFERRED_TENANTS_OPTION.findIndex(option => option.text === requiredFor)]}
+                            isMultiSelect={false}
+                            onButtonPress={(index, button) => {
+                                setRequiredFor(button.text);
+                            }}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        />
                     </div> : <div></div>}
 
                 <div style={{ marginTop: 20 }}>

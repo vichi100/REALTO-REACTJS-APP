@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdDateRange } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Button from "./../../../../components/Button";
 import Snackbar from "./../../../../components/SnackbarComponent";
@@ -21,7 +21,17 @@ const nonvegAllowedArray = [
 
 const ContactRentDetailsForm = props => {
     const navigate = useNavigate();
-    const [newDate, setNewDate] = React.useState("");
+
+    const getTodayString = () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    const [newDate, setNewDate] = React.useState(getTodayString());
+    const [focusedField, setFocusedField] = useState(null);
 
     const [customerDetailsX, setCustomerDetailsX] = useState(null);
     const [expectedRent, setExpectedRent] = useState("");
@@ -33,6 +43,9 @@ const ContactRentDetailsForm = props => {
     const [visible, setVisible] = React.useState(false);
 
     useEffect(() => {
+        // Always reset date to Today on mount
+        setNewDate(getTodayString());
+
         if (customerDetailsX === null) {
             init();
         }
@@ -109,7 +122,7 @@ const ContactRentDetailsForm = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+        <div style={{ flex: 1, backgroundColor: "#F9FAFB", minHeight: "100vh" }}>
             {/* Header */}
             <div style={styles.headerContainer}>
                 <div style={styles.backButtonContainer} onClick={() => navigate(-1)}>
@@ -124,90 +137,112 @@ const ContactRentDetailsForm = props => {
                     Provide rent details what max customer can afford
                 </p>
 
-                <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
-                        {expectedRent.trim() === "" ? "Max Rent*" : numDifferentiation(expectedRent) + " Max Rent"}
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'rent' ? 'text-teal-500' : 'text-gray-500'}`}>
+                        Max Rent*
                     </label>
                     <input
                         type="number"
-                        placeholder="Max Rent"
                         value={expectedRent}
                         onChange={e => setExpectedRent(e.target.value)}
-                        onFocus={() => setIsVisible(false)}
-                        style={{
-                            width: '100%',
-                            padding: 10,
-                            borderRadius: 4,
-                            border: '1px solid #ccc',
-                            backgroundColor: "#f9f9f9",
-                            color: '#000000'
-                        }}
+                        onFocus={() => { setIsVisible(false); setFocusedField('rent'); }}
+                        onBlur={() => setFocusedField(null)}
+                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'rent' ? 'border-teal-500' : 'border-gray-200'}`}
                     />
                 </div>
 
-                <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
-                        {expectedDeposit.trim() === "" ? "Max Deposit*" : numDifferentiation(expectedDeposit) + " Max Deposit"}
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'deposit' ? 'text-teal-500' : 'text-gray-500'}`}>
+                        Max Deposit*
                     </label>
                     <input
                         type="number"
-                        placeholder="Max Deposit"
                         value={expectedDeposit}
                         onChange={e => setExpectedDeposit(e.target.value)}
-                        onFocus={() => setIsVisible(false)}
-                        style={{
-                            width: '100%',
-                            padding: 10,
-                            borderRadius: 4,
-                            border: '1px solid #ccc',
-                            backgroundColor: "#f9f9f9",
-                            color: '#000000'
-                        }}
+                        onFocus={() => { setIsVisible(false); setFocusedField('deposit'); }}
+                        onBlur={() => setFocusedField(null)}
+                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'deposit' ? 'border-teal-500' : 'border-gray-200'}`}
                     />
                 </div>
 
-                <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'date' ? 'text-teal-500' : 'text-gray-500'}`}>
                         Required From (DD/MM/YYYY) *
                     </label>
-                    <input
-                        type={visible || newDate ? "date" : "text"}
-                        placeholder="DD/MM/YYYY"
-                        value={newDate}
-                        onChange={onChange}
-                        onFocus={() => setVisible(true)}
-                        onBlur={() => setVisible(false)}
-                        style={{
-                            width: '100%',
-                            padding: 10,
-                            borderRadius: 4,
-                            border: '1px solid #ccc',
-                            backgroundColor: "#f9f9f9",
-                            color: '#000000'
-                        }}
-                    />
+                    <div className={`relative w-full border-b-2 py-1 transition-colors flex items-center ${focusedField === 'date' ? 'border-teal-500' : 'border-gray-200'}`}>
+                        <style>
+                            {`
+                                input[type="date"]::-webkit-calendar-picker-indicator {
+                                    display: none;
+                                    -webkit-appearance: none;
+                                }
+                                input[type="date"] {
+                                    color-scheme: light;
+                                }
+                            `}
+                        </style>
+
+                        {/* Ghost Placeholder */}
+                        {!newDate && (
+                            <span className="absolute left-0 text-base text-gray-400 pointer-events-none">
+                                DD/MM/YYYY
+                            </span>
+                        )}
+
+                        <input
+                            type="date"
+                            min={getTodayString()}
+                            value={newDate}
+                            onChange={(e) => {
+                                const selectedDate = e.target.value;
+                                if (selectedDate && selectedDate < getTodayString()) {
+                                    return;
+                                }
+                                setNewDate(selectedDate);
+                            }}
+                            onClick={(e) => {
+                                try {
+                                    if (e.target.showPicker) e.target.showPicker();
+                                } catch (err) {
+                                    console.log(err);
+                                }
+                            }}
+                            onFocus={() => { setIsVisible(false); setFocusedField('date'); }}
+                            onBlur={() => setFocusedField(null)}
+                            onKeyDown={(e) => e.preventDefault()}
+                            className={`w-full bg-transparent text-base text-gray-900 focus:outline-none z-10 relative ${!newDate ? 'text-transparent' : 'text-gray-900'}`}
+                        />
+
+                        <div className="absolute right-0 pointer-events-none text-gray-500">
+                            <MdDateRange size={20} />
+                        </div>
+                    </div>
                 </div>
 
                 {customerDetailsX &&
                     customerDetailsX.customer_locality.property_type ===
                     "Residential" ? (
                     <div>
-                        <p style={{ color: '#000000', fontWeight: 'bold' }}>Type of Tenants*</p>
-                        <div style={styles.propSubSection}>
+                        <div className="mb-6">
+                            <p className="text-sm font-medium text-gray-700 mb-3">Type of Tenants*</p>
                             <CustomButtonGroup
                                 buttons={preferredTenantsArray}
                                 selectedIndices={[preferredTenantsIndex]}
                                 isMultiSelect={false}
                                 onButtonPress={(index) => selectedPreferredTenantsIndex(index)}
+                                containerStyle={{ gap: '12px' }}
+                                buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                             />
                         </div>
-                        <p style={{ color: '#000000', fontWeight: 'bold' }}>Tenants is veg / non veg*</p>
-                        <div style={styles.propSubSection}>
+                        <div className="mb-6">
+                            <p className="text-sm font-medium text-gray-700 mb-3">Tenants is veg / non veg*</p>
                             <CustomButtonGroup
                                 buttons={nonvegAllowedArray}
                                 selectedIndices={[nonvegAllowedIndex]}
                                 isMultiSelect={false}
                                 onButtonPress={(index) => selectNonvegAllowedIndex(index)}
+                                containerStyle={{ gap: '12px' }}
+                                buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                             />
                         </div>
                     </div>

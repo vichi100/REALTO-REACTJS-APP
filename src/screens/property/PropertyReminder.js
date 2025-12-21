@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { MdCall } from "react-icons/md";
+import { IoCall } from "react-icons/io5";
 import { makeCall } from "././../../utils/methods";
 import { formatIsoDateToCustomString, formatClientNameForDisplay, formatMobileNumber } from "../../utils/methods";
 
@@ -87,9 +87,15 @@ const PropertyReminder = props => {
 
         return (
             <div
-                key={index}
-                className="flex flex-row justify-between rounded mt-0.5 p-0"
-                style={{ backgroundColor: bgColor }}
+                style={{
+                    display: 'flex',
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    backgroundColor: bgColor,
+                    borderRadius: 5,
+                    marginTop: 2,
+                    marginBottom: 2
+                }}
             >
                 <div
                     onClick={() =>
@@ -98,85 +104,152 @@ const PropertyReminder = props => {
                             category: "property"
                         })
                     }
-                    className="flex flex-row justify-between w-4/5 cursor-pointer"
+                    style={{
+                        display: 'flex',
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        width: "80%",
+                        cursor: 'pointer'
+                    }}
                 >
-                    <div className="p-2.5 text-base pt-4">
+                    <div style={{ padding: 10, fontSize: 16, paddingTop: 15 }}>
                         <p
-                            className="text-base font-semibold text-black"
                             style={{
+                                fontSize: 16,
+                                fontWeight: "600",
+                                color: "#000",
+                                margin: 0,
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
                                 display: '-webkit-box',
                                 WebkitLineClamp: 2,
-                                WebkitBoxOrient: 'vertical',
-                                overflow: 'hidden'
+                                WebkitBoxOrient: 'vertical'
                             }}
                         >
                             {formatClientNameForDisplay(item.client_name)}
                         </p>
-                        <p className="text-black">{formatMobileNumber(item.client_mobile)}</p>
+                        <p style={{ margin: 0, color: '#000' }}>{formatMobileNumber(item.client_mobile)}</p>
                         {item.property_reference_id && (
-                            <p className="text-black">{"Reference id: " + item.property_reference_id}</p>
+                            <p style={{ margin: 0, color: '#000' }}>
+                                {"Reference id: " + item.property_reference_id}
+                            </p>
                         )}
                     </div>
                     <div>
-                        <div className="p-2.5">
-                            <p className="text-black">{item.reminder_for}</p>
-                            <p className="text-black">{item.meeting_time}</p>
-                            <p className="text-black">{formatIsoDateToCustomString(item.meeting_date)}</p>
+                        <div style={{ padding: 10 }}>
+                            <p style={{ margin: 0, color: '#000' }}>{item.reminder_for}</p>
+                            <p style={{ margin: 0, color: '#000' }}>{item.meeting_time}</p>
+                            <p style={{ margin: 0, color: '#000' }}>{formatIsoDateToCustomString(item.meeting_date)}</p>
                         </div>
                     </div>
                 </div>
-                <div className="w-0.5 bg-white h-auto"></div>
+                <div style={{ height: "auto", width: 2, backgroundColor: "#ffffff" }} />
                 <div
                     onClick={() => makeCall(item.client_mobile)}
-                    className="p-4 mt-2 pr-5 cursor-pointer"
+                    style={{
+                        padding: 15,
+                        marginTop: 7,
+                        paddingRight: 20,
+                        cursor: 'pointer'
+                    }}
                 >
-                    <MdCall color={"#ffffff"} size={26} />
+                    <IoCall color={"#ffffff"} size={26} />
                 </div>
             </div>
         );
     };
 
     return (
-        <div className="flex flex-col bg-white">
-            <p className="text-center text-base font-semibold mt-2.5 mb-2.5 text-black">
+        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+            <p
+                style={{
+                    textAlign: "center",
+                    fontSize: 16,
+                    fontWeight: "500",
+                    marginTop: 15,
+                    marginBottom: 10,
+                    color: '#000'
+                }}
+            >
                 Upcoming Meetings
             </p>
             {futureReminderList.length > 0 ? (
                 futureReminderList.map((item, index) => (
                     <React.Fragment key={index}>
                         <ItemView item={item} index={index} />
-                        <div className="h-px w-full bg-gray-300"></div>
+                        <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
                     </React.Fragment>
                 ))
             ) : (
-                <div className="flex flex-col items-center justify-center bg-gray-100 bg-opacity-90 py-5 mt-5 mb-5">
-                    <p className="text-center text-base font-light text-black">
+                <div
+                    style={{
+                        display: 'flex',
+                        alignContent: "center",
+                        justifyContent: "center",
+                        backgroundColor: "rgba(239, 239, 240, .9)",
+                        padding: 20
+                    }}
+                >
+                    <p
+                        style={{
+                            textAlign: "center",
+                            fontSize: 15,
+                            fontWeight: "300",
+                            margin: 0,
+                            color: '#000'
+                        }}
+                    >
                         No Meetings
                     </p>
                 </div>
             )}
 
-            <p className="text-center text-base font-semibold mt-4 mb-2.5 text-black">
+            <p
+                style={{
+                    textAlign: "center",
+                    fontSize: 16,
+                    fontWeight: "500",
+                    marginTop: 15,
+                    marginBottom: 10,
+                    color: '#000'
+                }}
+            >
                 Past Meetings
             </p>
             {pastReminderList.length > 0 ? (
                 pastReminderList.map((item, index) => (
                     <React.Fragment key={index}>
                         <ItemView item={item} index={index} />
-                        <div className="h-px w-full bg-gray-300"></div>
+                        <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
                     </React.Fragment>
                 ))
             ) : (
-                <div className="flex flex-col items-center justify-center bg-gray-100 bg-opacity-90 py-5 mt-5 mb-5">
-                    <p className="text-center text-base font-light text-black">
+                <div
+                    style={{
+                        display: 'flex',
+                        alignContent: "center",
+                        justifyContent: "center",
+                        backgroundColor: "rgba(239, 239, 240, .9)",
+                        padding: 20
+                    }}
+                >
+                    <p
+                        style={{
+                            textAlign: "center",
+                            fontSize: 15,
+                            fontWeight: "300",
+                            margin: 0,
+                            color: '#000'
+                        }}
+                    >
                         No Meetings
                     </p>
                 </div>
             )}
 
             {pastReminderList.length > 0 && (
-                <div className="p-2.5 items-center text-center">
-                    <span className="text-white">End</span>
+                <div style={{ padding: 10, alignItems: 'center', textAlign: 'center' }}>
+                    <span style={{ color: '#ffffffff' }}>End</span>
                 </div>
             )}
         </div>

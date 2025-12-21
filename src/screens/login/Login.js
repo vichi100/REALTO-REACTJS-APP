@@ -35,171 +35,134 @@ const Login = props => {
         });
     };
 
-    const getBorderColor = () => {
-        if (mobileNumber.length === 0) return "lightgrey";
-        return mobileNumber.length === 10 ? "green" : "red";
-    };
+
 
     const dismissSnackBar = () => {
         setIsVisible(false);
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <div style={{
-                flex: 1,
-                backgroundImage: 'url("/assets/images/rbg.jpeg")', // Ensure this path is correct for your public folder
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                position: 'relative'
-            }}>
-                <div
-                    style={styles.background}
-                />
-                <div
-                    style={{
-                        flex: 1,
-                        marginTop: "20%",
-                        marginLeft: 30,
-                        marginRight: 30,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        display: 'flex',
-                        flexDirection: 'column',
-                        zIndex: 1
-                    }}
-                >
+        <div className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center relative bg-black">
+            {/* Background Image */}
+            <div
+                className="absolute inset-0 z-0 bg-cover bg-center"
+                style={{
+                    backgroundImage: 'url("/assets/images/rbg.jpeg")',
+                }}
+            >
+                {/* Gradient Overlay - Darker for better text contrast */}
+                <div className="absolute inset-0 bg-black/60"></div>
+            </div>
 
+            {/* Content Container */}
+            <div className="relative z-10 w-full max-w-md p-6 flex flex-col items-center justify-center gap-12">
+
+                {/* Logo & Tagline */}
+                <div className="flex flex-col items-center gap-6">
                     <img
-                        style={{ width: 200, height: 200 }}
-                        src="/assets/images/logo.png" // Ensure this path is correct
+                        src="/assets/images/logo.png"
                         alt="Logo"
+                        className="w-32 h-32 object-contain"
                     />
-                    <div>
-                        <p style={{
-                            width: "100%",
-                            // height: 45,
-                            color: "#ffffff",
-                            fontWeight: "500",
-                            fontSize: 18,
-                            textAlign: 'center',
-                            margin: 0,
-                            marginTop: 10,
-                            marginBottom: 10
-                        }}>Supercharge Your Property Broking</p>
-                    </div>
+                    <p className="text-white text-xl font-medium text-center tracking-wide">
+                        Supercharge Your Property Broking
+                    </p>
+                </div>
 
-
-                    <div
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            width: "100%",
-                            marginBottom: "55%",
-                            display: 'flex',
-                            flexDirection: 'column'
-                        }}
-                    >
-
-                        <input
-                            style={{
-                                borderWidth: 1,
-                                borderColor: getBorderColor(),
-                                paddingLeft: 10,
-                                width: "80%",
-                                height: 45,
-                                color: "#000", // Changed to black for visibility on white input, or keep white if background is dark
-                                fontSize: 16,
-                                textAlign: 'center',
-                                borderRadius: 5,
-                                border: `1px solid ${getBorderColor()}`,
-                                backgroundColor: 'rgba(255, 255, 255, 0.8)'
+                {/* Input Section */}
+                <div className="w-full flex flex-col items-center gap-8 mt-8">
+                    <div className="relative w-full px-8 flex flex-col items-center gap-8">
+                        {/* Transparent Input Box */}
+                        <div
+                            onClick={() => {
+                                const input = document.getElementById('mobile-input');
+                                if (input) input.focus();
                             }}
-                            onChange={e => setMobileNumberX(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    onNext();
-                                }
-                            }}
-                            placeholder="Enter Mobile Number"
-                            type="tel"
-                        />
+                            className="w-full border border-white/80 py-3 px-4 flex flex-col items-center justify-center relative backdrop-blur-[2px] cursor-text"
+                        >
+                            {/* Wrapper that shrinks to fit content exactly */}
+                            <div className="relative inline-block">
+                                {/* Width Driver (Invisible) - sets the width of the relative container */}
+                                <span className="text-lg font-light tracking-wide opacity-0 pointer-events-none whitespace-pre">
+                                    {mobileNumber.length > 0 ? (
+                                        <>
+                                            {mobileNumber}
+                                            <span className="tracking-[8px]">{'.'.repeat(Math.max(0, 10 - mobileNumber.length))}</span>
+                                        </>
+                                    ) : (
+                                        "Enter Mobile Number"
+                                    )}
+                                </span>
+
+                                {/* Ghost Overlay (Digits + Dots) - Visible Layer */}
+                                {mobileNumber.length > 0 && (
+                                    <div className="absolute inset-0 flex items-center pointer-events-none z-0">
+                                        <span className="text-lg font-light tracking-wide">
+                                            <span className="text-white">{mobileNumber}</span>
+                                            <span className="text-white/50 tracking-[8px]">{'.'.repeat(Math.max(0, 10 - mobileNumber.length))}</span>
+                                        </span>
+                                    </div>
+                                )}
+
+                                {/* Actual Input - Interaction Layer */}
+                                <input
+                                    id="mobile-input"
+                                    className={`absolute inset-0 w-full h-full bg-transparent text-lg placeholder-gray-300 focus:outline-none font-light tracking-wide z-10 ${mobileNumber.length > 0 ? 'text-transparent caret-white text-left' : 'text-white text-center'}`}
+                                    onChange={e => {
+                                        const val = e.target.value;
+                                        if (/^\d*$/.test(val) && val.length <= 10) {
+                                            setMobileNumberX(val);
+                                        }
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            onNext();
+                                        }
+                                    }}
+                                    placeholder="Enter Mobile Number"
+                                    type="tel"
+                                    value={mobileNumber}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Play Button - Minimal White */}
                         <div
                             onClick={() => onNext()}
-                            style={{
-                                padding: 5,
-                                paddingTop: 15,
-                                cursor: 'pointer'
-                            }}
+                            className="cursor-pointer hover:scale-110 transition-transform active:scale-95"
                         >
                             <FaPlay
-                                color={"#ffffff"}
-                                size={50}
+                                color="white"
+                                size={32}
+                                className="drop-shadow-lg"
                             />
                         </div>
                     </div>
-                    <Snackbar
-                        visible={isVisible}
-                        textMessage={errorMessage}
-                        position={"top"}
-                        actionHandler={() => dismissSnackBar()}
-                        actionText="OK"
-                    />
                 </div>
 
-                <div
-                    style={{
-                        position: "absolute",
-                        bottom: 10,
-                        right: 10,
-                        margin: 20,
-                        cursor: 'pointer',
-                        zIndex: 1
-                    }}
-                    onClick={() => onSkip()}
-                >
-                    <span
-                        style={{ color: "#fff" }}
-                    >
-                        Skip
-                    </span>
-                </div>
+                <Snackbar
+                    visible={isVisible}
+                    textMessage={errorMessage}
+                    position={"top"}
+                    actionHandler={() => dismissSnackBar()}
+                    actionText="OK"
+                />
+            </div>
+
+            {/* Skip Button */}
+            <div
+                className="absolute bottom-10 right-8 z-20 cursor-pointer"
+                onClick={() => onSkip()}
+            >
+                <span className="text-white font-normal text-base hover:underline tracking-wide">
+                    Skip
+                </span>
             </div>
         </div>
     );
 };
 
-const styles = {
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'orange',
-    },
-    background: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: '100%',
-        width: '100%',
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.8), transparent)',
-        zIndex: 0
-    },
-    button: {
-        padding: 15,
-        alignItems: 'center',
-        borderRadius: 5,
-    },
-    text: {
-        backgroundColor: 'transparent',
-        fontSize: 15,
-        color: '#fff',
-    },
-};
+
 
 const mapStateToProps = state => ({
     userMobileNumber: state.AppReducer.userMobileNumber,

@@ -122,10 +122,16 @@ const PropDetailsFromListingForSell = props => {
                         onClick={() => getMatched(item)}
                         className="flex flex-row mt-2 cursor-pointer relative"
                     >
-                        <div className="bg-orange-400 bg-opacity-70 absolute right-0 top-0 flex items-center justify-center w-10 h-5 mr-0">
+                        <div
+                            className="absolute right-0 top-0 flex items-center justify-center w-10 h-5 mr-0"
+                            style={{ backgroundColor: 'rgba(246, 158, 6, 0.9)' }}
+                        >
                             <span className="text-sm font-medium text-black pl-0">{item.match_count ? item.match_count : 0}</span>
                         </div>
-                        <div className="absolute right-0 top-5 transform rotate-270 bg-green-500 bg-opacity-70 flex items-center justify-center w-20 h-9 p-0 -mr-4 mt-5 mb-4">
+                        <div
+                            className="absolute right-0 top-5 transform rotate-270 flex items-center justify-center w-20 h-10 p-0 -mr-5 mt-5 mb-4"
+                            style={{ backgroundColor: 'rgba(80, 200, 120, 0.7)' }}
+                        >
                             <span className="text-sm font-light text-black">Match</span>
                         </div>
                     </div>

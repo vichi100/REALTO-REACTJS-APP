@@ -8,7 +8,9 @@ import axios from "axios";
 import { SERVER_URL, GOOGLE_PLACES_API_KEY } from "./../../utils/Constant";
 import CustomButtonGroup from "./../../components/CustomButtonGroup";
 import Slider from "./../../components/Slider";
+
 import SliderCr from "./../../components/SliderCr";
+import Button from "./../../components/Button";
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 
 const homePlace = { description: 'Mumbai', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } } };
@@ -274,41 +276,61 @@ const GlobalSearch = props => {
         );
     };
 
+    const imgButtonStyle = {
+        borderRadius: '6px',
+        borderWidth: '0px',
+        padding: '10px 20px',
+        marginRight: '10px',
+        marginBottom: '10px',
+        boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+    };
+
+    const imgSelectedButtonStyle = {
+        backgroundColor: 'rgba(0, 163, 108, .2)',
+    };
+
+    const SectionHeader = ({ title }) => (
+        <div className="w-full bg-gray-100 px-4 py-2 mt-2">
+            <span className="text-gray-700 font-medium text-sm">{title}</span>
+        </div>
+    );
+
     return (
-        <div className="flex flex-col h-full bg-gray-100">
-            {/* Sticky Header */}
-            <div className="z-10 bg-white shadow-sm flex-shrink-0">
-                <div className="flex justify-center items-center p-2 relative">
-                    <img
-                        src="/assets/images/home.png"
-                        alt="Home"
-                        className="w-10 h-10 absolute left-2"
-                    />
-                    <span className="text-xl font-medium text-black">GLocal Search</span>
-                    <div className="absolute right-2">
-                        <MdFavoriteBorder size={30} color="rgb(137, 135, 135)" />
+
+        <div className="flex flex-col min-h-full bg-white font-sans text-gray-900 relative">
+            {/* Header */}
+            <div className="bg-white sticky top-0 z-40 shadow-sm border-b border-gray-100">
+                <div className="flex justify-between items-center px-4 py-3">
+                    <div className="flex items-center gap-3">
+                        <img src="/assets/images/home.png" alt="Logo" className="w-8 h-8" />
+                        <span className="text-xl font-bold text-gray-900">GLocal Search</span>
                     </div>
+                    <MdFavoriteBorder size={26} className="text-gray-400" />
                 </div>
-                <div className="flex justify-center items-center bg-green-100 bg-opacity-20 p-2">
-                    <span className="text-center text-sm text-black">Hi, {query}</span>
+
+                {/* Summary Banner */}
+                <div className="bg-teal-100 px-4 py-3 border-t border-teal-200">
+                    <p className="text-teal-900 text-sm font-medium leading-relaxed">
+                        Hi, {query}
+                    </p>
                 </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto">
-                <div className="p-4 flex flex-col gap-4">
+            <div className="flex flex-col pb-32">
+
+                {/* Location Section - Custom Layout since it's inputs */}
+                <div className="px-4 py-4 space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">City where you want to search*</label>
                         <input
                             type="text"
-                            placeholder="Enter city where customer wants property"
+                            placeholder="City where you want to search*"
                             value={city}
                             onChange={e => setCity(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-black"
+                            className="w-full border-b border-gray-300 py-3 text-gray-900 placeholder-gray-500 focus:border-teal-500 focus:outline-none transition-colors"
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Add multiple locations within city</label>
+                    <div className="relative z-50">
                         <GooglePlacesAutocomplete
                             apiKey={GOOGLE_PLACES_API_KEY}
                             selectProps={{
@@ -316,204 +338,212 @@ const GlobalSearch = props => {
                                 placeholder: 'Add multiple locations within city',
                                 onChange: (val) => onSelectPlace(val),
                                 styles: {
-                                    container: (provided) => ({
+                                    container: (provided) => ({ ...provided, width: '100%' }),
+                                    control: (provided, state) => ({
                                         ...provided,
-                                        zIndex: 1000,
-                                        position: 'relative',
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        borderBottom: '1px solid #e5e7eb',
+                                        borderRadius: '0',
+                                        padding: '8px 0',
+                                        boxShadow: 'none',
+                                        '&:hover': { borderBottom: '1px solid #d1d5db' }
                                     }),
+                                    input: (provided) => ({ ...provided, color: '#111827', padding: 0 }),
+                                    placeholder: (provided) => ({ ...provided, color: '#6b7280', padding: 0 }),
                                     menu: (provided) => ({
                                         ...provided,
+                                        marginTop: '8px',
+                                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                                         zIndex: 9999,
-                                    }),
-                                    input: (provided) => ({
-                                        ...provided,
-                                        height: '38px',
-                                    }),
-                                    control: (provided) => ({
-                                        ...provided,
-                                        borderColor: '#e2e8f0',
-                                        boxShadow: 'none',
-                                        '&:hover': {
-                                            borderColor: '#cbd5e0',
-                                        },
-                                    }),
-                                    option: (provided, state) => ({
-                                        ...provided,
-                                        color: '#374151', // text-gray-700
-                                        backgroundColor: state.isFocused ? '#e2e8f0' : '#ffffff',
-                                    }),
-                                    singleValue: (provided) => ({
-                                        ...provided,
-                                        color: '#374151',
                                     }),
                                 },
                             }}
                         />
                     </div>
-                    {/* Re-injecting the logic to call onSelectPlace correctly */}
-                    <div style={{ display: 'none' }}>
-                        {/* Hidden logic to trigger selection handling if needed, but better to do it in the component props */}
-                    </div>
-                    {/* Correcting the component usage above in the next step if this block is just replacement */}
-                    <div className="flex flex-row flex-wrap gap-2 mt-2">
-                        {selectedLocationArray.map((item, index) => (
-                            <div key={index} className="flex items-center bg-teal-400 rounded-full px-3 py-1 text-white">
-                                <span className="mr-2 truncate max-w-[100px]">{item.main_text}</span>
-                                <button onClick={() => removeLocation(item)} className="text-red-600 font-bold">x</button>
-                            </div>
-                        ))}
-                    </div>
+
+                    {selectedLocationArray.length > 0 && (
+                        <div className="flex flex-wrap gap-2 pt-2">
+                            {selectedLocationArray.map((item, index) => (
+                                <div key={index} className="flex items-center bg-teal-50 border border-teal-100 rounded-md px-2 py-1">
+                                    <span className="text-xs font-medium text-teal-700 mr-1 max-w-[150px] truncate">
+                                        {item.main_text}
+                                    </span>
+                                    <button
+                                        onClick={() => removeLocation(item)}
+                                        className="text-teal-400 hover:text-teal-600"
+                                    >
+                                        <MdClose size={14} />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
-                <div>
-                    <p className="p-2 bg-gray-200 font-bold text-black">What you are looking for</p>
-                    <div className="mt-2">
-                        <CustomButtonGroup
-                            buttons={lookingForOptions}
-                            selectedIndices={[lookingForOptions.findIndex(option => option.text === lookingFor)]}
-                            onButtonPress={selectWhatYouLookingFor}
-                        />
-                    </div>
+                {/* Looking For */}
+                <SectionHeader title="What you are looking for" />
+                <div className="bg-gray-50/50 p-4">
+                    <CustomButtonGroup
+                        buttons={lookingForOptions}
+                        selectedIndices={[lookingForOptions.findIndex(option => option.text === lookingFor)]}
+                        onButtonPress={selectWhatYouLookingFor}
+                        buttonStyle={imgButtonStyle}
+                        selectedButtonStyle={imgSelectedButtonStyle}
+                    />
                 </div>
 
-                <div>
-                    <p className="p-2 bg-gray-200 font-bold text-black">What type</p>
-                    <div className="mt-2">
-                        <CustomButtonGroup
-                            buttons={whatTypeOptions}
-                            selectedIndices={[whatTypeOptions.findIndex(option => option.text === whatType)]}
-                            onButtonPress={selectWhatType}
-                        />
-                    </div>
+                {/* Property Type */}
+                <SectionHeader title="What type" />
+                <div className="bg-gray-50/50 p-4">
+                    <CustomButtonGroup
+                        buttons={whatTypeOptions}
+                        selectedIndices={[whatTypeOptions.findIndex(option => option.text === whatType)]}
+                        onButtonPress={selectWhatType}
+                        buttonStyle={imgButtonStyle}
+                        selectedButtonStyle={imgSelectedButtonStyle}
+                    />
                 </div>
 
-                <div>
-                    <p className="p-2 bg-gray-200 font-bold text-black">What is purpose</p>
-                    <div className="mt-2">
-                        <CustomButtonGroup
-                            buttons={porposeForOptions}
-                            selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
-                            onButtonPress={(index, button) => setPurpose(button.text)}
-                        />
-                    </div>
+                {/* Purpose */}
+                <SectionHeader title="What is purpose" />
+                <div className="bg-gray-50/50 p-4">
+                    <CustomButtonGroup
+                        buttons={porposeForOptions}
+                        selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
+                        onButtonPress={(index, button) => setPurpose(button.text)}
+                        buttonStyle={imgButtonStyle}
+                        selectedButtonStyle={imgSelectedButtonStyle}
+                    />
                 </div>
 
+                {/* Dynamic Sections */}
                 {whatType.toLowerCase() === "residential" ? (
-                    <div>
-                        <p className="p-2 bg-gray-200 font-bold text-black">BHK Size</p>
-                        <div className="mt-2">
+                    <>
+                        <SectionHeader title="BHK Size" />
+                        <div className="bg-gray-50/50 p-4">
                             <CustomButtonGroup
                                 buttons={bhkOption}
                                 isMultiSelect={true}
                                 selectedIndices={selectedBHK.map(item => bhkOption.findIndex(option => option.text === item))}
                                 onButtonPress={selectBHK}
+                                buttonStyle={imgButtonStyle}
+                                selectedButtonStyle={imgSelectedButtonStyle}
                             />
                         </div>
-                    </div>
+                    </>
                 ) : (
                     <>
-                        <div>
-                            <p className="p-2 bg-gray-200 font-bold text-black">Required For</p>
-                            <div className="mt-2">
-                                <CustomButtonGroup
-                                    buttons={requiredForOption}
-                                    isMultiSelect={true}
-                                    selectedIndices={selectedRequiredFor.map(item => requiredForOption.findIndex(option => option.text === item))}
-                                    onButtonPress={(index, button) => {
-                                        let newSelected = [...selectedRequiredFor];
-                                        if (newSelected.includes(button.text)) {
-                                            newSelected.splice(newSelected.indexOf(button.text), 1);
-                                        } else {
-                                            newSelected.push(button.text);
-                                        }
-                                        setSelectedRequiredFor(newSelected);
-                                    }}
-                                />
-                            </div>
+                        <SectionHeader title="Required For" />
+                        <div className="bg-gray-50/50 p-4">
+                            <CustomButtonGroup
+                                buttons={requiredForOption}
+                                isMultiSelect={true}
+                                selectedIndices={selectedRequiredFor.map(item => requiredForOption.findIndex(option => option.text === item))}
+                                onButtonPress={(index, button) => {
+                                    let newSelected = [...selectedRequiredFor];
+                                    if (newSelected.includes(button.text)) {
+                                        newSelected.splice(newSelected.indexOf(button.text), 1);
+                                    } else {
+                                        newSelected.push(button.text);
+                                    }
+                                    setSelectedRequiredFor(newSelected);
+                                }}
+                                buttonStyle={imgButtonStyle}
+                                selectedButtonStyle={imgSelectedButtonStyle}
+                            />
                         </div>
-                        <div className="mt-4">
-                            <p className="p-2 bg-gray-200 font-bold text-black">Building type</p>
-                            <div className="mt-2">
-                                <CustomButtonGroup
-                                    buttons={buildingTypeOption}
-                                    isMultiSelect={true}
-                                    selectedIndices={selectedBuildingType.map(item => buildingTypeOption.findIndex(option => option.text === item))}
-                                    onButtonPress={(index, button) => {
-                                        let newSelected = [...selectedBuildingType];
-                                        if (newSelected.includes(button.text)) {
-                                            newSelected.splice(newSelected.indexOf(button.text), 1);
-                                        } else {
-                                            newSelected.push(button.text);
-                                        }
-                                        setSelectedBuildingType(newSelected);
-                                    }}
-                                />
-                            </div>
+
+                        <SectionHeader title="Building Type" />
+                        <div className="bg-gray-50/50 p-4">
+                            <CustomButtonGroup
+                                buttons={buildingTypeOption}
+                                isMultiSelect={true}
+                                selectedIndices={selectedBuildingType.map(item => buildingTypeOption.findIndex(option => option.text === item))}
+                                onButtonPress={(index, button) => {
+                                    let newSelected = [...selectedBuildingType];
+                                    if (newSelected.includes(button.text)) {
+                                        newSelected.splice(newSelected.indexOf(button.text), 1);
+                                    } else {
+                                        newSelected.push(button.text);
+                                    }
+                                    setSelectedBuildingType(newSelected);
+                                }}
+                                buttonStyle={imgButtonStyle}
+                                selectedButtonStyle={imgSelectedButtonStyle}
+                            />
                         </div>
                     </>
                 )}
 
-                <div>
-                    <p className="p-2 bg-gray-200 font-bold text-black">Price Range</p>
-                    <div className="mt-2 px-2">
-                        {purpose === "Rent" ? (
-                            <Slider
-                                min={10000}
-                                max={400000}
-                                initialValues={priceRange}
-                                onSlide={handlePriceRangeChange}
-                            />
-                        ) : (
-                            <SliderCr
-                                min={1000000}
-                                max={50000000}
-                                initialValues={priceRangeCr}
-                                onSlide={handlePriceRangeChangeCr}
-                            />
-                        )}
-                    </div>
-                </div>
-
-                <div>
-                    <p className="p-2 bg-gray-200 font-bold text-black">Required with in</p>
-                    <div className="mt-2">
-                        <CustomButtonGroup
-                            buttons={reqWithinOptions}
-                            selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
-                            onButtonPress={(index, button) => setReqWithin(button.text)}
+                {/* Price Range */}
+                <SectionHeader title="Price Range" />
+                <div className="bg-gray-50/50 p-6">
+                    {purpose === "Rent" ? (
+                        <Slider
+                            min={10000}
+                            max={400000}
+                            initialValues={priceRange}
+                            onSlide={handlePriceRangeChange}
                         />
-                    </div>
+                    ) : (
+                        <SliderCr
+                            min={1000000}
+                            max={50000000}
+                            initialValues={priceRangeCr}
+                            onSlide={handlePriceRangeChangeCr}
+                        />
+                    )}
                 </div>
 
+                {/* Timeline */}
+                <SectionHeader title="Required within" />
+                <div className="bg-gray-50/50 p-4">
+                    <CustomButtonGroup
+                        buttons={reqWithinOptions}
+                        selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
+                        onButtonPress={(index, button) => setReqWithin(button.text)}
+                        buttonStyle={imgButtonStyle}
+                        selectedButtonStyle={imgSelectedButtonStyle}
+                    />
+                </div>
+
+                {/* Tenant (Residential only) */}
                 {whatType.toLowerCase() === "residential" && (
-                    <div>
-                        <p className="p-2 bg-gray-200 font-bold text-black">Preferd Tenants</p>
-                        <div className="mt-2">
+                    <>
+                        <SectionHeader title="Preferred Tenant" />
+                        <div className="bg-gray-50/50 p-4">
                             <CustomButtonGroup
                                 buttons={tenantOptions}
                                 selectedIndices={[tenantOptions.findIndex(option => option.text === tenant)]}
                                 onButtonPress={(index, button) => setTenant(button.text)}
+                                buttonStyle={imgButtonStyle}
+                                selectedButtonStyle={imgSelectedButtonStyle}
                             />
                         </div>
-                    </div>
+                    </>
                 )}
 
-                <div className="mt-5 mb-10">
-                    <button
-                        onClick={onSubmit}
-                        className="w-full bg-teal-700 text-white p-3 rounded hover:bg-teal-800 font-bold"
-                    >
-                        SEARCH
-                    </button>
-                </div>
+
             </div>
 
+            {/* Floating Footer Action */}
+            <div
+                className="fixed bottom-[62px] left-0 right-0 px-4 py-2 z-40 bg-white shadow-lg"
+            >
+                <Button
+                    title="Search"
+                    onPress={onSubmit}
+                    accessibilityLabel="search-button"
+                    className="!mt-0 !mb-0"
+                />
+            </div>
 
             {/* Loading Overlay */}
             {
                 loading && (
-                    <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-                        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white"></div>
+                    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50">
+                        <div className="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent"></div>
                     </div>
                 )
             }
@@ -521,13 +551,14 @@ const GlobalSearch = props => {
             {/* Login Modal */}
             {
                 modalVisible && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-6 rounded shadow-lg max-w-sm w-full">
-                            <p className="text-lg mb-4">You are not logged in, please login.</p>
-                            <div className="flex justify-end gap-2">
+                    <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4">
+                        <div className="bg-white p-6 rounded-lg shadow-xl max-w-xs w-full">
+                            <h3 className="text-lg font-bold text-gray-900 mb-2">Login Required</h3>
+                            <p className="text-gray-600 mb-6 text-sm">Please login to continue.</p>
+                            <div className="flex gap-2">
                                 <button
                                     onClick={() => setModalVisible(false)}
-                                    className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                                    className="flex-1 py-2 text-gray-600 font-medium hover:bg-gray-50 rounded"
                                 >
                                     Cancel
                                 </button>
@@ -536,7 +567,7 @@ const GlobalSearch = props => {
                                         setModalVisible(false);
                                         navigation.navigate("Login");
                                     }}
-                                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    className="flex-1 py-2 bg-teal-600 text-white font-medium rounded hover:bg-teal-700"
                                 >
                                     Login
                                 </button>
@@ -549,9 +580,9 @@ const GlobalSearch = props => {
             {/* Snackbar */}
             {
                 isVisible && (
-                    <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded shadow-lg flex items-center gap-2 z-50">
-                        <span>{errorMessage}</span>
-                        <button onClick={() => setIsVisible(false)} className="text-blue-300 font-bold">OK</button>
+                    <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-4 z-50">
+                        <span className="font-medium text-sm">{errorMessage}</span>
+                        <button onClick={() => setIsVisible(false)} className="text-teal-400 font-bold hover:text-teal-300 text-sm">OK</button>
                     </div>
                 )
             }

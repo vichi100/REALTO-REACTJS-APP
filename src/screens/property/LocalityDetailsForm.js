@@ -21,13 +21,22 @@ const LocalityDetailsForm = props => {
     const [errorMessage, setErrorMessage] = useState("");
 
     const [address, setAddress] = useState(null);
+    const [focusedField, setFocusedField] = useState(null);
 
     const dismissSnackBar = () => {
         setIsVisible(false);
     };
 
     useEffect(() => {
-    }, []);
+        if (props.propertyDetails && props.propertyDetails.property_address) {
+            const data = props.propertyDetails.property_address;
+            if (data.city) setCity(data.city);
+            if (data.location_area) setGLocation(data.location_area);
+            if (data.flat_number) setFlatNumber(data.flat_number);
+            if (data.building_name) setBuildingName(data.building_name);
+            if (data.landmark_or_street) setLandmark(data.landmark_or_street);
+        }
+    }, [props.propertyDetails]);
 
     const onSubmit = async () => {
         const property = props.propertyDetails || {};
@@ -127,7 +136,7 @@ const LocalityDetailsForm = props => {
     }
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
+        <div className="flex flex-col h-full bg-gray-50 overflow-y-auto">
             <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
                 <button
                     onClick={() => navigate(-1)}
@@ -141,38 +150,59 @@ const LocalityDetailsForm = props => {
             <div className="p-5">
                 <p className="text-gray-600 text-lg font-medium mb-5">Enter property address details</p>
 
-                <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">City*</label>
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'city' ? 'text-teal-500' : 'text-gray-500'}`}>City*</label>
                     <input
                         type="text"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'city' ? 'border-teal-500' : 'border-gray-200'}`}
                         value={city}
                         onChange={e => setCity(e.target.value)}
-                        onFocus={() => setIsVisible(false)}
+                        onFocus={() => { setIsVisible(false); setFocusedField('city'); }}
+                        onBlur={() => setFocusedField(null)}
                     />
                 </div>
 
-                <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Area / Location*</label>
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'location' ? 'text-teal-500' : 'text-gray-500'}`}>Area / Location*</label>
                     <div className="w-full">
                         <GooglePlacesAutocomplete
                             apiKey={GOOGLE_PLACES_API_KEY}
                             selectProps={{
                                 placeholder: 'Add multiple locations within city',
                                 onChange: (val) => onSelectPlace(val),
+                                onFocus: () => setFocusedField('location'),
+                                onBlur: () => setFocusedField(null),
                                 styles: {
                                     input: (provided) => ({
                                         ...provided,
                                         height: '38px',
+                                        color: '#111827',
+                                        margin: 0,
+                                        padding: 0,
                                     }),
-                                    control: (provided) => ({
+                                    control: (provided, state) => ({
                                         ...provided,
-                                        borderColor: '#e2e8f0',
+                                        backgroundColor: 'transparent',
+                                        border: 'none',
+                                        borderBottom: state.isFocused ? '2px solid #14b8a6' : '2px solid #e5e7eb',
+                                        borderRadius: 0,
                                         boxShadow: 'none',
+                                        padding: '0',
+                                        minHeight: 'auto',
                                         '&:hover': {
-                                            borderColor: '#cbd5e0',
+                                            borderColor: state.isFocused ? '#14b8a6' : '#e5e7eb',
                                         },
                                     }),
+                                    valueContainer: (provided) => ({
+                                        ...provided,
+                                        padding: '4px 0',
+                                    }),
+                                    placeholder: (provided) => ({
+                                        ...provided,
+                                        color: '#9ca3af',
+                                    }),
+                                    indicatorSeparator: () => ({ display: 'none' }),
+                                    dropdownIndicator: () => ({ display: 'none' }),
                                     option: (provided, state) => ({
                                         ...provided,
                                         color: '#374151', // text-gray-700
@@ -180,7 +210,9 @@ const LocalityDetailsForm = props => {
                                     }),
                                     singleValue: (provided) => ({
                                         ...provided,
-                                        color: '#374151',
+                                        color: '#111827',
+                                        margin: 0,
+                                        padding: 0,
                                     }),
                                 },
                             }}
@@ -189,37 +221,40 @@ const LocalityDetailsForm = props => {
                 </div>
 
                 {props.propertyDetails && props.propertyDetails.property_type && props.propertyDetails.property_type.toLowerCase() === "residential" ? (
-                    <div className="mb-5">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Flat No and Wing*</label>
+                    <div className="mb-6">
+                        <label className={`block text-xs font-medium mb-1 ${focusedField === 'flatNumber' ? 'text-teal-500' : 'text-gray-500'}`}>Flat No and Wing*</label>
                         <input
                             type="text"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'flatNumber' ? 'border-teal-500' : 'border-gray-200'}`}
                             value={flatNumber}
                             onChange={e => setFlatNumber(e.target.value)}
-                            onFocus={() => setIsVisible(false)}
+                            onFocus={() => { setIsVisible(false); setFocusedField('flatNumber'); }}
+                            onBlur={() => setFocusedField(null)}
                         />
                     </div>
                 ) : null}
 
-                <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Building Name / Society*</label>
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'buildingName' ? 'text-teal-500' : 'text-gray-500'}`}>Building Name / Society*</label>
                     <input
                         type="text"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'buildingName' ? 'border-teal-500' : 'border-gray-200'}`}
                         value={buildingName}
                         onChange={e => setBuildingName(e.target.value)}
-                        onFocus={() => setIsVisible(false)}
+                        onFocus={() => { setIsVisible(false); setFocusedField('buildingName'); }}
+                        onBlur={() => setFocusedField(null)}
                     />
                 </div>
 
-                <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Street / Landmark*</label>
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'landmark' ? 'text-teal-500' : 'text-gray-500'}`}>Street / Landmark*</label>
                     <input
                         type="text"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'landmark' ? 'border-teal-500' : 'border-gray-200'}`}
                         value={landmark}
                         onChange={e => setLandmark(e.target.value)}
-                        onFocus={() => setIsVisible(false)}
+                        onFocus={() => { setIsVisible(false); setFocusedField('landmark'); }}
+                        onBlur={() => setFocusedField(null)}
                     />
                 </div>
 

@@ -778,20 +778,20 @@ const CustomerCommercialBuyCard = props => {
 
                 <div style={styles.detailsContainer}>
                     <div style={styles.details}>
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
                             <p style={{ ...styles.subDetailsValue, marginTop: 5 }}>
                                 {item.customer_property_details.property_used_for}
                             </p>
                             <p style={styles.subDetailsTitle}>Prop Type</p>
                         </div>
-                        <div style={styles.verticalLine}></div>
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
                             <p style={styles.subDetailsValue}>
                                 {numDifferentiation(item.customer_buy_details.expected_buy_price)}
                             </p>
                             <p style={styles.subDetailsTitle}>Buy</p>
                         </div>
-                        <div style={styles.verticalLine}></div>
+
                         <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                             <p style={styles.subDetailsValue}>
                                 {item.customer_property_details.furnishing_status}

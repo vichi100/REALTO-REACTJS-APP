@@ -86,6 +86,23 @@ const ResidentialPropertyDetailsForm = props => {
         setIsVisible(false);
     };
 
+    React.useEffect(() => {
+        if (props.propertyDetails && props.propertyDetails.property_details) {
+            const data = props.propertyDetails.property_details;
+            if (data.house_type) setHouseType(data.house_type);
+            if (data.bhk_type) setBHKType(data.bhk_type);
+            if (data.washroom_numbers) setWashroomNumber(data.washroom_numbers);
+            if (data.furnishing_status) setFurnishingStatus(data.furnishing_status);
+            if (data.parking_number) setParkingNumber(data.parking_number);
+            if (data.parking_type) setParkingType(data.parking_type);
+            if (data.property_age) setPropertyAge(data.property_age);
+            if (data.floor_number) setFloor(data.floor_number);
+            if (data.total_floor) setTotalFloor(data.total_floor);
+            if (data.lift) setLiftOption(data.lift);
+            if (data.property_size) setPropertySize(data.property_size);
+        }
+    }, [props.propertyDetails]);
+
     const onSubmit = async () => {
 
         if (floor.trim() === "") {
@@ -130,7 +147,7 @@ const ResidentialPropertyDetailsForm = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
+        <div className="flex flex-col h-full bg-gray-50 overflow-y-auto">
             <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
                 <button
                     onClick={() => navigate(-1)}
@@ -149,6 +166,8 @@ const ResidentialPropertyDetailsForm = props => {
                         selectedIndices={[AppConstant.HOUSE_TYPE_OPTION.findIndex(option => option.text === houseType)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setHouseType(button.text)}
+                        containerStyle={{ gap: '12px' }}
+                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
@@ -159,6 +178,8 @@ const ResidentialPropertyDetailsForm = props => {
                         selectedIndices={[AppConstant.BHK_OPTION.findIndex(option => option.text === bhkType)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setBHKType(button.text)}
+                        containerStyle={{ gap: '12px' }}
+                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
@@ -169,6 +190,8 @@ const ResidentialPropertyDetailsForm = props => {
                         selectedIndices={[washroomOption.findIndex(option => option.text === washroomNumber)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setWashroomNumber(button.text)}
+                        containerStyle={{ gap: '12px' }}
+                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
@@ -179,6 +202,8 @@ const ResidentialPropertyDetailsForm = props => {
                         selectedIndices={[AppConstant.FURNISHING_STATUS_OPTION.findIndex(option => option.text === furnishingStatus)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setFurnishingStatus(button.text)}
+                        containerStyle={{ gap: '12px' }}
+                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
@@ -189,6 +214,8 @@ const ResidentialPropertyDetailsForm = props => {
                         selectedIndices={[parkingNumberOption.findIndex(option => option.text === parkingNumber)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setParkingNumber(button.text)}
+                        containerStyle={{ gap: '12px' }}
+                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
 
                     <div className="flex items-center mt-4 ml-4">
@@ -201,6 +228,8 @@ const ResidentialPropertyDetailsForm = props => {
                             selectedIndices={[AppConstant.PARKING_OPTION.findIndex(option => option.text === parkingType)]}
                             isMultiSelect={false}
                             onButtonPress={(index, button) => setParkingType(button.text)}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
                 </div>
@@ -212,6 +241,8 @@ const ResidentialPropertyDetailsForm = props => {
                         selectedIndices={[propertyAgeOption.findIndex(option => option.text === propertyAge)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setPropertyAge(button.text)}
+                        containerStyle={{ gap: '12px' }}
+                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
@@ -221,7 +252,6 @@ const ResidentialPropertyDetailsForm = props => {
                         <input
                             type="number"
                             className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900"
-                            placeholder="Floor"
                             value={floor}
                             onChange={(e) => setFloor(e.target.value)}
                             onFocus={() => setIsVisible(false)}
@@ -232,7 +262,6 @@ const ResidentialPropertyDetailsForm = props => {
                         <input
                             type="number"
                             className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900"
-                            placeholder="Total Floor"
                             value={totalFloor}
                             onChange={(e) => setTotalFloor(e.target.value)}
                             onFocus={() => setIsVisible(false)}
@@ -245,8 +274,8 @@ const ResidentialPropertyDetailsForm = props => {
                             selectedIndices={[AppConstant.LIFT_AVAILBLE_OPTION.findIndex(option => option.text === liftOption)]}
                             isMultiSelect={false}
                             onButtonPress={(index, button) => setLiftOption(button.text)}
-                            width={50}
-                            height={40}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
                 </div>

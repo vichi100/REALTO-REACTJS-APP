@@ -494,7 +494,7 @@ const ContactResidentialSellCard = props => {
                     >
                         {displayMatchCount === true && (
                             <div className="w-10 h-24 relative flex-shrink-0 cursor-pointer" onClick={(e) => { e.stopPropagation(); getMatched(item); }}>
-                                <div style={{ backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', left: 0, top: 0, alignItems: 'center', justifyContent: 'center', width: 30, height: 20, display: 'flex', zIndex: 10 }}>
+                                <div style={{ backgroundColor: 'rgba(246, 158, 6, 0.9)', position: 'absolute', left: 0, top: 0, alignItems: 'center', justifyContent: 'center', width: 30, height: 20, display: 'flex', zIndex: 10 }}>
                                     <span style={{ fontSize: 15, fontWeight: '500', color: '#000' }}>{item.match_count ? item.match_count : 0}</span>
                                 </div>
                                 <div style={{
@@ -749,19 +749,19 @@ const ContactResidentialSellCard = props => {
 
                 <div style={styles.detailsContainer}>
                     <div style={styles.details}>
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
                             <span style={{ ...styles.subDetailsValue, marginTop: 5 }}>
                                 {item.customer_property_details.bhk_type}
                             </span>
                         </div>
-                        <div style={styles.verticalLine}></div>
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
                             <span style={styles.subDetailsValue}>
                                 {numDifferentiation(item.customer_buy_details.expected_buy_price)}
                             </span>
                             <span style={styles.subDetailsTitle}>Buy</span>
                         </div>
-                        <div style={styles.verticalLine}></div>
+
                         <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                             <span style={styles.subDetailsValue}>
                                 {item.customer_property_details.furnishing_status}

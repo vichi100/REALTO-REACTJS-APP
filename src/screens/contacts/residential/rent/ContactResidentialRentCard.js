@@ -499,7 +499,7 @@ const ContactResidentialRentCard = props => {
                     >
                         {displayMatchCount === true && (
                             <div className="w-10 h-24 relative flex-shrink-0 cursor-pointer" onClick={(e) => { e.stopPropagation(); getMatched(item); }}>
-                                <div style={{ backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 30, height: 20, zIndex: 10 }}>
+                                <div style={{ backgroundColor: 'rgba(246, 158, 6, 0.9)', position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 30, height: 20, zIndex: 10 }}>
                                     <span style={{ fontSize: 15, fontWeight: '500', color: '#000' }}>{item.match_count ? item.match_count : 0}</span>
                                 </div>
                                 <div style={{
@@ -762,7 +762,7 @@ const ContactResidentialRentCard = props => {
           size={16}
           style={{ marginLeft: 10, marginTop: 10 }}
         /> */}
-                    <span style={{ marginLeft: 10, marginTop: 10, color: "#000" }}>📍</span>
+                    <span style={{ marginLeft: 10, marginTop: 10, color: "#000" }}><VscLocation /></span>
                     <p style={{ ...styles.subTitleA, marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
                         {item.customer_locality.location_area.map(item => item.main_text).join(', ')}
                     </p>
@@ -783,27 +783,27 @@ const ContactResidentialRentCard = props => {
 
                 <div style={styles.detailsContainer}>
                     <div style={styles.details}>
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
                             <p style={{ ...styles.subDetailsValue, marginTop: 5 }}>
                                 {item.customer_property_details.bhk_type}
                             </p>
                             {/* <p style={styles.subDetailsTitle}>Prop Type</p> */}
                         </div>
-                        <div style={styles.verticalLine}></div>
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
                             <p style={styles.subDetailsValue}>
                                 {numDifferentiation(item.customer_rent_details.expected_rent)}
                             </p>
                             <p style={styles.subDetailsTitle}>Rent</p>
                         </div>
-                        <div style={styles.verticalLine}></div>
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
                             <p style={styles.subDetailsValue}>
                                 {numDifferentiation(item.customer_rent_details.expected_deposit)}
                             </p>
                             <p style={styles.subDetailsTitle}>Deposit</p>
                         </div>
-                        <div style={styles.verticalLine}></div>
+
                         <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                             <span style={styles.subDetailsValue}>
                                 {item.customer_property_details.furnishing_status}

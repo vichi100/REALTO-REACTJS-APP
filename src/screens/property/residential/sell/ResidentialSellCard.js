@@ -310,7 +310,13 @@ const Card = props => {
                         }}
                     >
                         {/* Orange Count Box */}
-                        <div className="bg-orange-400 w-8 h-8 flex items-center justify-center absolute top-0 left-0 z-10">
+                        {/* <div className="bg-orange-400 w-8 h-8 flex items-center justify-center absolute top-0 left-0 z-10">
+                            <span className="text-sm font-bold text-black">{item.match_count || 0}</span>
+                        </div> */}
+                        <div
+                            className="w-8 h-8 flex items-center justify-center absolute top-0 left-0 z-10"
+                            style={{ backgroundColor: 'rgba(246, 158, 6, 0.9)' }}
+                        >
                             <span className="text-sm font-bold text-black">{item.match_count || 0}</span>
                         </div>
                         {/* Green Match Strip */}

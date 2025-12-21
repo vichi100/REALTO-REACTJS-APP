@@ -11,6 +11,7 @@ const AddNewCustomer = props => {
     const [ownerName, setOwnerName] = useState("");
     const [ownerMobile, setOwnerMobile] = useState("");
     const [ownerAddress, setOwnerAddress] = useState("");
+    const [focusedField, setFocusedField] = useState(null);
 
     const [errorMessage, setErrorMessage] = useState("");
     const [isVisible, setIsVisible] = useState(false);
@@ -61,33 +62,42 @@ const AddNewCustomer = props => {
                     </p>
                 </div>
 
-                <div style={styles.propSection}>
-                    <div style={{ marginBottom: 15 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: '#000000', fontWeight: '500' }}>Name*</label>
+                <div className="mt-5">
+                    <div className="mb-6">
+                        <label className={`block text-xs font-medium mb-1 ${focusedField === 'name' ? 'text-teal-500' : 'text-gray-500'}`}>
+                            Name*
+                        </label>
                         <input
                             value={ownerName}
                             onChange={e => setOwnerName(e.target.value)}
-                            onFocus={() => setIsVisible(false)}
-                            style={styles.input}
+                            onFocus={() => { setIsVisible(false); setFocusedField('name'); }}
+                            onBlur={() => setFocusedField(null)}
+                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'name' ? 'border-teal-500' : 'border-gray-200'}`}
                         />
                     </div>
-                    <div style={{ marginBottom: 15 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: '#000000', fontWeight: '500' }}>Mobile*</label>
+                    <div className="mb-6">
+                        <label className={`block text-xs font-medium mb-1 ${focusedField === 'mobile' ? 'text-teal-500' : 'text-gray-500'}`}>
+                            Mobile*
+                        </label>
                         <input
                             value={ownerMobile}
                             onChange={e => setOwnerMobile(e.target.value)}
-                            onFocus={() => setIsVisible(false)}
+                            onFocus={() => { setIsVisible(false); setFocusedField('mobile'); }}
+                            onBlur={() => setFocusedField(null)}
                             type="number"
-                            style={styles.input}
+                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'mobile' ? 'border-teal-500' : 'border-gray-200'}`}
                         />
                     </div>
-                    <div style={{ marginBottom: 15 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: '#000000', fontWeight: '500' }}>Address*</label>
+                    <div className="mb-6">
+                        <label className={`block text-xs font-medium mb-1 ${focusedField === 'address' ? 'text-teal-500' : 'text-gray-500'}`}>
+                            Address*
+                        </label>
                         <input
                             value={ownerAddress}
                             onChange={e => setOwnerAddress(e.target.value)}
-                            onFocus={() => setIsVisible(false)}
-                            style={styles.input}
+                            onFocus={() => { setIsVisible(false); setFocusedField('address'); }}
+                            onBlur={() => setFocusedField(null)}
+                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'address' ? 'border-teal-500' : 'border-gray-200'}`}
                         />
                     </div>
                 </div>

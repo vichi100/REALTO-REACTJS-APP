@@ -68,7 +68,7 @@ const AddNewPropFinalDetails = props => {
     };
 
     const login = async () => {
-        navigate("Login");
+        navigate("/Login");
         setModalVisible(false);
     }
 
@@ -124,10 +124,10 @@ const AddNewPropFinalDetails = props => {
                         props.setPropertyDetails(null);
                         props.setResidentialPropertyList([...props.residentialPropertyList, responseData])
                         if (props.startNavigationPoint === null) {
-                            navigate("Listing", { didDbCall: true });
+                            navigate("/Listing", { state: { didDbCall: true } });
 
                         } else {
-                            navigate("PropertyListForMeeting");
+                            navigate("/PropertyListForMeeting");
                         }
                         props.setStartNavigationPoint(null);
                         setLoading(false);
@@ -187,28 +187,28 @@ const AddNewPropFinalDetails = props => {
                         <p className="text-xl font-bold text-black">{bhk}</p>
                         <p className="text-sm text-gray-900 font-medium">BHK</p>
                     </div>
-                    <div className="w-px bg-gray-400 h-full mx-2"></div>
+                    <div className="w-px bg-gray-400 h-10 mx-4 self-center"></div>
                     <div className="text-center">
                         <p className="text-xl font-bold text-black">
                             {numDifferentiation(propertyFinalDetails.rent_details.expected_rent)}
                         </p>
                         <p className="text-sm text-gray-900 font-medium">{propertyFinalDetails.property_for}</p>
                     </div>
-                    <div className="w-px bg-gray-400 h-full mx-2"></div>
+                    <div className="w-px bg-gray-400 h-10 mx-4 self-center"></div>
                     <div className="text-center">
                         <p className="text-xl font-bold text-black">
                             {numDifferentiation(propertyFinalDetails.rent_details.expected_deposit)}
                         </p>
                         <p className="text-sm text-gray-900 font-medium">Deposit</p>
                     </div>
-                    <div className="w-px bg-gray-400 h-full mx-2"></div>
+                    <div className="w-px bg-gray-400 h-10 mx-4 self-center"></div>
                     <div className="text-center">
                         <p className="text-xl font-bold text-black">
                             {propertyFinalDetails.property_details.furnishing_status}
                         </p>
                         <p className="text-sm text-gray-900 font-medium">Furnishing</p>
                     </div>
-                    <div className="w-px bg-gray-400 h-full mx-2"></div>
+                    <div className="w-px bg-gray-400 h-10 mx-4 self-center"></div>
                     <div className="text-center">
                         <p className="text-xl font-bold text-black">
                             {propertyFinalDetails.property_details.property_size}sqft
@@ -218,49 +218,49 @@ const AddNewPropFinalDetails = props => {
                 </div>
             </div>
 
-            <div className="mt-2 bg-white shadow-md">
-                <div className="p-4 border-b border-gray-200">
-                    <h3 className="text-lg font-bold text-black">Details</h3>
+            <div className="mt-2 bg-white px-4 pt-4">
+                <div className="pb-2 border-b border-gray-100">
+                    <h3 className="text-sm font-medium text-gray-900">Details</h3>
                 </div>
-                <div className="flex justify-between p-4">
-                    <div className="flex flex-col space-y-6 w-1/2">
+                <div className="flex justify-between py-4">
+                    <div className="flex flex-col space-y-4 w-1/2">
                         <div>
-                            <p className="text-lg font-bold text-black">{propertyFinalDetails.property_details.washroom_numbers}</p>
-                            <p className="text-sm text-gray-900 font-medium">Bathroom</p>
+                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.property_details.washroom_numbers}</p>
+                            <p className="text-xs text-gray-600">Bathroom</p>
                         </div>
                         <div>
-                            <p className="text-lg font-bold text-black">{possessionDate}</p>
-                            <p className="text-sm text-gray-900 font-medium">Possession</p>
+                            <p className="text-base font-bold text-gray-900">{possessionDate}</p>
+                            <p className="text-xs text-gray-600">Possession</p>
                         </div>
                         <div>
-                            <p className="text-lg font-bold text-black">{propertyFinalDetails.rent_details.preferred_tenants}</p>
-                            <p className="text-sm text-gray-900 font-medium">Preferred Tenant</p>
+                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.rent_details.preferred_tenants}</p>
+                            <p className="text-xs text-gray-600">Preferred Tenant</p>
                         </div>
                         <div>
-                            <p className="text-lg font-bold text-black">{propertyFinalDetails.property_details.lift}</p>
-                            <p className="text-sm text-gray-900 font-medium">Lift</p>
+                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.property_details.lift}</p>
+                            <p className="text-xs text-gray-600">Lift</p>
                         </div>
                     </div>
-                    <div className="flex flex-col space-y-6 w-1/2">
+                    <div className="flex flex-col space-y-4 w-1/2 items-end text-right">
                         <div>
-                            <p className="text-lg font-bold text-black">
+                            <p className="text-base font-bold text-gray-900">
                                 {propertyFinalDetails.property_details.parking_number} {propertyFinalDetails.property_details.parking_type}
                             </p>
-                            <p className="text-sm text-gray-900 font-medium">Parking</p>
+                            <p className="text-xs text-gray-600">Parking</p>
                         </div>
                         <div>
-                            <p className="text-lg font-bold text-black">
+                            <p className="text-base font-bold text-gray-900">
                                 {propertyFinalDetails.property_details.floor_number}/{propertyFinalDetails.property_details.total_floor}
                             </p>
-                            <p className="text-sm text-gray-900 font-medium">Floor</p>
+                            <p className="text-xs text-gray-600">Floor</p>
                         </div>
                         <div>
-                            <p className="text-lg font-bold text-black">{propertyFinalDetails.rent_details.non_veg_allowed}</p>
-                            <p className="text-sm text-gray-900 font-medium">NonVeg</p>
+                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.rent_details.non_veg_allowed}</p>
+                            <p className="text-xs text-gray-600">NonVeg</p>
                         </div>
                         <div>
-                            <p className="text-lg font-bold text-black">{propertyFinalDetails.property_details.property_age}</p>
-                            <p className="text-sm text-gray-900 font-medium">Age Of Building</p>
+                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.property_details.property_age}</p>
+                            <p className="text-xs text-gray-600">Age Of Building</p>
                         </div>
                     </div>
                 </div>

@@ -47,7 +47,7 @@ const ContactResidentialPropertyDetailsForm = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+        <div style={{ flex: 1, backgroundColor: "#F9FAFB", minHeight: "100vh" }}>
             {/* Header */}
             <div style={styles.headerContainer}>
                 <div style={styles.backButtonContainer} onClick={() => navigate(-1)}>
@@ -62,8 +62,9 @@ const ContactResidentialPropertyDetailsForm = props => {
                     <p style={{ marginBottom: 30, color: '#000000' }}>
                         Provide property details of which customer is looking for
                     </p>
-                    <p style={{ color: '#000000', fontWeight: 'bold' }}>House Type*</p>
-                    <div style={styles.propSubSection}>
+
+                    <div className="mb-6">
+                        <p className="text-sm font-medium text-gray-700 mb-3">House Type*</p>
                         <CustomButtonGroup
                             buttons={AppConstant.HOUSE_TYPE_OPTION}
                             selectedIndices={[AppConstant.HOUSE_TYPE_OPTION.findIndex(option => option.text === houseType)]}
@@ -71,10 +72,13 @@ const ContactResidentialPropertyDetailsForm = props => {
                             onButtonPress={(index, button) => {
                                 setHouseType(button.text);
                             }}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
-                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Size of BHK*</p>
-                    <div style={{ ...styles.propSubSection, marginTop: 10 }}>
+
+                    <div className="mb-6">
+                        <p className="text-sm font-medium text-gray-700 mb-3">Size of BHK*</p>
                         <CustomButtonGroup
                             buttons={AppConstant.BHK_OPTION}
                             selectedIndices={[AppConstant.BHK_OPTION.findIndex(option => option.text === bhkType)]}
@@ -82,11 +86,13 @@ const ContactResidentialPropertyDetailsForm = props => {
                             onButtonPress={(index, button) => {
                                 setBHKType(button.text);
                             }}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
 
-                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Furnishing*</p>
-                    <div style={styles.propSubSection}>
+                    <div className="mb-6">
+                        <p className="text-sm font-medium text-gray-700 mb-3">Furnishing*</p>
                         <CustomButtonGroup
                             buttons={AppConstant.FURNISHING_STATUS_OPTION}
                             selectedIndices={[AppConstant.FURNISHING_STATUS_OPTION.findIndex(option => option.text === furnishingStatus)]}
@@ -94,11 +100,13 @@ const ContactResidentialPropertyDetailsForm = props => {
                             onButtonPress={(index, button) => {
                                 setFurnishingStatus(button.text);
                             }}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
 
-                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Parkings*</p>
-                    <div style={styles.doubleColSection}>
+                    <div className="mb-6">
+                        <p className="text-sm font-medium text-gray-700 mb-3">Parkings*</p>
                         <CustomButtonGroup
                             buttons={AppConstant.PARKING_OPTION}
                             selectedIndices={[AppConstant.PARKING_OPTION.findIndex(option => option.text === parkingType)]}
@@ -106,11 +114,13 @@ const ContactResidentialPropertyDetailsForm = props => {
                             onButtonPress={(index, button) => {
                                 setParkingType(button.text);
                             }}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
 
-                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Lift Mandatory*</p>
-                    <div style={styles.propSubSection}>
+                    <div className="mb-6">
+                        <p className="text-sm font-medium text-gray-700 mb-3">Lift Mandatory*</p>
                         <CustomButtonGroup
                             buttons={AppConstant.LIFT_AVAILBLE_OPTION}
                             selectedIndices={[AppConstant.LIFT_AVAILBLE_OPTION.findIndex(option => option.text === liftOption)]}
@@ -118,6 +128,8 @@ const ContactResidentialPropertyDetailsForm = props => {
                             onButtonPress={(index, button) => {
                                 setLiftOption(button.text);
                             }}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
 

@@ -22,6 +22,7 @@ const AddNewProperty = props => {
     const [ownerName, setOwnerName] = useState("");
     const [ownerMobile, setOwnerMobile] = useState("");
     const [ownerAddress, setOwnerAddress] = useState("");
+    const [focusedField, setFocusedField] = useState(null);
 
     const [errorMessage, setErrorMessage] = useState("");
     const [isVisible, setIsVisible] = useState(false);
@@ -32,6 +33,19 @@ const AddNewProperty = props => {
     const dismissSnackBar = () => {
         setIsVisible(false);
     };
+
+    React.useEffect(() => {
+        if (props.propertyDetails) {
+            const { owner_details, property_type, property_for } = props.propertyDetails;
+            if (owner_details) {
+                setOwnerName(owner_details.name || "");
+                setOwnerMobile(owner_details.mobile1 || "");
+                setOwnerAddress(owner_details.address || "");
+            }
+            if (property_type) setSelectedPropType(property_type);
+            if (property_for) setPropertyFor(property_for);
+        }
+    }, [props.propertyDetails]);
 
     const onSubmit = () => {
         if (ownerName.trim() === "") {
@@ -82,6 +96,8 @@ const AddNewProperty = props => {
                             onButtonPress={(index, button) => {
                                 setSelectedPropType(button.text);
                             }}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
                 </div>
@@ -96,6 +112,8 @@ const AddNewProperty = props => {
                             onButtonPress={(index, button) => {
                                 setPropertyFor(button.text);
                             }}
+                            containerStyle={{ gap: '12px' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
                 </div>
@@ -104,36 +122,52 @@ const AddNewProperty = props => {
                     <h3 className="text-lg font-semibold text-gray-700">Owner Details</h3>
                 </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Name*</label>
+
+
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'name' ? 'text-teal-500' : 'text-gray-500'}`}>
+                        Name*
+                    </label>
                     <input
                         type="text"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'name' ? 'border-teal-500' : 'border-gray-200'}`}
                         value={ownerName}
                         onChange={e => setOwnerName(e.target.value)}
-                        onFocus={() => setIsVisible(false)}
+                        onFocus={() => { setIsVisible(false); setFocusedField('name'); }}
+                        onBlur={() => setFocusedField(null)}
                     />
                 </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Mobile*</label>
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'mobile' ? 'text-teal-500' : 'text-gray-500'}`}>
+                        Mobile*
+                    </label>
                     <input
                         type="tel"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'mobile' ? 'border-teal-500' : 'border-gray-200'}`}
                         value={ownerMobile}
-                        onChange={e => setOwnerMobile(e.target.value)}
-                        onFocus={() => setIsVisible(false)}
+                        onChange={e => {
+                            const val = e.target.value;
+                            if (/^\d*$/.test(val) && val.length <= 10) {
+                                setOwnerMobile(val);
+                            }
+                        }}
+                        onFocus={() => { setIsVisible(false); setFocusedField('mobile'); }}
+                        onBlur={() => setFocusedField(null)}
                     />
                 </div>
 
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Address*</label>
+                <div className="mb-6">
+                    <label className={`block text-xs font-medium mb-1 ${focusedField === 'address' ? 'text-teal-500' : 'text-gray-500'}`}>
+                        Address*
+                    </label>
                     <input
                         type="text"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'address' ? 'border-teal-500' : 'border-gray-200'}`}
                         value={ownerAddress}
                         onChange={e => setOwnerAddress(e.target.value)}
-                        onFocus={() => setIsVisible(false)}
+                        onFocus={() => { setIsVisible(false); setFocusedField('address'); }}
+                        onBlur={() => setFocusedField(null)}
                     />
                 </div>
 

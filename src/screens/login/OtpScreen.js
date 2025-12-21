@@ -107,46 +107,26 @@ const OtpScreen = (props) => {
     };
 
     return loading ? (
-        <div
-            style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0, .9)',
-                height: '100vh',
-                display: 'flex'
-            }}
-        >
-            <div style={{ color: '#fff' }}>Loading...</div>
+        <div className="h-screen w-screen flex items-center justify-center bg-black/90">
+            <div className="text-white text-lg font-medium animate-pulse">Loading...</div>
         </div>
     ) : (
-        <div style={{ flex: 1, backgroundColor: '#fff', height: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ overflowY: 'auto', flex: 1 }}>
-                <div
-                    style={{
-                        marginTop: 50,
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}
-                >
-                    <span style={{ color: '#000000', fontSize: 18, fontWeight: '500' }}>OTP Sent To Mobile</span>
-                    <span style={{ color: '#696969', fontSize: 16, fontWeight: '500', marginTop: 10 }}>
+        <div className="h-screen w-screen flex flex-col items-center justify-center bg-white">
+
+            <div className="w-full max-w-sm px-6 flex flex-col items-center gap-10">
+                {/* Header Section */}
+                <div className="text-center">
+                    <h2 className="text-3xl font-light text-gray-900 mb-2">Verification</h2>
+                    <p className="text-gray-500 text-sm mb-1">
+                        Enter the code sent to
+                    </p>
+                    <p className="text-black font-medium text-lg">
                         {props.countryCode + ' ' + props.userMobileNumber}
-                    </span>
+                    </p>
                 </div>
-                <div
-                    style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        marginLeft: 15,
-                        marginRight: 15,
-                        marginTop: 40,
-                        display: 'flex'
-                    }}
-                >
+
+                {/* OTP Input Section */}
+                <div className="w-full flex justify-center">
                     <OtpInput
                         shouldAutoFocus={true}
                         value={otpValue}
@@ -160,16 +140,8 @@ const OtpScreen = (props) => {
                         renderInput={(props) => (
                             <input
                                 {...props}
-                                style={{
-                                    width: '3rem',
-                                    height: '3.5rem',
-                                    margin: '0 0.5rem',
-                                    fontSize: '1.5rem',
-                                    borderRadius: 12,
-                                    outline: 'none',
-                                    textAlign: 'center'
-                                }}
-                                className="border border-gray-300 focus:border-green-600 focus:border-2 text-black"
+                                style={{ width: '3rem' }} // Override width for spacing
+                                className="h-14 mx-1 text-2xl text-center font-normal text-gray-900 bg-transparent border-b-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 type="tel"
@@ -178,14 +150,21 @@ const OtpScreen = (props) => {
                     />
                 </div>
 
-                <div style={{ margin: 20 }}>
+                {/* Resend/Counter Section */}
+                <div className="w-full text-center">
+                    <p className="text-sm text-gray-400 mb-4">
+                        Didn't receive the code?
+                    </p>
                     <Counter resendOTP={resendOTP} />
                 </div>
-            </div>
-            <div style={{ position: 'absolute', bottom: 15, right: 15 }}>
-                <div onClick={() => onSkip()} style={{ cursor: 'pointer' }}>
-                    <span style={{ color: '#000000' }}>{'Skip >>'}</span>
-                </div>
+
+                {/* Skip Button */}
+                <button
+                    onClick={() => onSkip()}
+                    className="text-gray-400 hover:text-black text-sm font-medium transition-colors"
+                >
+                    Skip for now
+                </button>
             </div>
         </div>
     );

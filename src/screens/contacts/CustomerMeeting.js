@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import Button from "./../../components/Button";
-import { MdClose, MdAddCircleOutline, MdArrowBack } from "react-icons/md";
+import { MdClose, MdAddCircleOutline, MdArrowBack, MdDateRange } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Snackbar from "./../../components/SnackbarComponent";
 import axios from "axios";
@@ -35,7 +35,15 @@ const CustomerMeeting = props => {
     const item = props.route.params.item; // customer item
     const category = props.route.params.category;
 
-    const [newDate, setNewDate] = React.useState("");
+    const getTodayString = () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    const [newDate, setNewDate] = React.useState(getTodayString());
     const [newTime, setNewTime] = React.useState("");
     const [clientName, setClientName] = useState(item.customer_details.name);
     const [clientMobile, setClientMobile] = useState(
@@ -55,7 +63,7 @@ const CustomerMeeting = props => {
     const [remiderType, setReminderType] = useState("Call");
 
     const clearState = () => {
-        setNewDate("");
+        setNewDate(getTodayString());
         setNewTime("");
         setHour("");
         setMinutes("");
@@ -68,7 +76,8 @@ const CustomerMeeting = props => {
     useEffect(() => {
         if (props.customerMeetingFormState && props.customerMeetingFormState.customerId === item.customer_id) {
             setReminderType(props.customerMeetingFormState.remiderType || "Call");
-            setNewDate(props.customerMeetingFormState.newDate || "");
+            // Always set date to today on mount
+            setNewDate(getTodayString());
             setNewTime(props.customerMeetingFormState.newTime || "");
             setAMPMIndex(props.customerMeetingFormState.ampmIndex || -1);
             setHour(props.customerMeetingFormState.hour || "");
@@ -256,11 +265,10 @@ const CustomerMeeting = props => {
                             buttons={AppConstant.REMINDER_FOR_OPTION}
                             selectedIndices={[AppConstant.REMINDER_FOR_OPTION.findIndex(option => option.text === remiderType)]}
                             isMultiSelect={false}
-                            buttonStyle={{ backgroundColor: '#fff' }}
+                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                             selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
                             buttonTextStyle={{ color: '#000' }}
                             selectedButtonTextStyle={{ color: '#000' }}
-                            width={100}
                             onButtonPress={(index, button) => {
                                 setReminderType(button.text);
                             }}
@@ -268,25 +276,25 @@ const CustomerMeeting = props => {
                     </div>
 
                     <div className="mb-4 mt-6">
-                        <label className="block mb-1 text-black font-medium">Customer Name*</label>
+                        <label className="block text-xs font-medium text-gray-500 mb-1">Customer Name*</label>
                         <input
                             disabled={true}
                             value={clientName}
                             onChange={e => setClientName(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            className="w-full p-2.5 rounded border border-gray-400 bg-white text-black outline-none text-base"
+                            className="w-full bg-transparent text-base text-gray-900 border-b-2 border-gray-200 focus:outline-none py-1"
                         />
                     </div>
 
                     <div className="mb-4">
-                        <label className="block mb-1 text-gray-800 font-medium">Customer Mobile*</label>
+                        <label className="block text-xs font-medium text-gray-500 mb-1">Customer Mobile*</label>
                         <input
                             disabled={true}
                             value={clientMobile}
                             onChange={e => setClientMobile(e.target.value)}
                             onFocus={() => setIsVisible(false)}
                             type="text"
-                            className="w-full p-2.5 rounded border border-gray-400 bg-white text-black outline-none text-base"
+                            className="w-full bg-transparent text-base text-gray-900 border-b-2 border-gray-200 focus:outline-none py-1"
                         />
                     </div>
 
@@ -330,27 +338,72 @@ const CustomerMeeting = props => {
                         </div>
                     </div>
 
-                    <div className="flex flex-row mt-5">
-                        <div className="flex-1 mr-2">
+                    <div className="flex flex-row mt-5 gap-2">
+                        <div className="flex-1 w-full min-w-0">
                             <label className="block mb-1 text-gray-800 font-medium">Date*</label>
-                            <input
-                                type={newDate ? "date" : "text"}
-                                onFocus={(e) => e.target.type = 'date'}
-                                onBlur={(e) => { if (!newDate) e.target.type = 'text' }}
-                                value={newDate}
-                                onChange={e => setNewDate(e.target.value)}
-                                placeholder="DD/MM/YYYY"
-                                className="w-full p-2.5 rounded border border-gray-400 text-black outline-none text-base"
-                            />
+                            <div className="relative w-full bg-white rounded border border-gray-400 h-12 flex items-center">
+                                <style>
+                                    {`
+                                        input[type="date"]::-webkit-calendar-picker-indicator {
+                                            display: none;
+                                            -webkit-appearance: none;
+                                        }
+                                        input[type="date"] {
+                                            color-scheme: light;
+                                        }
+                                    `}
+                                </style>
+                                {!newDate && (
+                                    <span className="absolute left-0 top-0 p-2.5 text-gray-400 pointer-events-none text-base">
+                                        DD/MM/YYYY
+                                    </span>
+                                )}
+                                <input
+                                    type="date"
+                                    min={(() => {
+                                        const now = new Date();
+                                        const year = now.getFullYear();
+                                        const month = String(now.getMonth() + 1).padStart(2, '0');
+                                        const day = String(now.getDate()).padStart(2, '0');
+                                        return `${year}-${month}-${day}`;
+                                    })()}
+                                    value={newDate}
+                                    onChange={e => {
+                                        const selectedDate = e.target.value;
+                                        const now = new Date();
+                                        const year = now.getFullYear();
+                                        const month = String(now.getMonth() + 1).padStart(2, '0');
+                                        const day = String(now.getDate()).padStart(2, '0');
+                                        const today = `${year}-${month}-${day}`;
+
+                                        if (selectedDate && selectedDate < today) {
+                                            return;
+                                        }
+                                        setNewDate(selectedDate);
+                                    }}
+                                    onClick={(e) => {
+                                        try {
+                                            if (e.target.showPicker) e.target.showPicker();
+                                        } catch (err) {
+                                            console.log(err);
+                                        }
+                                    }}
+                                    onKeyDown={(e) => e.preventDefault()}
+                                    className={`p-2.5 rounded bg-transparent outline-none text-base w-full h-full ${!newDate ? 'text-transparent' : 'text-black'}`}
+                                />
+                                <div className="absolute right-3 top-3 pointer-events-none">
+                                    <MdDateRange color="#757575" size={20} />
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex-1">
+                        <div className="flex-1 w-full min-w-0">
                             <label className="block mb-1 text-gray-800 font-medium">Time*</label>
                             <input
                                 readOnly
                                 value={newTime}
                                 onClick={() => setModalVisible(true)}
                                 placeholder="Select Time"
-                                className="w-full p-2.5 rounded border border-gray-400 text-black outline-none text-base"
+                                className="w-full h-12 p-2.5 rounded border border-gray-400 bg-white text-black outline-none text-base"
                             />
                         </div>
                     </div>
@@ -359,11 +412,11 @@ const CustomerMeeting = props => {
                         <Button title="Save" onPress={() => onSubmit()} />
                     </div>
                 </div>
-                {/* Property releted reminder list */}
-                {loading ? <div className="flex-1 justify-center items-center bg-gray-100 bg-opacity-40 flex h-full">
-                    <div>Loading...</div>
-                </div> : <PropertyReminder navigation={navigation} reminderListX={reminderListX} />}
             </div>
+            {/* Property releted reminder list */}
+            {loading ? <div className="flex-1 justify-center items-center bg-gray-100 bg-opacity-40 flex h-full">
+                <div>Loading...</div>
+            </div> : <PropertyReminder navigation={navigation} reminderListX={reminderListX} />}
             <Snackbar
                 visible={isVisible}
                 textMessage={errorMessage}

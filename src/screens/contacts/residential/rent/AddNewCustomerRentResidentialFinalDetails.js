@@ -148,136 +148,120 @@ const AddNewCustomerRentResidentialFinalDetails = props => {
                     <p style={styles.headerTitle}>Preview Customer</p>
                 </div>
             </div>
-            <div style={styles.headerContainer}>
-                <div
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "flex-start",
-                        paddingRight: 16,
-                        width: "100%",
-                        backgroundColor: "#ffffff",
-                        display: 'flex',
-                        padding: 10
+            {/* Gray Header with Avatar */}
+            <div className="bg-gray-300 p-4 flex items-start">
+                <Avatar
+                    square
+                    size={80}
+                    title={
+                        customerFinalDetails.customer_details.name &&
+                        customerFinalDetails.customer_details.name.slice(0, 1)
+                    }
+                    titleStyle={{ color: "#555", fontSize: 40 }}
+                    avatarStyle={{
+                        backgroundColor: "transparent",
                     }}
-                >
-                    <Avatar
-                        square
-                        size={80}
-                        title={
-                            customerFinalDetails.customer_details.name &&
-                            customerFinalDetails.customer_details.name.slice(0, 1)
-                        }
-                        titleStyle={{ color: "#000000" }}
-                        avatarStyle={{
-                            borderWidth: 1,
-                            borderColor: "#000000",
-                            borderStyle: "solid"
-                        }}
-                    />
-                    <div style={{ paddingLeft: 20, paddingTop: 10 }}>
-                        <span style={{ ...styles.title, display: 'block' }}>
-                            {customerFinalDetails.customer_details.name}
-                        </span>
-                        <span style={{ ...styles.subTitle, display: 'block' }}>
-                            {customerFinalDetails.customer_details.mobile1}
-                        </span>
-                        <span style={{ ...styles.subTitle, display: 'block' }}>
-                            {customerFinalDetails.customer_details.address}
-                        </span>
-                    </div>
+                />
+                <div className="ml-4 pt-2">
+                    <span className="block text-lg font-bold text-black">
+                        {customerFinalDetails.customer_details.name}
+                    </span>
+                    <span className="block text-sm text-gray-800">
+                        {customerFinalDetails.customer_details.mobile1}
+                    </span>
+                    <span className="block text-sm text-gray-800">
+                        {customerFinalDetails.customer_details.address}
+                    </span>
                 </div>
             </div>
 
-            <div style={styles.detailsContainer}>
-                <div style={styles.details}>
-                    <div style={styles.subDetails}>
-                        <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+            {/* Stats Row with Vertical Dividers */}
+            <div className="bg-gray-200 p-4 border-t border-gray-300">
+                <div className="flex justify-between items-center">
+                    <div className="text-center">
+                        <p className="text-base font-bold text-black">
                             {customerFinalDetails.customer_property_details.bhk_type}
-                        </span>
-                        <span style={{ ...styles.subDetailsTitle, display: 'block' }}>Looking For</span>
+                        </p>
+                        <p className="text-xs text-gray-600">Looking For</p>
                     </div>
-                    <div style={styles.verticalLine}></div>
-                    <div style={styles.subDetails}>
-                        <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+                    <div className="w-px bg-gray-400 h-10 mx-2 self-center"></div>
+                    <div className="text-center">
+                        <p className="text-base font-bold text-black">
                             {numDifferentiation(
                                 customerFinalDetails.customer_rent_details.expected_rent
                             )}
-                        </span>
-                        <span style={{ ...styles.subDetailsTitle, display: 'block' }}>
+                        </p>
+                        <p className="text-xs text-gray-600">
                             Max {customerFinalDetails.customer_locality.property_for}
-                        </span>
+                        </p>
                     </div>
-                    <div style={styles.verticalLine}></div>
-                    <div style={styles.subDetails}>
-                        <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+                    <div className="w-px bg-gray-400 h-10 mx-2 self-center"></div>
+                    <div className="text-center">
+                        <p className="text-base font-bold text-black">
                             {numDifferentiation(
                                 customerFinalDetails.customer_rent_details.expected_deposit
                             )}
-                        </span>
-                        <span style={{ ...styles.subDetailsTitle, display: 'block' }}>Max Deposit</span>
+                        </p>
+                        <p className="text-xs text-gray-600">Max Deposit</p>
                     </div>
-                    <div style={styles.verticalLine}></div>
-                    <div style={styles.subDetails}>
-                        <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+                    <div className="w-px bg-gray-400 h-10 mx-2 self-center"></div>
+                    <div className="text-center">
+                        <p className="text-base font-bold text-black">
                             {customerFinalDetails.customer_property_details.furnishing_status}
-                        </span>
-                        <span style={{ ...styles.subDetailsTitle, display: 'block' }}>Furnishing</span>
+                        </p>
+                        <p className="text-xs text-gray-600">Furnishing</p>
                     </div>
                 </div>
             </div>
 
-            <div style={styles.margin1}></div>
-            {/* property details */}
-            <div style={styles.overviewContainer}>
-                <div style={styles.overview}>
-                    <span style={{ fontSize: 16, fontWeight: "600", color: "#000000", display: 'block' }}>Details</span>
-                    <div style={styles.horizontalLine}></div>
+            {/* Details Section */}
+            <div className="mt-2 bg-white px-4 pt-4">
+                <div className="pb-2 border-b border-gray-100">
+                    <h3 className="text-sm font-medium text-gray-900">Details</h3>
                 </div>
-                <div style={styles.overviewColumnWrapper}>
-                    <div style={styles.overviewLeftColumn}>
-                        <div style={styles.subDetails}>
-                            <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+                <div className="flex justify-between py-4">
+                    <div className="flex flex-col space-y-4 w-1/2">
+                        <div>
+                            <p className="text-base font-bold text-black">
                                 {customerFinalDetails.customer_locality.city}
-                            </span>
-                            <span style={{ ...styles.subDetailsTitle, display: 'block' }}>City</span>
+                            </p>
+                            <p className="text-xs text-gray-600">City</p>
                         </div>
-                        <div style={{ paddingBottom: 20, width: "80%" }}>
-                            <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+                        <div>
+                            <p className="text-base font-bold text-black">
                                 {location.join(', ')}
-                            </span>
-                            <span style={{ ...styles.subDetailsTitle, display: 'block' }}>Locations</span>
+                            </p>
+                            <p className="text-xs text-gray-600">Locations</p>
                         </div>
-                        <div style={styles.subDetails}>
-                            <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+                        <div>
+                            <p className="text-base font-bold text-black">
                                 {possessionDate}
-                            </span>
-                            <span style={{ ...styles.subDetailsTitle, display: 'block' }}>Possession</span>
+                            </p>
+                            <p className="text-xs text-gray-600">Possession</p>
                         </div>
-                        <div style={styles.subDetails}>
-                            <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+                        <div>
+                            <p className="text-base font-bold text-black">
                                 {customerFinalDetails.customer_locality.preferred_tenants}
-                            </span>
-                            <span style={{ ...styles.subDetailsTitle, display: 'block' }}>Tenant Type</span>
+                            </p>
+                            <p className="text-xs text-gray-600">Tenant Type</p>
                         </div>
                     </div>
-                    <div style={styles.overviewRightColumn}>
-                        <div style={styles.subDetails}>
-                            <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+                    <div className="flex flex-col space-y-4 w-1/2 items-end text-right">
+                        <div>
+                            <p className="text-base font-bold text-black">
                                 {customerFinalDetails.customer_property_details.parking_type}
-                            </span>
-                            <span style={{ ...styles.subDetailsTitle, display: 'block' }}>Parking</span>
+                            </p>
+                            <p className="text-xs text-gray-600">Parking</p>
                         </div>
-                        <div style={styles.subDetails}>
-                            <span style={{ ...styles.subDetailsValue, display: 'block' }}>
+                        <div>
+                            <p className="text-base font-bold text-black">
                                 {customerFinalDetails.customer_property_details.lift}
-                            </span>
-                            <span style={{ ...styles.subDetailsTitle, display: 'block' }}>Lift Mandatory</span>
+                            </p>
+                            <p className="text-xs text-gray-600">Lift Mandatory</p>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* owner details */}
-            <div style={styles.margin1}></div>
 
             <div style={{ margin: 20 }}>
                 <Button title="ADD" onPress={() => send()} />
