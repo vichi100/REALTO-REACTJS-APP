@@ -4,8 +4,11 @@ import {
     MdSort,
     MdFilterList,
     MdRestartAlt,
-    MdSearch
+    MdSearch,
+    MdArrowBack
 } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 import Button from "./../../components/Button";
 import CustomerCommercialRentCard from "../contacts/commercial/rent/CustomerCommercialRentCard";
 import CustomerCommercialBuyCard from "../contacts/commercial/buy/CustomerCommercialBuyCard";
@@ -43,6 +46,17 @@ const sortByPostedDateArray = ["Recent First", "Oldest Fist"];
 const GlobalCommercialCustomersSearchResult = props => {
     const { navigation, route } = props;
     const { searchGlobalResult } = route?.params || {};
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/contacts');
+        }
+    };
+
+
     const [search, setSearch] = useState("");
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -98,11 +112,24 @@ const GlobalCommercialCustomersSearchResult = props => {
         setLookingForIndexSortBy(-1);
         setSortByNameIndex(-1);
         setSortByPostedDateIndex(-1);
-        setData(props.commercialCustomerList);
+        if (search) {
+            const newData = props.globalSearchResult.filter(function (item) {
+                const itemData =
+                    item.customer_details.name +
+                    item.customer_details.address +
+                    item.customer_details.mobile1 +
+                    item.customer_locality.location_area +
+                    item.customer_id;
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+            setData(newData);
+        } else {
+            setData(props.globalSearchResult);
+        }
     };
 
     const sortByPostedDate = index => {
-        console.log("sortByName", props.commercialCustomerList);
         if (lookingForIndexSortBy === -1) {
             setErrorMessage("Looking for is missing in filter");
             setIsVisible(true);
@@ -111,8 +138,20 @@ const GlobalCommercialCustomersSearchResult = props => {
         setSortByPostedDateIndex(index);
         setSortByNameIndex(-1);
         setVisibleSorting(false);
-        let filterList = [...props.commercialCustomerList];
-        console.log("lookingForIndexSortBy: ", lookingForIndexSortBy);
+        let filterList = [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.customer_details.name +
+                    item.customer_details.address +
+                    item.customer_details.mobile1 +
+                    item.customer_locality.location_area +
+                    item.customer_id;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(
                 item => item.customer_locality.property_for === "Rent"
@@ -155,7 +194,6 @@ const GlobalCommercialCustomersSearchResult = props => {
     };
 
     const sortByName = index => {
-        console.log("sortByName", props.commercialCustomerList);
         if (lookingForIndexSortBy === -1) {
             setErrorMessage("Looking for is missing in filter");
             setIsVisible(true);
@@ -164,8 +202,20 @@ const GlobalCommercialCustomersSearchResult = props => {
         setSortByPostedDateIndex(-1);
         setSortByNameIndex(index);
         setVisibleSorting(false);
-        let filterList = [...props.commercialCustomerList];
-        console.log("lookingForIndexSortBy: ", lookingForIndexSortBy);
+        let filterList = [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.customer_details.name +
+                    item.customer_details.address +
+                    item.customer_details.mobile1 +
+                    item.customer_locality.location_area +
+                    item.customer_id;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(
                 item => item.customer_locality.property_for === "Rent"
@@ -216,17 +266,31 @@ const GlobalCommercialCustomersSearchResult = props => {
         setMaxSell(100000000);
         setMinBuildupArea(50);
         setMaxBuildupArea(15000);
+        setData(props.globalSearchResult);
+        setSearch("");
         setVisible(false);
     };
 
     const onFilter = () => {
-        console.log("onFilter:     ", props.commercialCustomerList);
         if (lookingForIndex === -1) {
             setErrorMessage("Looking for is missing in filter");
             setIsVisible(true);
             return;
         }
-        let filterList = [...props.commercialCustomerList];
+        let filterList = [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.customer_details.name +
+                    item.customer_details.address +
+                    item.customer_details.mobile1 +
+                    item.customer_locality.location_area +
+                    item.customer_id;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndex > -1) {
             filterList = filterList.filter(
                 item =>
@@ -323,12 +387,13 @@ const GlobalCommercialCustomersSearchResult = props => {
 
     const searchFilterFunction = text => {
         if (text) {
-            const newData = props.commercialCustomerList.filter(function (item) {
+            const newData = props.globalSearchResult.filter(function (item) {
                 const itemData =
                     item.customer_details.name +
                     item.customer_details.address +
                     item.customer_details.mobile1 +
-                    item.customer_locality.location_area;
+                    item.customer_locality.location_area +
+                    item.customer_id;
 
                 const textData = text.toUpperCase();
                 return itemData.toUpperCase().indexOf(textData) > -1;
@@ -336,7 +401,7 @@ const GlobalCommercialCustomersSearchResult = props => {
             setData(newData);
             setSearch(text);
         } else {
-            setData(props.commercialCustomerList);
+            setData(props.globalSearchResult);
             setSearch(text);
         }
     };
@@ -463,44 +528,33 @@ const GlobalCommercialCustomersSearchResult = props => {
     const [visibleSorting, setVisibleSorting] = useState(false);
 
     return (
-        <div className="flex flex-col h-full bg-gray-100">
+        <div className="flex flex-col h-full bg-white relative">
+            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm">
+                <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 className="text-lg font-semibold text-gray-800">Search Results</h1>
+            </div>
             <div className="flex flex-row items-center bg-white p-2 shadow-sm">
                 <div className="relative flex-1">
                     <input
                         type="text"
-                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500"
+                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-400 text-black placeholder-gray-500 focus:outline-none focus:border-blue-500"
                         placeholder="GLocal Search..."
                         value={search}
                         onChange={e => searchFilterFunction(e.target.value)}
                     />
-                    <div className="absolute left-3 top-2.5 text-gray-400">
+                    <div className="absolute left-3 top-2.5 text-gray-600">
                         <MdSearch size={20} />
                     </div>
                 </div>
             </div>
 
             {data.length > 0 ? (
-                <div className="flex-1 overflow-y-auto p-2">
+                <div className="flex-1 overflow-y-auto p-2 pb-24">
                     {data.map((item, index) => (
                         <ItemView item={item} index={index} key={index} />
                     ))}
-
-                    <div className="absolute bottom-5 right-5 flex flex-col items-center space-y-2">
-                        <button
-                            data-testid="sort-button"
-                            onClick={() => setVisibleSorting(!visibleSorting)}
-                            className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
-                        >
-                            <MdSort size={24} />
-                        </button>
-                        <button
-                            data-testid="filter-button"
-                            onClick={() => setVisible(!visible)}
-                            className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
-                        >
-                            <MdFilterList size={24} />
-                        </button>
-                    </div>
                 </div>
             ) : (
                 <div className="flex flex-1 justify-center items-center h-full">
@@ -508,19 +562,61 @@ const GlobalCommercialCustomersSearchResult = props => {
                 </div>
             )}
 
+            {!visible && !visibleSorting && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: "row",
+                        position: "fixed",
+                        width: '130px',
+                        height: '35px',
+                        alignItems: "center",
+                        justifyContent: "center",
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        bottom: '70px',
+                        backgroundColor: "rgba(128,128,128, 0.8)",
+                        borderRadius: '30px',
+                        zIndex: 100,
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'
+                    }}
+                >
+                    <div
+                        onClick={() => setVisibleSorting(!visibleSorting)}
+                        style={{ paddingRight: '20px', cursor: 'pointer' }}
+                    >
+                        <MdSort color={"#ffffff"} size={26} />
+                    </div>
+                    <div style={{ height: "100%", width: '2px', backgroundColor: "#ffffff" }}></div>
+                    <div
+                        onClick={() => setVisible(!visible)}
+                        style={{ paddingLeft: '20px', cursor: 'pointer' }}
+                    >
+                        <MdFilterList
+                            color={"#ffffff"}
+                            size={26}
+                        />
+                    </div>
+                </div>
+            )}
+
+
             {/* Filter Modal/Drawer */}
             {visible && (
-                <div className="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50">
-                    <div className="w-full max-w-md bg-white h-full overflow-y-auto p-5 animate-slide-in-right">
-                        <div className="flex justify-between items-center mb-5">
-                            <h2 className="text-xl font-bold">Filter</h2>
-                            <button onClick={() => resetFilter()}>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisible(false)}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4 pt-4 pb-2 border-b border-gray-100">
+                            <h3 className="text-lg font-bold text-black">Filter</h3>
+                            <div
+                                onClick={() => resetFilter()}
+                                className="absolute right-4 text-gray-500 cursor-pointer"
+                            >
                                 <MdRestartAlt size={24} />
-                            </button>
+                            </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Looking For</p>
+                            <p className="mb-2 font-semibold text-gray-700">Looking For</p>
                             <CustomButtonGroup
                                 buttons={lookingForArray.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndex]}
@@ -529,7 +625,7 @@ const GlobalCommercialCustomersSearchResult = props => {
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Prop type</p>
+                            <p className="mb-2 font-semibold text-gray-700">Prop type</p>
                             <CustomButtonGroup
                                 buttons={propertyTypeArray.map(text => ({ text }))}
                                 selectedIndices={[propertyTypeIndex]}
@@ -539,7 +635,7 @@ const GlobalCommercialCustomersSearchResult = props => {
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Building type</p>
+                            <p className="mb-2 font-semibold text-gray-700">Building type</p>
                             <div className="grid grid-cols-2 gap-2">
                                 {buildingTypeArray.map((item, index) => (
                                     <div key={index} className="flex items-center">
@@ -547,38 +643,39 @@ const GlobalCommercialCustomersSearchResult = props => {
                                             type="checkbox"
                                             checked={checkBoxSelectArray.indexOf(item) > -1}
                                             onChange={() => onCheckBoxSelect(item)}
-                                            className="mr-2"
+                                            className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                         />
-                                        <span>{item}</span>
+                                        <span className="text-gray-700">{item}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
-                        <button
-                            data-testid="apply-filter-button"
-                            onClick={() => onFilter()}
-                            className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
-                        >
-                            Apply
-                        </button>
+                        <Button
+                            title="Apply"
+                            onPress={() => onFilter()}
+                            style={{ marginTop: 20 }}
+                        />
                     </div>
                 </div>
             )}
 
             {/* Sorting Modal/Drawer */}
             {visibleSorting && (
-                <div className="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50">
-                    <div className="w-full max-w-md bg-white h-full overflow-y-auto p-5 animate-slide-in-right">
-                        <div className="flex justify-between items-center mb-5">
-                            <h2 className="text-xl font-bold">Sort By</h2>
-                            <button onClick={() => resetSortBy()}>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisibleSorting(false)}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4 pt-4 pb-2 border-b border-gray-100">
+                            <h3 className="text-lg font-bold text-black">Sort By</h3>
+                            <div
+                                onClick={() => resetSortBy()}
+                                className="absolute right-4 text-gray-500 cursor-pointer"
+                            >
                                 <MdRestartAlt size={24} />
-                            </button>
+                            </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Looking For</p>
+                            <p className="mb-2 font-semibold text-gray-700">Looking For</p>
                             <CustomButtonGroup
                                 buttons={lookingForArraySortBy.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndexSortBy]}
@@ -587,7 +684,7 @@ const GlobalCommercialCustomersSearchResult = props => {
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Name</p>
+                            <p className="mb-2 font-semibold text-gray-700">Sort By Name</p>
                             <CustomButtonGroup
                                 buttons={sortByNameArray.map(text => ({ text }))}
                                 selectedIndices={[sortByNameIndex]}
@@ -596,7 +693,7 @@ const GlobalCommercialCustomersSearchResult = props => {
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Posted Date</p>
+                            <p className="mb-2 font-semibold text-gray-700">Sort By Posted Date</p>
                             <CustomButtonGroup
                                 buttons={sortByPostedDateArray.map(text => ({ text }))}
                                 selectedIndices={[sortByPostedDateIndex]}
@@ -604,13 +701,11 @@ const GlobalCommercialCustomersSearchResult = props => {
                             />
                         </div>
 
-                        <button
-                            data-testid="apply-sort-button"
-                            onClick={() => setVisibleSorting(false)}
-                            className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
-                        >
-                            Apply
-                        </button>
+                        <Button
+                            title="Apply"
+                            onPress={() => setVisibleSorting(false)}
+                            style={{ marginTop: 20 }}
+                        />
                     </div>
                 </div>
             )}

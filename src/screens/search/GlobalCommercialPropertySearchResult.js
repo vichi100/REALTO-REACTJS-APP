@@ -99,7 +99,24 @@ const GlobalCommercialPropertySearchResult = props => {
         setSortByRentIndex(-1);
         setSortByAvailabilityIndex(-1);
         setSortByPostedDateIndex(-1);
-        setData(props.commercialPropertyList);
+
+        if (search) {
+            const newData = props.commercialPropertyList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.property_address.formatted_address +
+                    item.owner_details.name +
+                    item.owner_details.mobile1 +
+                    item.property_id;
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+            setData(newData);
+        } else {
+            setData(props.globalSearchResult);
+        }
     };
 
     const sortByPostedDate = index => {
@@ -112,7 +129,23 @@ const GlobalCommercialPropertySearchResult = props => {
         setSortByRentIndex(-1);
         setSortByAvailabilityIndex(-1);
         setVisibleSorting(false);
-        let filterList = [...props.commercialPropertyList];
+        setVisibleSorting(false);
+        let filterList = search ? [...props.commercialPropertyList] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.property_address.formatted_address +
+                    item.owner_details.name +
+                    item.owner_details.mobile1 +
+                    item.property_id;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(item => item.property_for === "Rent");
             if (sortByPostedDateArray[index] === "Recent First") {
@@ -161,7 +194,23 @@ const GlobalCommercialPropertySearchResult = props => {
         setSortByPostedDateIndex(-1);
         setSortByRentIndex(-1);
         setVisibleSorting(false);
-        let filterList = [...props.commercialPropertyList];
+        setVisibleSorting(false);
+        let filterList = search ? [...props.commercialPropertyList] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.property_address.formatted_address +
+                    item.owner_details.name +
+                    item.owner_details.mobile1 +
+                    item.property_id;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(item => item.property_for === "Rent");
             if (sortByAvailabilityArray[index] === "Earliest First") {
@@ -212,7 +261,23 @@ const GlobalCommercialPropertySearchResult = props => {
         setSortByPostedDateIndex(-1);
         setSortByAvailabilityIndex(-1);
         setVisibleSorting(false);
-        let filterList = [...props.commercialPropertyList];
+        setVisibleSorting(false);
+        let filterList = search ? [...props.commercialPropertyList] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.property_address.formatted_address +
+                    item.owner_details.name +
+                    item.owner_details.mobile1 +
+                    item.property_id;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(item => item.property_for === "Rent");
             // const x = filterList;
@@ -275,17 +340,36 @@ const GlobalCommercialPropertySearchResult = props => {
         setMaxSell(100000000);
         setMinBuildupArea(50);
         setMaxBuildupArea(15000);
+        setData(props.globalSearchResult);
+        setSearch("");
         setVisible(false);
     };
 
     const onFilter = () => {
-        console.log("onFilter:     ", props.commercialPropertyList);
+        // console.log("onFilter:     ", props.commercialPropertyList);
         if (lookingForIndex === -1) {
             setErrorMessage("Looking for is missing in filter");
             setIsVisible(true);
             return;
         }
-        let filterList = [...props.commercialPropertyList];
+
+        let filterList = search ? [...props.commercialPropertyList] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.property_address.formatted_address +
+                    item.owner_details.name +
+                    item.owner_details.mobile1 +
+                    item.property_id;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
+
         if (lookingForIndex > -1) {
             filterList = filterList.filter(
                 item => item.property_for === lookingForArray[lookingForIndex]
@@ -304,11 +388,6 @@ const GlobalCommercialPropertySearchResult = props => {
 
         if (checkBoxSelectArray.length > 0) {
             console.log(checkBoxSelectArray);
-            console.log(
-                checkBoxSelectArray.indexOf(
-                    filterList[0].property_details.building_type
-                )
-            );
 
             filterList = filterList.filter(
                 item =>
@@ -351,21 +430,17 @@ const GlobalCommercialPropertySearchResult = props => {
             if (availabilityArray[availabilityIndex] === "Immediate") {
                 possessionDate = addDays(today, 7); //new Date(today.getTime() + 15*24*60*60*1000)
                 filterList = filterList.filter(
-                    item => possessionDate > new Date(item.rent_details.available_from)
-                );
-                console.log(
-                    "possessionDate: ",
-                    new Date(filterList[0].rent_details.available_from)
+                    item => new Date(item.rent_details.available_from) <= possessionDate
                 );
             } else if (availabilityArray[availabilityIndex] === "15 Days") {
                 possessionDate = addDays(today, 15);
                 filterList = filterList.filter(
-                    item => possessionDate > new Date(item.rent_details.available_from)
+                    item => new Date(item.rent_details.available_from) <= possessionDate
                 );
             } else if (availabilityArray[availabilityIndex] === "30 Days") {
                 possessionDate = addDays(today, 30);
                 filterList = filterList.filter(
-                    item => possessionDate > new Date(item.rent_details.available_from)
+                    item => new Date(item.rent_details.available_from) <= possessionDate
                 );
             } else if (availabilityArray[availabilityIndex] === "30+ Days") {
                 possessionDate = addDays(today, 30);
@@ -419,8 +494,10 @@ const GlobalCommercialPropertySearchResult = props => {
                     item.property_address.building_name +
                     item.property_address.landmark_or_street +
                     item.property_address.location_area +
+                    item.property_address.formatted_address +
                     item.owner_details.name +
-                    item.owner_details.mobile1;
+                    item.owner_details.mobile1 +
+                    item.property_id;
 
                 const textData = text.toUpperCase();
                 return itemData.toUpperCase().indexOf(textData) > -1;
@@ -561,16 +638,17 @@ const GlobalCommercialPropertySearchResult = props => {
 
     return (
         <div className="flex flex-col h-full bg-gray-100">
+            {/* Search Bar - High Contrast */}
             <div className="flex flex-row items-center bg-white p-2 shadow-sm">
                 <div className="relative flex-1">
                     <input
                         type="text"
-                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500"
+                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-400 text-black placeholder-gray-500 focus:outline-none focus:border-blue-500"
                         placeholder="GLocal Search..."
                         value={search}
                         onChange={e => searchFilterFunction(e.target.value)}
                     />
-                    <div className="absolute left-3 top-2.5 text-gray-400">
+                    <div className="absolute left-3 top-2.5 text-gray-600">
                         <MdSearch size={20} />
                     </div>
                 </div>
@@ -581,23 +659,6 @@ const GlobalCommercialPropertySearchResult = props => {
                     {data.map((item, index) => (
                         <ItemView item={item} index={index} key={index} />
                     ))}
-
-                    <div className="absolute bottom-5 right-5 flex flex-col items-center space-y-2">
-                        <button
-                            data-testid="sort-button"
-                            onClick={() => setVisibleSorting(!visibleSorting)}
-                            className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
-                        >
-                            <MdSort size={24} />
-                        </button>
-                        <button
-                            data-testid="filter-button"
-                            onClick={() => setVisible(!visible)}
-                            className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
-                        >
-                            <MdFilterList size={24} />
-                        </button>
-                    </div>
                 </div>
             ) : (
                 <div className="flex flex-1 justify-center items-center h-full">
@@ -605,38 +666,91 @@ const GlobalCommercialPropertySearchResult = props => {
                 </div>
             )}
 
-            {/* Filter Modal/Drawer */}
+            {/* Centered Pill Filter/Sort Buttons */}
+            {!visible && !visibleSorting && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: "row",
+                        position: "fixed",
+                        width: '130px',
+                        height: '35px',
+                        alignItems: "center",
+                        justifyContent: "center",
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        bottom: '70px',
+                        backgroundColor: "rgba(128,128,128, 0.8)",
+                        borderRadius: '30px',
+                        zIndex: 100,
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'
+                    }}
+                >
+                    <div
+                        onClick={() => setVisibleSorting(!visibleSorting)}
+                        style={{ paddingRight: '20px', cursor: 'pointer' }}
+                    >
+                        <MdSort color={"#ffffff"} size={26} />
+                    </div>
+                    <div style={{ height: "100%", width: '2px', backgroundColor: "#ffffff" }}></div>
+                    <div
+                        onClick={() => setVisible(!visible)}
+                        style={{ paddingLeft: '20px', cursor: 'pointer' }}
+                    >
+                        <MdFilterList
+                            color={"#ffffff"}
+                            size={26}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {/* Filter Modal - Bottom Sheet */}
             {visible && (
-                <div className="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50">
-                    <div className="w-full max-w-md bg-white h-full overflow-y-auto p-5 animate-slide-in-right">
-                        <div className="flex justify-between items-center mb-5">
-                            <h2 className="text-xl font-bold">Filter</h2>
-                            <button onClick={() => resetFilter()}>
-                                <MdRestartAlt size={24} />
-                            </button>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisible(false)}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4">
+                            <h3 className="text-lg font-bold text-black">Filter</h3>
+                            <div
+                                onClick={() => resetFilter()}
+                                className="absolute top-0 right-4 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Looking For</p>
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={lookingForArray.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndex]}
                                 onButtonPress={selectLookingForIndex}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Prop type</p>
+                            <h4 className="font-semibold mb-2 text-black">Prop type</h4>
                             <CustomButtonGroup
                                 buttons={propertyTypeArray.map(text => ({ text }))}
                                 selectedIndices={[propertyTypeIndex]}
                                 onButtonPress={selectPropertyTypeIndex}
                                 vertical={true}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Building type</p>
+                            <h4 className="font-semibold mb-2 text-black">Building type</h4>
                             <div className="grid grid-cols-2 gap-2">
                                 {buildingTypeArray.map((item, index) => (
                                     <div key={index} className="flex items-center">
@@ -645,78 +759,91 @@ const GlobalCommercialPropertySearchResult = props => {
                                             checked={checkBoxSelectArray.indexOf(item) > -1}
                                             onChange={() => onCheckBoxSelect(item)}
                                             className="mr-2"
+                                            style={{ accentColor: '#00a36c' }}
                                         />
-                                        <span>{item}</span>
+                                        <span className="text-black">{item}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
-                        <button
-                            data-testid="apply-filter-button"
-                            onClick={() => onFilter()}
-                            className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
-                        >
-                            Apply
-                        </button>
+                        <div className="mt-5">
+                            <Button title="Apply" onPress={() => onFilter()} />
+                        </div>
                     </div>
                 </div>
             )}
 
-            {/* Sorting Modal/Drawer */}
+            {/* Sorting Modal - Bottom Sheet */}
             {visibleSorting && (
-                <div className="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50">
-                    <div className="w-full max-w-md bg-white h-full overflow-y-auto p-5 animate-slide-in-right">
-                        <div className="flex justify-between items-center mb-5">
-                            <h2 className="text-xl font-bold">Sort By</h2>
-                            <button onClick={() => resetSortBy()}>
-                                <MdRestartAlt size={24} />
-                            </button>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisibleSorting(false)}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4">
+                            <h3 className="text-lg font-bold text-black">Sort By</h3>
+                            <div
+                                onClick={() => resetSortBy()}
+                                className="absolute top-0 right-4 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Looking For</p>
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={lookingForArraySortBy.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndexSortBy]}
                                 onButtonPress={selectLookingForIndexSortBy}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Rent</p>
+                            <h4 className="font-semibold mb-2 text-black">Sort By Rent</h4>
                             <CustomButtonGroup
                                 buttons={sortByRentArray.map(text => ({ text }))}
                                 selectedIndices={[sortByRentIndex]}
                                 onButtonPress={sortByRent}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Availability</p>
+                            <h4 className="font-semibold mb-2 text-black">Sort By Availability</h4>
                             <CustomButtonGroup
                                 buttons={sortByAvailabilityArray.map(text => ({ text }))}
                                 selectedIndices={[sortByAvailabilityIndex]}
                                 onButtonPress={sortByAvailability}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Posted Date</p>
+                            <h4 className="font-semibold mb-2 text-black">Sort By Posted Date</h4>
                             <CustomButtonGroup
                                 buttons={sortByPostedDateArray.map(text => ({ text }))}
                                 selectedIndices={[sortByPostedDateIndex]}
                                 onButtonPress={sortByPostedDate}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
-                        <button
-                            data-testid="apply-sort-button"
-                            onClick={() => setVisibleSorting(false)}
-                            className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
-                        >
-                            Apply
-                        </button>
+
                     </div>
                 </div>
             )}

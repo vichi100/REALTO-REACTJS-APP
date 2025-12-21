@@ -4,8 +4,11 @@ import {
     MdSort,
     MdFilterList,
     MdRestartAlt,
-    MdSearch
+    MdSearch,
+    MdArrowBack
 } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 import Button from "./../../components/Button";
 import ContactResidentialRentCard from "../contacts/residential/rent/ContactResidentialRentCard";
 import ContactResidentialSellCard from "../contacts/residential/buy/ContactResidentialSellCard";
@@ -86,11 +89,25 @@ const GlobalResidentialContactsSearchResult = props => {
         setLookingForIndexSortBy(-1);
         setSortByNameIndex(-1);
         setSortByPostedDateIndex(-1);
-        setData(props.residentialCustomerList);
+        if (search) {
+            const newData = props.globalSearchResult.filter(function (item) {
+                const itemData =
+                    item.customer_details.name +
+                    item.customer_details.address +
+                    item.customer_details.mobile1 +
+                    item.customer_locality.location_area +
+                    item.customer_id;
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+            setData(newData);
+        } else {
+            setData(props.globalSearchResult);
+        }
     };
 
     const sortByPostedDate = index => {
-        console.log("sortByName", props.residentialCustomerList);
+        console.log("sortByName", props.globalSearchResult);
         if (lookingForIndexSortBy === -1) {
             setErrorMessage("Looking for is missing in filter");
             setIsVisible(true);
@@ -99,7 +116,19 @@ const GlobalResidentialContactsSearchResult = props => {
         setSortByPostedDateIndex(index);
         setSortByNameIndex(-1);
         setVisibleSorting(false);
-        let filterList = [...props.residentialCustomerList];
+        let filterList = search ? [...props.globalSearchResult] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.customer_details.name +
+                    item.customer_details.address +
+                    item.customer_details.mobile1 +
+                    item.customer_locality.location_area +
+                    item.customer_id;
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         console.log("lookingForIndexSortBy: ", lookingForIndexSortBy);
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(
@@ -144,7 +173,7 @@ const GlobalResidentialContactsSearchResult = props => {
     };
 
     const sortByName = index => {
-        console.log("sortByName", props.residentialCustomerList);
+        console.log("sortByName", props.globalSearchResult);
         if (lookingForIndexSortBy === -1) {
             setErrorMessage("Looking for is missing in filter");
             setIsVisible(true);
@@ -153,7 +182,19 @@ const GlobalResidentialContactsSearchResult = props => {
         setSortByPostedDateIndex(-1);
         setSortByNameIndex(index);
         setVisibleSorting(false);
-        let filterList = [...props.residentialCustomerList];
+        let filterList = search ? [...props.globalSearchResult] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.customer_details.name +
+                    item.customer_details.address +
+                    item.customer_details.mobile1 +
+                    item.customer_locality.location_area +
+                    item.customer_id;
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         console.log("lookingForIndexSortBy: ", lookingForIndexSortBy);
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(
@@ -200,7 +241,8 @@ const GlobalResidentialContactsSearchResult = props => {
         setBHKTypeIndex(-1);
         setAvailabilityIndex(-1);
         setFurnishingIndex(-1);
-        setData(props.residentialCustomerList);
+        setData(props.globalSearchResult);
+        setSearch("");
         setVisible(false);
         setMinRent(5000);
         setMaxRent(500000);
@@ -209,13 +251,25 @@ const GlobalResidentialContactsSearchResult = props => {
     };
 
     const onFilter = () => {
-        console.log("onFilter:     ", props.residentialCustomerList);
+        console.log("onFilter:     ", props.globalSearchResult);
         if (lookingForIndex === -1) {
             setErrorMessage("Looking for is missing in filter");
             setIsVisible(true);
             return;
         }
-        let filterList = [...props.residentialCustomerList];
+        let filterList = search ? [...props.globalSearchResult] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.customer_details.name +
+                    item.customer_details.address +
+                    item.customer_details.mobile1 +
+                    item.customer_locality.location_area +
+                    item.customer_id;
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndex > -1) {
             filterList = filterList.filter(
                 item =>
@@ -332,12 +386,13 @@ const GlobalResidentialContactsSearchResult = props => {
 
     const searchFilterFunction = text => {
         if (text) {
-            const newData = props.residentialCustomerList.filter(function (item) {
+            const newData = props.globalSearchResult.filter(function (item) {
                 const itemData =
                     item.customer_details.name +
                     item.customer_details.address +
                     item.customer_details.mobile1 +
-                    item.customer_locality.location_area;
+                    item.customer_locality.location_area +
+                    item.customer_id;
 
                 const textData = text.toUpperCase();
                 return itemData.toUpperCase().indexOf(textData) > -1;
@@ -345,7 +400,7 @@ const GlobalResidentialContactsSearchResult = props => {
             setData(newData);
             setSearch(text);
         } else {
-            setData(props.residentialCustomerList);
+            setData(props.globalSearchResult);
             setSearch(text);
         }
     };
@@ -470,18 +525,34 @@ const GlobalResidentialContactsSearchResult = props => {
     const [visible, setVisible] = useState(false);
     const [visibleSorting, setVisibleSorting] = useState(false);
 
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+            navigate(-1);
+        } else {
+            navigate('/contacts');
+        }
+    };
+
     return (
-        <div className="flex flex-col h-full bg-gray-100">
+        <div className="flex flex-col h-full bg-white relative">
+            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm">
+                <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
+                    <MdArrowBack size={24} color="#333" />
+                </div>
+                <h1 className="text-lg font-semibold text-gray-800">Search Results</h1>
+            </div>
             <div className="flex flex-row items-center bg-white p-2 shadow-sm">
                 <div className="relative flex-1">
                     <input
                         type="text"
-                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500"
+                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-400 text-black placeholder-gray-500 focus:outline-none focus:border-blue-500"
                         placeholder="GLocal Search..."
                         value={search}
                         onChange={e => searchFilterFunction(e.target.value)}
                     />
-                    <div className="absolute left-3 top-2.5 text-gray-400">
+                    <div className="absolute left-3 top-2.5 text-gray-600">
                         <MdSearch size={20} />
                     </div>
                 </div>
@@ -492,23 +563,6 @@ const GlobalResidentialContactsSearchResult = props => {
                     {data.map((item, index) => (
                         <ItemView item={item} index={index} key={index} />
                     ))}
-
-                    <div className="absolute bottom-5 right-5 flex flex-col items-center space-y-2">
-                        <button
-                            data-testid="sort-button"
-                            onClick={() => setVisibleSorting(!visibleSorting)}
-                            className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
-                        >
-                            <MdSort size={24} />
-                        </button>
-                        <button
-                            data-testid="filter-button"
-                            onClick={() => setVisible(!visible)}
-                            className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
-                        >
-                            <MdFilterList size={24} />
-                        </button>
-                    </div>
                 </div>
             ) : (
                 <div className="flex flex-1 justify-center items-center h-full">
@@ -516,48 +570,105 @@ const GlobalResidentialContactsSearchResult = props => {
                 </div>
             )}
 
+            {!visible && !visibleSorting && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: "row",
+                        position: "fixed",
+                        width: '130px',
+                        height: '35px',
+                        alignItems: "center",
+                        justifyContent: "center",
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        bottom: '70px',
+                        backgroundColor: "rgba(128,128,128, 0.8)",
+                        borderRadius: '30px',
+                        zIndex: 100,
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'
+                    }}
+                >
+                    <div
+                        onClick={() => setVisibleSorting(!visibleSorting)}
+                        style={{ paddingRight: '20px', cursor: 'pointer' }}
+                    >
+                        <MdSort color={"#ffffff"} size={26} />
+                    </div>
+                    <div style={{ height: "100%", width: '2px', backgroundColor: "#ffffff" }}></div>
+                    <div
+                        onClick={() => setVisible(!visible)}
+                        style={{ paddingLeft: '20px', cursor: 'pointer' }}
+                    >
+                        <MdFilterList
+                            color={"#ffffff"}
+                            size={26}
+                        />
+                    </div>
+                </div>
+            )}
+
+
             {/* Filter Modal/Drawer */}
             {visible && (
-                <div className="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50">
-                    <div className="w-full max-w-md bg-white h-full overflow-y-auto p-5 animate-slide-in-right">
-                        <div className="flex justify-between items-center mb-5">
-                            <h2 className="text-xl font-bold">Filter</h2>
-                            <button onClick={() => resetFilter()}>
-                                <MdRestartAlt size={24} />
-                            </button>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisible(false)}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4">
+                            <h3 className="text-lg font-bold text-black">Filter</h3>
+                            <div
+                                onClick={() => resetFilter()}
+                                className="absolute top-0 right-4 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Looking For</p>
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={lookingForArray.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndex]}
                                 onButtonPress={selectLookingForIndex}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Home type</p>
+                            <h4 className="font-semibold mb-2 text-black">Home type</h4>
                             <CustomButtonGroup
                                 buttons={homeTypeArray.map(text => ({ text }))}
                                 selectedIndices={[homeTypeIndex]}
                                 onButtonPress={selectHomeTypeIndex}
                                 vertical={true}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">BHK type</p>
+                            <h4 className="font-semibold mb-2 text-black">BHK type</h4>
                             <CustomButtonGroup
                                 buttons={bhkTypeArray.map(text => ({ text }))}
                                 selectedIndices={[bhkTypeIndex]}
                                 onButtonPress={selectBHKTypeIndex}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         {lookingForIndex === 0 && (
                             <div className="mb-5">
-                                <p className="mb-2 font-semibold">Rent Range</p>
+                                <h4 className="font-semibold mb-2 text-black">Rent Range</h4>
                                 <div className="flex justify-between mt-2">
                                     <div>
                                         <span className="text-gray-500">{numDifferentiation(minRent)}</span>
@@ -580,7 +691,7 @@ const GlobalResidentialContactsSearchResult = props => {
 
                         {lookingForIndex === 1 && (
                             <div className="mb-5">
-                                <p className="mb-2 font-semibold">Sell Range</p>
+                                <h4 className="font-semibold mb-2 text-black">Sell Range</h4>
                                 <div className="flex justify-between mt-2">
                                     <div>
                                         <span className="text-gray-500">{numDifferentiation(minSell)}</span>
@@ -602,79 +713,93 @@ const GlobalResidentialContactsSearchResult = props => {
                         )}
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Availability</p>
+                            <h4 className="font-semibold mb-2 text-black">Availability</h4>
                             <CustomButtonGroup
                                 buttons={availabilityArray.map(text => ({ text }))}
                                 selectedIndices={[availabilityIndex]}
                                 onButtonPress={selectAvailabilityIndex}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Furnishing Status</p>
+                            <h4 className="font-semibold mb-2 text-black">Furnishing Status</h4>
                             <CustomButtonGroup
                                 buttons={furnishingStatusArray.map(text => ({ text }))}
                                 selectedIndices={[furnishingIndex]}
                                 onButtonPress={selectFurnishingIndex}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
-                        <button
-                            data-testid="apply-filter-button"
-                            onClick={() => onFilter()}
-                            className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
-                        >
-                            Apply
-                        </button>
+                        <div className="mt-5">
+                            <Button title="Apply" onPress={() => onFilter()} />
+                        </div>
                     </div>
                 </div>
             )}
 
             {/* Sorting Modal/Drawer */}
             {visibleSorting && (
-                <div className="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50">
-                    <div className="w-full max-w-md bg-white h-full overflow-y-auto p-5 animate-slide-in-right">
-                        <div className="flex justify-between items-center mb-5">
-                            <h2 className="text-xl font-bold">Sort By</h2>
-                            <button onClick={() => resetSortBy()}>
-                                <MdRestartAlt size={24} />
-                            </button>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisibleSorting(false)}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4">
+                            <h3 className="text-lg font-bold text-black">Sort By</h3>
+                            <div
+                                onClick={() => resetSortBy()}
+                                className="absolute top-0 right-4 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Looking For</p>
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={lookingForArraySortBy.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndexSortBy]}
                                 onButtonPress={selectLookingForIndexSortBy}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Name</p>
+                            <h4 className="font-semibold mb-2 text-black">Sort By Name</h4>
                             <CustomButtonGroup
                                 buttons={sortByNameArray.map(text => ({ text }))}
                                 selectedIndices={[sortByNameIndex]}
                                 onButtonPress={sortByName}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Posted Date</p>
+                            <h4 className="font-semibold mb-2 text-black">Sort By Posted Date</h4>
                             <CustomButtonGroup
                                 buttons={sortByPostedDateArray.map(text => ({ text }))}
                                 selectedIndices={[sortByPostedDateIndex]}
                                 onButtonPress={sortByPostedDate}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
-
-                        <button
-                            data-testid="apply-sort-button"
-                            onClick={() => setVisibleSorting(false)}
-                            className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
-                        >
-                            Apply
-                        </button>
                     </div>
                 </div>
             )}

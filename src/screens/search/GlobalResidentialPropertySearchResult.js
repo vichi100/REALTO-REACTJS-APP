@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { connect } from "react-redux";
 import {
     MdSort,
@@ -24,7 +24,7 @@ import { useSelector, useDispatch } from 'react-redux';
 const lookingForArray = ["Rent", "Sell"];
 const homeTypeArray = ["Apartment", "Villa", "Independent House"];
 const bhkTypeArray = ["1RK", "1BHK", "2BHK", "3BHK", "4BHK", "4+BHK"];
-const availabilityArray = ["Immediate", "15 Days", "30 Days", "30+ Days"];
+const availabilityArray = ["7 Days", "15 Days", "30 Days", "60 Days", "60+ Days"];
 const furnishingStatusArray = ["Full", "Semi", "Empty"];
 const lookingForArraySortBy = ["Rent", "Sell"];
 const sortByRentArray = ["Lowest First", "Highest First"];
@@ -57,6 +57,40 @@ const GlobalResidentialPropertySearchResult = props => {
     const shouldRefresh = useSelector((state) => state.dataRefresh.shouldRefresh);
     const dispatch = useDispatch();
 
+    const scrollRef = useRef(null);
+    const lastScrollY = useRef(0);
+
+    // Save scroll position on unmount (navigating away)
+    useEffect(() => {
+        return () => {
+            sessionStorage.setItem('global_search_scroll_pos', lastScrollY.current);
+        };
+    }, []);
+
+    // Restore scroll position when data loads
+    useEffect(() => {
+        if (data && data.length > 0) {
+            // Restore scroll position with polling
+            const scrollPos = sessionStorage.getItem('global_search_scroll_pos');
+            if (scrollPos && parseInt(scrollPos) > 0) {
+                const pos = parseInt(scrollPos, 10);
+                const attemptRestore = () => {
+                    if (scrollRef.current) {
+                        if (Math.abs(scrollRef.current.scrollTop - pos) > 10) {
+                            scrollRef.current.scrollTop = pos;
+                        }
+                    }
+                };
+                requestAnimationFrame(() => {
+                    attemptRestore();
+                    setTimeout(attemptRestore, 50);
+                    setTimeout(attemptRestore, 150);
+                    setTimeout(attemptRestore, 300);
+                });
+            }
+        }
+    }, [data]);
+
     useEffect(() => {
         console.log('Screen focused - refreshing data');
         if (searchGlobalResult) {
@@ -87,7 +121,22 @@ const GlobalResidentialPropertySearchResult = props => {
         setSortByRentIndex(-1);
         setSortByAvailabilityIndex(-1);
         setSortByPostedDateIndex(-1);
-        setData(props.residentialPropertyList);
+
+        if (search) {
+            const newData = props.residentialPropertyList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.owner_details.name +
+                    item.owner_details.mobile1;
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+            setData(newData);
+        } else {
+            setData(props.globalSearchResult);
+        }
     };
 
     const sortByPostedDate = index => {
@@ -100,7 +149,20 @@ const GlobalResidentialPropertySearchResult = props => {
         setSortByRentIndex(-1);
         setSortByAvailabilityIndex(-1);
         setVisibleSorting(false);
-        let filterList = [...props.residentialPropertyList];
+        let filterList = search ? [...props.residentialPropertyList] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.owner_details.name +
+                    item.owner_details.mobile1;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(item => item.property_for === "Rent");
             if (sortByPostedDateArray[index] === "Recent First") {
@@ -149,7 +211,20 @@ const GlobalResidentialPropertySearchResult = props => {
         setSortByRentIndex(-1);
         setSortByPostedDateIndex(-1);
         setVisibleSorting(false);
-        let filterList = [...props.residentialPropertyList];
+        let filterList = search ? [...props.residentialPropertyList] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.owner_details.name +
+                    item.owner_details.mobile1;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(item => item.property_for === "Rent");
             if (sortByAvailabilityArray[index] === "Earliest First") {
@@ -200,7 +275,20 @@ const GlobalResidentialPropertySearchResult = props => {
         setSortByAvailabilityIndex(-1);
         setSortByPostedDateIndex(-1);
         setVisibleSorting(false);
-        let filterList = [...props.residentialPropertyList];
+        let filterList = search ? [...props.residentialPropertyList] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.owner_details.name +
+                    item.owner_details.mobile1;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndexSortBy === 0) {
             filterList = filterList.filter(item => item.property_for === "Rent");
             // const x = filterList;
@@ -250,7 +338,8 @@ const GlobalResidentialPropertySearchResult = props => {
         setBHKTypeIndex(-1);
         setAvailabilityIndex(-1);
         setFurnishingIndex(-1);
-        setData(props.residentialPropertyList);
+        setData(props.globalSearchResult);
+        setSearch("");
         setVisible(false);
         setMinRent(5000);
         setMaxRent(500000);
@@ -265,7 +354,20 @@ const GlobalResidentialPropertySearchResult = props => {
             setIsVisible(true);
             return;
         }
-        let filterList = [...props.residentialPropertyList];
+        let filterList = search ? [...props.residentialPropertyList] : [...props.globalSearchResult];
+        if (search) {
+            filterList = filterList.filter(function (item) {
+                const itemData =
+                    item.property_address.building_name +
+                    item.property_address.landmark_or_street +
+                    item.property_address.location_area +
+                    item.owner_details.name +
+                    item.owner_details.mobile1;
+
+                const textData = search.toUpperCase();
+                return itemData.toUpperCase().indexOf(textData) > -1;
+            });
+        }
         if (lookingForIndex > -1) {
             filterList = filterList.filter(
                 item => item.property_for === lookingForArray[lookingForIndex]
@@ -286,23 +388,29 @@ const GlobalResidentialPropertySearchResult = props => {
         if (availabilityIndex > -1) {
             let possessionDate = new Date();
             const today = new Date();
-            if (availabilityArray[availabilityIndex] === "Immediate") {
+
+            if (availabilityArray[availabilityIndex] === "7 Days") {
                 possessionDate = addDays(today, 7);
                 filterList = filterList.filter(
-                    item => possessionDate > new Date(item.rent_details.available_from)
+                    item => new Date(item.rent_details.available_from) <= possessionDate
                 );
             } else if (availabilityArray[availabilityIndex] === "15 Days") {
                 possessionDate = addDays(today, 15);
                 filterList = filterList.filter(
-                    item => possessionDate > new Date(item.rent_details.available_from)
+                    item => new Date(item.rent_details.available_from) <= possessionDate
                 );
             } else if (availabilityArray[availabilityIndex] === "30 Days") {
                 possessionDate = addDays(today, 30);
                 filterList = filterList.filter(
-                    item => possessionDate > new Date(item.rent_details.available_from)
+                    item => new Date(item.rent_details.available_from) <= possessionDate
                 );
-            } else if (availabilityArray[availabilityIndex] === "30+ Days") {
-                possessionDate = addDays(today, 30);
+            } else if (availabilityArray[availabilityIndex] === "60 Days") {
+                possessionDate = addDays(today, 60);
+                filterList = filterList.filter(
+                    item => new Date(item.rent_details.available_from) <= possessionDate
+                );
+            } else if (availabilityArray[availabilityIndex] === "60+ Days") {
+                possessionDate = addDays(today, 60);
                 filterList = filterList.filter(
                     item => new Date(item.rent_details.available_from) > possessionDate
                 );
@@ -402,7 +510,7 @@ const GlobalResidentialPropertySearchResult = props => {
             setData(newData);
             setSearch(text);
         } else {
-            setData(props.residentialPropertyList);
+            setData(props.globalSearchResult);
             setSearch(text);
         }
     };
@@ -552,39 +660,26 @@ const GlobalResidentialPropertySearchResult = props => {
                 <div className="relative flex-1">
                     <input
                         type="text"
-                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500"
+                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-400 text-black placeholder-gray-500 focus:outline-none focus:border-blue-500"
                         placeholder="GLocal Search..."
                         value={search}
                         onChange={e => searchFilterFunction(e.target.value)}
                     />
-                    <div className="absolute left-3 top-2.5 text-gray-400">
+                    <div className="absolute left-3 top-2.5 text-gray-600">
                         <MdSearch size={20} />
                     </div>
                 </div>
             </div>
 
             {data.length > 0 ? (
-                <div className="flex-1 overflow-y-auto p-2">
+                <div
+                    ref={scrollRef}
+                    onScroll={(e) => { lastScrollY.current = e.currentTarget.scrollTop; }}
+                    className="flex-1 overflow-y-auto p-2"
+                >
                     {data.map((item, index) => (
                         <ItemView item={item} index={index} key={index} />
                     ))}
-
-                    <div className="absolute bottom-5 right-5 flex flex-col items-center space-y-2">
-                        <button
-                            data-testid="sort-button"
-                            onClick={() => setVisibleSorting(!visibleSorting)}
-                            className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
-                        >
-                            <MdSort size={24} />
-                        </button>
-                        <button
-                            data-testid="filter-button"
-                            onClick={() => setVisible(!visible)}
-                            className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
-                        >
-                            <MdFilterList size={24} />
-                        </button>
-                    </div>
                 </div>
             ) : (
                 <div className="flex flex-1 justify-center items-center h-full">
@@ -592,48 +687,104 @@ const GlobalResidentialPropertySearchResult = props => {
                 </div>
             )}
 
+            {!visible && !visibleSorting && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: "row",
+                        position: "fixed",
+                        width: '130px',
+                        height: '35px',
+                        alignItems: "center",
+                        justifyContent: "center",
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        bottom: '70px',
+                        backgroundColor: "rgba(128,128,128, 0.8)",
+                        borderRadius: '30px',
+                        zIndex: 100,
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'
+                    }}
+                >
+                    <div
+                        onClick={() => setVisibleSorting(!visibleSorting)}
+                        style={{ paddingRight: '20px', cursor: 'pointer' }}
+                    >
+                        <MdSort color={"#ffffff"} size={26} />
+                    </div>
+                    <div style={{ height: "100%", width: '2px', backgroundColor: "#ffffff" }}></div>
+                    <div
+                        onClick={() => setVisible(!visible)}
+                        style={{ paddingLeft: '20px', cursor: 'pointer' }}
+                    >
+                        <MdFilterList
+                            color={"#ffffff"}
+                            size={26}
+                        />
+                    </div>
+                </div>
+            )}
+
             {/* Filter Modal/Drawer */}
             {visible && (
-                <div className="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50">
-                    <div className="w-full max-w-md bg-white h-full overflow-y-auto p-5 animate-slide-in-right">
-                        <div className="flex justify-between items-center mb-5">
-                            <h2 className="text-xl font-bold">Filter</h2>
-                            <button onClick={() => resetFilter()}>
-                                <MdRestartAlt size={24} />
-                            </button>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisible(false)}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
+                            <h3 className="text-lg font-bold text-black">Filter</h3>
+                            <div
+                                onClick={() => resetFilter()}
+                                className="absolute top-0 right-0 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Looking For</p>
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={lookingForArray.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndex]}
                                 onButtonPress={selectLookingForIndex}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Home type</p>
+                            <h4 className="font-semibold mb-2 text-black">Home type</h4>
                             <CustomButtonGroup
                                 buttons={homeTypeArray.map(text => ({ text }))}
                                 selectedIndices={[homeTypeIndex]}
                                 onButtonPress={selectHomeTypeIndex}
                                 vertical={true}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">BHK type</p>
+                            <h4 className="font-semibold mb-2 text-black">BHK type</h4>
                             <CustomButtonGroup
                                 buttons={bhkTypeArray.map(text => ({ text }))}
                                 selectedIndices={[bhkTypeIndex]}
                                 onButtonPress={selectBHKTypeIndex}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         {lookingForIndex === 0 && (
                             <div className="mb-5">
-                                <p className="mb-2 font-semibold">Rent Range</p>
+                                <h4 className="font-semibold mb-2 text-black">Rent Range</h4>
                                 <div className="flex justify-between mt-2">
                                     <div>
                                         <span className="text-gray-500">{numDifferentiation(minRent)}</span>
@@ -656,7 +807,7 @@ const GlobalResidentialPropertySearchResult = props => {
 
                         {lookingForIndex === 1 && (
                             <div className="mb-5">
-                                <p className="mb-2 font-semibold">Sell Range</p>
+                                <h4 className="font-semibold mb-2 text-black">Sell Range</h4>
                                 <div className="flex justify-between mt-2">
                                     <div>
                                         <span className="text-gray-500">{numDifferentiation(minSell)}</span>
@@ -678,88 +829,114 @@ const GlobalResidentialPropertySearchResult = props => {
                         )}
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Availability</p>
+                            <h4 className="font-semibold mb-2 text-black">Availability</h4>
                             <CustomButtonGroup
                                 buttons={availabilityArray.map(text => ({ text }))}
                                 selectedIndices={[availabilityIndex]}
                                 onButtonPress={selectAvailabilityIndex}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Furnishing Status</p>
+                            <h4 className="font-semibold mb-2 text-black">Furnishing Status</h4>
                             <CustomButtonGroup
                                 buttons={furnishingStatusArray.map(text => ({ text }))}
                                 selectedIndices={[furnishingIndex]}
                                 onButtonPress={selectFurnishingIndex}
+                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
-                        <button
-                            data-testid="apply-filter-button"
-                            onClick={() => onFilter()}
-                            className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
-                        >
-                            Apply
-                        </button>
+                        <div className="mb-5">
+                            <Button title="Apply" onPress={() => onFilter()} />
+                        </div>
                     </div>
                 </div>
             )}
 
             {/* Sorting Modal/Drawer */}
             {visibleSorting && (
-                <div className="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50">
-                    <div className="w-full max-w-md bg-white h-full overflow-y-auto p-5 animate-slide-in-right">
-                        <div className="flex justify-between items-center mb-5">
-                            <h2 className="text-xl font-bold">Sort By</h2>
-                            <button onClick={() => resetSortBy()}>
-                                <MdRestartAlt size={24} />
-                            </button>
+                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisibleSorting(false)}>
+                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
+                            <h3 className="text-lg font-bold text-black">Sort By</h3>
+                            <div
+                                onClick={() => resetSortBy()}
+                                className="absolute top-0 right-0 cursor-pointer"
+                            >
+                                <MdRestartAlt
+                                    color={"#000000"}
+                                    size={30}
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Looking For</p>
+                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={lookingForArraySortBy.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndexSortBy]}
                                 onButtonPress={selectLookingForIndexSortBy}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Rent</p>
+                            <h4 className="font-semibold mb-2 text-black">Sort By Rent</h4>
                             <CustomButtonGroup
                                 buttons={sortByRentArray.map(text => ({ text }))}
                                 selectedIndices={[sortByRentIndex]}
                                 onButtonPress={sortByRent}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Availability</p>
+                            <h4 className="font-semibold mb-2 text-black">Sort By Availability</h4>
                             <CustomButtonGroup
                                 buttons={sortByAvailabilityArray.map(text => ({ text }))}
                                 selectedIndices={[sortByAvailabilityIndex]}
                                 onButtonPress={sortByAvailability}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold">Sort By Posted Date</p>
+                            <h4 className="font-semibold mb-2 text-black">Sort By Posted Date</h4>
                             <CustomButtonGroup
                                 buttons={sortByPostedDateArray.map(text => ({ text }))}
                                 selectedIndices={[sortByPostedDateIndex]}
                                 onButtonPress={sortByPostedDate}
+                                isSegmented={true}
+                                containerStyle={{ width: '100%' }}
+                                buttonStyle={{ flex: 1, backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
+                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
+                                buttonTextStyle={{ color: '#000' }}
+                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
-
-                        <button
-                            data-testid="apply-sort-button"
-                            onClick={() => setVisibleSorting(false)}
-                            className="mt-5 w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600"
-                        >
-                            Apply
-                        </button>
                     </div>
                 </div>
             )}
