@@ -123,7 +123,7 @@ const GlobalResidentialPropertySearchResult = props => {
         setSortByPostedDateIndex(-1);
 
         if (search) {
-            const newData = props.residentialPropertyList.filter(function (item) {
+            const newData = props.globalSearchResult.filter(function (item) {
                 const itemData =
                     item.property_address.building_name +
                     item.property_address.landmark_or_street +
@@ -149,7 +149,7 @@ const GlobalResidentialPropertySearchResult = props => {
         setSortByRentIndex(-1);
         setSortByAvailabilityIndex(-1);
         setVisibleSorting(false);
-        let filterList = search ? [...props.residentialPropertyList] : [...props.globalSearchResult];
+        let filterList = search ? [...props.globalSearchResult] : [...props.globalSearchResult];
         if (search) {
             filterList = filterList.filter(function (item) {
                 const itemData =
@@ -211,7 +211,7 @@ const GlobalResidentialPropertySearchResult = props => {
         setSortByRentIndex(-1);
         setSortByPostedDateIndex(-1);
         setVisibleSorting(false);
-        let filterList = search ? [...props.residentialPropertyList] : [...props.globalSearchResult];
+        let filterList = search ? [...props.globalSearchResult] : [...props.globalSearchResult];
         if (search) {
             filterList = filterList.filter(function (item) {
                 const itemData =
@@ -265,7 +265,7 @@ const GlobalResidentialPropertySearchResult = props => {
     };
 
     const sortByRent = index => {
-        console.log("onFilter:     ", props.residentialPropertyList);
+        console.log("onFilter:     ", props.globalSearchResult);
         if (lookingForIndexSortBy === -1) {
             setErrorMessage("Looking for is missing in filter");
             setIsVisible(true);
@@ -275,7 +275,7 @@ const GlobalResidentialPropertySearchResult = props => {
         setSortByAvailabilityIndex(-1);
         setSortByPostedDateIndex(-1);
         setVisibleSorting(false);
-        let filterList = search ? [...props.residentialPropertyList] : [...props.globalSearchResult];
+        let filterList = search ? [...props.globalSearchResult] : [...props.globalSearchResult];
         if (search) {
             filterList = filterList.filter(function (item) {
                 const itemData =
@@ -348,13 +348,13 @@ const GlobalResidentialPropertySearchResult = props => {
     };
 
     const onFilter = () => {
-        console.log("onFilter:     ", props.residentialPropertyList);
+        console.log("onFilter:     ", props.globalSearchResult);
         if (lookingForIndex === -1) {
             setErrorMessage("Looking for is missing in filter");
             setIsVisible(true);
             return;
         }
-        let filterList = search ? [...props.residentialPropertyList] : [...props.globalSearchResult];
+        let filterList = search ? [...props.globalSearchResult] : [...props.globalSearchResult];
         if (search) {
             filterList = filterList.filter(function (item) {
                 const itemData =
@@ -496,13 +496,14 @@ const GlobalResidentialPropertySearchResult = props => {
 
     const searchFilterFunction = text => {
         if (text) {
-            const newData = props.residentialPropertyList.filter(function (item) {
+            const newData = props.globalSearchResult.filter(function (item) {
                 const itemData =
                     item.property_address.building_name +
                     item.property_address.landmark_or_street +
                     item.property_address.location_area +
                     item.owner_details.name +
-                    item.owner_details.mobile1;
+                    item.owner_details.mobile1 +
+                    item.property_id;
 
                 const textData = text.toUpperCase();
                 return itemData.toUpperCase().indexOf(textData) > -1;
