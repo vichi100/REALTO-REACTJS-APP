@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { MdPublic, MdViewModule, MdContacts, MdNotifications, MdAccountCircle } from "react-icons/md";
+import { MdPublic, MdViewModule, MdContacts, MdNotifications, MdPerson } from "react-icons/md";
 import ListingStack from "../stacks/ListingStack";
 import ContactsStack from "../stacks/ContactsStack";
 import NotificationStack from "../stacks/NotificationStack";
@@ -45,7 +45,7 @@ const BottomTabScreen = () => {
                 </Link>
 
                 <Link to="/profile" className="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-500">
-                    <MdAccountCircle size={26} color={isActive('/profile') ? 'rgba(148, 124, 176, 1)' : '#828282'} />
+                    <MdPerson size={26} color={isActive('/profile') ? 'rgba(148, 124, 176, 1)' : '#828282'} />
                 </Link>
             </div>
         </div>
