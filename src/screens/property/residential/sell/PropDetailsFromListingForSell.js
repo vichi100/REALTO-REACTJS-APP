@@ -49,6 +49,7 @@ const PropDetailsFromListingForSell = props => {
     }
 
     const getPropReminders = () => {
+        if (!props.userDetails) return;
         const propertyId = {
             req_user_id: props.userDetails.id,
             agent_id: props.userDetails.works_for,
@@ -102,7 +103,7 @@ const PropDetailsFromListingForSell = props => {
                             {item.property_address.formatted_address}
                         </p>
                     </div>
-                    {props.userDetails.works_for === props.userDetails.id && item.agent_id === props.userDetails.id && (
+                    {props.userDetails && props.userDetails.works_for === props.userDetails.id && item.agent_id === props.userDetails.id && (
                         <div onClick={() => gotoEmployeeList(item)} className="cursor-pointer">
                             <div className="flex flex-row items-center justify-center my-2">
                                 <MdPersonAdd size={20} color="black" />
@@ -262,7 +263,7 @@ const PropDetailsFromListingForSell = props => {
                     Loading...
                 </div>
             ) : (
-                <PropertyReminder navigation={navigation} reminderListX={reminderListX} />
+                props.userDetails && <PropertyReminder navigation={navigation} reminderListX={reminderListX} />
             )}
         </div>
     );

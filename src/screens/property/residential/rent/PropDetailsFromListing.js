@@ -6,7 +6,7 @@ import AccordionListItem from './../../../../components/AccordionListItem';
 import PropertyReminder from "../../PropertyReminder";
 import { SERVER_URL } from "./../../../../utils/Constant";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { MdPersonAdd, MdPhone, MdArrowBack } from "react-icons/md";
 
 const PropDetailsFromListing = props => {
@@ -23,15 +23,24 @@ const PropDetailsFromListing = props => {
         }
     };
 
-    let item = props.item || location.state?.item || props.route?.params?.item || props.propertyDetails;
+    const { agentId, propertyId, propertyType } = useParams();
+    const [fetchedItem, setFetchedItem] = useState(null);
+
+    let item = props.item || location.state?.item || props.route?.params?.item || props.propertyDetails || fetchedItem;
     let showHeader = props.showHeader ?? location.state?.showHeader ?? props.route?.params?.showHeader ?? true;
     let displayMatchCount = props.displayMatchCount ?? location.state?.displayMatchCount ?? props.route?.params?.displayMatchCount ?? true;
 
     const scrollViewRef = useRef();
     const [reminderListX, setReminderListX] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [reqUserId, setReqUserId] = useState(props.userDetails.works_for);
-    const [propertyAgentId, setPropertyAgentId] = useState(item.property_agent_id);
+    const [reqUserId, setReqUserId] = useState(props.userDetails?.works_for);
+
+    const [propertyAgentId, setPropertyAgentId] = useState(item?.property_agent_id);
+
+    // We expect item to be passed from parent or PublicPropertyDetails wrapper.
+    // However, if we still want to support direct usage without item? 
+    // The previous implementation added fetching, but now PublicPropertyDetails handles it.
+    // So we can remove the fetch logic here to avoid duplication and potential bugs.
 
     const scrollToAccordion = () => {
         if (scrollViewRef.current) {
@@ -52,12 +61,13 @@ const PropDetailsFromListing = props => {
     }
 
     const getPropReminders = () => {
+        if (!item || !props.userDetails) return; // Skip if no item or no user
         const propertyId = {
             req_user_id: props.userDetails.id,
             agent_id: props.userDetails.works_for,
             property_id: item.property_id
         };
-        setLoading(true);
+        // setLoading(true); // Don't block main UI for reminders
 
         axios
             .post(
@@ -68,21 +78,39 @@ const PropDetailsFromListing = props => {
                 response => {
                     if (response.data && response.data.length > 0) {
                         setReminderListX(response.data);
-                        setLoading(false);
+                        // setLoading(false);
                     } else {
                         setReminderListX([]);
-                        setLoading(false);
+                        // setLoading(false);
                     }
                 },
                 error => {
-                    setLoading(false);
+                    // setLoading(false);
                     console.log(error);
                 }
             );
     };
     useEffect(() => {
-        getPropReminders();
-    }, []);
+        if (item) {
+            getPropReminders();
+        }
+    }, [item]);
+
+    if (loading && !item) {
+        return (
+            <div className="flex flex-1 justify-center items-center h-screen bg-white">
+                Loading Property Details...
+            </div>
+        )
+    }
+
+    if (!item) {
+        return (
+            <div className="flex flex-1 justify-center items-center h-screen bg-white">
+                Property not found or link expired.
+            </div>
+        )
+    }
 
     return (
         <div className="flex flex-col h-full bg-white overflow-y-auto" ref={scrollViewRef}>
@@ -108,7 +136,7 @@ const PropDetailsFromListing = props => {
                             {item.property_address.formatted_address}
                         </p>
                     </div>
-                    {props.userDetails.works_for === props.userDetails.id && item.agent_id === props.userDetails.id && (
+                    {props.userDetails && props.userDetails.works_for === props.userDetails.id && item.agent_id === props.userDetails.id && (
                         <div onClick={() => gotoEmployeeList(item)} className="cursor-pointer">
                             <div className="flex flex-row items-center justify-center my-2">
                                 <MdPersonAdd size={20} color="black" />
@@ -275,7 +303,7 @@ const PropDetailsFromListing = props => {
                     Loading...
                 </div>
             ) : (
-                <PropertyReminder navigation={navigation} reminderListX={reminderListX} />
+                props.userDetails && <PropertyReminder navigation={navigation} reminderListX={reminderListX} />
             )}
         </div>
     );

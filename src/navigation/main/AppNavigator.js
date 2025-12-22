@@ -7,6 +7,8 @@ import OtpScreen from "./../../screens/login/OtpScreen";
 import BottomTabScreen from "../tabs/BottomTabNavigator";
 import ProfileForm from "./../../screens/profile/ProfileForm";
 import PrivacyPolicy from "./../../screens/profile/PrivacyPolicy";
+import PropDetailsFromListing from "./../../screens/property/residential/rent/PropDetailsFromListing";
+import PublicPropertyDetails from "./../../screens/property/PublicPropertyDetails";
 import { setUserDetails } from "./../../reducers/Action";
 import { connect } from "react-redux";
 
@@ -35,6 +37,7 @@ const MainScreen = (props) => {
                     <Route path="/otp" element={<OtpScreen />} />
                     <Route path="/profile-form" element={<ProfileForm />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/prop/:agentId/:propertyId/:propertyType" element={<PublicPropertyDetails />} />
                     <Route path="/*" element={userDetails ? <BottomTabScreen /> : <Login />} />
                 </Routes>
             </Router>

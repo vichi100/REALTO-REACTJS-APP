@@ -264,18 +264,58 @@ const Card = props => {
     };
 
     const onShare = async (item) => {
+        const url = WEB_APP_URL + "/prop/" + item.agent_id + "/" + item.property_id + "/" + item.property_type.toLowerCase();
         if (navigator.share) {
             try {
                 await navigator.share({
                     title: 'Property Details',
                     text: 'Check out this property',
-                    url: WEB_APP_URL + "/prop/" + item.agent_id + "/" + item.property_id + "/" + item.property_type.toLowerCase(),
+                    url: url,
                 });
             } catch (error) {
                 console.log('Error sharing:', error);
             }
         } else {
-            alert('Web Share API not supported');
+            // Try modern clipboard API first
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url)
+                    .then(() => alert("Link copied to clipboard!"))
+                    .catch((err) => {
+                        console.error('Clipboard API failed, trying fallback:', err);
+                        copyToClipboardFallback(url);
+                    });
+            } else {
+                // Direct fallback
+                copyToClipboardFallback(url);
+            }
+        }
+    };
+
+    const copyToClipboardFallback = (text) => {
+        try {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+
+            // Ensure textArea is part of the DOM but hidden
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            textArea.style.top = "0";
+            document.body.appendChild(textArea);
+
+            textArea.focus();
+            textArea.select();
+
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textArea);
+
+            if (successful) {
+                alert("Link copied to clipboard!");
+            } else {
+                alert("Failed to copy link to clipboard");
+            }
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+            alert("Failed to copy link to clipboard");
         }
     };
 
