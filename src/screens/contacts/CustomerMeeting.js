@@ -102,8 +102,8 @@ const CustomerMeeting = props => {
 
     const checkHourValidation = hour => {
         setIsVisible(false);
-        if (parseInt(hour) > 24 || parseInt(hour) < 0) {
-            setErrorMessage("Hours can between 0 to 24 only");
+        if (parseInt(hour) > 12 || parseInt(hour) < 0) {
+            setErrorMessage("Hours can between 0 to 12 only");
             setHour(hour);
             setIsVisible(true);
             return;
@@ -426,52 +426,62 @@ const CustomerMeeting = props => {
             />
 
             {modalVisible && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-                    <div className="bg-white rounded-2xl p-8 items-center shadow-lg flex flex-col m-5">
-                        <div className="flex flex-row gap-4 items-center">
+                <div style={styles.centeredView1}>
+                    <div style={styles.modalView}>
+                        <div style={{ flexDirection: "row", display: 'flex', gap: 15, alignItems: 'center' }}>
                             <input
                                 type="number"
                                 value={hour}
                                 onChange={e => checkHourValidation(e.target.value)}
-                                className="w-20 h-20 text-center text-base rounded border border-gray-500 bg-white outline-none text-black"
+                                style={styles.timeInput}
                                 placeholder="Hour*"
                             />
                             <input
                                 type="number"
                                 value={minutes}
                                 onChange={e => checkMinutesValidation(e.target.value)}
-                                className="w-20 h-20 text-center text-base rounded border border-gray-500 bg-white outline-none text-black"
+                                style={styles.timeInput}
                                 placeholder="Minute*"
                             />
 
                             <CustomButtonGroup
-                                selectedButtonStyle={{ backgroundColor: "#00BFFF" }}
+                                selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)', borderColor: 'rgba(0, 163, 108, .2)' }}
                                 onButtonPress={(index) => selectAMPMIndex(index)}
                                 selectedIndices={[ampmIndex]}
                                 buttons={ampmArray}
-                                buttonTextStyle={{ textAlign: "center" }}
-                                selectedButtonTextStyle={{ color: "#fff" }}
-                                containerStyle={{ borderRadius: 5, width: 70, height: 82, borderColor: '#757575', borderWidth: 1 }}
+                                buttonStyle={{ backgroundColor: '#fff', border: '1px solid #ccc', borderRadius: '5px', padding: '10px 0', width: '100%', marginBottom: '4px' }}
+                                buttonTextStyle={{ textAlign: "center", color: "#333", fontSize: "16px", fontWeight: "500" }}
+                                selectedButtonTextStyle={{ color: "#000", fontSize: "16px", fontWeight: "500" }}
+                                containerStyle={{ width: 80 }}
                                 vertical={true}
                             />
                         </div>
 
-                        <div className="flex flex-row mt-6 mb-1 justify-end w-full">
+                        <div
+                            style={{
+                                flexDirection: "row",
+                                marginTop: 25,
+                                marginBottom: 5,
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                                width: '100%'
+                            }}
+                        >
                             <div
-                                className="mx-2 p-2 bg-transparent cursor-pointer"
+                                style={styles.textButton}
                                 onClick={() => {
                                     setModalVisible(false);
                                 }}
                             >
-                                <span className="text-black font-medium text-center text-base">Cancel</span>
+                                <span style={styles.textButtonLabel}>Cancel</span>
                             </div>
                             <div
-                                className="mx-2 p-2 bg-transparent cursor-pointer"
+                                style={styles.textButton}
                                 onClick={() => {
                                     onApply();
                                 }}
                             >
-                                <span className="text-black font-medium text-center text-base">Apply</span>
+                                <span style={styles.textButtonLabel}>Apply</span>
                             </div>
                         </div>
                     </div>
@@ -479,6 +489,75 @@ const CustomerMeeting = props => {
             )}
         </div>
     );
+};
+
+const styles = {
+    container: {
+        flex: 1,
+        marginTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    propSubSection: {
+        marginBottom: 20
+    },
+    input: {
+        width: '100%',
+        height: '45px',
+        padding: 10,
+        borderRadius: 5,
+        border: '1px solid #ccc',
+        fontSize: 16,
+        backgroundColor: '#fff',
+        boxSizing: 'border-box'
+    },
+    centeredView1: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        zIndex: 1000,
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    modalView: {
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        boxShadow: "0px 2px 4px rgba(0,0,0,0.25)",
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    timeInput: {
+        width: 80,
+        height: 80,
+        textAlign: 'center',
+        fontSize: 16,
+        borderRadius: 5,
+        border: '1px solid #757575',
+        backgroundColor: "#ffffff",
+        outline: 'none',
+        color: '#000'
+    },
+    textButton: {
+        marginLeft: 10,
+        marginRight: 10,
+        padding: 10,
+        backgroundColor: 'transparent',
+        cursor: 'pointer'
+    },
+    textButtonLabel: {
+        color: "#000",
+        fontWeight: "500",
+        textAlign: "center",
+        fontSize: 16
+    }
 };
 
 const mapStateToProps = state => ({
