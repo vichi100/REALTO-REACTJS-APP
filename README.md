@@ -1,5 +1,12 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+
+make network change in these two files:
+1) next.config.ts
+2) .env.local
+
+npm run dev.  to start application
+
 ## Getting Started
 
 First, run the development server:
