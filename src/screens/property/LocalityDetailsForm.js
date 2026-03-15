@@ -91,37 +91,6 @@ const LocalityDetailsForm = props => {
     const onSelectPlace = (data) => {
         console.log("onSelectPlace data: ", data);
         if (data && data.value && data.value.place_id) {
-            // Fetch details using the place_id if needed, or use the data provided
-            // The library usually returns basic info. For geometry, we might need to fetch details.
-            // However, react-google-places-autocomplete usually handles this if configured.
-            // Let's assume 'data' contains the necessary info or we need to use the 'selectProps' to get details.
-            // Actually, the library's onChange returns { label, value } usually.
-            // Let's check how we want to structure gLocation.
-
-            // Wait, the previous code had onSelectPlace(data, details).
-            // The standard react-google-places-autocomplete (if it's the one I think) works differently than the RN one.
-            // Let's use the standard prop 'selectProps' -> 'onChange'.
-
-            // Let's look at the documentation or standard usage.
-            // Usually: <GooglePlacesAutocomplete apiKey="..." selectProps={{ onChange: (val) => ... }} />
-
-            // But wait, I need to get geometry (lat/lng).
-            // The library 'react-google-places-autocomplete' is a wrapper around 'react-select'.
-            // It has a prop 'autocompletionRequest' and 'onLoadFailed'.
-
-            // Let's try to use it simply first.
-            // The 'data' in onChange is the selected option.
-            // To get details (geometry), we might need to use the Google Maps Geocoding API or Places Details API separately if the library doesn't provide it automatically in the option.
-            // OR, maybe I should use 'react-places-autocomplete' (different lib) or just use the raw API.
-            // But I installed 'react-google-places-autocomplete'.
-
-            // Let's stick to the plan. I will use the component.
-            // I need to fetch details.
-            // Actually, the library might have a helper or I might need to do it manually.
-
-            // Let's assume for now we just get the description and place_id.
-            // I'll update gLocation with what I have.
-
             const gLocation = {
                 location: {
                     type: "Point",
@@ -132,29 +101,31 @@ const LocalityDetailsForm = props => {
                 place_id: data.value.place_id
             }
             setGLocation(gLocation);
+        } else if (data === null) {
+            setGLocation(null);
         }
     }
 
     return (
-        <div className="flex flex-col h-full bg-gray-50 overflow-y-auto">
-            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+        <div className="flex flex-col h-full bg-neutral-800 overflow-y-auto">
+            <div className="bg-neutral-900 px-4 py-3 flex items-center shadow-sm border-b border-neutral-700">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    className="mr-3 p-1 rounded-full hover:bg-neutral-800 focus:outline-none"
                     aria-label="Go back"
                 >
-                    <MdArrowBack className="text-gray-700 text-xl" />
+                    <MdArrowBack className="text-gray-300 text-xl" />
                 </button>
-                <h1 className="text-lg font-medium text-gray-900">Locality Details</h1>
+                <h1 className="text-lg font-medium text-gray-100">Locality Details</h1>
             </div>
             <div className="p-5">
-                <p className="text-gray-600 text-lg font-medium mb-5">Enter property address details</p>
+                <p className="text-gray-400 text-lg font-medium mb-5">Enter property address details</p>
 
                 <div className="mb-6">
                     <label className={`block text-xs font-medium mb-1 ${focusedField === 'city' ? 'text-teal-500' : 'text-gray-500'}`}>City*</label>
                     <input
                         type="text"
-                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'city' ? 'border-teal-500' : 'border-gray-200'}`}
+                        className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'city' ? 'border-teal-500' : 'border-neutral-700'}`}
                         value={city}
                         onChange={e => setCity(e.target.value)}
                         onFocus={() => { setIsVisible(false); setFocusedField('city'); }}
@@ -169,6 +140,7 @@ const LocalityDetailsForm = props => {
                             apiKey={GOOGLE_PLACES_API_KEY}
                             selectProps={{
                                 placeholder: 'Add multiple locations within city',
+                                isClearable: true,
                                 onChange: (val) => onSelectPlace(val),
                                 onFocus: () => setFocusedField('location'),
                                 onBlur: () => setFocusedField(null),
@@ -176,41 +148,55 @@ const LocalityDetailsForm = props => {
                                     input: (provided) => ({
                                         ...provided,
                                         height: '38px',
-                                        color: '#111827',
+                                        color: 'var(--foreground)',
                                         margin: 0,
                                         padding: 0,
+                                    }),
+                                    menu: (provided) => ({
+                                        ...provided,
+                                        zIndex: 1000,
+                                        backgroundColor: '#1e1e1e',
+                                        boxShadow: '0px 2px 8px rgba(0,0,0,0.5)',
                                     }),
                                     control: (provided, state) => ({
                                         ...provided,
                                         backgroundColor: 'transparent',
                                         border: 'none',
-                                        borderBottom: state.isFocused ? '2px solid #14b8a6' : '2px solid #e5e7eb',
+                                        borderBottom: state.isFocused ? '2px solid #14b8a6' : '2px solid rgba(255,255,255,0.2)',
                                         borderRadius: 0,
                                         boxShadow: 'none',
                                         padding: '0',
                                         minHeight: 'auto',
                                         '&:hover': {
-                                            borderColor: state.isFocused ? '#14b8a6' : '#e5e7eb',
+                                            borderColor: state.isFocused ? '#14b8a6' : 'rgba(255,255,255,0.2)',
                                         },
                                     }),
                                     valueContainer: (provided) => ({
                                         ...provided,
                                         padding: '4px 0',
                                     }),
+                                    clearIndicator: (provided) => ({
+                                        ...provided,
+                                        color: 'rgba(255,255,255,0.4)',
+                                        padding: '0 8px',
+                                        '&:hover': {
+                                            color: 'var(--foreground)',
+                                        },
+                                    }),
                                     placeholder: (provided) => ({
                                         ...provided,
-                                        color: '#9ca3af',
+                                        color: 'rgba(255,255,255,0.4)',
                                     }),
                                     indicatorSeparator: () => ({ display: 'none' }),
                                     dropdownIndicator: () => ({ display: 'none' }),
                                     option: (provided, state) => ({
                                         ...provided,
-                                        color: '#374151', // text-gray-700
-                                        backgroundColor: state.isFocused ? '#e2e8f0' : '#ffffff',
+                                        color: 'var(--foreground)',
+                                        backgroundColor: state.isFocused ? 'rgba(255,255,255,0.1)' : '#1e1e1e',
                                     }),
                                     singleValue: (provided) => ({
                                         ...provided,
-                                        color: '#111827',
+                                        color: 'var(--foreground)',
                                         margin: 0,
                                         padding: 0,
                                     }),
@@ -225,7 +211,7 @@ const LocalityDetailsForm = props => {
                         <label className={`block text-xs font-medium mb-1 ${focusedField === 'flatNumber' ? 'text-teal-500' : 'text-gray-500'}`}>Flat No and Wing*</label>
                         <input
                             type="text"
-                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'flatNumber' ? 'border-teal-500' : 'border-gray-200'}`}
+                            className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'flatNumber' ? 'border-teal-500' : 'border-neutral-700'}`}
                             value={flatNumber}
                             onChange={e => setFlatNumber(e.target.value)}
                             onFocus={() => { setIsVisible(false); setFocusedField('flatNumber'); }}
@@ -238,7 +224,7 @@ const LocalityDetailsForm = props => {
                     <label className={`block text-xs font-medium mb-1 ${focusedField === 'buildingName' ? 'text-teal-500' : 'text-gray-500'}`}>Building Name / Society*</label>
                     <input
                         type="text"
-                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'buildingName' ? 'border-teal-500' : 'border-gray-200'}`}
+                        className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'buildingName' ? 'border-teal-500' : 'border-neutral-700'}`}
                         value={buildingName}
                         onChange={e => setBuildingName(e.target.value)}
                         onFocus={() => { setIsVisible(false); setFocusedField('buildingName'); }}
@@ -250,7 +236,7 @@ const LocalityDetailsForm = props => {
                     <label className={`block text-xs font-medium mb-1 ${focusedField === 'landmark' ? 'text-teal-500' : 'text-gray-500'}`}>Street / Landmark*</label>
                     <input
                         type="text"
-                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'landmark' ? 'border-teal-500' : 'border-gray-200'}`}
+                        className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'landmark' ? 'border-teal-500' : 'border-neutral-700'}`}
                         value={landmark}
                         onChange={e => setLandmark(e.target.value)}
                         onFocus={() => { setIsVisible(false); setFocusedField('landmark'); }}

@@ -283,12 +283,12 @@ const Meeting = props => {
             </div>
             <div style={styles.container}>
                 <div>
-                    <p style={{ marginTop: 10, marginBottom: 10, fontSize: 16, color: '#000', fontWeight: '500' }}>
+                    <p style={{ marginTop: 10, marginBottom: 10, fontSize: 16, color: 'var(--foreground)', fontWeight: '500' }}>
                         Create a call/visiting schedule to show property to client and get
                         reminder on time
                     </p>
                     <div style={{ height: 1, backgroundColor: '#ccc', width: '100%' }} />
-                    <p style={{ marginTop: 20, marginBottom: 15, fontSize: 16, color: '#000', fontWeight: '500' }}>
+                    <p style={{ marginTop: 20, marginBottom: 15, fontSize: 16, color: 'var(--foreground)', fontWeight: '500' }}>
                         Reminder For ?
                     </p>
 
@@ -298,10 +298,10 @@ const Meeting = props => {
                             accessibilityLabelId="reminder_type"
                             selectedIndices={[AppConstant.REMINDER_FOR_OPTION.findIndex(option => option.text === remiderType)]}
                             isMultiSelect={false}
-                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                             selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                            buttonTextStyle={{ color: '#000' }}
-                            selectedButtonTextStyle={{ color: '#000' }}
+                            buttonTextStyle={{ color: 'var(--foreground)' }}
+                            selectedButtonTextStyle={{ color: 'var(--foreground)' }}
                             onButtonPress={(index, button) => {
                                 setReminderType(button.text);
                             }}
@@ -335,7 +335,7 @@ const Meeting = props => {
                                     value={clientName}
                                     onChange={e => setClientName(e.target.value)}
                                     onFocus={() => setIsVisible(false)}
-                                    className="w-full bg-gray-50 text-base text-gray-900 border-b-2 border-gray-200 focus:outline-none py-1 px-2"
+                                    className="w-full bg-neutral-800 text-base text-gray-100 border-b-2 border-neutral-700 focus:outline-none py-1 px-2"
                                 />
                             </div>
 
@@ -347,15 +347,15 @@ const Meeting = props => {
                                     onChange={e => setClientMobile(e.target.value)}
                                     onFocus={() => setIsVisible(false)}
                                     type="text"
-                                    className="w-full bg-gray-50 text-base text-gray-900 border-b-2 border-gray-200 focus:outline-none py-1 px-2"
+                                    className="w-full bg-neutral-800 text-base text-gray-100 border-b-2 border-neutral-700 focus:outline-none py-1 px-2"
                                 />
                             </div>
                         </div>
                     ) : null}
                     <div className="flex flex-row mt-5 gap-2">
                         <div className="flex-1 w-full min-w-0">
-                            <label className="block mb-1 text-gray-800 font-medium">Date*</label>
-                            <div className="relative w-full bg-white rounded border border-gray-400 h-12 flex items-center">
+                            <label className="block mb-1 text-gray-200 font-medium">Date*</label>
+                            <div className="relative w-full bg-neutral-900 rounded border border-gray-400 h-12 flex items-center">
                                 <style>
                                     {`
                                         input[type="date"]::-webkit-calendar-picker-indicator {
@@ -363,7 +363,7 @@ const Meeting = props => {
                                             -webkit-appearance: none;
                                         }
                                         input[type="date"] {
-                                            color-scheme: light;
+                                            color-scheme: dark;
                                         }
                                     `}
                                 </style>
@@ -404,7 +404,7 @@ const Meeting = props => {
                                         }
                                     }}
                                     onKeyDown={(e) => e.preventDefault()}
-                                    className={`w-full h-full p-2.5 rounded bg-transparent outline-none text-base ${!newDate ? 'text-transparent' : 'text-black'}`}
+                                    className={`w-full h-full p-2.5 rounded bg-transparent outline-none text-base ${!newDate ? 'text-transparent' : 'text-white'}`}
                                 />
                                 <div className="absolute right-3 top-3 pointer-events-none">
                                     <MdDateRange color="#757575" size={20} />
@@ -412,13 +412,13 @@ const Meeting = props => {
                             </div>
                         </div>
                         <div className="flex-1 w-full min-w-0">
-                            <label className="block mb-1 text-gray-800 font-medium">Time*</label>
+                            <label className="block mb-1 text-gray-200 font-medium">Time*</label>
                             <input
                                 readOnly
                                 value={newTime}
                                 onClick={() => setModalVisibleTemp(true)}
                                 placeholder="Select Time"
-                                className="w-full h-12 p-2.5 rounded border border-gray-400 bg-white text-black outline-none text-base"
+                                className="w-full h-12 p-2.5 rounded border border-gray-400 bg-neutral-900 text-white outline-none text-base"
                             />
                         </div>
                     </div>
@@ -482,9 +482,9 @@ const Meeting = props => {
                                     onButtonPress={(index) => selectAMPMIndex(index)}
                                     selectedIndices={[ampmIndex]}
                                     buttons={ampmArray}
-                                    buttonStyle={{ backgroundColor: '#fff', border: '1px solid #ccc', borderRadius: '5px', padding: '10px 0', width: '100%', marginBottom: '4px' }}
+                                    buttonStyle={{ backgroundColor: '#fff', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '5px', padding: '10px 0', width: '100%', marginBottom: '4px' }}
                                     buttonTextStyle={{ textAlign: "center", color: "#333", fontSize: "16px", fontWeight: "500" }}
-                                    selectedButtonTextStyle={{ color: "#000", fontSize: "16px", fontWeight: "500" }}
+                                    selectedButtonTextStyle={{ color: "var(--foreground)", fontSize: "16px", fontWeight: "500" }}
                                     containerStyle={{ width: 80 }}
                                     vertical={true}
                                 />
@@ -542,7 +542,7 @@ const styles = {
         height: '45px',
         padding: 10,
         borderRadius: 5,
-        border: '1px solid #ccc',
+        border: '1px solid rgba(255, 255, 255, 0.15)',
         fontSize: 16,
         backgroundColor: '#fff',
         boxSizing: 'border-box'
@@ -560,7 +560,7 @@ const styles = {
         alignItems: "center",
     },
     modalView: {
-        backgroundColor: "white",
+        backgroundColor: "var(--card)",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -575,9 +575,9 @@ const styles = {
         fontSize: 16,
         borderRadius: 5,
         border: '1px solid #757575',
-        backgroundColor: "#ffffff",
+        backgroundColor: "var(--background)",
         outline: 'none',
-        color: '#000'
+        color: 'var(--foreground)'
     },
     textButton: {
         marginLeft: 10,
@@ -587,7 +587,7 @@ const styles = {
         cursor: 'pointer'
     },
     textButtonLabel: {
-        color: "#000",
+        color: "var(--foreground)",
         fontWeight: "500",
         textAlign: "center",
         fontSize: 16

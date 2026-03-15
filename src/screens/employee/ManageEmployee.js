@@ -247,20 +247,20 @@ const ManageEmployee = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-white">
-            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm sticky top-0 z-10">
+        <div className="flex flex-col h-full bg-neutral-900">
+            <div className="bg-neutral-900 border-b border-neutral-700 flex items-center p-4 shadow-sm sticky top-0 z-10">
                 <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
                     <MdArrowBack size={24} color="#333" />
                 </div>
-                <h1 className="text-lg font-semibold text-gray-800">{editEmp ? "Update Employee" : "Add Employee"}</h1>
+                <h1 className="text-lg font-semibold text-gray-200">{editEmp ? "Update Employee" : "Add Employee"}</h1>
             </div>
             <div className="flex-1 overflow-y-auto">
                 <div className="p-4">
-                    <p className="mb-4 text-sm font-medium text-gray-700">
+                    <p className="mb-4 text-sm font-medium text-gray-300">
                         Add employees so they can have access/edit rights for your
                         properties listing, you can any time change any employees rights
                     </p>
-                    <div className="h-px w-full bg-gray-200 mb-6" />
+                    <div className="h-px w-full bg-neutral-700 mb-6" />
 
                     <div className="mb-4">
                         <label className="block mb-1 text-xs text-gray-500 font-bold">Employee Name*</label>
@@ -268,7 +268,7 @@ const ManageEmployee = props => {
                             value={employeeName}
                             onChange={e => setEmployeeName(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            className="w-full py-2 border-b border-gray-300 focus:border-teal-500 outline-none text-lg text-gray-800 transition-colors bg-transparent placeholder-gray-400"
+                            className="w-full py-2 border-b border-neutral-600 focus:border-teal-500 outline-none text-lg text-gray-200 transition-colors bg-transparent placeholder-gray-400"
                             placeholder="Enter employee name"
                         />
                     </div>
@@ -280,12 +280,12 @@ const ManageEmployee = props => {
                             onChange={e => setEmployeeMobile(e.target.value)}
                             onFocus={() => setIsVisible(false)}
                             type="tel"
-                            className="w-full py-2 border-b border-gray-300 focus:border-teal-500 outline-none text-lg text-gray-800 transition-colors bg-transparent placeholder-gray-400"
+                            className="w-full py-2 border-b border-neutral-600 focus:border-teal-500 outline-none text-lg text-gray-200 transition-colors bg-transparent placeholder-gray-400"
                             placeholder="+91"
                         />
                     </div>
 
-                    <p className="mb-3 text-sm font-semibold text-gray-800">
+                    <p className="mb-3 text-sm font-semibold text-gray-200">
                         Grant Access Rights
                     </p>
                     <div className="mb-6">
@@ -293,16 +293,16 @@ const ManageEmployee = props => {
                             <div className="flex flex-row flex-wrap items-center gap-x-8 gap-y-4 mb-4">
                                 {/* View Toggle - Always On */}
                                 <label className="flex items-center cursor-pointer">
-                                    <span className="text-sm font-medium text-gray-700 mr-3 w-12">View</span>
+                                    <span className="text-sm font-medium text-gray-300 mr-3 w-12">View</span>
                                     <div className="relative inline-flex items-center cursor-pointer">
                                         <input type="checkbox" className="sr-only peer" checked={true} readOnly />
-                                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                        <div className="w-11 h-6 bg-neutral-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-neutral-900 after:border-neutral-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                                     </div>
                                 </label>
 
                                 {/* Add Toggle */}
                                 <label className="flex items-center cursor-pointer">
-                                    <span className="text-sm font-medium text-gray-700 mr-3 w-12">Add</span>
+                                    <span className="text-sm font-medium text-gray-300 mr-3 w-12">Add</span>
                                     <div className="relative inline-flex items-center cursor-pointer">
                                         <input
                                             type="checkbox"
@@ -310,13 +310,13 @@ const ManageEmployee = props => {
                                             checked={isAddEnabled}
                                             onChange={toggleAddSwitch}
                                         />
-                                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
+                                        <div className="w-11 h-6 bg-neutral-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-neutral-900 after:border-neutral-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
                                     </div>
                                 </label>
 
                                 {/* Master Toggle */}
                                 <label className="flex items-center cursor-pointer">
-                                    <span className="text-sm font-medium text-gray-700 mr-3 w-12">Master</span>
+                                    <span className="text-sm font-medium text-gray-300 mr-3 w-12">Master</span>
                                     <div className="relative inline-flex items-center cursor-pointer">
                                         <input
                                             type="checkbox"
@@ -324,7 +324,7 @@ const ManageEmployee = props => {
                                             checked={isMasterEnabled}
                                             onChange={toggleMasterSwitch}
                                         />
-                                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-400"></div>
+                                        <div className="w-11 h-6 bg-neutral-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-neutral-900 after:border-neutral-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-400"></div>
                                     </div>
                                 </label>
                             </div>
@@ -332,7 +332,7 @@ const ManageEmployee = props => {
                             {/* Admin Toggle - Separate Row */}
                             <div className="flex flex-row items-center gap-4 mb-4">
                                 <label className="flex items-center cursor-pointer">
-                                    <span className="text-sm font-medium text-gray-700 mr-3 w-12">Admin</span>
+                                    <span className="text-sm font-medium text-gray-300 mr-3 w-12">Admin</span>
                                     <div className="relative inline-flex items-center cursor-pointer">
                                         <input
                                             type="checkbox"
@@ -340,18 +340,18 @@ const ManageEmployee = props => {
                                             checked={isAdminEnabled}
                                             onChange={toggleAdminSwitch}
                                         />
-                                        <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
+                                        <div className="w-11 h-6 bg-neutral-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-neutral-900 after:border-neutral-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
                                     </div>
                                 </label>
                             </div>
 
-                            <div className="space-y-2 text-sm text-gray-600 p-0">
+                            <div className="space-y-2 text-sm text-gray-400 p-0">
                                 <p>
-                                    <span className="font-bold text-gray-900">View:</span> Enable View will allow employee to see the properties and customers which are assigned to him.
+                                    <span className="font-bold text-gray-100">View:</span> Enable View will allow employee to see the properties and customers which are assigned to him.
                                 </p>
                                 {isAddEnabled && (
                                     <p>
-                                        <span className="font-bold text-gray-900">Add:</span> Enable Add will allow employee to add the new properties and customers. Also will allow employee to see the properties and customers which are assigned to him.
+                                        <span className="font-bold text-gray-100">Add:</span> Enable Add will allow employee to add the new properties and customers. Also will allow employee to see the properties and customers which are assigned to him.
                                     </p>
                                 )}
                                 {isMasterEnabled && (

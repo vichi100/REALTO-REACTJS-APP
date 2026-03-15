@@ -356,8 +356,8 @@ const ContactResidentialRentCard = props => {
         card: {
             flex: 1,
             justifyContent: "center",
-            backgroundColor: "white",
-            borderColor: "#ffffff",
+            backgroundColor: "transparent",
+            borderColor: "transparent",
             marginTop: 2,
             position: 'relative',
             overflow: 'hidden'
@@ -365,21 +365,21 @@ const ContactResidentialRentCard = props => {
         title: {
             fontSize: 16,
             fontWeight: "600",
-            color: "#000"
+            color: "var(--foreground)"
         },
         subTitle: {
             fontSize: 14,
             fontWeight: "400",
-            color: "#000"
+            color: "var(--foreground)"
         },
         subTitleA: {
             fontSize: 14,
             fontWeight: "500",
-            color: "#000",
+            color: "var(--foreground)",
             marginTop: 5
         },
         detailsContainer: {
-            borderBottomColor: "#bdbdbd",
+            borderBottomColor: "var(--border)",
             borderBottomWidth: 1,
             marginBottom: 3
         },
@@ -392,12 +392,12 @@ const ContactResidentialRentCard = props => {
         subDetailsTitle: {
             fontSize: 12,
             fontWeight: "400",
-            color: "#000"
+            color: "var(--muted-foreground)"
         },
         subDetailsValue: {
             fontSize: 14,
             fontWeight: "600",
-            color: "#000"
+            color: "var(--foreground)"
         },
         verticalLine: {
             height: "100%",
@@ -406,7 +406,7 @@ const ContactResidentialRentCard = props => {
         },
         Main_Sliding_Drawer_Container: {
             flexDirection: "row",
-            backgroundColor: "#616161",
+            backgroundColor: "var(--card)",
             height: "100%",
             display: 'flex',
             alignItems: 'center'
@@ -423,7 +423,7 @@ const ContactResidentialRentCard = props => {
         modalView: {
             margin: 20,
             height: 250,
-            backgroundColor: "white",
+            backgroundColor: "var(--background)",
             borderRadius: 20,
             padding: 35,
             alignItems: "center",
@@ -438,7 +438,7 @@ const ContactResidentialRentCard = props => {
             marginRight: 10,
             cursor: 'pointer',
             padding: '10px 20px',
-            backgroundColor: '#f0f0f0',
+            backgroundColor: 'var(--border)',
             borderRadius: 5
         },
         cancelButton: {
@@ -446,13 +446,13 @@ const ContactResidentialRentCard = props => {
             marginRight: 30,
             cursor: 'pointer',
             padding: '10px 20px',
-            backgroundColor: '#f0f0f0',
+            backgroundColor: 'var(--border)',
             borderRadius: 5
         },
         modalText: {
             marginBottom: 15,
             textAlign: "center",
-            color: "#000"
+            color: "var(--foreground)"
         },
         drawer: {
             position: "absolute",
@@ -466,7 +466,7 @@ const ContactResidentialRentCard = props => {
         textStyle: {
             fontWeight: 'bold',
             textAlign: 'center',
-            color: "#000"
+            color: "var(--foreground)"
         },
         MainContainer: {
             position: 'relative'
@@ -485,22 +485,12 @@ const ContactResidentialRentCard = props => {
             }}>
                 <div style={styles.MainContainer}>
                     <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: "row",
-                            alignItems: "flex-start",
-                            // paddingRight: 16,
-                            // paddingLeft: 16,
-                            // paddingBottom: 16,
-                            // paddingTop: 16,
-                            width: "100%",
-                            backgroundColor: iscustomerClosed ? "rgba(128, 128, 128, 0.2)" : "#ffffff",
-                        }}
+                        className={iscustomerClosed ? "bg-black/20 text-foreground w-full flex flex-row items-start" : "bg-card text-foreground w-full flex flex-row items-start"}
                     >
                         {displayMatchCount === true && (
                             <div className="w-10 h-24 relative flex-shrink-0 cursor-pointer" onClick={(e) => { e.stopPropagation(); getMatched(item); }}>
                                 <div style={{ backgroundColor: 'rgba(246, 158, 6, 0.9)', position: 'absolute', left: 0, top: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 30, height: 20, zIndex: 10 }}>
-                                    <span style={{ fontSize: 15, fontWeight: '500', color: '#000' }}>{item.match_count ? item.match_count : 0}</span>
+                                    <span style={{ fontSize: 15, fontWeight: '500', color: "var(--foreground)" }}>{item.match_count ? item.match_count : 0}</span>
                                 </div>
                                 <div style={{
                                     position: 'absolute', left: 0, top: 20, transform: 'rotate(270deg)',
@@ -508,7 +498,7 @@ const ContactResidentialRentCard = props => {
                                     width: 70, height: 30, padding: 0, marginLeft: -20, marginTop: 20, marginBottom: 15
                                 }}
                                 >
-                                    <span style={{ fontSize: 14, fontWeight: '300', color: '#000' }}
+                                    <span style={{ fontSize: 14, fontWeight: '300', color: "var(--foreground)" }}
 
                                     >Match</span>
                                 </div>
@@ -542,8 +532,8 @@ const ContactResidentialRentCard = props => {
                                         radius={35}
                                         holeRadius={25}  // Adjust this to change the hole size
                                         strokeWidth={60}
-                                        colors={['rgba(38, 208, 109, 0.8)', 'rgba(211, 61, 24, 0.6)']}
-                                        textColor="#333"
+                                        colors={['#22c55e', '#f97316']}
+                                        textColor="var(--foreground)"
                                         textSize={14}
                                         showPercentage={true}
                                     />
@@ -555,7 +545,7 @@ const ContactResidentialRentCard = props => {
                             {!displayMatchPercent &&
                                 <div style={{
                                     width: 60, height: 60, display: 'flex', justifyContent: 'center', alignItems: 'center',
-                                    color: "rgba(105,105,105, .9)",
+                                    color: "var(--foreground)",
                                     fontSize: 24, fontWeight: 'bold'
                                 }}>
                                     {item.customer_details.name && item.customer_details.name.slice(0, 1)}
@@ -571,21 +561,21 @@ const ContactResidentialRentCard = props => {
                             }}
                         >
                             <div style={{ paddingLeft: 20, paddingTop: 10 }}>
-                                <p style={styles.title}
+                                <p style={{ ...styles.title, color: "var(--foreground)" }}
                                 >
                                     {item.customer_details.name}
                                 </p>
                                 <div style={{ display: 'flex', flexDirection: "row", alignItems: "center", marginTop: 5 }}>
                                     {/* <MaterialCommunityIcons name="phone-dial" color={"#0f1a20"} size={20} /> */}
                                     <span>📞</span>
-                                    <p style={{ ...styles.subTitle, paddingLeft: 10, color: "#0f1a20" }}
+                                    <p style={{ ...styles.subTitle, paddingLeft: 10, color: "var(--foreground)" }}
                                     >
                                         {item.customer_details.mobile1?.startsWith("+91")
                                             ? item.customer_details.mobile1
                                             : `+91 ${item.customer_details.mobile1}`}
                                     </p>
                                 </div>
-                                <p style={{ paddingRight: 10, color: "#0f1a20", marginTop: 5, marginBottom: 5 }}
+                                <p style={{ paddingRight: 10, color: "var(--foreground)", marginTop: 5, marginBottom: 5 }}
                                 >
                                     Reference id: {item.customer_id?.slice(-6)}
                                 </p>
@@ -751,19 +741,16 @@ const ContactResidentialRentCard = props => {
                     )}
                 </div>
                 <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: "row",
-                        paddingLeft: 30, backgroundColor: "rgba(220,220,220, .2)"
-                    }}>
+                    className="flex flex-row pl-[30px] bg-black/5 dark:bg-white/5"
+                >
                     {/* <Ionicons
           name="location-sharp"
           color={"#000"}
           size={16}
           style={{ marginLeft: 10, marginTop: 10 }}
         /> */}
-                    <span style={{ marginLeft: 10, marginTop: 10, color: "#000" }}><VscLocation /></span>
-                    <p style={{ ...styles.subTitleA, marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
+                    <span className="ml-[10px] mt-[10px] text-foreground"><VscLocation /></span>
+                    <p className="ml-[10px] mr-[10px] pt-[5px] pb-[5px] text-foreground text-sm font-light">
                         {item.customer_locality.location_area.map(item => item.main_text).join(', ')}
                     </p>
                 </div>
@@ -772,8 +759,8 @@ const ContactResidentialRentCard = props => {
                     <div onClick={(e) => { e.stopPropagation(); gotoEmployeeList(item); }} style={{ cursor: 'pointer', width: '100%' }}>
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 10, marginTop: 10, marginLeft: 20 }}>
                             {/* <Feather name="user-plus" size={20} color="black" /> */}
-                            <MdPersonAdd size={18} className="text-black mr-2" />
-                            <p style={{ fontSize: 14, fontWeight: '400', color: '#000', marginLeft: 0, marginRight: 0 }}>
+                            <MdPersonAdd size={18} className="text-foreground mr-2" />
+                            <p style={{ fontSize: 14, fontWeight: '400', color: 'var(--foreground)', marginLeft: 0, marginRight: 0 }}>
                                 {Array.isArray(item.assigned_to_employee_name) && item.assigned_to_employee_name.length > 0
                                     ? item.assigned_to_employee_name.join(", ")
                                     : "No Employees Assigned"}
@@ -783,21 +770,21 @@ const ContactResidentialRentCard = props => {
 
                 <div style={styles.detailsContainer}>
                     <div style={styles.details}>
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
-                            <p style={{ ...styles.subDetailsValue, marginTop: 5 }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid var(--border)' }}>
+                            <p style={{ ...styles.subDetailsValue, marginTop: 5, color: "var(--foreground)" }}>
                                 {item.customer_property_details.bhk_type}
                             </p>
                             {/* <p style={styles.subDetailsTitle}>Prop Type</p> */}
                         </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
-                            <p style={styles.subDetailsValue}>
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid var(--border)' }}>
+                            <p style={{ ...styles.subDetailsValue, color: "var(--foreground)" }}>
                                 {numDifferentiation(item.customer_rent_details.expected_rent)}
                             </p>
-                            <p style={styles.subDetailsTitle}>Rent</p>
+                            <p style={{ ...styles.subDetailsTitle, color: "var(--muted-foreground)" }}>Rent</p>
                         </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #d0d0d0' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center', borderRight: '1px solid var(--border)' }}>
                             <p style={styles.subDetailsValue}>
                                 {numDifferentiation(item.customer_rent_details.expected_deposit)}
                             </p>
@@ -805,10 +792,10 @@ const ContactResidentialRentCard = props => {
                         </div>
 
                         <div style={{ display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={styles.subDetailsValue}>
+                            <span style={{ ...styles.subDetailsValue, color: "var(--foreground)" }}>
                                 {item.customer_property_details.furnishing_status}
                             </span>
-                            <span style={styles.subDetailsTitle}>Furnishing</span>
+                            <span style={{ ...styles.subDetailsTitle, color: "var(--muted-foreground)" }}>Furnishing</span>
                         </div>
                     </div>
                 </div>
@@ -817,8 +804,8 @@ const ContactResidentialRentCard = props => {
             {/* Modal */}
             {modalVisible && (
                 <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={(e) => { e.stopPropagation(); }}>
-                    <div className="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full mx-4" onClick={(e) => { e.stopPropagation(); }}>
-                        <p className="text-lg font-medium text-center mb-6 text-black">
+                    <div className="bg-neutral-900 p-6 rounded-2xl shadow-lg max-w-sm w-full mx-4" onClick={(e) => { e.stopPropagation(); }}>
+                        <p className="text-lg font-medium text-center mb-6 text-white">
                             {iscustomerClosed ? "Do you want to open this customer?" : "Did you win deal for this customer?"}
                         </p>
 
@@ -837,7 +824,7 @@ const ContactResidentialRentCard = props => {
                                         Yes
                                     </button>
                                     <button
-                                        className="px-8 py-2 border border-gray-300 text-black rounded-md font-medium hover:bg-gray-50"
+                                        className="px-8 py-2 border border-neutral-600 text-white rounded-md font-medium hover:bg-neutral-800"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             setDealWin("No");
@@ -849,7 +836,7 @@ const ContactResidentialRentCard = props => {
                                     </button>
                                 </div>
 
-                                <p className="text-sm text-gray-600 text-center mb-8 leading-relaxed">
+                                <p className="text-sm text-gray-400 text-center mb-8 leading-relaxed">
                                     You can close or delete customer. Close will keep customer in list for 10 days, Delete will remove permanently.
                                 </p>
                             </>
@@ -858,7 +845,7 @@ const ContactResidentialRentCard = props => {
                         <div className="flex justify-end items-center space-x-8">
                             {canDelete && (
                                 <button
-                                    className="text-black font-medium hover:text-gray-700"
+                                    className="text-white font-medium hover:text-gray-300"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         deleteMe(item);
@@ -869,7 +856,7 @@ const ContactResidentialRentCard = props => {
                                 </button>
                             )}
                             <button
-                                className="text-black font-medium hover:text-gray-700"
+                                className="text-white font-medium hover:text-gray-300"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     closeMe(item);
@@ -879,7 +866,7 @@ const ContactResidentialRentCard = props => {
                                 {iscustomerClosed ? "Open" : "Close"}
                             </button>
                             <button
-                                className="text-black font-medium hover:text-gray-700"
+                                className="text-white font-medium hover:text-gray-300"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setModalVisible(false);

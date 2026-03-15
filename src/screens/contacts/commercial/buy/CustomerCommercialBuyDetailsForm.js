@@ -105,10 +105,10 @@ const CustomerCommercialBuyDetailsForm = props => {
     // };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.container}>
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'var(--foreground)', fontWeight: '500' }}>
                         {expectedSellPrice.trim() === "" ? "Expected Buy Price*" : numDifferentiation(expectedSellPrice) + " Expected Buy Price"}
                     </label>
                     <input
@@ -121,15 +121,15 @@ const CustomerCommercialBuyDetailsForm = props => {
                             width: '100%',
                             padding: 10,
                             borderRadius: 4,
-                            border: '1px solid #ccc',
-                            backgroundColor: "#f9f9f9",
-                            color: '#000000'
+                            border: '1px solid rgba(255, 255, 255, 0.15)',
+                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            color: 'var(--foreground)'
                         }}
                     />
                 </div>
 
                 <div style={styles.inputContainerStyle}>
-                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000', fontWeight: '500' }}>
+                    <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'var(--foreground)', fontWeight: '500' }}>
                         Required From (DD/MM/YYYY) *
                     </label>
                     <input
@@ -143,24 +143,24 @@ const CustomerCommercialBuyDetailsForm = props => {
                             width: '100%',
                             padding: 10,
                             borderRadius: 4,
-                            border: '1px solid #ccc',
-                            backgroundColor: "#f9f9f9",
-                            color: '#000000'
+                            border: '1px solid rgba(255, 255, 255, 0.15)',
+                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            color: 'var(--foreground)'
                         }}
                     />
                 </div>
 
-                <p style={{ color: '#000000', fontWeight: 'bold' }}>Negotiable*</p>
+                <p style={{ color: 'var(--foreground)', fontWeight: 'bold' }}>Negotiable*</p>
                 <div style={styles.propSubSection}>
                     <CustomButtonGroup
                         buttons={AppConstant.NEGOTIABLE_OPTION}
                         accessibilityLabelId="negotiable"
                         selectedIndices={[AppConstant.NEGOTIABLE_OPTION.findIndex(option => option.text === negotiable)]}
                         isMultiSelect={false}
-                        buttonStyle={{ backgroundColor: '#fff' }}
+                        buttonStyle={{ backgroundColor: 'var(--background)' }}
                         selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                        buttonTextStyle={{ color: '#000' }}
-                        selectedButtonTextStyle={{ color: '#000' }}
+                        buttonTextStyle={{ color: 'var(--foreground)' }}
+                        selectedButtonTextStyle={{ color: 'var(--foreground)' }}
                         onButtonPress={(index, button) => {
                             console.log(`Button pressed: ${button.text} (Index: ${index})`);
                             setNegotiable(button.text);

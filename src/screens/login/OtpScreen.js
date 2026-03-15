@@ -111,16 +111,16 @@ const OtpScreen = (props) => {
             <div className="text-white text-lg font-medium animate-pulse">Loading...</div>
         </div>
     ) : (
-        <div className="h-screen w-screen flex flex-col items-center justify-center bg-white">
+        <div className="h-screen w-screen flex flex-col items-center justify-center bg-neutral-900">
 
             <div className="w-full max-w-sm px-6 flex flex-col items-center gap-10">
                 {/* Header Section */}
                 <div className="text-center">
-                    <h2 className="text-3xl font-light text-gray-900 mb-2">Verification</h2>
+                    <h2 className="text-3xl font-light text-gray-100 mb-2">Verification</h2>
                     <p className="text-gray-500 text-sm mb-1">
                         Enter the code sent to
                     </p>
-                    <p className="text-black font-medium text-lg">
+                    <p className="text-white font-medium text-lg">
                         {props.countryCode + ' ' + props.userMobileNumber}
                     </p>
                 </div>
@@ -141,7 +141,7 @@ const OtpScreen = (props) => {
                             <input
                                 {...props}
                                 style={{ width: '3rem' }} // Override width for spacing
-                                className="h-14 mx-1 text-2xl text-center font-normal text-gray-900 bg-transparent border-b-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
+                                className="h-14 mx-1 text-2xl text-center font-normal text-gray-100 bg-transparent border-b-2 border-neutral-600 focus:border-black focus:outline-none transition-colors"
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 type="tel"
@@ -161,7 +161,7 @@ const OtpScreen = (props) => {
                 {/* Skip Button */}
                 <button
                     onClick={() => onSkip()}
-                    className="text-gray-400 hover:text-black text-sm font-medium transition-colors"
+                    className="text-gray-400 hover:text-white text-sm font-medium transition-colors"
                 >
                     Skip for now
                 </button>

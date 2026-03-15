@@ -29,7 +29,7 @@ const MainScreen = (props) => {
     if (!mounted) return null;
 
     return (
-        <div className="flex flex-col h-screen bg-white">
+        <div className="flex flex-col h-screen bg-neutral-900">
             <Router>
                 <Routes>
                     <Route path="/" element={<Login />} />

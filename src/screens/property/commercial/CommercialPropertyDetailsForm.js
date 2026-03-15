@@ -80,19 +80,19 @@ const PropertyDetails = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-50 overflow-y-auto">
-            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+        <div className="flex flex-col h-full bg-neutral-800 overflow-y-auto">
+            <div className="bg-neutral-900 px-4 py-3 flex items-center shadow-sm border-b border-neutral-700">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    className="mr-3 p-1 rounded-full hover:bg-neutral-800 focus:outline-none"
                     aria-label="Go back"
                 >
-                    <MdArrowBack className="text-gray-700 text-xl" />
+                    <MdArrowBack className="text-gray-300 text-xl" />
                 </button>
-                <h1 className="text-lg font-medium text-gray-900">Commercial Property Details</h1>
+                <h1 className="text-lg font-medium text-gray-100">Commercial Property Details</h1>
             </div>
             <div className="p-5">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Property Type*</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Property Type*</label>
                 <div className="mb-4">
                     <CustomButtonGroup
                         buttons={AppConstant.COMMERCIAL_PROPERTY_TYPE_OPTION}
@@ -100,13 +100,13 @@ const PropertyDetails = props => {
                         selectedIndices={[AppConstant.COMMERCIAL_PROPERTY_TYPE_OPTION.findIndex(option => option.text === propertyType)]}
                         isMultiSelect={false}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         onButtonPress={(index, button) => {
                             setPropertyType(button.text);
                         }}
                     />
                 </div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Building Type*</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Building Type*</label>
                 <div className="mb-4">
                     <CustomButtonGroup
                         buttons={AppConstant.COMMERCIAL_PROPERTY_BUILDING_TYPE_OPTION}
@@ -114,21 +114,21 @@ const PropertyDetails = props => {
                         selectedIndices={[AppConstant.COMMERCIAL_PROPERTY_BUILDING_TYPE_OPTION.findIndex(option => option.text === buildingType)]}
                         isMultiSelect={false}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         onButtonPress={(index, button) => {
                             setBuildingType(button.text);
                         }}
                     />
                 </div>
 
-                <label className="block text-sm font-medium text-gray-700 mb-2">Ideal For*(Multi Select)</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Ideal For*(Multi Select)</label>
                 <div className="mb-4">
                     <CustomButtonGroup
                         buttons={AppConstant.COMMERCIAL_PROPERTY_IDEAL_FOR_OPTION}
                         accessibilityLabelId="commercial_property_ideal_for"
                         isMultiSelect={true}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         selectedIndices={selectIdealForList.map((item) =>
                             AppConstant.COMMERCIAL_PROPERTY_IDEAL_FOR_OPTION.findIndex((option) => option.text === item)
                         )}
@@ -138,7 +138,7 @@ const PropertyDetails = props => {
                     />
                 </div>
 
-                <label className="block text-sm font-medium text-gray-700 mb-2">Parkings</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Parkings</label>
                 <div className="mb-4">
                     <CustomButtonGroup
                         buttons={AppConstant.COMMERCIAL_PARKING_OPTION}
@@ -146,13 +146,13 @@ const PropertyDetails = props => {
                         selectedIndices={[AppConstant.COMMERCIAL_PARKING_OPTION.findIndex(option => option.text === parkingType)]}
                         isMultiSelect={false}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         onButtonPress={(index, button) => {
                             setParkingType(button.text);
                         }}
                     />
                 </div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Property Age*</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Property Age*</label>
                 <div className="mb-4">
                     <CustomButtonGroup
                         buttons={AppConstant.PROPERTY_AGE_OPTION}
@@ -160,13 +160,13 @@ const PropertyDetails = props => {
                         selectedIndices={[AppConstant.PROPERTY_AGE_OPTION.findIndex(option => option.text === propertyAge)]}
                         isMultiSelect={false}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         onButtonPress={(index, button) => {
                             setPropertyAge(button.text);
                         }}
                     />
                 </div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Power Backup*</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Power Backup*</label>
                 <div className="mb-4">
                     <CustomButtonGroup
                         buttons={AppConstant.POWER_BACKUP_OPTION}
@@ -174,21 +174,21 @@ const PropertyDetails = props => {
                         selectedIndices={[AppConstant.POWER_BACKUP_OPTION.findIndex(option => option.text === powerBackup)]}
                         isMultiSelect={false}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         onButtonPress={(index, button) => {
                             setPowerBackup(button.text);
                         }}
                     />
                 </div>
                 <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Property Size*</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Property Size*</label>
                     <input
                         type="number"
                         placeholder="Property Size"
                         value={propertySize}
                         onChange={e => setPropertySize(e.target.value)}
                         onFocus={() => setIsVisible(false)}
-                        className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 focus:outline-none focus:border-teal-500"
+                        className="w-full p-2 border border-neutral-600 rounded bg-neutral-900 text-gray-100 focus:outline-none focus:border-teal-500"
                     />
                 </div>
 

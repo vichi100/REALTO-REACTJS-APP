@@ -122,18 +122,18 @@ const ContactRentDetailsForm = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#F9FAFB", minHeight: "100vh" }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)", minHeight: "100vh" }}>
             {/* Header */}
             <div style={styles.headerContainer}>
                 <div style={styles.backButtonContainer} onClick={() => navigate(-1)}>
-                    <MdArrowBack size={24} color="#000000" />
+                    <MdArrowBack size={24} color="var(--foreground)" />
                 </div>
                 <div style={styles.headerTitleContainer}>
                     <p style={styles.headerTitle}>Rent Details</p>
                 </div>
             </div>
             <div style={styles.container}>
-                <p style={{ marginBottom: 30, color: '#000000' }}>
+                <p style={{ marginBottom: 30, color: 'var(--foreground)' }}>
                     Provide rent details what max customer can afford
                 </p>
 
@@ -147,7 +147,7 @@ const ContactRentDetailsForm = props => {
                         onChange={e => setExpectedRent(e.target.value)}
                         onFocus={() => { setIsVisible(false); setFocusedField('rent'); }}
                         onBlur={() => setFocusedField(null)}
-                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'rent' ? 'border-teal-500' : 'border-gray-200'}`}
+                        className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'rent' ? 'border-teal-500' : 'border-neutral-700'}`}
                     />
                 </div>
 
@@ -161,7 +161,7 @@ const ContactRentDetailsForm = props => {
                         onChange={e => setExpectedDeposit(e.target.value)}
                         onFocus={() => { setIsVisible(false); setFocusedField('deposit'); }}
                         onBlur={() => setFocusedField(null)}
-                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'deposit' ? 'border-teal-500' : 'border-gray-200'}`}
+                        className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'deposit' ? 'border-teal-500' : 'border-neutral-700'}`}
                     />
                 </div>
 
@@ -169,7 +169,7 @@ const ContactRentDetailsForm = props => {
                     <label className={`block text-xs font-medium mb-1 ${focusedField === 'date' ? 'text-teal-500' : 'text-gray-500'}`}>
                         Required From (DD/MM/YYYY) *
                     </label>
-                    <div className={`relative w-full border-b-2 py-1 transition-colors flex items-center ${focusedField === 'date' ? 'border-teal-500' : 'border-gray-200'}`}>
+                    <div className={`relative w-full border-b-2 py-1 transition-colors flex items-center ${focusedField === 'date' ? 'border-teal-500' : 'border-neutral-700'}`}>
                         <style>
                             {`
                                 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -177,7 +177,7 @@ const ContactRentDetailsForm = props => {
                                     -webkit-appearance: none;
                                 }
                                 input[type="date"] {
-                                    color-scheme: light;
+                                    color-scheme: dark;
                                 }
                             `}
                         </style>
@@ -210,7 +210,7 @@ const ContactRentDetailsForm = props => {
                             onFocus={() => { setIsVisible(false); setFocusedField('date'); }}
                             onBlur={() => setFocusedField(null)}
                             onKeyDown={(e) => e.preventDefault()}
-                            className={`w-full bg-transparent text-base text-gray-900 focus:outline-none z-10 relative ${!newDate ? 'text-transparent' : 'text-gray-900'}`}
+                            className={`w-full bg-transparent text-base text-gray-100 focus:outline-none z-10 relative ${!newDate ? 'text-transparent' : 'text-gray-100'}`}
                         />
 
                         <div className="absolute right-0 pointer-events-none text-gray-500">
@@ -224,25 +224,25 @@ const ContactRentDetailsForm = props => {
                     "Residential" ? (
                     <div>
                         <div className="mb-6">
-                            <p className="text-sm font-medium text-gray-700 mb-3">Type of Tenants*</p>
+                            <p className="text-sm font-medium text-gray-300 mb-3">Type of Tenants*</p>
                             <CustomButtonGroup
                                 buttons={preferredTenantsArray}
                                 selectedIndices={[preferredTenantsIndex]}
                                 isMultiSelect={false}
                                 onButtonPress={(index) => selectedPreferredTenantsIndex(index)}
                                 containerStyle={{ gap: '12px' }}
-                                buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                             />
                         </div>
                         <div className="mb-6">
-                            <p className="text-sm font-medium text-gray-700 mb-3">Tenants is veg / non veg*</p>
+                            <p className="text-sm font-medium text-gray-300 mb-3">Tenants is veg / non veg*</p>
                             <CustomButtonGroup
                                 buttons={nonvegAllowedArray}
                                 selectedIndices={[nonvegAllowedIndex]}
                                 isMultiSelect={false}
                                 onButtonPress={(index) => selectNonvegAllowedIndex(index)}
                                 containerStyle={{ gap: '12px' }}
-                                buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                             />
                         </div>
                     </div>
@@ -268,8 +268,8 @@ const styles = {
         flexDirection: 'row',
         alignItems: 'center',
         padding: '10px 15px',
-        borderBottom: '1px solid #e0e0e0',
-        backgroundColor: '#fff',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        backgroundColor: 'var(--background)',
         position: 'sticky',
         top: 0,
         zIndex: 1000,
@@ -286,7 +286,7 @@ const styles = {
     headerTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#1a1a1a',
+        color: 'var(--foreground)',
         margin: 0,
     },
     container: {

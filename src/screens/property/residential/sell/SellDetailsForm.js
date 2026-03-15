@@ -52,17 +52,17 @@ const SellDetails = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
+        <div className="flex flex-col h-full bg-neutral-800 overflow-y-auto">
             <div className="p-5">
                 <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                    <label className="block text-gray-300 text-sm font-bold mb-2">
                         {expectedSellPrice.trim() === ""
                             ? "Expected Sell Price*"
                             : numDifferentiation(expectedSellPrice) + " Expected Sell Price"}
                     </label>
                     <input
                         type="number"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Expected Sell Price*"
                         value={expectedSellPrice}
                         onChange={e => setExpectedSellPrice(e.target.value)}
@@ -71,14 +71,14 @@ const SellDetails = props => {
                 </div>
 
                 <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                    <label className="block text-gray-300 text-sm font-bold mb-2">
                         {maintenanceCharge.trim() === ""
                             ? "Maintenance Charge/Month*"
                             : numDifferentiation(maintenanceCharge) + " Maintenance Charge/Month"}
                     </label>
                     <input
                         type="number"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Maintenance Charge"
                         value={maintenanceCharge}
                         onChange={e => setMaintenanceCharge(e.target.value)}
@@ -87,12 +87,12 @@ const SellDetails = props => {
                 </div>
 
                 <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                    <label className="block text-gray-300 text-sm font-bold mb-2">
                         Available From *
                     </label>
                     <input
                         type="date"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Available From *"
                         value={newDate}
                         onChange={e => setNewDate(e.target.value)}
@@ -101,7 +101,7 @@ const SellDetails = props => {
                 </div>
 
                 <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                    <label className="block text-gray-300 text-sm font-bold mb-2">
                         Negotiable*
                     </label>
                     <div className="mt-2 mb-4">

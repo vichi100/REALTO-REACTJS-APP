@@ -33,18 +33,18 @@ const ListingTopTab = () => {
     return (
         <div className="flex flex-col h-full">
             {isProfileContext && (
-                <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm">
+                <div className="bg-neutral-900 border-b border-neutral-700 flex items-center p-4 shadow-sm">
                     <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
                         <MdArrowBack size={24} color="#333" />
                     </div>
-                    <h1 className="text-lg font-semibold text-gray-800">Property Listing</h1>
+                    <h1 className="text-lg font-semibold text-gray-200">Property Listing</h1>
                 </div>
             )}
-            <div className="flex bg-white border-b border-gray-200">
+            <div className="flex bg-neutral-900 border-b border-neutral-700">
                 <Link
                     to={`${basePath}/residential`}
                     state={location.state}
-                    className={`flex-1 py-3 text-center font-medium text-xs md:text-sm flex items-center justify-center gap-2 ${currentPath === 'residential' || currentPath === 'Listing' || currentPath === '' ? 'text-black border-b-2 border-green-600' : 'text-gray-500'
+                    className={`flex-1 py-3 text-center font-medium text-xs md:text-sm flex items-center justify-center gap-2 ${currentPath === 'residential' || currentPath === 'Listing' || currentPath === '' ? 'text-white border-b-2 border-green-600' : 'text-gray-500'
                         }`}
                 >
                     <MdHome size={20} />
@@ -53,7 +53,7 @@ const ListingTopTab = () => {
                 <Link
                     to={`${basePath}/commercial`}
                     state={location.state}
-                    className={`flex-1 py-3 text-center font-medium text-xs md:text-sm flex items-center justify-center gap-2 ${currentPath === 'commercial' ? 'text-black border-b-2 border-green-600' : 'text-gray-500'
+                    className={`flex-1 py-3 text-center font-medium text-xs md:text-sm flex items-center justify-center gap-2 ${currentPath === 'commercial' ? 'text-white border-b-2 border-green-600' : 'text-gray-500'
                         }`}
                 >
                     <MdBusiness size={20} />

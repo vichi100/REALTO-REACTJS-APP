@@ -18,7 +18,7 @@ const Avatar = ({ title, size, avatarStyle, titleStyle }) => (
             width: size,
             height: size,
             borderRadius: size / 2,
-            backgroundColor: "#ffffff",
+            backgroundColor: "var(--background)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -138,18 +138,18 @@ const AddNewCustomerRentResidentialFinalDetails = props => {
     };
 
     return customerFinalDetails ? (
-        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)" }}>
             {/* Header */}
             <div style={styles.headerContainer}>
                 <div style={styles.backButtonContainer} onClick={() => navigate(-1)}>
-                    <MdArrowBack size={24} color="#000000" />
+                    <MdArrowBack size={24} color="var(--foreground)" />
                 </div>
                 <div style={styles.headerTitleContainer}>
                     <p style={styles.headerTitle}>Preview Customer</p>
                 </div>
             </div>
             {/* Gray Header with Avatar */}
-            <div className="bg-gray-300 p-4 flex items-start">
+            <div className="bg-neutral-700 p-4 flex items-start">
                 <Avatar
                     square
                     size={80}
@@ -163,101 +163,101 @@ const AddNewCustomerRentResidentialFinalDetails = props => {
                     }}
                 />
                 <div className="ml-4 pt-2">
-                    <span className="block text-lg font-bold text-black">
+                    <span className="block text-lg font-bold text-white">
                         {customerFinalDetails.customer_details.name}
                     </span>
-                    <span className="block text-sm text-gray-800">
+                    <span className="block text-sm text-gray-200">
                         {customerFinalDetails.customer_details.mobile1}
                     </span>
-                    <span className="block text-sm text-gray-800">
+                    <span className="block text-sm text-gray-200">
                         {customerFinalDetails.customer_details.address}
                     </span>
                 </div>
             </div>
 
             {/* Stats Row with Vertical Dividers */}
-            <div className="bg-gray-200 p-4 border-t border-gray-300">
+            <div className="bg-neutral-700 p-4 border-t border-neutral-600">
                 <div className="flex justify-between items-center">
                     <div className="text-center">
-                        <p className="text-base font-bold text-black">
+                        <p className="text-base font-bold text-white">
                             {customerFinalDetails.customer_property_details.bhk_type}
                         </p>
-                        <p className="text-xs text-gray-600">Looking For</p>
+                        <p className="text-xs text-gray-400">Looking For</p>
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-2 self-center"></div>
                     <div className="text-center">
-                        <p className="text-base font-bold text-black">
+                        <p className="text-base font-bold text-white">
                             {numDifferentiation(
                                 customerFinalDetails.customer_rent_details.expected_rent
                             )}
                         </p>
-                        <p className="text-xs text-gray-600">
+                        <p className="text-xs text-gray-400">
                             Max {customerFinalDetails.customer_locality.property_for}
                         </p>
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-2 self-center"></div>
                     <div className="text-center">
-                        <p className="text-base font-bold text-black">
+                        <p className="text-base font-bold text-white">
                             {numDifferentiation(
                                 customerFinalDetails.customer_rent_details.expected_deposit
                             )}
                         </p>
-                        <p className="text-xs text-gray-600">Max Deposit</p>
+                        <p className="text-xs text-gray-400">Max Deposit</p>
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-2 self-center"></div>
                     <div className="text-center">
-                        <p className="text-base font-bold text-black">
+                        <p className="text-base font-bold text-white">
                             {customerFinalDetails.customer_property_details.furnishing_status}
                         </p>
-                        <p className="text-xs text-gray-600">Furnishing</p>
+                        <p className="text-xs text-gray-400">Furnishing</p>
                     </div>
                 </div>
             </div>
 
             {/* Details Section */}
-            <div className="mt-2 bg-white px-4 pt-4">
+            <div className="mt-2 bg-neutral-900 px-4 pt-4">
                 <div className="pb-2 border-b border-gray-100">
-                    <h3 className="text-sm font-medium text-gray-900">Details</h3>
+                    <h3 className="text-sm font-medium text-gray-100">Details</h3>
                 </div>
                 <div className="flex justify-between py-4">
                     <div className="flex flex-col space-y-4 w-1/2">
                         <div>
-                            <p className="text-base font-bold text-black">
+                            <p className="text-base font-bold text-white">
                                 {customerFinalDetails.customer_locality.city}
                             </p>
-                            <p className="text-xs text-gray-600">City</p>
+                            <p className="text-xs text-gray-400">City</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-black">
+                            <p className="text-base font-bold text-white">
                                 {location.join(', ')}
                             </p>
-                            <p className="text-xs text-gray-600">Locations</p>
+                            <p className="text-xs text-gray-400">Locations</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-black">
+                            <p className="text-base font-bold text-white">
                                 {possessionDate}
                             </p>
-                            <p className="text-xs text-gray-600">Possession</p>
+                            <p className="text-xs text-gray-400">Possession</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-black">
+                            <p className="text-base font-bold text-white">
                                 {customerFinalDetails.customer_locality.preferred_tenants}
                             </p>
-                            <p className="text-xs text-gray-600">Tenant Type</p>
+                            <p className="text-xs text-gray-400">Tenant Type</p>
                         </div>
                     </div>
                     <div className="flex flex-col space-y-4 w-1/2 items-end text-right">
                         <div>
-                            <p className="text-base font-bold text-black">
+                            <p className="text-base font-bold text-white">
                                 {customerFinalDetails.customer_property_details.parking_type}
                             </p>
-                            <p className="text-xs text-gray-600">Parking</p>
+                            <p className="text-xs text-gray-400">Parking</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-black">
+                            <p className="text-base font-bold text-white">
                                 {customerFinalDetails.customer_property_details.lift}
                             </p>
-                            <p className="text-xs text-gray-600">Lift Mandatory</p>
+                            <p className="text-xs text-gray-400">Lift Mandatory</p>
                         </div>
                     </div>
                 </div>
@@ -320,7 +320,7 @@ const styles = {
         alignItems: 'center',
         padding: '10px 15px',
         borderBottom: '1px solid #e0e0e0',
-        backgroundColor: '#fff',
+        backgroundColor: 'var(--background)',
         position: 'sticky',
         top: 0,
         zIndex: 1000,
@@ -342,7 +342,7 @@ const styles = {
     },
     card: {
         boxShadow: '0px 2px 4px rgba(0,0,0,0.25)',
-        backgroundColor: "#ffffff"
+        backgroundColor: "var(--background)"
     },
     cardImage: {
         alignSelf: "stretch",
@@ -354,18 +354,18 @@ const styles = {
     title: {
         fontSize: 16,
         fontWeight: "600",
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     subTitle: {
         fontSize: 14,
         fontWeight: "400",
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     detailsContainer: {
         height: 60,
         borderTopWidth: 1,
         borderTopColor: "#000000",
-        backgroundColor: "#ffffff"
+        backgroundColor: "var(--background)"
     },
     details: {
         padding: 10,
@@ -379,17 +379,17 @@ const styles = {
     subDetailsTitle: {
         fontSize: 12,
         fontWeight: "400",
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     subDetailsValue: {
         fontSize: 14,
         fontWeight: "600",
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     verticalLine: {
         height: "70%",
         width: 1,
-        backgroundColor: "#000000"
+        backgroundColor: "var(--foreground)"
     },
     horizontalLine: {
         borderBottomColor: "#000000",
@@ -400,7 +400,7 @@ const styles = {
     },
     overviewContainer: {
         boxShadow: '0px 2px 4px rgba(0,0,0,0.25)',
-        backgroundColor: "#ffffff"
+        backgroundColor: "var(--background)"
     },
     overview: {
         padding: 10
@@ -446,7 +446,7 @@ const styles = {
     modalView: {
         margin: 20,
         height: 150,
-        backgroundColor: "white",
+        backgroundColor: "var(--card)",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -461,7 +461,7 @@ const styles = {
         marginRight: 10,
         cursor: 'pointer',
         padding: '10px 20px',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
         borderRadius: 5
     },
     cancelButton: {
@@ -469,7 +469,7 @@ const styles = {
         marginRight: 30,
         cursor: 'pointer',
         padding: '10px 20px',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
         borderRadius: 5
     },
     modalText: {

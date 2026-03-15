@@ -3,6 +3,8 @@ import { setUserDetails } from "./../../reducers/Action";
 import axios from "axios";
 import { connect } from "react-redux";
 import { SERVER_URL } from "./../../utils/Constant";
+import { FaHome, FaBuilding, FaUsers, FaArrowUp, FaArrowDown, FaTag, FaKey } from "react-icons/fa";
+import { MdTrendingUp, MdTrendingDown } from "react-icons/md";
 
 const Home = props => {
     const { navigation } = props;
@@ -106,164 +108,162 @@ const Home = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: props.disableScroll ? 'auto' : '100vh', overflowY: props.disableScroll ? 'visible' : 'auto' }}>
-            {isLoading ? <div
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: 'rgba(245,245,245, .4)',
-                    display: 'flex',
-                    height: '100%'
-                }}
-            >
-                <div>Loading...</div>
-            </div> :
-
-                <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                    <div style={styles.container}>
-                        <div
-                            style={{
-                                ...styles.componentContainer,
-                                marginLeft: 10,
-                                marginRight: 10
-                            }}
-                        >
-                            <div style={styles.bar}>
-                                <p style={styles.barHeader}>Residential Listing Summary</p>
+        <div style={{ flex: 1, backgroundColor: "var(--background)", height: props.disableScroll ? 'auto' : '100vh', overflowY: props.disableScroll ? 'visible' : 'auto' }}>
+            {isLoading ? (
+                <div className="flex-1 flex justify-center items-center h-full">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
+                </div>
+            ) : (
+                <div className="flex-1">
+                    <div className="w-full px-4 py-8">
+                        {/* Listing Summary Section */}
+                        <div className="mb-8">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="p-2 rounded-xl bg-teal-500/10 dark:bg-teal-500/20">
+                                    <FaHome className="text-2xl text-teal-500" />
+                                </div>
+                                <h2 className="text-xl font-bold text-foreground">Residential Listings</h2>
                             </div>
-                            <div
-                                style={{
-                                    ...styles.cardContainer,
-                                    marginLeft: 10,
-                                    marginRight: 10
-                                }}
-                            >
-                                <div style={styles.card}>
-                                    <div style={{ alignItems: "center", justifyContent: "center", display: 'flex' }}>
-                                        <p style={{ ...styles.cardHeader1, textAlign: "center" }}>Properties</p>
-                                    </div>
-                                    <div style={styles.cardContent}>
-                                        <div style={styles.innerCard}>
-                                            <p style={{ color: '#000000' }}>{listingData?.residentialPropertyRentCount || 0}</p>
-                                            <p style={{ color: '#000000' }}>Rent</p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* Properties Card */}
+                                <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Properties</span>
+                                        <div className="p-2 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 text-blue-500">
+                                            <FaTag className="text-lg" />
                                         </div>
-                                        <div style={styles.space} />
-                                        <div style={styles.innerCard}>
-                                            <p style={{ color: '#000000' }}>{listingData?.residentialPropertySellCount || 0}</p>
-                                            <p style={{ color: '#000000' }}>Sell</p>
+                                    </div>
+                                    <div className="flex items-center gap-8">
+                                        <div className="flex-1">
+                                            <div className="text-3xl font-bold text-foreground mb-1">{listingData?.residentialPropertyRentCount || 0}</div>
+                                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                                <FaKey className="text-xs text-orange-400" /> For Rent
+                                            </div>
+                                        </div>
+                                        <div className="w-px h-12 bg-border/50" />
+                                        <div className="flex-1">
+                                            <div className="text-3xl font-bold text-foreground mb-1">{listingData?.residentialPropertySellCount || 0}</div>
+                                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                                <FaTag className="text-xs text-teal-500" /> For Sell
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div style={styles.card}>
-                                    <div style={{ alignItems: "center", justifyContent: "center", display: 'flex' }}>
-                                        <p style={styles.cardHeader2}>Customers</p>
-                                    </div>
-                                    <div style={styles.cardContent}>
-                                        <div style={styles.innerCard}>
-                                            <p style={{ color: '#000000' }}>{listingData?.residentialPropertyCustomerRentCount || 0}</p>
-                                            <p style={{ color: '#000000' }}>Rent</p>
+                                {/* Customers Card */}
+                                <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Customers</span>
+                                        <div className="p-2 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 text-purple-500">
+                                            <FaUsers className="text-lg" />
                                         </div>
-                                        <div style={styles.space} />
-                                        <div style={styles.innerCard}>
-                                            <p style={{ color: '#000000' }}>{listingData?.residentialPropertyCustomerBuyCount || 0}</p>
-                                            <p style={{ color: '#000000' }}>Sell</p>
+                                    </div>
+                                    <div className="flex items-center gap-8">
+                                        <div className="flex-1">
+                                            <div className="text-3xl font-bold text-foreground mb-1">{listingData?.residentialPropertyCustomerRentCount || 0}</div>
+                                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                                <FaKey className="text-xs text-orange-400" /> For Rent
+                                            </div>
+                                        </div>
+                                        <div className="w-px h-12 bg-border/50" />
+                                        <div className="flex-1">
+                                            <div className="text-3xl font-bold text-foreground mb-1">{listingData?.residentialPropertyCustomerBuyCount || 0}</div>
+                                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                                <FaTag className="text-xs text-teal-500" /> For Sell
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Commercial Section */}
+                        <div>
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="p-2 rounded-xl bg-orange-500/10 dark:bg-orange-500/20">
+                                    <FaBuilding className="text-2xl text-orange-500" />
+                                </div>
+                                <h2 className="text-xl font-bold text-foreground">Commercial Listings</h2>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* Properties Card */}
+                                <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Properties</span>
+                                        <div className="p-2 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 text-blue-500">
+                                            <FaTag className="text-lg" />
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-8">
+                                        <div className="flex-1">
+                                            <div className="text-3xl font-bold text-foreground mb-1">{listingData?.commercialPropertyRentCount || 0}</div>
+                                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                                <FaKey className="text-xs text-orange-400" /> For Rent
+                                            </div>
+                                        </div>
+                                        <div className="w-px h-12 bg-border/50" />
+                                        <div className="flex-1">
+                                            <div className="text-3xl font-bold text-foreground mb-1">{listingData?.commercialPropertySellCount || 0}</div>
+                                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                                <FaTag className="text-xs text-teal-500" /> For Sell
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Customers Card */}
+                                <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Customers</span>
+                                        <div className="p-2 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 text-purple-500">
+                                            <FaUsers className="text-lg" />
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-8">
+                                        <div className="flex-1">
+                                            <div className="text-3xl font-bold text-foreground mb-1">{listingData?.commercialPropertyCustomerRentCount || 0}</div>
+                                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                                <FaKey className="text-xs text-orange-400" /> For Rent
+                                            </div>
+                                        </div>
+                                        <div className="w-px h-12 bg-border/50" />
+                                        <div className="flex-1">
+                                            <div className="text-3xl font-bold text-foreground mb-1">{listingData?.commercialPropertyCustomerBuyCount || 0}</div>
+                                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                                <FaTag className="text-xs text-teal-500" /> For Sell
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        {modalVisible && (
+                            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex justify-center items-center p-4">
+                                <div className="bg-background border border-border rounded-3xl p-8 max-w-sm w-full shadow-2xl relative">
+                                    <p className="text-destructive font-semibold text-lg mb-8 text-center px-4">
+                                        Your account is suspended. Would you like to reactivate it?
+                                    </p>
 
-                        <div
-                            style={{
-                                ...styles.componentContainer,
-                                marginLeft: 10,
-                                marginRight: 10
-                            }}
-                        >
-                            <div style={styles.bar}>
-                                <p style={styles.barHeader}>Commercial Listing Summary</p>
-                            </div>
-                            <div
-                                style={{
-                                    ...styles.cardContainer,
-                                    marginLeft: 10,
-                                    marginRight: 10
-                                }}
-                            >
-                                <div style={styles.card}>
-                                    <div style={{ alignItems: "center", justifyContent: "center", display: 'flex' }}>
-                                        <p style={styles.cardHeader1}>Properties</p>
-                                    </div>
-                                    <div style={styles.cardContent}>
-                                        <div style={styles.innerCard}>
-                                            <p style={{ color: '#000000' }}>{listingData?.commercialPropertyRentCount || 0}</p>
-                                            <p style={{ color: '#000000' }}>Rent</p>
-                                        </div>
-                                        <div style={styles.space} />
-                                        <div style={styles.innerCard}>
-                                            <p style={{ color: '#000000' }}>{listingData?.commercialPropertySellCount || 0}</p>
-                                            <p style={{ color: '#000000' }}>Sell</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div style={styles.card}>
-                                    <div style={{ alignItems: "center", justifyContent: "center", display: 'flex' }}>
-                                        <p style={styles.cardHeader2}>Customers</p>
-                                    </div>
-                                    <div style={styles.cardContent}>
-                                        <div style={styles.innerCard}>
-                                            <p style={{ color: '#000000' }}>{listingData?.commercialPropertyCustomerRentCount || 0}</p>
-                                            <p style={{ color: '#000000' }}>Rent</p>
-                                        </div>
-                                        <div style={styles.space} />
-                                        <div style={styles.innerCard}>
-                                            <p style={{ color: '#000000' }}>{listingData?.commercialPropertyCustomerBuyCount || 0}</p>
-                                            <p style={{ color: '#000000' }}>Sell</p>
-                                        </div>
+                                    <div className="flex justify-end gap-3 mt-4">
+                                        <button
+                                            onClick={() => reactivateAccount()}
+                                            className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg active:scale-95"
+                                        >
+                                            Reactivate
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </div>
-
-                    {modalVisible && (
-                        <div style={styles.centeredView1}>
-                            <div style={styles.modalView}>
-                                <p style={{ color: "rgba(255,0,0, .9)", marginBottom: 10 }}>
-                                    Your account is in suspend mode by you. Do you want to activate
-                                    it ?
-                                </p>
-
-                                <div
-                                    style={{
-                                        position: "absolute",
-                                        flexDirection: "row",
-                                        right: 0,
-                                        bottom: 0,
-                                        marginBottom: 20,
-                                        padding: 20,
-                                        display: 'flex'
-                                    }}
-                                >
-                                    <div
-                                        style={{ ...styles.applyButton, cursor: 'pointer' }}
-                                        onClick={() => {
-                                            reactivateAccount();
-                                        }}
-                                    >
-                                        <span style={styles.textStyle}>Yes</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>}
+                </div>
+            )}
         </div>
     );
+
 };
 
 const mapStateToProps = state => ({
@@ -303,7 +303,7 @@ const styles = {
     },
     bar: {
         boxShadow: '0px 0.6px 1.8px rgba(0, 0, 0, 0.18)',
-        backgroundColor: "#ffffff"
+        backgroundColor: "var(--card)"
     },
     barHeader: {
         fontSize: 16,
@@ -313,12 +313,12 @@ const styles = {
         width: "100%",
         textAlign: "center",
         margin: 0,
-        color: "#000000"
+        color: "var(--foreground)"
     },
     card: {
         padding: 10,
         boxShadow: '0px 3px 9px rgba(0, 0, 0, 0.18)',
-        backgroundColor: "#ffffff",
+        backgroundColor: "var(--card)",
         marginRight: 10
     },
     cardContent: {
@@ -328,7 +328,7 @@ const styles = {
     },
     innerCard: {
         boxShadow: '0px 3px 9px rgba(0, 0, 0, 0.18)',
-        backgroundColor: "#ffffff",
+        backgroundColor: "var(--card)",
         padding: 12
     },
     cardHeader1: {
@@ -337,7 +337,7 @@ const styles = {
         alignContent: "center",
         textAlign: "left",
         margin: 0,
-        color: "#000000"
+        color: "var(--foreground)"
     },
     cardHeader2: {
         fontSize: 16,
@@ -346,7 +346,7 @@ const styles = {
         justifyContent: "center",
         textAlign: "right",
         margin: 0,
-        color: "#000000"
+        color: "var(--foreground)"
     },
     text: {
         color: "#101010",
@@ -370,7 +370,7 @@ const styles = {
     modalView: {
         margin: 20,
         height: 230,
-        backgroundColor: "white",
+        backgroundColor: "var(--background)",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",

@@ -219,13 +219,13 @@ const MatchedProperties = props => {
     }, [props.residentialPropertyList])
 
     return (
-        <div className="flex flex-col h-full bg-gray-100">
+        <div className="flex flex-col h-full bg-neutral-800">
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 padding: '15px 20px',
                 borderBottom: '1px solid #d0d0d0',
-                backgroundColor: '#fff',
+                backgroundColor: 'var(--background)',
                 position: 'sticky',
                 top: 0,
                 zIndex: 10,
@@ -246,7 +246,7 @@ const MatchedProperties = props => {
                 }}>Matched Properties</h1>
             </div>
             {loading ? (
-                <div className="flex flex-1 justify-center items-center bg-gray-100 bg-opacity-40">
+                <div className="flex flex-1 justify-center items-center bg-neutral-800 bg-opacity-40">
                     <div className="loader">Loading...</div>
                 </div>
             ) : (

@@ -621,15 +621,15 @@ const ContactsResidential = props => {
     }, [props.residentialCustomerList])
 
     return (
-        <div className="flex flex-col h-full bg-white relative">
+        <div className="flex flex-col h-full bg-neutral-900 relative">
             {loading ? (
                 <div className="flex justify-center items-center h-full">
                     <div>Loading...</div>
                 </div>
             ) : (
                 <>
-                    <div className="flex flex-row items-center p-4 border-b border-gray-200 bg-white">
-                        <div className="flex-1 flex items-center bg-white rounded-lg border border-gray-300 px-3 py-2 shadow-sm">
+                    <div className="flex flex-row items-center p-4 border-b border-neutral-700 bg-neutral-900">
+                        <div className="flex-1 flex items-center bg-neutral-900 rounded-lg border border-neutral-600 px-3 py-2 shadow-sm">
                             <MdSearch size={24} className="text-gray-400" />
                             <div className="h-6 w-0.5 bg-blue-500 mx-3"></div>
                             <input
@@ -637,7 +637,7 @@ const ContactsResidential = props => {
                                 placeholder="Search By Name, Address, Id, Mobile"
                                 value={search}
                                 onChange={(e) => searchFilterFunction(e.target.value)}
-                                className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-500 text-base"
+                                className="flex-1 bg-transparent border-none outline-none text-gray-300 placeholder-gray-500 text-base"
                             />
                         </div>
 
@@ -700,30 +700,27 @@ const ContactsResidential = props => {
             {/* Filter Modal */}
             {visible && (
                 <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={toggleBottomNavigationView}>
-                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
-                            <h3 className="text-lg font-bold text-black">Filter</h3>
+                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-10">
+                            <h3 className="text-lg font-bold text-white">Filter</h3>
                             <div
                                 onClick={resetFilter}
                                 className="absolute top-0 right-0 cursor-pointer"
                             >
                                 <MdRestartAlt
-                                    color={"#000000"}
+                                    color={"var(--foreground)"}
                                     size={30}
                                 />
                             </div>
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
+                            <h4 className="font-semibold mb-2 text-white">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={porposeForOptions}
                                 selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#fff' }}
+                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 onButtonPress={(index, button) => {
                                     setPurpose(button.text);
                                 }}
@@ -731,14 +728,11 @@ const ContactsResidential = props => {
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2 text-black">BHK Type</h4>
+                            <h4 className="font-semibold mb-2 text-white">BHK Type</h4>
                             <CustomButtonGroup
                                 buttons={bhkOption}
                                 isMultiSelect={true}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#fff' }}
+                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 selectedIndices={selectedBHK.map((item) =>
                                     bhkOption.findIndex((option) => option.text === item)
                                 )}
@@ -750,7 +744,7 @@ const ContactsResidential = props => {
 
                         {purpose === "" ? null : purpose === "Rent" ? (
                             <div className="mb-4">
-                                <h4 className="font-semibold mb-2 text-black">Rent Range</h4>
+                                <h4 className="font-semibold mb-2 text-white">Rent Range</h4>
                                 <Slider
                                     min={10000}
                                     max={500000}
@@ -759,7 +753,7 @@ const ContactsResidential = props => {
                             </div>
                         ) : (
                             <div className="mb-4">
-                                <h4 className="font-semibold mb-2 text-black">Sell Price Range</h4>
+                                <h4 className="font-semibold mb-2 text-white">Sell Price Range</h4>
                                 <SliderCr
                                     min={1000000}
                                     max={100000000}
@@ -769,15 +763,12 @@ const ContactsResidential = props => {
                         )}
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2 text-black">Availability</h4>
+                            <h4 className="font-semibold mb-2 text-white">Availability</h4>
                             <CustomButtonGroup
                                 buttons={reqWithinOptions}
                                 selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#fff' }}
+                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 onButtonPress={(index, button) => {
                                     setReqWithin(button.text);
                                 }}
@@ -785,14 +776,11 @@ const ContactsResidential = props => {
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2 text-black">Furnishing</h4>
+                            <h4 className="font-semibold mb-2 text-white">Furnishing</h4>
                             <CustomButtonGroup
                                 buttons={furnishingStatusOptions}
                                 isMultiSelect={true}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#fff' }}
+                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 selectedIndices={selectedFunishing.map((item) =>
                                     furnishingStatusOptions.findIndex((option) => option.text === item)
                                 )}
@@ -820,59 +808,50 @@ const ContactsResidential = props => {
             {/* Sort Modal */}
             {visibleSorting && (
                 <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }} onClick={toggleSortingBottomNavigationView}>
-                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-10">
-                            <h3 className="text-lg font-bold text-black">Sort By</h3>
+                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-10">
+                            <h3 className="text-lg font-bold text-white">Sort By</h3>
                             <div
                                 onClick={resetSortBy}
                                 className="absolute top-0 right-0 cursor-pointer"
                             >
                                 <MdRestartAlt
-                                    color={"#000000"}
+                                    color={"var(--foreground)"}
                                     size={30}
                                 />
                             </div>
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2 text-black">Customer Looking For</h4>
+                            <h4 className="font-semibold mb-2 text-white">Customer Looking For</h4>
                             <CustomButtonGroup
                                 buttons={lookingForArraySortBy.map(text => ({ text }))}
                                 onButtonPress={(index) => selectLookingForIndexSortBy(index)}
                                 selectedIndices={[lookingForIndexSortBy]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#fff' }}
+                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2 text-black">Name</h4>
+                            <h4 className="font-semibold mb-2 text-white">Name</h4>
                             <CustomButtonGroup
                                 buttons={sortByNameArray.map(text => ({ text }))}
                                 onButtonPress={(index) => sortByName(index)}
                                 selectedIndices={[sortByNameIndex]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#fff' }}
+                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="font-semibold mb-2 text-black">Posted date</h4>
+                            <h4 className="font-semibold mb-2 text-white">Posted date</h4>
                             <CustomButtonGroup
                                 buttons={sortByPostedDateArray.map(text => ({ text }))}
                                 onButtonPress={(index) => sortByPostedDate(index)}
                                 selectedIndices={[sortByPostedDateIndex]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#fff' }}
+                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 

@@ -89,8 +89,8 @@ const CommercialRentPropDetails = props => {
                     display: 'flex',
                     alignItems: 'center',
                     padding: '15px 20px',
-                    borderBottom: '1px solid #f0f0f0',
-                    backgroundColor: '#fff',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                    backgroundColor: 'var(--background)',
                     position: 'sticky',
                     top: 0,
                     zIndex: 10,
@@ -101,12 +101,12 @@ const CommercialRentPropDetails = props => {
                         display: 'flex',
                         alignItems: 'center',
                     }}>
-                        <MdArrowBack size={24} color="#333" />
+                        <MdArrowBack size={24} color="var(--foreground)" />
                     </div>
                     <h1 style={{
                         fontSize: '20px',
                         fontWeight: '600',
-                        color: '#333',
+                        color: 'var(--foreground)',
                         margin: 0,
                     }}>Property Details</h1>
                 </div>
@@ -133,8 +133,8 @@ const CommercialRentPropDetails = props => {
                     {props.userDetails.works_for === props.userDetails.id && item.agent_id === props.userDetails.id &&
                         <div onClick={() => gotoEmployeeList(item)} style={{ cursor: 'pointer' }}>
                             <div style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 10, marginTop: 10, display: 'flex' }}>
-                                <MdPersonAdd size={20} color="black" />
-                                <span style={{ fontSize: 14, fontWeight: '300', color: '#000', marginLeft: 20, marginRight: 20 }}>
+                                <MdPersonAdd size={20} color="var(--foreground)" />
+                                <span style={{ fontSize: 14, fontWeight: '300', color: 'var(--foreground)', marginLeft: 20, marginRight: 20 }}>
                                     {Array.isArray(item.assigned_to_employee_name) && item.assigned_to_employee_name.length > 0
                                         ? item.assigned_to_employee_name.join(", ")
                                         : "No Employees Assigned"}
@@ -152,14 +152,14 @@ const CommercialRentPropDetails = props => {
                         backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', right: 0, top: 0, alignItems: 'center', justifyContent: 'center',
                         width: 38, height: 20, marginRight: 0, display: 'flex'
                     }}>
-                        <span style={{ fontSize: 15, fontWeight: '500', color: '#000', paddingLeft: 0 }}>{item.match_count ? item.match_count : 0}</span>
+                        <span style={{ fontSize: 15, fontWeight: '500', color: 'var(--foreground)', paddingLeft: 0 }}>{item.match_count ? item.match_count : 0}</span>
                     </div>
                     <div style={{
                         position: 'absolute', right: 0, top: 20, transform: 'rotate(270deg)',
                         backgroundColor: 'rgba(80, 200, 120, 0.7)', alignItems: 'center', justifyContent: 'center',
                         width: 70, height: 35, padding: 0, marginRight: -15, marginTop: 20, marginBottom: 15, display: 'flex'
                     }}>
-                        <span style={{ fontSize: 14, fontWeight: '300', color: '#000' }}>Match</span>
+                        <span style={{ fontSize: 14, fontWeight: '300', color: 'var(--foreground)' }}>Match</span>
                     </div>
                 </div>}
             </div>
@@ -202,46 +202,46 @@ const CommercialRentPropDetails = props => {
             <div style={styles.margin1}></div>
             <div className="mt-0.5"></div>
             <AccordionListItem title="Details" onPress={scrollToAccordion} open={true}>
-                <div className="bg-white w-full shadow-md">
+                <div className="bg-neutral-900 w-full shadow-md">
                     <div className="flex justify-between p-2">
                         <div className="flex flex-col justify-center">
                             <div className="pb-5">
-                                <span className="text-sm font-semibold block text-black">
+                                <span className="text-sm font-semibold block text-white">
                                     {item.property_details.building_type}
                                 </span>
-                                <span className="text-xs font-normal block text-black">Building Type</span>
+                                <span className="text-xs font-normal block text-white">Building Type</span>
                             </div>
                             <div className="pb-5">
-                                <span className="text-sm font-semibold block text-black">
+                                <span className="text-sm font-semibold block text-white">
                                     {formatIsoDateToCustomString(item.rent_details.available_from)}
                                 </span>
-                                <span className="text-xs font-normal block text-black">Possession</span>
+                                <span className="text-xs font-normal block text-white">Possession</span>
                             </div>
                             <div className="pb-5">
-                                <span className="text-sm font-semibold block text-black break-words w-48">
+                                <span className="text-sm font-semibold block text-white break-words w-48">
                                     {item.property_details && item.property_details.ideal_for.join(", ")}
                                 </span>
-                                <span className="text-xs font-normal block text-black">Ideal For</span>
+                                <span className="text-xs font-normal block text-white">Ideal For</span>
                             </div>
                         </div>
                         <div className="flex flex-col justify-center">
                             <div className="pb-5">
-                                <span className="text-sm font-semibold block text-black">
+                                <span className="text-sm font-semibold block text-white">
                                     {item.property_details.parking_type}
                                 </span>
-                                <span className="text-xs font-normal block text-black">Parking</span>
+                                <span className="text-xs font-normal block text-white">Parking</span>
                             </div>
                             <div className="pb-5">
-                                <span className="text-sm font-semibold block text-black">
+                                <span className="text-sm font-semibold block text-white">
                                     {item.property_details.property_age} years
                                 </span>
-                                <span className="text-xs font-normal block text-black">Age Of Building</span>
+                                <span className="text-xs font-normal block text-white">Age Of Building</span>
                             </div>
                             <div className="pb-5">
-                                <span className="text-sm font-semibold block text-black">
+                                <span className="text-sm font-semibold block text-white">
                                     {item.property_details.power_backup}
                                 </span>
-                                <span className="text-xs font-normal block text-black">Power Backup</span>
+                                <span className="text-xs font-normal block text-white">Power Backup</span>
                             </div>
                         </div>
                     </div>
@@ -249,12 +249,12 @@ const CommercialRentPropDetails = props => {
             </AccordionListItem>
             <div className="mt-0.5"></div>
             <AccordionListItem title="Owner" open={false} onPress={scrollToAccordion}>
-                <div className="bg-white w-full shadow-md">
+                <div className="bg-neutral-900 w-full shadow-md">
                     <div className="flex-1 py-2 pb-2 px-4 w-full">
                         <div className="flex flex-row mb-0 items-center justify-between">
                             <div className="flex flex-col">
-                                <span className="text-black font-medium">{item.owner_details.name}</span>
-                                <span className="text-black">
+                                <span className="text-white font-medium">{item.owner_details.name}</span>
+                                <span className="text-white">
                                     {item.owner_details.mobile1?.startsWith("+91")
                                         ? item.owner_details.mobile1
                                         : `+91 ${item.owner_details.mobile1}`}
@@ -267,7 +267,7 @@ const CommercialRentPropDetails = props => {
                                 <MdPhone color={"#00bfa5"} size={25} />
                             </div>
                         </div>
-                        <span className="mt-1 block text-black">{camalize(item.owner_details.address)}</span>
+                        <span className="mt-1 block text-white">{camalize(item.owner_details.address)}</span>
                     </div>
                 </div>
             </AccordionListItem>
@@ -277,7 +277,7 @@ const CommercialRentPropDetails = props => {
                     flex: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: 'rgba(245,245,245, .4)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
                     display: 'flex',
                     padding: 20
                 }}
@@ -292,7 +292,7 @@ const CommercialRentPropDetails = props => {
 
 const styles = {
     container: {
-        backgroundColor: "white",
+        backgroundColor: "var(--background)",
         display: 'flex',
         flexDirection: 'column',
         flex: 1
@@ -301,18 +301,18 @@ const styles = {
         fontSize: 16,
         fontWeight: "600",
         margin: 0,
-        color: "#000"
+        color: "var(--foreground)"
     },
     subTitle: {
         fontSize: 14,
         fontWeight: "400",
-        color: "#000"
+        color: "var(--foreground)"
     },
     detailsContainer: {
         height: 60,
         borderTopWidth: 1,
-        borderTopColor: "#C0C0C0",
-        backgroundColor: "rgba(220,220,220, 0.80)"
+        borderTopColor: "rgba(255, 255, 255, 0.1)",
+        backgroundColor: "rgba(255, 255, 255, 0.05)"
     },
     details: {
         padding: 10,
@@ -328,20 +328,20 @@ const styles = {
     subDetailsTitle: {
         fontSize: 12,
         fontWeight: "400",
-        color: "#000"
+        color: "var(--foreground)"
     },
     subDetailsValue: {
         fontSize: 14,
         fontWeight: "600",
-        color: "#000"
+        color: "var(--foreground)"
     },
     verticalLine: {
         height: "70%",
         width: 1,
-        backgroundColor: "#909090"
+        backgroundColor: "rgba(255, 255, 255, 0.2)"
     },
     horizontalLine: {
-        borderBottomColor: "#E0E0E0",
+        borderBottomColor: "rgba(255, 255, 255, 0.1)",
         borderBottomWidth: 1,
         marginLeft: 5,
         marginRight: 5,

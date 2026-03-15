@@ -16,20 +16,20 @@ const AccordionListItem = ({ title, children, open = false, testID }) => {
     return (
         <div className="flex flex-col w-full">
             <div
-                className="flex flex-row justify-between items-center p-4 pl-6 border-t border-b-5 border-[#EFEFEF] cursor-pointer select-none"
+                className="flex flex-row justify-between items-center p-4 pl-6 border-t border-b border-neutral-700 cursor-pointer select-none"
                 onClick={toggleListItem}
                 data-testid={testID}
             >
-                <span className="text-lg font-semibold text-black">{title}</span>
+                <span className="text-lg font-semibold text-white">{title}</span>
                 <div
                     className={`transform transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"
                         }`}
                 >
-                    <MdKeyboardArrowDown size={30} color="black" />
+                    <MdKeyboardArrowDown size={30} color="var(--foreground)" />
                 </div>
             </div>
             <div
-                className={`overflow-hidden transition-[max-height] duration-300 ease-in-out bg-[#EFEFEF]`}
+                className={`overflow-hidden transition-[max-height] duration-300 ease-in-out bg-transparent`}
                 style={{
                     maxHeight: isOpen ? `${contentRef.current?.scrollHeight}px` : "0px",
                 }}

@@ -528,23 +528,23 @@ const GlobalCommercialCustomersSearchResult = props => {
     const [visibleSorting, setVisibleSorting] = useState(false);
 
     return (
-        <div className="flex flex-col h-full bg-white relative">
-            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm">
+        <div className="flex flex-col h-full bg-neutral-900 relative">
+            <div className="bg-neutral-900 border-b border-neutral-700 flex items-center p-4 shadow-sm">
                 <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
-                    <MdArrowBack size={24} color="#333" />
+                    <MdArrowBack size={24} color={"var(--foreground)"} />
                 </div>
-                <h1 className="text-lg font-semibold text-gray-800">Search Results</h1>
+                <h1 className="text-lg font-semibold text-gray-200">Search Results</h1>
             </div>
-            <div className="flex flex-row items-center bg-white p-2 shadow-sm">
+            <div className="flex flex-row items-center bg-neutral-900 p-2 shadow-sm">
                 <div className="relative flex-1">
                     <input
                         type="text"
-                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-400 text-black placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                        className="w-full pl-10 pr-4 py-2 rounded-full border border-neutral-600 bg-neutral-900 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
                         placeholder="GLocal Search..."
                         value={search}
                         onChange={e => searchFilterFunction(e.target.value)}
                     />
-                    <div className="absolute left-3 top-2.5 text-gray-600">
+                    <div className="absolute left-3 top-2.5 text-gray-400">
                         <MdSearch size={20} />
                     </div>
                 </div>
@@ -587,7 +587,7 @@ const GlobalCommercialCustomersSearchResult = props => {
                     >
                         <MdSort color={"#ffffff"} size={26} />
                     </div>
-                    <div style={{ height: "100%", width: '2px', backgroundColor: "#ffffff" }}></div>
+                    <div style={{ height: "100%", width: '2px', backgroundColor: "var(--background)" }}></div>
                     <div
                         onClick={() => setVisible(!visible)}
                         style={{ paddingLeft: '20px', cursor: 'pointer' }}
@@ -604,19 +604,19 @@ const GlobalCommercialCustomersSearchResult = props => {
             {/* Filter Modal/Drawer */}
             {visible && (
                 <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisible(false)}>
-                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4 pt-4 pb-2 border-b border-gray-100">
-                            <h3 className="text-lg font-bold text-black">Filter</h3>
+                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-50 -mt-4 -mx-4 px-4 pt-4 pb-2 border-b border-neutral-700">
+                            <h3 className="text-lg font-bold text-white">Filter</h3>
                             <div
                                 onClick={() => resetFilter()}
                                 className="absolute right-4 text-gray-500 cursor-pointer"
                             >
-                                <MdRestartAlt size={24} />
+                                <MdRestartAlt size={24} color={"var(--foreground)"} />
                             </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold text-gray-700">Looking For</p>
+                            <p className="mb-2 font-semibold text-gray-300">Looking For</p>
                             <CustomButtonGroup
                                 buttons={lookingForArray.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndex]}
@@ -625,7 +625,7 @@ const GlobalCommercialCustomersSearchResult = props => {
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold text-gray-700">Prop type</p>
+                            <p className="mb-2 font-semibold text-gray-300">Prop type</p>
                             <CustomButtonGroup
                                 buttons={propertyTypeArray.map(text => ({ text }))}
                                 selectedIndices={[propertyTypeIndex]}
@@ -635,7 +635,7 @@ const GlobalCommercialCustomersSearchResult = props => {
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold text-gray-700">Building type</p>
+                            <p className="mb-2 font-semibold text-gray-300">Building type</p>
                             <div className="grid grid-cols-2 gap-2">
                                 {buildingTypeArray.map((item, index) => (
                                     <div key={index} className="flex items-center">
@@ -643,9 +643,9 @@ const GlobalCommercialCustomersSearchResult = props => {
                                             type="checkbox"
                                             checked={checkBoxSelectArray.indexOf(item) > -1}
                                             onChange={() => onCheckBoxSelect(item)}
-                                            className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-neutral-600 rounded"
                                         />
-                                        <span className="text-gray-700">{item}</span>
+                                        <span className="text-gray-300">{item}</span>
                                     </div>
                                 ))}
                             </div>
@@ -663,19 +663,19 @@ const GlobalCommercialCustomersSearchResult = props => {
             {/* Sorting Modal/Drawer */}
             {visibleSorting && (
                 <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisibleSorting(false)}>
-                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4 pt-4 pb-2 border-b border-gray-100">
-                            <h3 className="text-lg font-bold text-black">Sort By</h3>
+                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-50 -mt-4 -mx-4 px-4 pt-4 pb-2 border-b border-neutral-700">
+                            <h3 className="text-lg font-bold text-white">Sort By</h3>
                             <div
                                 onClick={() => resetSortBy()}
                                 className="absolute right-4 text-gray-500 cursor-pointer"
                             >
-                                <MdRestartAlt size={24} />
+                                <MdRestartAlt size={24} color={"var(--foreground)"} />
                             </div>
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold text-gray-700">Looking For</p>
+                            <p className="mb-2 font-semibold text-gray-300">Looking For</p>
                             <CustomButtonGroup
                                 buttons={lookingForArraySortBy.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndexSortBy]}
@@ -684,7 +684,7 @@ const GlobalCommercialCustomersSearchResult = props => {
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold text-gray-700">Sort By Name</p>
+                            <p className="mb-2 font-semibold text-gray-300">Sort By Name</p>
                             <CustomButtonGroup
                                 buttons={sortByNameArray.map(text => ({ text }))}
                                 selectedIndices={[sortByNameIndex]}
@@ -693,7 +693,7 @@ const GlobalCommercialCustomersSearchResult = props => {
                         </div>
 
                         <div className="mb-5">
-                            <p className="mb-2 font-semibold text-gray-700">Sort By Posted Date</p>
+                            <p className="mb-2 font-semibold text-gray-300">Sort By Posted Date</p>
                             <CustomButtonGroup
                                 buttons={sortByPostedDateArray.map(text => ({ text }))}
                                 selectedIndices={[sortByPostedDateIndex]}

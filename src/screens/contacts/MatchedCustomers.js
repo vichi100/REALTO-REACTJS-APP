@@ -466,12 +466,12 @@ const MatchedCustomers = props => {
                     display: 'flex'
                 }}
             >
-                <div>Loading...</div>
+                <div style={{ color: 'var(--foreground)' }}>Loading...</div>
             </div> :
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
                     <div style={styles.header}>
                         <div onClick={handleBack} style={styles.backButton}>
-                            <MdArrowBack size={24} color="#333" />
+                            <MdArrowBack size={24} color="var(--foreground)" />
                         </div>
                         <h1 style={styles.title}>Matched Customers</h1>
                     </div>
@@ -627,7 +627,7 @@ const MatchedCustomers = props => {
                                 overflowY: 'auto'
                             }} onClick={e => e.stopPropagation()}>
                                 <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                                    <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600" }}>
+                                    <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: 'var(--foreground)' }}>
                                         Filter
                                     </span>
                                     <div
@@ -642,45 +642,36 @@ const MatchedCustomers = props => {
                                 </div>
 
                                 <div style={{ marginTop: 20, marginBottom: 20 }}>
-                                    <p style={styles.marginBottom10}>Looking For</p>
+                                    <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Looking For</p>
                                     <div style={styles.propSubSection}>
                                         <CustomButtonGroup
-                                            selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                             onButtonPress={(index) => selectLookingForIndex(index)}
                                             selectedIndices={[lookingForIndex]}
                                             buttons={lookingForArray.map(item => ({ text: item }))}
-                                            buttonTextStyle={{ textAlign: "center" }}
-                                            selectedButtonTextStyle={{ color: "#fff" }}
                                             containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
-                                    <p style={styles.marginBottom10}>Home type</p>
+                                    <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Home type</p>
                                     <div style={styles.propSubSection}>
                                         <CustomButtonGroup
-                                            selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                             onButtonPress={(index) => selectHomeTypeIndex(index)}
                                             selectedIndices={[homeTypeIndex]}
                                             buttons={homeTypeArray.map(item => ({ text: item }))}
-                                            buttonTextStyle={{ textAlign: "center" }}
-                                            selectedButtonTextStyle={{ color: "#fff" }}
                                             containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
-                                    <p style={styles.marginBottom10}>BHK type</p>
+                                    <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>BHK type</p>
                                     <div style={styles.propSubSection}>
                                         <CustomButtonGroup
-                                            selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                             onButtonPress={(index) => selectBHKTypeIndex(index)}
                                             selectedIndices={[bhkTypeIndex]}
                                             buttons={bhkTypeArray.map(item => ({ text: item }))}
-                                            buttonTextStyle={{ textAlign: "center" }}
-                                            selectedButtonTextStyle={{ color: "#fff" }}
                                             containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
                                     {lookingForIndex === -1 ? null : lookingForIndex === 0 ? (
                                         <div>
-                                            <p>Rent Range</p>
+                                            <p style={{ color: 'var(--foreground)' }}>Rent Range</p>
                                             <div
                                                 style={{
                                                     flexDirection: "row",
@@ -712,7 +703,7 @@ const MatchedCustomers = props => {
                                         </div>
                                     ) : (
                                         <div>
-                                            <p>Sell Price Range</p>
+                                            <p style={{ color: 'var(--foreground)' }}>Sell Price Range</p>
                                             <div
                                                 style={{
                                                     flexDirection: "row",
@@ -742,27 +733,21 @@ const MatchedCustomers = props => {
                                             />
                                         </div>
                                     )}
-                                    <p style={styles.marginBottom10}>Availability</p>
+                                    <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Availability</p>
                                     <div style={styles.propSubSection}>
                                         <CustomButtonGroup
-                                            selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                             onButtonPress={(index) => selectAvailabilityIndex(index)}
                                             selectedIndices={[availabilityIndex]}
                                             buttons={availabilityArray.map(item => ({ text: item }))}
-                                            buttonTextStyle={{ textAlign: "center" }}
-                                            selectedButtonTextStyle={{ color: "#fff" }}
                                             containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
-                                    <p style={styles.marginBottom10}>Furnishing</p>
+                                    <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Furnishing</p>
                                     <div style={styles.propSubSection}>
                                         <CustomButtonGroup
-                                            selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                             onButtonPress={(index) => selectFurnishingIndex(index)}
                                             selectedIndices={[furnishingIndex]}
                                             buttons={furnishingStatusArray.map(item => ({ text: item }))}
-                                            buttonTextStyle={{ textAlign: "center" }}
-                                            selectedButtonTextStyle={{ color: "#fff" }}
                                             containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
@@ -803,7 +788,7 @@ const MatchedCustomers = props => {
                                 overflowY: 'auto'
                             }} onClick={e => e.stopPropagation()}>
                                 <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                                    <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600" }}>
+                                    <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: 'var(--foreground)' }}>
                                         Sort By
                                     </span>
                                     <div
@@ -818,44 +803,32 @@ const MatchedCustomers = props => {
                                 </div>
 
                                 <div style={{ marginTop: 10, marginBottom: 20 }}>
-                                    <p style={styles.marginBottom10}>Customer Looking For</p>
+                                    <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Customer Looking For</p>
                                     <div style={styles.propSubSection}>
-                                        <ButtonGroup
-                                            selectedBackgroundColor="rgba(27, 106, 158, 0.85)"
-                                            onPress={selectLookingForIndexSortBy}
-                                            selectedIndex={lookingForIndexSortBy}
-                                            buttons={lookingForArraySortBy}
-                                            textStyle={{ textAlign: "center" }}
-                                            selectedTextStyle={{ color: "#fff" }}
+                                        <CustomButtonGroup
+                                            onButtonPress={selectLookingForIndexSortBy}
+                                            selectedIndices={[lookingForIndexSortBy]}
+                                            buttons={lookingForArraySortBy.map(item => ({ text: item }))}
                                             containerStyle={{ borderRadius: 10, width: '100%' }}
-                                            containerBorderRadius={10}
                                         />
                                     </div>
-                                    <p style={styles.marginBottom10}>Name</p>
+                                    <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Name</p>
                                     <div style={styles.propSubSection}>
-                                        <ButtonGroup
-                                            selectedBackgroundColor="rgba(27, 106, 158, 0.85)"
-                                            onPress={sortByName}
-                                            selectedIndex={sortByNameIndex}
-                                            buttons={sortByNameArray}
-                                            textStyle={{ textAlign: "center" }}
-                                            selectedTextStyle={{ color: "#fff" }}
+                                        <CustomButtonGroup
+                                            onButtonPress={sortByName}
+                                            selectedIndices={[sortByNameIndex]}
+                                            buttons={sortByNameArray.map(item => ({ text: item }))}
                                             containerStyle={{ borderRadius: 10, width: '100%' }}
-                                            containerBorderRadius={10}
                                         />
                                     </div>
 
-                                    <p style={styles.marginBottom10}>Posted date</p>
+                                    <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Posted date</p>
                                     <div style={styles.propSubSection}>
-                                        <ButtonGroup
-                                            selectedBackgroundColor="rgba(27, 106, 158, 0.85)"
-                                            onPress={sortByPostedDate}
-                                            selectedIndex={sortByPostedDateIndex}
-                                            buttons={sortByPostedDateArray}
-                                            textStyle={{ textAlign: "center" }}
-                                            selectedTextStyle={{ color: "#fff" }}
+                                        <CustomButtonGroup
+                                            onButtonPress={sortByPostedDate}
+                                            selectedIndices={[sortByPostedDateIndex]}
+                                            buttons={sortByPostedDateArray.map(item => ({ text: item }))}
                                             containerStyle={{ borderRadius: 10, width: '100%' }}
-                                            containerBorderRadius={10}
                                         />
                                     </div>
                                 </div>
@@ -923,7 +896,7 @@ const styles = {
         flexDirection: 'row',
         justifyContent: 'center',
         alignContent: 'center',
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "var(--background)",
         paddingBottom: 15,
         paddingTop: 10,
         display: 'flex'
@@ -931,14 +904,14 @@ const styles = {
     tab: {
         padding: '10px 20px',
         borderRadius: 20,
-        backgroundColor: '#f0f0f0',
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
         marginLeft: 20,
     },
     activeTab: {
         backgroundColor: " rgba(102, 204, 153, .9)",
     },
     tabText: {
-        color: '#000',
+        color: 'var(--foreground)',
     },
     input: {
         width: '100%',
@@ -952,7 +925,7 @@ const styles = {
         alignItems: 'center',
         padding: '15px 20px',
         borderBottom: '1px solid #f0f0f0',
-        backgroundColor: '#fff',
+        backgroundColor: 'var(--background)',
         position: 'sticky',
         top: 0,
         zIndex: 10,
@@ -966,7 +939,7 @@ const styles = {
     title: {
         fontSize: '20px',
         fontWeight: '600',
-        color: '#333',
+        color: 'var(--foreground)',
         margin: 0,
     }
 };

@@ -154,23 +154,23 @@ const AddNewPropFinalDetails = props => {
     };
 
     return (propertyFinalDetails ? (
-        <div className="flex flex-col h-full bg-white overflow-y-auto">
-            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+        <div className="flex flex-col h-full bg-neutral-900 overflow-y-auto">
+            <div className="bg-neutral-900 px-4 py-3 flex items-center shadow-sm border-b border-neutral-700">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    className="mr-3 p-1 rounded-full hover:bg-neutral-800 focus:outline-none"
                     aria-label="Go back"
                 >
-                    <MdArrowBack className="text-gray-700 text-xl" />
+                    <MdArrowBack className="text-gray-300 text-xl" />
                 </button>
-                <h1 className="text-lg font-medium text-gray-900">Preview Property</h1>
+                <h1 className="text-lg font-medium text-gray-100">Preview Property</h1>
             </div>
-            <div className="bg-gray-200 p-4">
-                <h2 className="text-xl font-bold text-black">
+            <div className="bg-neutral-700 p-4">
+                <h2 className="text-xl font-bold text-white">
                     {"Rent In "}{propertyFinalDetails.property_address.flat_number},
                     {propertyFinalDetails.property_address.building_name},
                 </h2>
-                <p className="text-base text-gray-900 font-medium">
+                <p className="text-base text-gray-100 font-medium">
                     {propertyFinalDetails.property_address.landmark_or_street},
                     {propertyFinalDetails.property_address.location_area.formatted_address}
                 </p>
@@ -181,99 +181,99 @@ const AddNewPropFinalDetails = props => {
                 height={300}
             />
 
-            <div className="border-t border-gray-300 bg-gray-100 p-4">
+            <div className="border-t border-neutral-700 bg-neutral-800 p-4">
                 <div className="flex justify-between">
                     <div className="text-center">
-                        <p className="text-xl font-bold text-black">{bhk}</p>
-                        <p className="text-sm text-gray-900 font-medium">BHK</p>
+                        <p className="text-xl font-bold text-white">{bhk}</p>
+                        <p className="text-sm text-gray-100 font-medium">BHK</p>
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-4 self-center"></div>
                     <div className="text-center">
-                        <p className="text-xl font-bold text-black">
+                        <p className="text-xl font-bold text-white">
                             {numDifferentiation(propertyFinalDetails.rent_details.expected_rent)}
                         </p>
-                        <p className="text-sm text-gray-900 font-medium">{propertyFinalDetails.property_for}</p>
+                        <p className="text-sm text-gray-100 font-medium">{propertyFinalDetails.property_for}</p>
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-4 self-center"></div>
                     <div className="text-center">
-                        <p className="text-xl font-bold text-black">
+                        <p className="text-xl font-bold text-white">
                             {numDifferentiation(propertyFinalDetails.rent_details.expected_deposit)}
                         </p>
-                        <p className="text-sm text-gray-900 font-medium">Deposit</p>
+                        <p className="text-sm text-gray-100 font-medium">Deposit</p>
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-4 self-center"></div>
                     <div className="text-center">
-                        <p className="text-xl font-bold text-black">
+                        <p className="text-xl font-bold text-white">
                             {propertyFinalDetails.property_details.furnishing_status}
                         </p>
-                        <p className="text-sm text-gray-900 font-medium">Furnishing</p>
+                        <p className="text-sm text-gray-100 font-medium">Furnishing</p>
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-4 self-center"></div>
                     <div className="text-center">
-                        <p className="text-xl font-bold text-black">
+                        <p className="text-xl font-bold text-white">
                             {propertyFinalDetails.property_details.property_size}sqft
                         </p>
-                        <p className="text-sm text-gray-900 font-medium">Builtup</p>
+                        <p className="text-sm text-gray-100 font-medium">Builtup</p>
                     </div>
                 </div>
             </div>
 
-            <div className="mt-2 bg-white px-4 pt-4">
+            <div className="mt-2 bg-neutral-900 px-4 pt-4">
                 <div className="pb-2 border-b border-gray-100">
-                    <h3 className="text-sm font-medium text-gray-900">Details</h3>
+                    <h3 className="text-sm font-medium text-gray-100">Details</h3>
                 </div>
                 <div className="flex justify-between py-4">
                     <div className="flex flex-col space-y-4 w-1/2">
                         <div>
-                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.property_details.washroom_numbers}</p>
-                            <p className="text-xs text-gray-600">Bathroom</p>
+                            <p className="text-base font-bold text-gray-100">{propertyFinalDetails.property_details.washroom_numbers}</p>
+                            <p className="text-xs text-gray-400">Bathroom</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">{possessionDate}</p>
-                            <p className="text-xs text-gray-600">Possession</p>
+                            <p className="text-base font-bold text-gray-100">{possessionDate}</p>
+                            <p className="text-xs text-gray-400">Possession</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.rent_details.preferred_tenants}</p>
-                            <p className="text-xs text-gray-600">Preferred Tenant</p>
+                            <p className="text-base font-bold text-gray-100">{propertyFinalDetails.rent_details.preferred_tenants}</p>
+                            <p className="text-xs text-gray-400">Preferred Tenant</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.property_details.lift}</p>
-                            <p className="text-xs text-gray-600">Lift</p>
+                            <p className="text-base font-bold text-gray-100">{propertyFinalDetails.property_details.lift}</p>
+                            <p className="text-xs text-gray-400">Lift</p>
                         </div>
                     </div>
                     <div className="flex flex-col space-y-4 w-1/2 items-end text-right">
                         <div>
-                            <p className="text-base font-bold text-gray-900">
+                            <p className="text-base font-bold text-gray-100">
                                 {propertyFinalDetails.property_details.parking_number} {propertyFinalDetails.property_details.parking_type}
                             </p>
-                            <p className="text-xs text-gray-600">Parking</p>
+                            <p className="text-xs text-gray-400">Parking</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">
+                            <p className="text-base font-bold text-gray-100">
                                 {propertyFinalDetails.property_details.floor_number}/{propertyFinalDetails.property_details.total_floor}
                             </p>
-                            <p className="text-xs text-gray-600">Floor</p>
+                            <p className="text-xs text-gray-400">Floor</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.rent_details.non_veg_allowed}</p>
-                            <p className="text-xs text-gray-600">NonVeg</p>
+                            <p className="text-base font-bold text-gray-100">{propertyFinalDetails.rent_details.non_veg_allowed}</p>
+                            <p className="text-xs text-gray-400">NonVeg</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">{propertyFinalDetails.property_details.property_age}</p>
-                            <p className="text-xs text-gray-600">Age Of Building</p>
+                            <p className="text-base font-bold text-gray-100">{propertyFinalDetails.property_details.property_age}</p>
+                            <p className="text-xs text-gray-400">Age Of Building</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="mt-2 bg-white shadow-md">
-                <div className="p-4 border-b border-gray-200">
-                    <h3 className="text-lg font-bold text-black">Owner</h3>
+            <div className="mt-2 bg-neutral-900 shadow-md">
+                <div className="p-4 border-b border-neutral-700">
+                    <h3 className="text-lg font-bold text-white">Owner</h3>
                 </div>
                 <div className="p-4">
-                    <p className="text-lg font-medium text-black">{propertyFinalDetails.owner_details.name}</p>
-                    <p className="text-base text-gray-800">{propertyFinalDetails.owner_details.address}</p>
-                    <p className="text-base text-gray-800">+91 {propertyFinalDetails.owner_details.mobile1}</p>
+                    <p className="text-lg font-medium text-white">{propertyFinalDetails.owner_details.name}</p>
+                    <p className="text-base text-gray-200">{propertyFinalDetails.owner_details.address}</p>
+                    <p className="text-base text-gray-200">+91 {propertyFinalDetails.owner_details.mobile1}</p>
                 </div>
             </div>
 
@@ -296,11 +296,11 @@ const AddNewPropFinalDetails = props => {
 
             {modalVisible && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                    <div className="bg-neutral-900 p-6 rounded-lg shadow-lg max-w-sm w-full">
                         <p className="text-center mb-4 font-semibold">You are not logged in, please login.</p>
                         <div className="flex justify-end space-x-4">
                             <button
-                                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                className="px-4 py-2 text-gray-400 hover:text-gray-200"
                                 onClick={() => setModalVisible(false)}
                             >
                                 Cancel

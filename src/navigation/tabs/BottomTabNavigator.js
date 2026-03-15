@@ -27,7 +27,7 @@ const BottomTabScreen = () => {
                 </Routes>
             </div>
 
-            <div className="fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around items-center h-16 z-50">
+            <div className="fixed bottom-0 w-full bg-neutral-900 border-t border-neutral-700 flex justify-around items-center h-16 z-50">
                 <Link to="/search" className="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-500">
                     <MdPublic size={26} color={isActive('/search') ? '#ff5733' : '#828282'} />
                 </Link>

@@ -258,7 +258,7 @@ const Profile = props => {
                 {/* Contact Information */}
                 <div style={styles.contactSection}>
                     <div style={styles.contactRow}>
-                        <MdMap color="#000000" size={20} />
+                        <MdMap color="var(--foreground)" size={20} />
                         <span style={styles.contactText}>
                             {props.userDetails && props.userDetails.city
                                 ? props.userDetails.city
@@ -266,7 +266,7 @@ const Profile = props => {
                         </span>
                     </div>
                     <div style={styles.contactRow}>
-                        <MdPhone color="#000000" size={20} />
+                        <MdPhone color="var(--foreground)" size={20} />
                         <span style={styles.contactText}>
                             {props.userDetails && props.userDetails.mobile
                                 ? props.userDetails.mobile
@@ -279,10 +279,10 @@ const Profile = props => {
                 {(props.userDetails && props.userDetails.user_type === "agent") && (
                     <div style={styles.actionButtons}>
                         <div onClick={() => setModalVisible(true)} style={styles.actionButton}>
-                            <MdPersonOff color="#000000" size={20} />
+                            <MdPersonOff color="var(--foreground)" size={20} />
                         </div>
                         <div onClick={() => openEditProfile()} style={styles.actionButton}>
-                            <MdEdit color="#000000" size={20} />
+                            <MdEdit color="var(--foreground)" size={20} />
                         </div>
                     </div>
                 )}
@@ -290,7 +290,7 @@ const Profile = props => {
                 {(props.userDetails && props.userDetails.user_type === "employee") && (
                     <div style={styles.actionButtons}>
                         <div onClick={() => setModalVisible(true)} style={styles.actionButton}>
-                            <MdPersonOff color="#000000" size={20} />
+                            <MdPersonOff color="var(--foreground)" size={20} />
                         </div>
                     </div>
                 )}
@@ -386,14 +386,14 @@ const Profile = props => {
 const styles = {
     container: {
         flex: 1,
-        backgroundColor: "#ffffff",
+        backgroundColor: "var(--background)",
         marginTop: 0,
         minHeight: '100vh',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     },
     header: {
         padding: '20px 20px 15px',
-        borderBottom: '1px solid #f0f0f0',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
     },
     profileSection: {
         marginBottom: 20,
@@ -407,15 +407,15 @@ const styles = {
         width: 80,
         height: 80,
         borderRadius: '50%',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         border: '2px solid rgba(127, 255, 212, 0.9)',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
     },
     avatarText: {
-        color: "#333",
+        color: "var(--foreground)",
         fontSize: 32,
         fontWeight: "600",
     },
@@ -426,12 +426,12 @@ const styles = {
         margin: '0 0 5px 0',
         fontSize: 24,
         fontWeight: "700",
-        color: "#000000",
+        color: "var(--foreground)",
         lineHeight: 1.2,
     },
     companyName: {
         fontSize: 14,
-        color: "#666",
+        color: "rgba(255, 255, 255, 0.6)",
         fontWeight: "500",
     },
     contactSection: {
@@ -444,7 +444,7 @@ const styles = {
         marginBottom: 10,
     },
     contactText: {
-        color: "#000000",
+        color: "var(--foreground)",
         marginLeft: 15,
         fontSize: 16,
     },
@@ -462,7 +462,7 @@ const styles = {
         transition: 'background-color 0.2s',
     },
     actionButtonHover: {
-        backgroundColor: '#f5f5f5',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
     },
     employeeSection: {
         marginTop: 20,
@@ -472,17 +472,17 @@ const styles = {
         margin: '10px 0',
     },
     divider: {
-        borderBottom: "1px solid rgba(211, 211, 211, 0.5)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
         margin: '10px 20px 0',
     },
     menuContainer: {
         marginTop: 10,
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
         borderRadius: '12px',
         overflow: 'hidden',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.2)',
         margin: '20px',
     },
     menuItem: {
@@ -491,11 +491,11 @@ const styles = {
         alignItems: 'center',
         padding: '16px 20px',
         cursor: 'pointer',
-        borderBottom: '1px solid #f0f0f0',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
         transition: 'background-color 0.2s',
     },
     menuItemHover: {
-        backgroundColor: '#f9f9f9',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
     },
     menuItemInner: {
         display: 'flex',
@@ -503,7 +503,7 @@ const styles = {
         alignItems: 'center',
     },
     menuItemText: {
-        color: "#333",
+        color: "var(--foreground)",
         marginLeft: 20,
         fontWeight: "600",
         fontSize: 16,
@@ -517,7 +517,7 @@ const styles = {
         justifyContent: 'space-between',
         padding: '16px 20px',
         cursor: 'pointer',
-        borderBottom: '1px solid #f0f0f0',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
         transition: 'background-color 0.2s',
     },
     emailDataContent: {
@@ -526,13 +526,13 @@ const styles = {
         flex: 1,
     },
     emailText: {
-        color: "#666",
+        color: "rgba(255, 255, 255, 0.6)",
         fontSize: 14,
         marginTop: 4,
         marginLeft: 45,
     },
     lastBackupDate: {
-        color: "#0f1a20",
+        color: "var(--foreground)",
         fontSize: 14,
         fontWeight: "500",
     },
@@ -542,7 +542,7 @@ const styles = {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -550,26 +550,26 @@ const styles = {
         padding: '20px',
     },
     modalContent: {
-        backgroundColor: 'white',
+        backgroundColor: '#1a1a1a',
         borderRadius: 20,
         padding: 35,
         maxWidth: 450,
         width: '100%',
-        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
+        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
     },
     modalWarning: {
-        color: "#e53935",
+        color: "#ff6b6b",
         marginBottom: 12,
         fontSize: 18,
         fontWeight: "600",
         lineHeight: 1.4,
     },
     modalDescription: {
-        color: "#666",
+        color: "rgba(255, 255, 255, 0.7)",
         fontSize: 15,
         lineHeight: 1.5,
         marginBottom: 25,
@@ -583,7 +583,7 @@ const styles = {
     },
     cancelButton: {
         padding: '12px 24px',
-        backgroundColor: '#2196F3',
+        backgroundColor: '#1976D2',
         borderRadius: 8,
         color: 'white',
         cursor: 'pointer',
@@ -592,7 +592,7 @@ const styles = {
     },
     deleteButton: {
         padding: '12px 24px',
-        backgroundColor: '#f44336',
+        backgroundColor: '#d32f2f',
         borderRadius: 8,
         color: 'white',
         cursor: 'pointer',

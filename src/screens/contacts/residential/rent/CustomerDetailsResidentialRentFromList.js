@@ -12,14 +12,14 @@ const Avatar = ({ title, size, avatarStyle, titleStyle }) => (
             width: size,
             height: size,
             borderRadius: size / 2,
-            backgroundColor: "#ccc",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             ...avatarStyle,
         }}
     >
-        <span style={{ fontSize: size / 2, ...titleStyle }}>{title}</span>
+        <span style={{ fontSize: size / 2, color: "var(--foreground)", ...titleStyle }}>{title}</span>
     </div>
 );
 
@@ -68,8 +68,8 @@ const CustomerDetailsResidentialRentFromList = props => {
                     display: 'flex',
                     alignItems: 'center',
                     padding: '15px 20px',
-                    borderBottom: '1px solid #d0d0d0',
-                    backgroundColor: '#fff',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                    backgroundColor: 'var(--background)',
                     position: 'sticky',
                     top: 0,
                     zIndex: 10,
@@ -80,12 +80,12 @@ const CustomerDetailsResidentialRentFromList = props => {
                         display: 'flex',
                         alignItems: 'center',
                     }}>
-                        <MdArrowBack size={24} color="#333" />
+                        <MdArrowBack size={24} color="var(--foreground)" />
                     </div>
                     <h1 style={{
                         fontSize: '20px',
                         fontWeight: '600',
-                        color: '#333',
+                        color: 'var(--foreground)',
                         margin: 0,
                     }}>Customer Details</h1>
                 </div>
@@ -95,7 +95,7 @@ const CustomerDetailsResidentialRentFromList = props => {
                     flex: 1,
                     flexDirection: "row",
                     alignItems: "flex-start",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "var(--background)",
                     display: 'flex',
                     padding: 10
                 }}
@@ -106,7 +106,7 @@ const CustomerDetailsResidentialRentFromList = props => {
                     title={
                         item.customer_details.name && item.customer_details.name.slice(0, 1)
                     }
-                    titleStyle={{ color: "#000" }}
+                    titleStyle={{ color: "var(--foreground)" }}
                     avatarStyle={{
                         borderWidth: 1,
                         borderColor: "rgba(127,255,212, .9)",
@@ -132,19 +132,19 @@ const CustomerDetailsResidentialRentFromList = props => {
                         backgroundColor: 'rgba(234, 155, 20, 0.7)', position: 'absolute', right: 0, top: 0, alignItems: 'center', justifyContent: 'center',
                         width: 38, height: 20, marginRight: 0, display: 'flex'
                     }}>
-                        <span style={{ fontSize: 15, fontWeight: '500', color: '#000', paddingLeft: 0 }}>{item.match_count ? item.match_count : 0}</span>
+                        <span style={{ fontSize: 15, fontWeight: '500', color: "var(--foreground)", paddingLeft: 0 }}>{item.match_count ? item.match_count : 0}</span>
                     </div>
                     <div style={{
                         position: 'absolute', right: 0, top: 20, transform: 'rotate(270deg)',
                         backgroundColor: 'rgba(80, 200, 120, 0.7)', alignItems: 'center', justifyContent: 'center',
                         width: 70, height: 35, padding: 0, marginRight: -15, marginTop: 20, marginBottom: 15, display: 'flex'
                     }}>
-                        <span style={{ fontSize: 14, fontWeight: '300', color: '#000' }}>Match</span>
+                        <span style={{ fontSize: 14, fontWeight: '300', color: "var(--foreground)" }}>Match</span>
                     </div>
                 </div>}
             </div>
 
-            <div style={{ ...styles.detailsContainer, backgroundColor: "#ffffff" }}>
+            <div style={{ ...styles.detailsContainer, backgroundColor: "var(--background)" }}>
                 <div style={styles.details}>
                     <div style={styles.subDetails}>
                         <span style={{ ...styles.subDetailsValue, paddingTop: 5, display: 'block' }}>
@@ -182,7 +182,7 @@ const CustomerDetailsResidentialRentFromList = props => {
                     <div
                         style={{ justifyContent: "space-between", flexDirection: "row", display: 'flex' }}
                     >
-                        <span style={{ color: '#000', fontWeight: '500' }}>Details</span>
+                        <span style={{ color: 'var(--foreground)', fontWeight: '500' }}>Details</span>
                     </div>
                     <div style={styles.horizontalLine}></div>
                 </div>
@@ -251,7 +251,7 @@ const styles = {
     },
     card: {
         boxShadow: '0px 2px 4px rgba(0,0,0,0.25)',
-        backgroundColor: "#ffffff"
+        backgroundColor: "var(--background)"
     },
     cardImage: {
         alignSelf: "stretch",
@@ -271,12 +271,13 @@ const styles = {
         fontSize: 16,
         fontWeight: "600",
         display: 'block',
-        color: '#000'
+        color: 'var(--foreground)'
     },
     subTitle: {
         fontSize: 14,
         fontWeight: "400",
-        color: "#333"
+        color: "var(--foreground)",
+        opacity: 0.7
     },
     detailsContainer: {
         height: 60
@@ -293,20 +294,21 @@ const styles = {
     subDetailsTitle: {
         fontSize: 12,
         fontWeight: "400",
-        color: '#666'
+        color: 'var(--foreground)',
+        opacity: 0.7
     },
     subDetailsValue: {
         fontSize: 14,
         fontWeight: "600",
-        color: '#000'
+        color: 'var(--foreground)'
     },
     verticalLine: {
         height: "70%",
         width: 1,
-        backgroundColor: "#909090"
+        backgroundColor: "rgba(255, 255, 255, 0.2)"
     },
     horizontalLine: {
-        borderBottomColor: "#ffffff",
+        borderBottomColor: "rgba(255, 255, 255, 0.1)",
         borderBottomWidth: 1,
         marginLeft: 5,
         marginRight: 5,
@@ -314,7 +316,7 @@ const styles = {
     },
     overviewContainer: {
         boxShadow: '0px 2px 4px rgba(0,0,0,0.25)',
-        backgroundColor: "#E0E0E0"
+        backgroundColor: "rgba(255, 255, 255, 0.05)"
     },
     overview: {
         padding: 10

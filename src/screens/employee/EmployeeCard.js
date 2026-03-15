@@ -349,7 +349,7 @@ const EmployeeCard = props => {
                         display: "flex",
                         flexDirection: "row",
                         alignItems: "flex-start",
-                        backgroundColor: "#ffffff",
+                        backgroundColor: "var(--background)",
                         justifyContent: 'center',
                         position: 'relative'
                     }}
@@ -473,11 +473,11 @@ const EmployeeCard = props => {
                 style={{
                     display: "flex",
                     flexDirection: "row",
-                    paddingLeft: 30, backgroundColor: "rgba(220,220,220, .2)",
+                    paddingLeft: 30, backgroundColor: "rgba(255, 255, 255, 0.05)",
                     alignItems: 'center'
                 }}>
                 <IoMdPin
-                    color={"#000"}
+                    color={"var(--foreground)"}
                     size={16}
                     style={{ marginLeft: 10, marginTop: 10 }}
                 />
@@ -559,11 +559,11 @@ const EmployeeCard = props => {
 
 const styles = {
     card: {
-        backgroundColor: "#ffffff",
+        backgroundColor: "var(--background)",
         // borderRadius: 10, // Removed for edge-to-edge
         // margin: 10, // Removed for edge-to-edge
         // boxShadow: "0px 2px 4px rgba(0,0,0,0.2)", // Optional: Remove shadow for flat list
-        borderBottom: '1px solid #eee', // Add separator
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)', // Add separator
         overflow: 'hidden',
         position: 'relative'
     },
@@ -574,15 +574,15 @@ const styles = {
     title: {
         fontSize: 18,
         fontWeight: "bold",
-        color: "#000"
+        color: "var(--foreground)"
     },
     subTitle: {
         fontSize: 14,
-        color: "#666"
+        color: "rgba(255, 255, 255, 0.6)"
     },
     subTitleA: {
         fontSize: 14,
-        color: "#000"
+        color: "var(--foreground)"
     },
     detailsContainer: {
         padding: 10
@@ -600,12 +600,12 @@ const styles = {
     },
     subDetailsValue: {
         fontSize: 12,
-        color: "#666"
+        color: "rgba(255, 255, 255, 0.6)"
     },
     subDetailsTitle: {
         fontSize: 16,
         fontWeight: "bold",
-        color: "#000"
+        color: "var(--foreground)"
     },
     verticalLine: {
         width: 1,
@@ -620,7 +620,7 @@ const styles = {
     Main_Sliding_Drawer_Container: {
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: '#fff',
+        backgroundColor: 'var(--background)',
         height: '100%',
         alignItems: 'center'
     },
@@ -637,11 +637,11 @@ const styles = {
         alignItems: "center",
     },
     modalView: {
-        backgroundColor: "white",
+        backgroundColor: "#1a1a1a",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
-        boxShadow: "0px 2px 4px rgba(0,0,0,0.25)",
+        boxShadow: "0px 2px 4px rgba(0,0,0,0.5)",
         display: 'flex',
         flexDirection: 'column',
         gap: 20
@@ -650,12 +650,12 @@ const styles = {
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: '#000'
+        color: 'var(--foreground)'
     },
     modalTextSub: {
         fontSize: 14,
         textAlign: 'center',
-        color: '#666'
+        color: 'rgba(255, 255, 255, 0.6)'
     }
 };
 

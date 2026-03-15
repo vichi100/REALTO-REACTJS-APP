@@ -6,14 +6,14 @@ const DoughnutChart = ({
     holeRadius = 60,
     strokeWidth = 30,
     colors = [],
-    textColor = '#000',
+    textColor = '#ffffff',
     textSize = 24,
     showPercentage = true
 }) => {
     // Default colors if none provided
     const defaultColors = [
-        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
-        '#FF9F40', '#8AC24A', '#607D8B', '#E91E63', '#00BCD4'
+        '#22c55e', '#f97316', '#00BCD4', '#9C27B0', '#E91E63',
+        '#FF5722', '#8BC34A', '#607D8B', '#2196F3', '#FFC107'
     ];
 
     const chartColors = colors.length ? colors : defaultColors;

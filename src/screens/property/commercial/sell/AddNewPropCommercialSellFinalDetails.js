@@ -102,7 +102,7 @@ const AddNewPropCommercialSellFinalDetails = props => {
             );
     };
     return propertyFinalDetails ? (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.headerContainer}>
                 <h3 style={styles.title}>
                     {propertyFinalDetails.property_details.property_used_for} {"For Sell In "}
@@ -313,7 +313,7 @@ const styles = {
     detailsContainer: {
         height: 60,
         borderTopWidth: 1,
-        borderTopColor: "#C0C0C0",
+        borderTopColor: "rgba(255, 255, 255, 0.1)",
         backgroundColor: "rgba(220,220,220, 0.80)"
     },
     details: {
@@ -338,10 +338,10 @@ const styles = {
     verticalLine: {
         height: "70%",
         width: 1,
-        backgroundColor: "#909090"
+        backgroundColor: "rgba(255, 255, 255, 0.2)"
     },
     horizontalLine: {
-        borderBottomColor: "#E0E0E0",
+        borderBottomColor: "rgba(255, 255, 255, 0.1)",
         borderBottomWidth: 1,
         marginLeft: 5,
         marginRight: 5,
@@ -349,7 +349,7 @@ const styles = {
     },
     overviewContainer: {
         boxShadow: "0px 2px 4px rgba(0,0,0,0.2)",
-        backgroundColor: "white"
+        backgroundColor: "var(--background)"
     },
     overview: {
         padding: 10
@@ -392,7 +392,7 @@ const styles = {
         zIndex: 1000
     },
     modalView: {
-        backgroundColor: "white",
+        backgroundColor: "var(--background)",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",

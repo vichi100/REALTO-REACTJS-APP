@@ -147,75 +147,75 @@ const ResidentialPropertyDetailsForm = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-50 overflow-y-auto">
-            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+        <div className="flex flex-col h-full bg-neutral-800 overflow-y-auto">
+            <div className="bg-neutral-900 px-4 py-3 flex items-center shadow-sm border-b border-neutral-700">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    className="mr-3 p-1 rounded-full hover:bg-neutral-800 focus:outline-none"
                     aria-label="Go back"
                 >
-                    <MdArrowBack className="text-gray-700 text-xl" />
+                    <MdArrowBack className="text-gray-300 text-xl" />
                 </button>
-                <h1 className="text-lg font-medium text-gray-900">Property Details</h1>
+                <h1 className="text-lg font-medium text-gray-100">Property Details</h1>
             </div>
             <div className="p-4">
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">House Type*</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">House Type*</label>
                     <CustomButtonGroup
                         buttons={AppConstant.HOUSE_TYPE_OPTION}
                         selectedIndices={[AppConstant.HOUSE_TYPE_OPTION.findIndex(option => option.text === houseType)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setHouseType(button.text)}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Size of BHK*</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Size of BHK*</label>
                     <CustomButtonGroup
                         buttons={AppConstant.BHK_OPTION}
                         selectedIndices={[AppConstant.BHK_OPTION.findIndex(option => option.text === bhkType)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setBHKType(button.text)}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">How many wash rooms*</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">How many wash rooms*</label>
                     <CustomButtonGroup
                         buttons={washroomOption}
                         selectedIndices={[washroomOption.findIndex(option => option.text === washroomNumber)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setWashroomNumber(button.text)}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Furnishing*</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Furnishing*</label>
                     <CustomButtonGroup
                         buttons={AppConstant.FURNISHING_STATUS_OPTION}
                         selectedIndices={[AppConstant.FURNISHING_STATUS_OPTION.findIndex(option => option.text === furnishingStatus)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setFurnishingStatus(button.text)}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Parkings*</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Parkings*</label>
                     <CustomButtonGroup
                         buttons={parkingNumberOption}
                         selectedIndices={[parkingNumberOption.findIndex(option => option.text === parkingNumber)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setParkingNumber(button.text)}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
 
                     <div className="flex items-center mt-4 ml-4">
@@ -229,62 +229,62 @@ const ResidentialPropertyDetailsForm = props => {
                             isMultiSelect={false}
                             onButtonPress={(index, button) => setParkingType(button.text)}
                             containerStyle={{ gap: '12px' }}
-                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Property Age*</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Property Age*</label>
                     <CustomButtonGroup
                         buttons={propertyAgeOption}
                         selectedIndices={[propertyAgeOption.findIndex(option => option.text === propertyAge)]}
                         isMultiSelect={false}
                         onButtonPress={(index, button) => setPropertyAge(button.text)}
                         containerStyle={{ gap: '12px' }}
-                        buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     />
                 </div>
 
                 <div className="flex flex-row mb-4 gap-4">
                     <div className="w-1/4">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Floor*</label>
+                        <label className="block text-sm font-medium text-gray-300 mb-1">Floor*</label>
                         <input
                             type="number"
-                            className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900"
+                            className="w-full p-2 border border-neutral-600 rounded bg-neutral-900 text-gray-100"
                             value={floor}
                             onChange={(e) => setFloor(e.target.value)}
                             onFocus={() => setIsVisible(false)}
                         />
                     </div>
                     <div className="w-1/3">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Total Floor*</label>
+                        <label className="block text-sm font-medium text-gray-300 mb-1">Total Floor*</label>
                         <input
                             type="number"
-                            className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900"
+                            className="w-full p-2 border border-neutral-600 rounded bg-neutral-900 text-gray-100"
                             value={totalFloor}
                             onChange={(e) => setTotalFloor(e.target.value)}
                             onFocus={() => setIsVisible(false)}
                         />
                     </div>
                     <div className="ml-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Lift*</label>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">Lift*</label>
                         <CustomButtonGroup
                             buttons={AppConstant.LIFT_AVAILBLE_OPTION}
                             selectedIndices={[AppConstant.LIFT_AVAILBLE_OPTION.findIndex(option => option.text === liftOption)]}
                             isMultiSelect={false}
                             onButtonPress={(index, button) => setLiftOption(button.text)}
                             containerStyle={{ gap: '12px' }}
-                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Property Size*</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">Property Size*</label>
                     <input
                         type="number"
-                        className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900"
+                        className="w-full p-2 border border-neutral-600 rounded bg-neutral-900 text-gray-100"
                         placeholder="Property Size"
                         value={propertySize}
                         onChange={(e) => setPropertySize(e.target.value)}

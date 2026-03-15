@@ -637,18 +637,18 @@ const GlobalCommercialPropertySearchResult = props => {
     const [visibleSorting, setVisibleSorting] = useState(false);
 
     return (
-        <div className="flex flex-col h-full bg-gray-100">
+        <div className="flex flex-col h-full bg-neutral-800">
             {/* Search Bar - High Contrast */}
-            <div className="flex flex-row items-center bg-white p-2 shadow-sm">
+            <div className="flex flex-row items-center bg-neutral-900 p-2 shadow-sm">
                 <div className="relative flex-1">
                     <input
                         type="text"
-                        className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-400 text-black placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                        className="w-full pl-10 pr-4 py-2 rounded-full border border-neutral-600 bg-neutral-900 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
                         placeholder="GLocal Search..."
                         value={search}
                         onChange={e => searchFilterFunction(e.target.value)}
                     />
-                    <div className="absolute left-3 top-2.5 text-gray-600">
+                    <div className="absolute left-3 top-2.5 text-gray-400">
                         <MdSearch size={20} />
                     </div>
                 </div>
@@ -692,7 +692,7 @@ const GlobalCommercialPropertySearchResult = props => {
                     >
                         <MdSort color={"#ffffff"} size={26} />
                     </div>
-                    <div style={{ height: "100%", width: '2px', backgroundColor: "#ffffff" }}></div>
+                    <div style={{ height: "100%", width: '2px', backgroundColor: "var(--background)" }}></div>
                     <div
                         onClick={() => setVisible(!visible)}
                         style={{ paddingLeft: '20px', cursor: 'pointer' }}
@@ -708,49 +708,41 @@ const GlobalCommercialPropertySearchResult = props => {
             {/* Filter Modal - Bottom Sheet */}
             {visible && (
                 <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisible(false)}>
-                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4">
-                            <h3 className="text-lg font-bold text-black">Filter</h3>
+                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-50 -mt-4 -mx-4 px-4">
+                            <h3 className="text-lg font-bold text-white">Filter</h3>
                             <div
                                 onClick={() => resetFilter()}
                                 className="absolute top-0 right-4 cursor-pointer"
                             >
                                 <MdRestartAlt
-                                    color={"#000000"}
+                                    color={"var(--foreground)"}
                                     size={30}
                                 />
                             </div>
                         </div>
 
                         <div className="mb-5">
-                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
+                            <h4 className="font-semibold mb-2 text-white">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={lookingForArray.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndex]}
                                 onButtonPress={selectLookingForIndex}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <h4 className="font-semibold mb-2 text-black">Prop type</h4>
+                            <h4 className="font-semibold mb-2 text-white">Prop type</h4>
                             <CustomButtonGroup
                                 buttons={propertyTypeArray.map(text => ({ text }))}
                                 selectedIndices={[propertyTypeIndex]}
                                 onButtonPress={selectPropertyTypeIndex}
                                 vertical={true}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <h4 className="font-semibold mb-2 text-black">Building type</h4>
+                            <h4 className="font-semibold mb-2 text-white">Building type</h4>
                             <div className="grid grid-cols-2 gap-2">
                                 {buildingTypeArray.map((item, index) => (
                                     <div key={index} className="flex items-center">
@@ -761,7 +753,7 @@ const GlobalCommercialPropertySearchResult = props => {
                                             className="mr-2"
                                             style={{ accentColor: '#00a36c' }}
                                         />
-                                        <span className="text-black">{item}</span>
+                                        <span className="text-white">{item}</span>
                                     </div>
                                 ))}
                             </div>
@@ -777,69 +769,53 @@ const GlobalCommercialPropertySearchResult = props => {
             {/* Sorting Modal - Bottom Sheet */}
             {visibleSorting && (
                 <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={() => setVisibleSorting(false)}>
-                    <div className="bg-white w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-white z-50 -mt-4 -mx-4 px-4">
-                            <h3 className="text-lg font-bold text-black">Sort By</h3>
+                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-50 -mt-4 -mx-4 px-4">
+                            <h3 className="text-lg font-bold text-white">Sort By</h3>
                             <div
                                 onClick={() => resetSortBy()}
                                 className="absolute top-0 right-4 cursor-pointer"
                             >
                                 <MdRestartAlt
-                                    color={"#000000"}
+                                    color={"var(--foreground)"}
                                     size={30}
                                 />
                             </div>
                         </div>
 
                         <div className="mb-5">
-                            <h4 className="font-semibold mb-2 text-black">Looking For</h4>
+                            <h4 className="font-semibold mb-2 text-white">Looking For</h4>
                             <CustomButtonGroup
                                 buttons={lookingForArraySortBy.map(text => ({ text }))}
                                 selectedIndices={[lookingForIndexSortBy]}
                                 onButtonPress={selectLookingForIndexSortBy}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <h4 className="font-semibold mb-2 text-black">Sort By Rent</h4>
+                            <h4 className="font-semibold mb-2 text-white">Sort By Rent</h4>
                             <CustomButtonGroup
                                 buttons={sortByRentArray.map(text => ({ text }))}
                                 selectedIndices={[sortByRentIndex]}
                                 onButtonPress={sortByRent}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <h4 className="font-semibold mb-2 text-black">Sort By Availability</h4>
+                            <h4 className="font-semibold mb-2 text-white">Sort By Availability</h4>
                             <CustomButtonGroup
                                 buttons={sortByAvailabilityArray.map(text => ({ text }))}
                                 selectedIndices={[sortByAvailabilityIndex]}
                                 onButtonPress={sortByAvailability}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 
                         <div className="mb-5">
-                            <h4 className="font-semibold mb-2 text-black">Sort By Posted Date</h4>
+                            <h4 className="font-semibold mb-2 text-white">Sort By Posted Date</h4>
                             <CustomButtonGroup
                                 buttons={sortByPostedDateArray.map(text => ({ text }))}
                                 selectedIndices={[sortByPostedDateIndex]}
                                 onButtonPress={sortByPostedDate}
-                                buttonStyle={{ backgroundColor: '#fff', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c4d' }}
-                                buttonTextStyle={{ color: '#000' }}
-                                selectedButtonTextStyle={{ color: '#000' }}
                             />
                         </div>
 

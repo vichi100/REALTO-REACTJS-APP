@@ -28,7 +28,7 @@ const MessageDetails = () => {
     if (!item) return null;
 
     return (
-        <div className="flex flex-col h-full bg-white overflow-y-auto">
+        <div className="flex flex-col h-full bg-neutral-900 overflow-y-auto">
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -55,13 +55,13 @@ const MessageDetails = () => {
                 }}>Message Details</h1>
             </div>
             <div className="p-2.5 text-base pt-4">
-                <p className="text-base text-gray-700">
+                <p className="text-base text-gray-300">
                     I have customer for your {item.subject.location_area},
                     {item.subject.city} property. Please call me on +91{" "}
                     {item.sender_details.mobile} - {item.subject.name}
                 </p>
                 <div className="flex flex-row justify-start">
-                    <p className="text-right text-gray-700 text-xs mt-1.5">
+                    <p className="text-right text-gray-300 text-xs mt-1.5">
                         {new Date(item.create_date_time).toDateString()}
                     </p>
                 </div>

@@ -135,7 +135,7 @@ const AddNewCustomerBuyResidentialFinalDetails = props => {
             );
     };
     return customerFinalDetails ? (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.headerContainer}>
                 <div
                     style={{
@@ -147,12 +147,12 @@ const AddNewCustomerBuyResidentialFinalDetails = props => {
                         // paddingBottom: 16,
                         // paddingTop: 16,
                         width: "100%",
-                        backgroundColor: "#ffffff"
+                        backgroundColor: "var(--background)"
                     }}
                 >
                     <div style={{
                         width: 80, height: 80, display: 'flex', justifyContent: 'center', alignItems: 'center',
-                        backgroundColor: '#ffffff', color: "#000000", border: '1px solid #000000',
+                        backgroundColor: 'var(--background)', color: 'var(--foreground)', border: '1px solid #000000',
                         fontSize: 32, fontWeight: 'bold'
                     }}>
                         {customerFinalDetails.customer_details.name &&
@@ -220,7 +220,7 @@ const AddNewCustomerBuyResidentialFinalDetails = props => {
             {/* property details */}
             <div style={styles.overviewContainer}>
                 <div style={styles.overview}>
-                    <p style={{ fontSize: 16, fontWeight: "600", color: "#000000", margin: 0 }}>Details</p>
+                    <p style={{ fontSize: 16, fontWeight: "600", color: 'var(--foreground)', margin: 0 }}>Details</p>
                     <div style={styles.horizontalLine}></div>
                 </div>
                 <div style={styles.overviewColumnWrapper}>
@@ -375,7 +375,7 @@ const styles = {
         // shadowOffset: {
         //   height: 0.6 * 5
         // },
-        backgroundColor: "#ffffff"
+        backgroundColor: "var(--background)"
     },
     cardImage: {
         alignSelf: "stretch",
@@ -396,12 +396,12 @@ const styles = {
         fontSize: 16,
         fontWeight: "600",
         margin: 0,
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     subTitle: {
         fontSize: 14,
         fontWeight: "400",
-        color: "#000000",
+        color: 'var(--foreground)',
         margin: 0
     },
     detailsContainer: {
@@ -409,7 +409,7 @@ const styles = {
         height: 60,
         borderTopWidth: 1,
         borderTopColor: "#000000",
-        backgroundColor: "#ffffff"
+        backgroundColor: "var(--background)"
     },
 
     details: {
@@ -425,18 +425,18 @@ const styles = {
         fontSize: 12,
         fontWeight: "400",
         margin: 0,
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     subDetailsValue: {
         fontSize: 14,
         fontWeight: "600",
         margin: 0,
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     verticalLine: {
         height: "70%",
         width: 1,
-        backgroundColor: "#000000"
+        backgroundColor: "var(--foreground)"
     },
 
     horizontalLine: {
@@ -452,7 +452,7 @@ const styles = {
         // shadowOffset: {
         //   height: 0.6 * 5
         // },
-        backgroundColor: "white"
+        backgroundColor: "var(--card)"
     },
     overview: {
         padding: 10
@@ -503,7 +503,7 @@ const styles = {
     modalView: {
         margin: 20,
         height: 150,
-        backgroundColor: "white",
+        backgroundColor: "var(--card)",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",

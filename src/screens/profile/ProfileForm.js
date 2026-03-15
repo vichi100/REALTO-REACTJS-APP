@@ -86,17 +86,17 @@ const ProfileForm = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.header}>
                 <div onClick={handleBack} style={styles.backButton}>
-                    <MdArrowBack size={24} color="#333" />
+                    <MdArrowBack size={24} color="var(--foreground)" />
                 </div>
                 <h1 style={styles.title}>Edit Profile</h1>
             </div>
             <div style={styles.container}>
                 <div style={styles.propSection}>
                     <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: '#000' }}>Name*</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: 'var(--foreground)' }}>Name*</label>
                         <input
                             value={name}
                             onChange={e => setName(e.target.value)}
@@ -105,7 +105,7 @@ const ProfileForm = props => {
                         />
                     </div>
                     <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: '#000' }}>City*</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: 'var(--foreground)' }}>City*</label>
                         <input
                             value={city}
                             onChange={e => setCity(e.target.value)}
@@ -114,7 +114,7 @@ const ProfileForm = props => {
                         />
                     </div>
                     <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: '#000' }}>Company</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: 'var(--foreground)' }}>Company</label>
                         <input
                             value={company}
                             onChange={e => setCompany(e.target.value)}
@@ -123,7 +123,7 @@ const ProfileForm = props => {
                         />
                     </div>
                     <div style={{ marginTop: 8 }}>
-                        <label style={{ display: 'block', marginBottom: 5, color: '#000' }}>Email</label>
+                        <label style={{ display: 'block', marginBottom: 5, color: 'var(--foreground)' }}>Email</label>
                         <input
                             value={email}
                             onChange={e => setEmail(e.target.value)}
@@ -160,8 +160,8 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         padding: '15px 20px',
-        borderBottom: '1px solid #f0f0f0',
-        backgroundColor: '#fff',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        backgroundColor: 'var(--background)',
         position: 'sticky',
         top: 0,
         zIndex: 10,
@@ -175,7 +175,7 @@ const styles = {
     title: {
         fontSize: '20px',
         fontWeight: '600',
-        color: '#333',
+        color: 'var(--foreground)',
         margin: 0,
     },
     propSection: {
@@ -185,9 +185,10 @@ const styles = {
         width: '100%',
         padding: 10,
         borderRadius: 5,
-        border: '1px solid #ccc',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
         fontSize: 16,
-        color: '#000'
+        color: 'var(--foreground)',
+        backgroundColor: 'transparent'
     }
 };
 

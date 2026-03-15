@@ -290,20 +290,20 @@ const GlobalSearch = props => {
     };
 
     const SectionHeader = ({ title }) => (
-        <div className="w-full bg-gray-100 px-4 py-2 mt-2">
-            <span className="text-gray-700 font-medium text-sm">{title}</span>
+        <div className="w-full bg-neutral-800 px-4 py-2 mt-2">
+            <span className="text-gray-300 font-medium text-sm">{title}</span>
         </div>
     );
 
     return (
 
-        <div className="flex flex-col min-h-full bg-white font-sans text-gray-900 relative">
+        <div className="flex flex-col min-h-full bg-neutral-900 font-sans text-gray-100 relative">
             {/* Header */}
-            <div className="bg-white sticky top-0 z-40 shadow-sm border-b border-gray-100">
+            <div className="bg-neutral-900 sticky top-0 z-40 shadow-sm border-b border-gray-100">
                 <div className="flex justify-between items-center px-4 py-3">
                     <div className="flex items-center gap-3">
                         <img src="/assets/images/home.png" alt="Logo" className="w-8 h-8" />
-                        <span className="text-xl font-bold text-gray-900">GLocal Search</span>
+                        <span className="text-xl font-bold text-gray-100">GLocal Search</span>
                     </div>
                     <MdFavoriteBorder size={26} className="text-gray-400" />
                 </div>
@@ -326,7 +326,7 @@ const GlobalSearch = props => {
                             placeholder="City where you want to search*"
                             value={city}
                             onChange={e => setCity(e.target.value)}
-                            className="w-full border-b border-gray-300 py-3 text-gray-900 placeholder-gray-500 focus:border-teal-500 focus:outline-none transition-colors"
+                            className="w-full border-b border-neutral-600 py-3 text-gray-100 placeholder-gray-500 focus:border-teal-500 focus:outline-none transition-colors"
                         />
                     </div>
 
@@ -335,6 +335,7 @@ const GlobalSearch = props => {
                             apiKey={GOOGLE_PLACES_API_KEY}
                             selectProps={{
                                 value: address,
+                                isClearable: true,
                                 placeholder: 'Add multiple locations within city',
                                 onChange: (val) => onSelectPlace(val),
                                 styles: {
@@ -343,19 +344,32 @@ const GlobalSearch = props => {
                                         ...provided,
                                         backgroundColor: 'transparent',
                                         border: 'none',
-                                        borderBottom: '1px solid #e5e7eb',
+                                        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
                                         borderRadius: '0',
                                         padding: '8px 0',
                                         boxShadow: 'none',
-                                        '&:hover': { borderBottom: '1px solid #d1d5db' }
+                                        '&:hover': { borderBottom: '1px solid rgba(255, 255, 255, 0.3)' }
                                     }),
-                                    input: (provided) => ({ ...provided, color: '#111827', padding: 0 }),
-                                    placeholder: (provided) => ({ ...provided, color: '#6b7280', padding: 0 }),
+                                    input: (provided) => ({ ...provided, color: 'var(--foreground)', padding: 0 }),
+                                    placeholder: (provided) => ({ ...provided, color: 'rgba(255, 255, 255, 0.4)', padding: 0 }),
                                     menu: (provided) => ({
                                         ...provided,
                                         marginTop: '8px',
-                                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                                        backgroundColor: '#1e1e1e',
+                                        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)',
                                         zIndex: 9999,
+                                    }),
+                                    option: (provided, state) => ({
+                                        ...provided,
+                                        color: 'var(--foreground)',
+                                        backgroundColor: state.isFocused ? 'rgba(255, 255, 255, 0.1)' : '#1e1e1e',
+                                    }),
+                                    clearIndicator: (provided) => ({
+                                        ...provided,
+                                        color: 'rgba(255, 255, 255, 0.4)',
+                                        '&:hover': {
+                                            color: 'var(--foreground)',
+                                        },
                                     }),
                                 },
                             }}
@@ -365,15 +379,15 @@ const GlobalSearch = props => {
                     {selectedLocationArray.length > 0 && (
                         <div className="flex flex-wrap gap-2 pt-2">
                             {selectedLocationArray.map((item, index) => (
-                                <div key={index} className="flex items-center bg-teal-50 border border-teal-100 rounded-md px-2 py-1">
-                                    <span className="text-xs font-medium text-teal-700 mr-1 max-w-[150px] truncate">
+                                <div key={index} className="flex items-center bg-teal-600/20 border border-teal-500/30 rounded-md px-2 py-1">
+                                    <span className="text-xs font-medium text-teal-400 mr-2 max-w-[150px] truncate">
                                         {item.main_text}
                                     </span>
                                     <button
                                         onClick={() => removeLocation(item)}
-                                        className="text-teal-400 hover:text-teal-600"
+                                        className="text-gray-400 hover:text-red-400 transition-colors"
                                     >
-                                        <MdClose size={14} />
+                                        <MdClose size={16} />
                                     </button>
                                 </div>
                             ))}
@@ -383,37 +397,34 @@ const GlobalSearch = props => {
 
                 {/* Looking For */}
                 <SectionHeader title="What you are looking for" />
-                <div className="bg-gray-50/50 p-4">
+                <div className="bg-neutral-800/50 p-4">
                     <CustomButtonGroup
                         buttons={lookingForOptions}
                         selectedIndices={[lookingForOptions.findIndex(option => option.text === lookingFor)]}
                         onButtonPress={selectWhatYouLookingFor}
-                        buttonStyle={imgButtonStyle}
-                        selectedButtonStyle={imgSelectedButtonStyle}
+                        buttonStyle={{ borderRadius: '6px' }}
                     />
                 </div>
 
                 {/* Property Type */}
                 <SectionHeader title="What type" />
-                <div className="bg-gray-50/50 p-4">
+                <div className="bg-neutral-800/50 p-4">
                     <CustomButtonGroup
                         buttons={whatTypeOptions}
                         selectedIndices={[whatTypeOptions.findIndex(option => option.text === whatType)]}
                         onButtonPress={selectWhatType}
-                        buttonStyle={imgButtonStyle}
-                        selectedButtonStyle={imgSelectedButtonStyle}
+                        buttonStyle={{ borderRadius: '6px' }}
                     />
                 </div>
 
                 {/* Purpose */}
                 <SectionHeader title="What is purpose" />
-                <div className="bg-gray-50/50 p-4">
+                <div className="bg-neutral-800/50 p-4">
                     <CustomButtonGroup
                         buttons={porposeForOptions}
                         selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
                         onButtonPress={(index, button) => setPurpose(button.text)}
-                        buttonStyle={imgButtonStyle}
-                        selectedButtonStyle={imgSelectedButtonStyle}
+                        buttonStyle={{ borderRadius: '6px' }}
                     />
                 </div>
 
@@ -421,21 +432,20 @@ const GlobalSearch = props => {
                 {whatType.toLowerCase() === "residential" ? (
                     <>
                         <SectionHeader title="BHK Size" />
-                        <div className="bg-gray-50/50 p-4">
+                        <div className="bg-neutral-800/50 p-4">
                             <CustomButtonGroup
                                 buttons={bhkOption}
                                 isMultiSelect={true}
                                 selectedIndices={selectedBHK.map(item => bhkOption.findIndex(option => option.text === item))}
                                 onButtonPress={selectBHK}
-                                buttonStyle={imgButtonStyle}
-                                selectedButtonStyle={imgSelectedButtonStyle}
+                                buttonStyle={{ borderRadius: '6px' }}
                             />
                         </div>
                     </>
                 ) : (
                     <>
                         <SectionHeader title="Required For" />
-                        <div className="bg-gray-50/50 p-4">
+                        <div className="bg-neutral-800/50 p-4">
                             <CustomButtonGroup
                                 buttons={requiredForOption}
                                 isMultiSelect={true}
@@ -449,13 +459,12 @@ const GlobalSearch = props => {
                                     }
                                     setSelectedRequiredFor(newSelected);
                                 }}
-                                buttonStyle={imgButtonStyle}
-                                selectedButtonStyle={imgSelectedButtonStyle}
+                                buttonStyle={{ borderRadius: '6px' }}
                             />
                         </div>
 
                         <SectionHeader title="Building Type" />
-                        <div className="bg-gray-50/50 p-4">
+                        <div className="bg-neutral-800/50 p-4">
                             <CustomButtonGroup
                                 buttons={buildingTypeOption}
                                 isMultiSelect={true}
@@ -469,8 +478,7 @@ const GlobalSearch = props => {
                                     }
                                     setSelectedBuildingType(newSelected);
                                 }}
-                                buttonStyle={imgButtonStyle}
-                                selectedButtonStyle={imgSelectedButtonStyle}
+                                buttonStyle={{ borderRadius: '6px' }}
                             />
                         </div>
                     </>
@@ -478,7 +486,7 @@ const GlobalSearch = props => {
 
                 {/* Price Range */}
                 <SectionHeader title="Price Range" />
-                <div className="bg-gray-50/50 p-6">
+                <div className="bg-neutral-800/50 p-6">
                     {purpose === "Rent" ? (
                         <Slider
                             min={10000}
@@ -498,13 +506,12 @@ const GlobalSearch = props => {
 
                 {/* Timeline */}
                 <SectionHeader title="Required within" />
-                <div className="bg-gray-50/50 p-4">
+                <div className="bg-neutral-800/50 p-4">
                     <CustomButtonGroup
                         buttons={reqWithinOptions}
                         selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
                         onButtonPress={(index, button) => setReqWithin(button.text)}
-                        buttonStyle={imgButtonStyle}
-                        selectedButtonStyle={imgSelectedButtonStyle}
+                        buttonStyle={{ borderRadius: '6px' }}
                     />
                 </div>
 
@@ -512,13 +519,12 @@ const GlobalSearch = props => {
                 {whatType.toLowerCase() === "residential" && (
                     <>
                         <SectionHeader title="Preferred Tenant" />
-                        <div className="bg-gray-50/50 p-4">
+                        <div className="bg-neutral-800/50 p-4">
                             <CustomButtonGroup
                                 buttons={tenantOptions}
                                 selectedIndices={[tenantOptions.findIndex(option => option.text === tenant)]}
                                 onButtonPress={(index, button) => setTenant(button.text)}
-                                buttonStyle={imgButtonStyle}
-                                selectedButtonStyle={imgSelectedButtonStyle}
+                                buttonStyle={{ borderRadius: '6px' }}
                             />
                         </div>
                     </>
@@ -529,7 +535,7 @@ const GlobalSearch = props => {
 
             {/* Floating Footer Action */}
             <div
-                className="fixed bottom-[62px] left-0 right-0 px-4 py-2 z-40 bg-white shadow-lg"
+                className="fixed bottom-[62px] left-0 right-0 px-4 py-2 z-40 bg-neutral-900 shadow-lg"
             >
                 <Button
                     title="Search"
@@ -552,13 +558,13 @@ const GlobalSearch = props => {
             {
                 modalVisible && (
                     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4">
-                        <div className="bg-white p-6 rounded-lg shadow-xl max-w-xs w-full">
-                            <h3 className="text-lg font-bold text-gray-900 mb-2">Login Required</h3>
-                            <p className="text-gray-600 mb-6 text-sm">Please login to continue.</p>
+                        <div className="bg-neutral-900 p-6 rounded-lg shadow-xl max-w-xs w-full">
+                            <h3 className="text-lg font-bold text-gray-100 mb-2">Login Required</h3>
+                            <p className="text-gray-400 mb-6 text-sm">Please login to continue.</p>
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => setModalVisible(false)}
-                                    className="flex-1 py-2 text-gray-600 font-medium hover:bg-gray-50 rounded"
+                                    className="flex-1 py-2 text-gray-400 font-medium hover:bg-neutral-800 rounded"
                                 >
                                     Cancel
                                 </button>

@@ -51,16 +51,16 @@ const AddImages = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
-            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+        <div className="flex flex-col h-full bg-neutral-800 overflow-y-auto">
+            <div className="bg-neutral-900 px-4 py-3 flex items-center shadow-sm border-b border-neutral-700">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    className="mr-3 p-1 rounded-full hover:bg-neutral-800 focus:outline-none"
                     aria-label="Go back"
                 >
-                    <MdArrowBack className="text-gray-700 text-xl" />
+                    <MdArrowBack className="text-gray-300 text-xl" />
                 </button>
-                <h1 className="text-lg font-medium text-gray-900">Add Photos</h1>
+                <h1 className="text-lg font-medium text-gray-100">Add Photos</h1>
             </div>
             <div className="p-4 flex-1">
                 <div className="mb-4">
@@ -77,7 +77,7 @@ const AddImages = props => {
 
                 <div className="grid grid-cols-2 gap-2 w-full">
                     {imageArray.map((item, index) => (
-                        <div key={index} className="relative aspect-[4/3] bg-gray-200 rounded overflow-hidden">
+                        <div key={index} className="relative aspect-[4/3] bg-neutral-700 rounded overflow-hidden">
                             <img
                                 src={item.url}
                                 alt={`Selected ${index}`}

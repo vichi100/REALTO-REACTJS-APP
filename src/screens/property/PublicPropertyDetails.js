@@ -43,7 +43,7 @@ const PublicPropertyDetails = () => {
 
     if (loading) {
         return (
-            <div className="flex flex-1 justify-center items-center h-screen bg-white">
+            <div className="flex flex-1 justify-center items-center h-screen bg-neutral-900">
                 Loading Property Details...
             </div>
         );
@@ -51,7 +51,7 @@ const PublicPropertyDetails = () => {
 
     if (error || !fetchedItem) {
         return (
-            <div className="flex flex-1 justify-center items-center h-screen bg-white">
+            <div className="flex flex-1 justify-center items-center h-screen bg-neutral-900">
                 {error || "Property not found."}
             </div>
         );

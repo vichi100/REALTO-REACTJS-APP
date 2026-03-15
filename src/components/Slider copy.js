@@ -22,8 +22,8 @@ const SliderCopy = props => {
     return (
         <div className="flex flex-col justify-between ml-[50px] flex-1">
             <div className="flex flex-row justify-between mt-2.5 px-5">
-                <span className="text-black text-sm">{multiSliderValue[0]} </span>
-                <span className="text-black text-sm">{multiSliderValue[1]}</span>
+                <span className="text-white text-sm">{multiSliderValue[0]} </span>
+                <span className="text-white text-sm">{multiSliderValue[1]}</span>
             </div>
             <div className="ml-5 w-[280px] h-[300px] flex justify-center">
                 <Slider

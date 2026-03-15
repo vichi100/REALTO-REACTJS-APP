@@ -68,8 +68,8 @@ const SliderSmallNum = (props) => {
     return (
         <div className="flex flex-col justify-center items-center w-full">
             <div className="flex flex-row justify-between w-[300px] mb-2.5">
-                <span className="text-black text-sm">{formatValue(selectedRange.min)}</span>
-                <span className="text-black text-sm">
+                <span className="text-white text-sm">{formatValue(selectedRange.min)}</span>
+                <span className="text-white text-sm">
                     {selectedRange.max >= maxValue ? `${formatValue(maxValue)}+` : formatValue(selectedRange.max)}
                 </span>
             </div>

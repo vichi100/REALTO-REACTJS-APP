@@ -192,15 +192,15 @@ const CustomerListForMeeting = props => {
 
     return (
         <div style={{ flex: 1, height: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm" style={{ height: 60, width: '100%' }}>
+            <div className="bg-neutral-900 border-b border-neutral-700 flex items-center p-4 shadow-sm" style={{ height: 60, width: '100%' }}>
                 <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
-                    <MdArrowBack size={24} color="#333" />
+                    <MdArrowBack size={24} color="var(--foreground)" />
                 </div>
-                <h1 className="text-lg font-semibold text-gray-800">Customer List For Meeting</h1>
+                <h1 className="text-lg font-semibold text-gray-200">Customer List For Meeting</h1>
             </div>
             <div style={styles.searchBarContainer}>
                 <div style={styles.searchBar}>
-                    <MdSearch size={20} color="#999" style={{ marginRight: 5, }} />
+                    <MdSearch size={20} color="var(--foreground)" style={{ marginRight: 5, }} />
                     <input
                         style={styles.textInputStyle}
                         onChange={e => searchFilterFunction(e.target.value)}
@@ -230,13 +230,13 @@ const CustomerListForMeeting = props => {
                         flexDirection: 'column'
                     }}
                 >
-                    <span style={{ textAlign: "center" }}>You have no customer</span>
+                    <span style={{ textAlign: "center", color: 'var(--foreground)' }}>You have no customer</span>
                     {props.userDetails && ((props.userDetails.works_for === props.userDetails.id) ||
                         (props.userDetails.user_type === "employee" && EMPLOYEE_ROLE.includes(props.userDetails.employee_role)
                         )) ?
                         <div onClick={() => navigateTo()} style={{ cursor: 'pointer' }}>
                             <span
-                                style={{ color: "#00BFFF", textAlign: "center", marginTop: 20 }}
+                                style={{ color: "var(--blue-500)", textAlign: "center", marginTop: 20 }}
                             >
                                 Add New Customer
                             </span>
@@ -265,11 +265,11 @@ const styles = {
     searchBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: 'var(--background)',
         borderRadius: 8,
         paddingHorizontal: 10,
         paddingVertical: 5,
-        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+        border: '1px solid var(--border)',
         display: 'flex'
     },
     textInputStyle: {
@@ -278,7 +278,9 @@ const styles = {
         paddingLeft: 10,
         border: 'none',
         outline: 'none',
-        fontSize: 16
+        fontSize: 16,
+        color: 'var(--foreground)',
+        backgroundColor: 'transparent'
     },
 };
 

@@ -127,7 +127,7 @@ const AddNewCustomerCommercialRentFinalDetails = props => {
             );
     };
     return customerFinalDetails ? (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", overflowY: 'auto', height: '100vh' }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)", overflowY: 'auto', height: '100vh' }}>
             <div style={styles.headerContainer}>
                 <div
                     style={{
@@ -139,13 +139,13 @@ const AddNewCustomerCommercialRentFinalDetails = props => {
                         // paddingBottom: 16,
                         // paddingTop: 16,
                         width: "100%",
-                        backgroundColor: "#ffffff"
+                        backgroundColor: "var(--background)"
                     }}
                 >
                     {/* Avatar replacement */}
                     <div style={{
                         width: 80, height: 80, display: 'flex', justifyContent: 'center', alignItems: 'center',
-                        backgroundColor: '#ffffff', color: "#000000", border: '1px solid #000000',
+                        backgroundColor: 'var(--background)', color: 'var(--foreground)', border: '1px solid #000000',
                         fontSize: 30, fontWeight: 'bold'
                     }}>
                         {customerFinalDetails.customer_details.name && customerFinalDetails.customer_details.name.slice(0, 1)}
@@ -207,7 +207,7 @@ const AddNewCustomerCommercialRentFinalDetails = props => {
             {/* property details */}
             <div style={styles.overviewContainer}>
                 <div style={styles.overview}>
-                    <p style={{ fontSize: 16, fontWeight: "600", color: "#000000", margin: 0 }}>Details</p>
+                    <p style={{ fontSize: 16, fontWeight: "600", color: 'var(--foreground)', margin: 0 }}>Details</p>
                     <div style={styles.horizontalLine}></div>
                 </div>
                 <div style={styles.overviewColumnWrapper}>
@@ -350,7 +350,7 @@ const styles = {
         //   height: 0.6 * 5
         // },
         boxShadow: '0px 3px 2.7px rgba(0, 0, 0, 0.18)',
-        backgroundColor: "#ffffff"
+        backgroundColor: "var(--background)"
     },
     cardImage: {
         alignSelf: "stretch",
@@ -371,12 +371,12 @@ const styles = {
         fontSize: 16,
         fontWeight: "600",
         margin: 0,
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     subTitle: {
         fontSize: 14,
         fontWeight: "400",
-        color: "#000000", // Changed from white to black for visibility on white/grey bg
+        color: 'var(--foreground)', // Changed from white to black for visibility on white/grey bg
         margin: 0
     },
     detailsContainer: {
@@ -384,7 +384,7 @@ const styles = {
         height: 60,
         borderTopWidth: 1,
         borderTopColor: "#000000",
-        backgroundColor: "#ffffff"
+        backgroundColor: "var(--background)"
     },
 
     details: {
@@ -400,18 +400,18 @@ const styles = {
         fontSize: 12,
         fontWeight: "400",
         margin: 0,
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     subDetailsValue: {
         fontSize: 14,
         fontWeight: "600",
         margin: 0,
-        color: "#000000"
+        color: 'var(--foreground)'
     },
     verticalLine: {
         height: "70%",
         width: 1,
-        backgroundColor: "#000000"
+        backgroundColor: "var(--foreground)"
     },
 
     horizontalLine: {
@@ -428,7 +428,7 @@ const styles = {
         //   height: 0.6 * 5
         // },
         boxShadow: '0px 3px 2.7px rgba(0, 0, 0, 0.18)',
-        backgroundColor: "white"
+        backgroundColor: "var(--card)"
     },
     overview: {
         padding: 10
@@ -475,7 +475,7 @@ const styles = {
     modalView: {
         margin: 20,
         height: 150,
-        backgroundColor: "white",
+        backgroundColor: "var(--card)",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",

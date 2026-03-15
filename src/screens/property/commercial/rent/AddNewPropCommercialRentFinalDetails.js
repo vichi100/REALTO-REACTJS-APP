@@ -107,12 +107,12 @@ const AddNewPropCommercialRentFinalDetails = props => {
     };
 
     return propertyFinalDetails ? (
-        <div className="flex flex-col h-full bg-white overflow-y-auto">
+        <div className="flex flex-col h-full bg-neutral-900 overflow-y-auto">
             {/* Top Navigation Bar */}
-            <div className="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200 sticky top-0 z-10">
+            <div className="bg-neutral-900 px-4 py-3 flex items-center justify-between border-b border-neutral-700 sticky top-0 z-10">
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
+                    className="flex items-center text-gray-500 hover:text-gray-300 focus:outline-none"
                     aria-label="Go back"
                 >
                     <MdArrowBack className="text-xl mr-1" />
@@ -125,12 +125,12 @@ const AddNewPropCommercialRentFinalDetails = props => {
             </div>
 
             {/* Property Title & Address Header */}
-            <div className="bg-gray-300 px-4 py-4 flex flex-col items-start">
-                <h2 className="text-base font-bold text-gray-900 mb-1">
+            <div className="bg-neutral-700 px-4 py-4 flex flex-col items-start">
+                <h2 className="text-base font-bold text-gray-100 mb-1">
                     {propertyFinalDetails.property_details.property_used_for} {"For Rent In "}
                     {propertyFinalDetails.property_address.building_name},
                 </h2>
-                <p className="text-sm text-gray-800">
+                <p className="text-sm text-gray-200">
                     {propertyFinalDetails.property_address.landmark_or_street},
                     {propertyFinalDetails.property_address.location_area.formatted_address}
                 </p>
@@ -140,17 +140,17 @@ const AddNewPropCommercialRentFinalDetails = props => {
                 dataSource={propertyFinalDetails.image_urls}
             />
 
-            <div className="border-t border-gray-300 bg-gray-100 p-4">
+            <div className="border-t border-neutral-700 bg-neutral-800 p-4">
                 <div className="flex justify-between items-center text-center">
                     <div className="flex flex-col">
-                        <span className="text-xl font-bold text-gray-900">
+                        <span className="text-xl font-bold text-gray-100">
                             {propertyFinalDetails.property_details.property_used_for}
                         </span>
                         <span className="text-sm text-gray-500 font-medium">Prop Type</span>
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-4"></div>
                     <div className="flex flex-col">
-                        <span className="text-xl font-bold text-gray-900">
+                        <span className="text-xl font-bold text-gray-100">
                             {numDifferentiation(
                                 propertyFinalDetails.rent_details.expected_rent
                             )}
@@ -161,7 +161,7 @@ const AddNewPropCommercialRentFinalDetails = props => {
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-4"></div>
                     <div className="flex flex-col">
-                        <span className="text-xl font-bold text-gray-900">
+                        <span className="text-xl font-bold text-gray-100">
                             {numDifferentiation(
                                 propertyFinalDetails.rent_details.expected_deposit
                             )}
@@ -170,7 +170,7 @@ const AddNewPropCommercialRentFinalDetails = props => {
                     </div>
                     <div className="w-px bg-gray-400 h-10 mx-4"></div>
                     <div className="flex flex-col">
-                        <span className="text-xl font-bold text-gray-900">
+                        <span className="text-xl font-bold text-gray-100">
                             {propertyFinalDetails.property_details.property_size}sqft
                         </span>
                         <span className="text-sm text-gray-500 font-medium">Builtup</span>
@@ -178,62 +178,62 @@ const AddNewPropCommercialRentFinalDetails = props => {
                 </div>
             </div>
 
-            <div className="mt-2 bg-white px-4 pt-4">
+            <div className="mt-2 bg-neutral-900 px-4 pt-4">
                 <div className="pb-2 border-b border-gray-100">
-                    <h3 className="text-sm font-medium text-gray-900">Details</h3>
+                    <h3 className="text-sm font-medium text-gray-100">Details</h3>
                 </div>
                 <div className="flex justify-between py-4">
                     <div className="flex flex-col space-y-4 w-1/2">
                         <div>
-                            <p className="text-base font-bold text-gray-900">
+                            <p className="text-base font-bold text-gray-100">
                                 {propertyFinalDetails.property_details.building_type}
                             </p>
-                            <p className="text-xs text-gray-600">Building Type</p>
+                            <p className="text-xs text-gray-400">Building Type</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">
+                            <p className="text-base font-bold text-gray-100">
                                 {dateFormat(propertyFinalDetails.rent_details.available_from)}
                             </p>
-                            <p className="text-xs text-gray-600">Possession</p>
+                            <p className="text-xs text-gray-400">Possession</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">
+                            <p className="text-base font-bold text-gray-100">
                                 {propertyFinalDetails.property_details.ideal_for.join(", ")}
                             </p>
-                            <p className="text-xs text-gray-600">Ideal For</p>
+                            <p className="text-xs text-gray-400">Ideal For</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">
+                            <p className="text-base font-bold text-gray-100">
                                 {propertyFinalDetails.property_details.power_backup}
                             </p>
-                            <p className="text-xs text-gray-600">Power Backup</p>
+                            <p className="text-xs text-gray-400">Power Backup</p>
                         </div>
                     </div>
                     <div className="flex flex-col space-y-4 w-1/2 items-end text-right">
                         <div>
-                            <p className="text-base font-bold text-gray-900">
+                            <p className="text-base font-bold text-gray-100">
                                 {propertyFinalDetails.property_details.parking_type}
                             </p>
-                            <p className="text-xs text-gray-600">Parking</p>
+                            <p className="text-xs text-gray-400">Parking</p>
                         </div>
                         <div>
-                            <p className="text-base font-bold text-gray-900">
+                            <p className="text-base font-bold text-gray-100">
                                 {propertyFinalDetails.property_details.property_age}
                             </p>
-                            <p className="text-xs text-gray-600">Age Of Building</p>
+                            <p className="text-xs text-gray-400">Age Of Building</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="mt-2 bg-white shadow-md">
-                <div className="p-4 border-b border-gray-200">
-                    <h3 className="text-lg font-bold text-black">Owner</h3>
+            <div className="mt-2 bg-neutral-900 shadow-md">
+                <div className="p-4 border-b border-neutral-700">
+                    <h3 className="text-lg font-bold text-white">Owner</h3>
                 </div>
                 <div className="p-4">
-                    <p className="text-lg font-medium text-black">{propertyFinalDetails.owner_details.name}</p>
-                    <p className="text-base text-gray-800">{propertyFinalDetails.owner_details.address}</p>
-                    <p className="text-base text-gray-800">+91 {propertyFinalDetails.owner_details.mobile1}</p>
+                    <p className="text-lg font-medium text-white">{propertyFinalDetails.owner_details.name}</p>
+                    <p className="text-base text-gray-200">{propertyFinalDetails.owner_details.address}</p>
+                    <p className="text-base text-gray-200">+91 {propertyFinalDetails.owner_details.mobile1}</p>
                 </div>
             </div>
 
@@ -256,7 +256,7 @@ const AddNewPropCommercialRentFinalDetails = props => {
 
             {modalVisible && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white rounded-lg p-6 shadow-xl w-80 flex flex-col items-center">
+                    <div className="bg-neutral-900 rounded-lg p-6 shadow-xl w-80 flex flex-col items-center">
                         <span className="text-center font-bold mb-4">
                             You are not logged in, please login.
                         </span>

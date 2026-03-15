@@ -90,26 +90,26 @@ const RentDetailsForm = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-50 overflow-y-auto">
-            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+        <div className="flex flex-col h-full bg-neutral-800 overflow-y-auto">
+            <div className="bg-neutral-900 px-4 py-3 flex items-center shadow-sm border-b border-neutral-700">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    className="mr-3 p-1 rounded-full hover:bg-neutral-800 focus:outline-none"
                     aria-label="Go back"
                 >
-                    <MdArrowBack className="text-gray-700 text-xl" />
+                    <MdArrowBack className="text-gray-300 text-xl" />
                 </button>
-                <h1 className="text-lg font-medium text-gray-900">Rent Details</h1>
+                <h1 className="text-lg font-medium text-gray-100">Rent Details</h1>
             </div>
             <div className="p-4">
-                <div className="bg-white p-4 rounded shadow">
+                <div className="bg-neutral-900 p-4 rounded shadow">
                     <div className="mb-6">
                         <label className={`block text-xs font-medium mb-1 ${focusedField === 'rent' ? 'text-teal-500' : 'text-gray-500'}`}>
                             Expected Rent*
                         </label>
                         <input
                             type="number"
-                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'rent' ? 'border-teal-500' : 'border-gray-200'}`}
+                            className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'rent' ? 'border-teal-500' : 'border-neutral-700'}`}
                             value={expectedRent}
                             onChange={(e) => setExpectedRent(e.target.value)}
                             onFocus={() => { setIsVisible(false); setFocusedField('rent'); }}
@@ -123,7 +123,7 @@ const RentDetailsForm = props => {
                         </label>
                         <input
                             type="number"
-                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'deposit' ? 'border-teal-500' : 'border-gray-200'}`}
+                            className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'deposit' ? 'border-teal-500' : 'border-neutral-700'}`}
                             value={expectedDeposit}
                             onChange={(e) => setExpectedDeposit(e.target.value)}
                             onFocus={() => { setIsVisible(false); setFocusedField('deposit'); }}
@@ -133,7 +133,7 @@ const RentDetailsForm = props => {
 
                     <div className="mb-6">
                         <label className={`block text-xs font-medium mb-1 ${focusedField === 'date' ? 'text-teal-500' : 'text-gray-500'}`}>Available From *</label>
-                        <div className={`relative w-full border-b-2 py-1 transition-colors flex items-center ${focusedField === 'date' ? 'border-teal-500' : 'border-gray-200'}`}>
+                        <div className={`relative w-full border-b-2 py-1 transition-colors flex items-center ${focusedField === 'date' ? 'border-teal-500' : 'border-neutral-700'}`}>
                             <style>
                                 {`
                                     input[type="date"]::-webkit-calendar-picker-indicator {
@@ -141,7 +141,7 @@ const RentDetailsForm = props => {
                                         -webkit-appearance: none;
                                     }
                                     input[type="date"] {
-                                        color-scheme: light;
+                                        color-scheme: dark;
                                     }
                                 `}
                             </style>
@@ -174,7 +174,7 @@ const RentDetailsForm = props => {
                                 onFocus={() => { setIsVisible(false); setFocusedField('date'); }}
                                 onBlur={() => setFocusedField(null)}
                                 onKeyDown={(e) => e.preventDefault()}
-                                className={`w-full bg-transparent text-base text-gray-900 focus:outline-none z-10 relative ${!newDate ? 'text-transparent' : 'text-gray-900'}`}
+                                className={`w-full bg-transparent text-base text-gray-100 focus:outline-none z-10 relative ${!newDate ? 'text-transparent' : 'text-gray-100'}`}
                             />
 
                             <div className="absolute right-0 pointer-events-none text-gray-500">
@@ -186,7 +186,7 @@ const RentDetailsForm = props => {
                     {props.propertyDetails && props.propertyDetails.propertyType === "Residential" ? (
                         <div>
                             <div className="mb-4">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Tenants*</label>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Preferred Tenants*</label>
                                 <CustomButtonGroup
                                     buttons={preferredTenantsOption}
                                     selectedIndices={[preferredTenantsOption.findIndex(option => option.text === preferredTenant)]}
@@ -196,7 +196,7 @@ const RentDetailsForm = props => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Nonveg Allowed*</label>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Nonveg Allowed*</label>
                                 <CustomButtonGroup
                                     buttons={nonvegAllowedOption}
                                     selectedIndices={[nonvegAllowedOption.findIndex(option => option.text === nonvegAllowed)]}

@@ -242,11 +242,11 @@ const PropertyListForMeeting = props => {
 
     return (
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
-            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm" style={{ height: 60, width: '100%', marginBottom: 10 }}>
+            <div className="bg-neutral-900 border-b border-neutral-700 flex items-center p-4 shadow-sm" style={{ height: 60, width: '100%', marginBottom: 10 }}>
                 <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
                     <MdArrowBack size={24} color="#333" />
                 </div>
-                <h1 className="text-lg font-semibold text-gray-800">Property List For Meeting</h1>
+                <h1 className="text-lg font-semibold text-gray-200">Property List For Meeting</h1>
             </div>
             <div style={styles.searchBarContainer}>
                 <input
@@ -374,7 +374,7 @@ const PropertyListForMeeting = props => {
                         flexDirection: 'column'
                     }}
                 >
-                    <p style={{ textAlign: "center", color: '#000', fontWeight: '500' }}>
+                    <p style={{ textAlign: "center", color: 'var(--foreground)', fontWeight: '500' }}>
                         You have no property listing
                     </p>
                     {props.userDetails && ((props.userDetails.works_for === props.userDetails.id) ||
@@ -433,7 +433,7 @@ const PropertyListForMeeting = props => {
                         overflowY: 'auto'
                     }} onClick={e => e.stopPropagation()}>
                         <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: "#000" }}>
+                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: "var(--foreground)" }}>
                                 Filter
                             </span>
                             <div
@@ -441,72 +441,57 @@ const PropertyListForMeeting = props => {
                                 style={{ position: "absolute", top: 10, right: 10, cursor: 'pointer' }}
                             >
                                 <MdRestartAlt
-                                    color={"#000000"}
+                                    color={"var(--foreground)"}
                                     size={30}
                                 />
                             </div>
                         </div>
 
                         <div style={{ marginTop: 10, marginBottom: 20 }}>
-                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Looking For</p>
+                            <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Looking For</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
-                                    selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                     onButtonPress={(i) => setFilterForIndex(i)}
                                     selectedIndices={[filterForIndex]}
                                     buttons={["Rent", "Sell"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
-                                    selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Home type</p>
+                            <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Home type</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
-                                    selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                     onButtonPress={(i) => setFilterTypeIndex(i)}
                                     selectedIndices={[filterTypeIndex]}
                                     buttons={["Apartment", "Villa", "Independent House", "Any"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
-                                    selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>BHK type</p>
+                            <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>BHK type</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
-                                    selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                     onButtonPress={(i) => setFilterBHKIndex(i)}
                                     selectedIndices={[filterBHKIndex]}
                                     buttons={["1RK", "1BHK", "2BHK", "3BHK", "4BHK", "4+BHK"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
-                                    selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p style={{ color: '#000', fontWeight: '500' }}>Rent Range</p>
+                            <p style={{ color: 'var(--foreground)', fontWeight: '500' }}>Rent Range</p>
                             <Slider min={10000} max={400000} onSlide={(values) => setFilterRange(values)} />
-                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Availability</p>
+                            <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Availability</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
-                                    selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                     onButtonPress={(i) => setFilterAvailabilityIndex(i)}
                                     selectedIndices={[filterAvailabilityIndex]}
                                     buttons={["Immediate", "15 Days", "30 Days", "30+ Days"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
-                                    selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Furnishing</p>
+                            <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Furnishing</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
-                                    selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                     onButtonPress={(i) => setFilterFurnishingIndex(i)}
                                     selectedIndices={[filterFurnishingIndex]}
                                     buttons={["Full", "Semi", "Empty", "Any"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
-                                    selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
@@ -543,46 +528,37 @@ const PropertyListForMeeting = props => {
                         overflowY: 'auto'
                     }} onClick={e => e.stopPropagation()}>
                         <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: "#000" }}>
+                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: "var(--foreground)" }}>
                                 Sort By
                             </span>
                         </div>
 
                         <div style={{ marginTop: 10, marginBottom: 20 }}>
-                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Rent</p>
+                            <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Rent</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
-                                    selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                     onButtonPress={(index) => applySort('rent', index)}
                                     selectedIndices={[sortRentIndex]}
                                     buttons={["Lowest First", "Highest First"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
-                                    selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
-                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Availability</p>
+                            <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Availability</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
-                                    selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                     onButtonPress={(index) => applySort('avail', index)}
                                     selectedIndices={[sortAvailabilityIndex]}
                                     buttons={["Earliest First", "Oldest First"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
-                                    selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
 
-                            <p style={{ ...styles.marginBottom10, color: '#000', fontWeight: '500' }}>Posted date</p>
+                            <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Posted date</p>
                             <div style={styles.propSubSection}>
                                 <CustomButtonGroup
-                                    selectedButtonStyle={{ backgroundColor: "rgba(27, 106, 158, 0.85)" }}
                                     onButtonPress={(index) => applySort('date', index)}
                                     selectedIndices={[sortDateIndex]}
                                     buttons={["Recent First", "Oldest Fist"].map(item => ({ text: item }))}
-                                    buttonTextStyle={{ textAlign: "center", color: '#000' }}
-                                    selectedButtonTextStyle={{ color: "#fff" }}
                                     containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>

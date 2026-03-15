@@ -296,7 +296,7 @@ const Card = props => {
     }
 
     return (
-        <div className={`bg-white shadow-md mb-2 rounded-lg overflow-hidden ${isPropertyClosed ? 'opacity-60 bg-gray-200' : ''}`}>
+        <div className={`bg-neutral-900 shadow-md mb-2 rounded-lg overflow-hidden ${isPropertyClosed ? 'opacity-60 bg-neutral-700' : ''}`}>
             <Slideshow
                 dataSource={item.image_urls}
             />
@@ -310,14 +310,14 @@ const Card = props => {
                             className="w-8 h-8 flex items-center justify-center absolute top-0 left-0 z-10"
                             style={{ backgroundColor: 'rgba(234, 155, 20, 0.7)' }}
                         >
-                            <span className="text-sm font-bold text-black">{item.match_count || 0}</span>
+                            <span className="text-sm font-bold text-white">{item.match_count || 0}</span>
                         </div>
                         {/* Green Match Strip */}
                         <div
                             className="w-8 h-24 flex items-center justify-center absolute top-4 left-0 pt-6"
                             style={{ backgroundColor: 'rgba(80, 200, 120, 0.7)' }}
                         >
-                            <span className="text-xs font-medium text-black transform -rotate-90 whitespace-nowrap">Match</span>
+                            <span className="text-xs font-medium text-white transform -rotate-90 whitespace-nowrap">Match</span>
                         </div>
                     </div>
                 )}
@@ -344,8 +344,8 @@ const Card = props => {
                             radius={35}
                             holeRadius={25}
                             strokeWidth={60}
-                            colors={['rgba(38, 208, 109, 0.8)', 'rgba(211, 61, 24, 0.6)']}
-                            textColor="#333"
+                            colors={['#22c55e', '#f97316']}
+                            textColor="var(--foreground)"
                             textSize={14}
                             showPercentage={true}
                         />
@@ -354,13 +354,13 @@ const Card = props => {
 
                 {/* Details Section */}
                 <div className="flex-1 py-2 pl-2 pr-12">
-                    <h3 className="text-base font-bold text-black leading-tight">
+                    <h3 className="text-base font-bold text-white leading-tight">
                         {`Sell Off In ${item.property_address.building_name?.trim() || ""} ${item.property_address.landmark_or_street?.trim() || ""}`}
                     </h3>
-                    <p className="text-sm text-gray-900 mt-1">
+                    <p className="text-sm text-gray-100 mt-1">
                         {item.property_address.formatted_address}
                     </p>
-                    <p className="text-sm text-black mt-1">
+                    <p className="text-sm text-white mt-1">
                         Reference id: {item.property_id?.slice(-6)}
                     </p>
 
@@ -370,8 +370,8 @@ const Card = props => {
                             className="flex flex-row items-center mt-2 justify-center cursor-pointer"
                             onClick={(e) => { e.stopPropagation(); gotoEmployeeList(item); }}
                         >
-                            <MdPersonAdd size={18} className="text-black mr-2" />
-                            <span className="text-sm text-gray-900">
+                            <MdPersonAdd size={18} className="text-white mr-2" />
+                            <span className="text-sm text-gray-100">
                                 {Array.isArray(item.assigned_to_employee_name) && item.assigned_to_employee_name.length > 0
                                     ? item.assigned_to_employee_name.join(", ")
                                     : "No Employees Assigned"}
@@ -381,7 +381,7 @@ const Card = props => {
 
                 {displayCheckBox && (
                     <div
-                        className="w-10 flex items-center justify-center absolute right-0 top-0 bottom-0 cursor-pointer z-30 bg-white"
+                        className="w-10 flex items-center justify-center absolute right-0 top-0 bottom-0 cursor-pointer z-30 bg-neutral-900"
                         onClick={(e) => {
                             e.stopPropagation();
                             onClickCheckBox(item);
@@ -406,7 +406,7 @@ const Card = props => {
 
                 {displayCheckBoxForEmployee && (
                     <div
-                        className="w-10 flex items-center justify-center absolute right-0 top-0 bottom-0 cursor-pointer z-30 bg-white"
+                        className="w-10 flex items-center justify-center absolute right-0 top-0 bottom-0 cursor-pointer z-30 bg-neutral-900"
                         onClick={(e) => {
                             e.stopPropagation();
                             onClickCheckBoxForEmployee(item);
@@ -442,7 +442,7 @@ const Card = props => {
                 )}
 
                 {!disableDrawer && (
-                    <div className={`absolute top-0 right-0 h-full bg-white transition-transform duration-300 z-50 flex flex-row ${drawerOpen ? 'translate-x-0' : 'translate-x-full'}`} style={{ width: 'auto' }}>
+                    <div className={`absolute top-0 right-0 h-full bg-neutral-900 transition-transform duration-300 z-50 flex flex-row ${drawerOpen ? 'translate-x-0' : 'translate-x-full'}`} style={{ width: 'auto' }}>
                         {/* Back Arrow Strip */}
                         <div
                             onClick={(e) => { e.stopPropagation(); ShowSlidingDrawer(); }}
@@ -476,26 +476,26 @@ const Card = props => {
             </div>
 
             {/* Bottom Stats Row */}
-            <div className="border-t border-gray-200 py-3 px-2">
+            <div className="border-t border-neutral-700 py-3 px-2">
                 <div className="flex flex-row justify-between items-center text-center">
                     {/* Prop Type */}
-                    <div className="flex-1 border-r border-gray-300">
-                        <span className="text-sm font-bold block text-black">{item.property_details.property_used_for}</span>
+                    <div className="flex-1 border-r border-neutral-600">
+                        <span className="text-sm font-bold block text-white">{item.property_details.property_used_for}</span>
                         <span className="text-xs text-gray-500 block">Prop Type</span>
                     </div>
                     {/* Price */}
-                    <div className="flex-1 border-r border-gray-300">
-                        <span className="text-sm font-bold block text-black">{numDifferentiation(item.sell_details.expected_sell_price)}</span>
+                    <div className="flex-1 border-r border-neutral-600">
+                        <span className="text-sm font-bold block text-white">{numDifferentiation(item.sell_details.expected_sell_price)}</span>
                         <span className="text-xs text-gray-500 block">Price</span>
                     </div>
                     {/* Building Type */}
-                    <div className="flex-1 border-r border-gray-300">
-                        <span className="text-sm font-bold block text-black">{item.property_details.building_type}</span>
+                    <div className="flex-1 border-r border-neutral-600">
+                        <span className="text-sm font-bold block text-white">{item.property_details.building_type}</span>
                         <span className="text-xs text-gray-500 block">Building Type</span>
                     </div>
                     {/* Builtup */}
                     <div className="flex-1">
-                        <span className="text-sm font-bold block text-black">{item.property_details.property_size}</span>
+                        <span className="text-sm font-bold block text-white">{item.property_details.property_size}</span>
                         <span className="text-xs text-gray-500 block">Builtup</span>
                     </div>
                 </div>
@@ -503,8 +503,8 @@ const Card = props => {
 
             {modalVisible && (
                 <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={(e) => { e.stopPropagation(); }}>
-                    <div className="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full mx-4" onClick={(e) => { e.stopPropagation(); }}>
-                        <p className="text-lg font-medium text-center mb-6 text-black">
+                    <div className="bg-neutral-900 p-6 rounded-2xl shadow-lg max-w-sm w-full mx-4" onClick={(e) => { e.stopPropagation(); }}>
+                        <p className="text-lg font-medium text-center mb-6 text-white">
                             {isPropertyClosed ? "Do you want to open this property?" : "Did you win deal for this property?"}
                         </p>
 
@@ -522,7 +522,7 @@ const Card = props => {
                                         Yes
                                     </button>
                                     <button
-                                        className="px-8 py-2 border border-gray-300 text-black rounded-md font-medium hover:bg-gray-50"
+                                        className="px-8 py-2 border border-neutral-600 text-white rounded-md font-medium hover:bg-neutral-800"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             closeMe(item);
@@ -533,7 +533,7 @@ const Card = props => {
                                     </button>
                                 </div>
 
-                                <p className="text-sm text-gray-600 text-center mb-8 leading-relaxed">
+                                <p className="text-sm text-gray-400 text-center mb-8 leading-relaxed">
                                     You can close or delete property. Close will keep property in list for 10 days, Delete will remove permanently.
                                 </p>
                             </>
@@ -541,7 +541,7 @@ const Card = props => {
 
                         <div className="flex justify-end items-center space-x-8">
                             <button
-                                className="text-black font-medium hover:text-gray-700"
+                                className="text-white font-medium hover:text-gray-300"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     deleteMe(item);
@@ -551,7 +551,7 @@ const Card = props => {
                                 Delete
                             </button>
                             <button
-                                className="text-black font-medium hover:text-gray-700"
+                                className="text-white font-medium hover:text-gray-300"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     closeMe(item);
@@ -561,7 +561,7 @@ const Card = props => {
                                 {isPropertyClosed ? "Open" : "Close"}
                             </button>
                             <button
-                                className="text-black font-medium hover:text-gray-700"
+                                className="text-white font-medium hover:text-gray-300"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setModalVisible(false);
@@ -580,7 +580,7 @@ const Card = props => {
 const styles = {
     card: {
         boxShadow: "0px 2px 4px rgba(0,0,0,0.2)",
-        backgroundColor: "#ffffff",
+        backgroundColor: "var(--background)",
         marginBottom: 10
     },
     headerContainer: {
@@ -591,7 +591,7 @@ const styles = {
         paddingLeft: 16,
         paddingBottom: 25,
         paddingTop: 16,
-        backgroundColor: "#d1d1d1",
+        backgroundColor: "var(--background)",
     },
     title: {
         fontSize: 16,
@@ -601,8 +601,8 @@ const styles = {
     detailsContainer: {
         height: 60,
         borderTopWidth: 1,
-        borderTopColor: "#C0C0C0",
-        backgroundColor: "rgba(220,220,220, 0.80)"
+        borderTopColor: "rgba(255, 255, 255, 0.1)",
+        backgroundColor: "rgba(255, 255, 255, 0.05)"
     },
     details: {
         padding: 10,
@@ -626,7 +626,7 @@ const styles = {
     verticalLine: {
         height: "70%",
         width: 1,
-        backgroundColor: "#909090"
+        backgroundColor: "rgba(255, 255, 255, 0.2)"
     },
     MainContainer: {
         position: 'relative'
@@ -652,7 +652,7 @@ const styles = {
         zIndex: 1000
     },
     modalView: {
-        backgroundColor: "white",
+        backgroundColor: "var(--card)",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",

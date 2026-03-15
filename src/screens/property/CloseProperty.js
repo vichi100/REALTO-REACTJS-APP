@@ -37,7 +37,7 @@ const CloseProperty = props => {
     }
 
     return (
-        <div className="flex flex-col h-full bg-white overflow-y-auto p-5">
+        <div className="flex flex-col h-full bg-neutral-900 overflow-y-auto p-5">
             <div className="mb-5">
                 <p className="mb-2 font-semibold">Did you close this deal successfully</p>
                 <CustomButtonGroup
@@ -48,7 +48,7 @@ const CloseProperty = props => {
                 />
             </div>
             <div>
-                <p className="mb-2 text-sm text-gray-600">
+                <p className="mb-2 text-sm text-gray-400">
                     If you take below query our AI engine will be able to help you fill
                     gaps
                 </p>

@@ -78,11 +78,11 @@ const PropertyReminder = props => {
 
 
     const ItemView = ({ item, index }) => {
-        let bgColor = "rgba(255,182,193, 0.5)"; // Default pinkish
+        let bgColor = "rgba(255,182,193, 0.2)"; // Default pinkish
         if (item.reminder_for.toLowerCase() === "meeting") {
-            bgColor = "rgba(135,206,250, 0.5)"; // Blueish
+            bgColor = "rgba(135,206,250, 0.2)"; // Blueish
         } else if (item.reminder_for.toLowerCase() === "call") {
-            bgColor = "rgba(64,224,208, 0.5)"; // Tealish
+            bgColor = "rgba(64,224,208, 0.2)"; // Tealish
         }
 
         return (
@@ -117,7 +117,7 @@ const PropertyReminder = props => {
                             style={{
                                 fontSize: 16,
                                 fontWeight: "600",
-                                color: "#000",
+                                color: "var(--foreground)",
                                 margin: 0,
                                 overflow: 'hidden',
                                 textOverflow: 'ellipsis',
@@ -128,22 +128,22 @@ const PropertyReminder = props => {
                         >
                             {formatClientNameForDisplay(item.client_name)}
                         </p>
-                        <p style={{ margin: 0, color: '#000' }}>{formatMobileNumber(item.client_mobile)}</p>
+                        <p style={{ margin: 0, color: 'var(--foreground)' }}>{formatMobileNumber(item.client_mobile)}</p>
                         {item.property_reference_id && (
-                            <p style={{ margin: 0, color: '#000' }}>
+                            <p style={{ margin: 0, color: 'var(--foreground)' }}>
                                 {"Reference id: " + item.property_reference_id}
                             </p>
                         )}
                     </div>
                     <div>
                         <div style={{ padding: 10 }}>
-                            <p style={{ margin: 0, color: '#000' }}>{item.reminder_for}</p>
-                            <p style={{ margin: 0, color: '#000' }}>{item.meeting_time}</p>
-                            <p style={{ margin: 0, color: '#000' }}>{formatIsoDateToCustomString(item.meeting_date)}</p>
+                            <p style={{ margin: 0, color: 'var(--foreground)' }}>{item.reminder_for}</p>
+                            <p style={{ margin: 0, color: 'var(--foreground)' }}>{item.meeting_time}</p>
+                            <p style={{ margin: 0, color: 'var(--foreground)' }}>{formatIsoDateToCustomString(item.meeting_date)}</p>
                         </div>
                     </div>
                 </div>
-                <div style={{ height: "auto", width: 2, backgroundColor: "#ffffff" }} />
+                <div style={{ height: "auto", width: 2, backgroundColor: "var(--background)" }} />
                 <div
                     onClick={() => makeCall(item.client_mobile)}
                     style={{
@@ -160,7 +160,7 @@ const PropertyReminder = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)" }}>
             <p
                 style={{
                     textAlign: "center",
@@ -168,7 +168,7 @@ const PropertyReminder = props => {
                     fontWeight: "500",
                     marginTop: 15,
                     marginBottom: 10,
-                    color: '#000'
+                    color: 'var(--foreground)'
                 }}
             >
                 Upcoming Meetings
@@ -177,7 +177,7 @@ const PropertyReminder = props => {
                 futureReminderList.map((item, index) => (
                     <React.Fragment key={index}>
                         <ItemView item={item} index={index} />
-                        <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
+                        <div style={{ height: 0.5, width: "100%", backgroundColor: "rgba(255, 255, 255, 0.1)" }} />
                     </React.Fragment>
                 ))
             ) : (
@@ -186,7 +186,7 @@ const PropertyReminder = props => {
                         display: 'flex',
                         alignContent: "center",
                         justifyContent: "center",
-                        backgroundColor: "rgba(239, 239, 240, .9)",
+                        backgroundColor: "rgba(255, 255, 255, 0.05)",
                         padding: 20
                     }}
                 >
@@ -196,7 +196,7 @@ const PropertyReminder = props => {
                             fontSize: 15,
                             fontWeight: "300",
                             margin: 0,
-                            color: '#000'
+                            color: 'var(--foreground)'
                         }}
                     >
                         No Meetings
@@ -211,7 +211,7 @@ const PropertyReminder = props => {
                     fontWeight: "500",
                     marginTop: 15,
                     marginBottom: 10,
-                    color: '#000'
+                    color: 'var(--foreground)'
                 }}
             >
                 Past Meetings
@@ -220,7 +220,7 @@ const PropertyReminder = props => {
                 pastReminderList.map((item, index) => (
                     <React.Fragment key={index}>
                         <ItemView item={item} index={index} />
-                        <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
+                        <div style={{ height: 0.5, width: "100%", backgroundColor: "rgba(255, 255, 255, 0.1)" }} />
                     </React.Fragment>
                 ))
             ) : (
@@ -229,7 +229,7 @@ const PropertyReminder = props => {
                         display: 'flex',
                         alignContent: "center",
                         justifyContent: "center",
-                        backgroundColor: "rgba(239, 239, 240, .9)",
+                        backgroundColor: "rgba(255, 255, 255, 0.05)",
                         padding: 20
                     }}
                 >
@@ -239,7 +239,7 @@ const PropertyReminder = props => {
                             fontSize: 15,
                             fontWeight: "300",
                             margin: 0,
-                            color: '#000'
+                            color: 'var(--foreground)'
                         }}
                     >
                         No Meetings
@@ -249,7 +249,7 @@ const PropertyReminder = props => {
 
             {pastReminderList.length > 0 && (
                 <div style={{ padding: 10, alignItems: 'center', textAlign: 'center' }}>
-                    <span style={{ color: '#ffffffff' }}>End</span>
+                    <span style={{ color: '#ffffff' }}>End</span>
                 </div>
             )}
         </div>

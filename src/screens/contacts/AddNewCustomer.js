@@ -44,11 +44,11 @@ const AddNewCustomer = props => {
     };
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)" }}>
             {/* Header */}
             <div style={styles.headerContainer}>
                 <div style={styles.backButtonContainer} onClick={() => navigate(-1)}>
-                    <MdArrowBack size={24} color="#000000" />
+                    <MdArrowBack size={24} color="var(--foreground)" />
                 </div>
                 <div style={styles.headerTitleContainer}>
                     <p style={styles.headerTitle}>Customer Details</p>
@@ -57,7 +57,7 @@ const AddNewCustomer = props => {
 
             <div style={styles.container}>
                 <div>
-                    <p style={{ color: '#000000' }}>
+                    <p style={{ color: 'var(--foreground)' }}>
                         Add new customer details who is looking to rent or buy a property
                     </p>
                 </div>
@@ -72,7 +72,7 @@ const AddNewCustomer = props => {
                             onChange={e => setOwnerName(e.target.value)}
                             onFocus={() => { setIsVisible(false); setFocusedField('name'); }}
                             onBlur={() => setFocusedField(null)}
-                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'name' ? 'border-teal-500' : 'border-gray-200'}`}
+                            className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'name' ? 'border-teal-500' : 'border-neutral-700'}`}
                         />
                     </div>
                     <div className="mb-6">
@@ -85,7 +85,7 @@ const AddNewCustomer = props => {
                             onFocus={() => { setIsVisible(false); setFocusedField('mobile'); }}
                             onBlur={() => setFocusedField(null)}
                             type="number"
-                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'mobile' ? 'border-teal-500' : 'border-gray-200'}`}
+                            className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'mobile' ? 'border-teal-500' : 'border-neutral-700'}`}
                         />
                     </div>
                     <div className="mb-6">
@@ -97,7 +97,7 @@ const AddNewCustomer = props => {
                             onChange={e => setOwnerAddress(e.target.value)}
                             onFocus={() => { setIsVisible(false); setFocusedField('address'); }}
                             onBlur={() => setFocusedField(null)}
-                            className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'address' ? 'border-teal-500' : 'border-gray-200'}`}
+                            className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'address' ? 'border-teal-500' : 'border-neutral-700'}`}
                         />
                     </div>
                 </div>
@@ -122,8 +122,8 @@ const styles = {
         flexDirection: 'row',
         alignItems: 'center',
         padding: '10px 15px',
-        borderBottom: '1px solid #e0e0e0', // Light border for separation
-        backgroundColor: '#fff',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        backgroundColor: 'var(--background)',
     },
     backButtonContainer: {
         cursor: 'pointer',
@@ -137,7 +137,7 @@ const styles = {
     headerTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#1a1a1a', // Darker text color
+        color: 'var(--foreground)',
         margin: 0,
     },
     container: {
@@ -157,10 +157,10 @@ const styles = {
         width: '100%',
         padding: 10,
         borderRadius: 5,
-        border: '1px solid #ccc',
-        backgroundColor: "#f9f9f9",
+        border: '1px solid rgba(255, 255, 255, 0.15)',
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
         outline: 'none',
-        color: '#000000'
+        color: 'var(--foreground)'
     }
 };
 

@@ -26,7 +26,7 @@ export default class Drawer extends Component {
     render() {
         return (
             <div className="flex-1 flex flex-col justify-center items-center relative h-screen overflow-hidden">
-                <div className="text-2xl text-center m-2.5 text-black font-bold">
+                <div className="text-2xl text-center m-2.5 text-white font-bold">
                     Animated Sliding Drawer Tutorial.
                 </div>
                 <div

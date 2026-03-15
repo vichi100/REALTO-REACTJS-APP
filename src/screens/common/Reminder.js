@@ -264,24 +264,16 @@ const Reminder = props => {
     };
 
     const ItemView = ({ item }) => {
-        let bgColor = "rgba(255,182,193, 0.5)";
+        let bgClass = "bg-[rgba(255,182,193,0.3)] ";
         if (item.reminder_for.toLowerCase() === "meeting") {
-            bgColor = "rgba(135,206,250, 0.5)";
+            bgClass = "bg-[rgba(135,206,250,0.3)] ";
         } else if (item.reminder_for.toLowerCase() === "call") {
-            bgColor = "rgba(64,224,208, 0.5)";
+            bgClass = "bg-[rgba(64,224,208,0.3)] ";
         }
 
         return (
             <div
-                style={{
-                    display: 'flex',
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    backgroundColor: bgColor,
-                    borderRadius: 5,
-                    marginTop: 2,
-                    marginBottom: 2
-                }}
+                className={`flex flex-row justify-between rounded-[5px] my-[2px] ${bgClass}`}
             >
                 <div
                     onClick={() => {
@@ -309,7 +301,7 @@ const Reminder = props => {
                             style={{
                                 fontSize: 16,
                                 fontWeight: "600",
-                                color: "#000",
+                                color: "var(--foreground)",
                                 margin: 0,
                                 overflow: 'hidden',
                                 textOverflow: 'ellipsis',
@@ -320,22 +312,22 @@ const Reminder = props => {
                         >
                             {formatClientNameForDisplay(item.client_name)}
                         </p>
-                        <p style={{ margin: 0, color: '#000' }}>{formatMobileNumber(item.client_mobile)}</p>
+                        <p style={{ margin: 0, color: 'var(--foreground)' }}>{formatMobileNumber(item.client_mobile)}</p>
                         {item.property_reference_id && (
-                            <p style={{ margin: 0, color: '#000' }}>
+                            <p style={{ margin: 0, color: 'var(--foreground)' }}>
                                 {"Reference id: " + item.property_reference_id}
                             </p>
                         )}
                     </div>
                     <div>
                         <div style={{ padding: 10 }}>
-                            <p style={{ margin: 0, color: '#000' }}>{item.reminder_for}</p>
-                            <p style={{ margin: 0, color: '#000' }}>{item.meeting_time}</p>
-                            <p style={{ margin: 0, color: '#000' }}>{formatIsoDateToCustomString(item.meeting_date)}</p>
+                            <p style={{ margin: 0, color: 'var(--foreground)' }}>{item.reminder_for}</p>
+                            <p style={{ margin: 0, color: 'var(--foreground)' }}>{item.meeting_time}</p>
+                            <p style={{ margin: 0, color: 'var(--foreground)' }}>{formatIsoDateToCustomString(item.meeting_date)}</p>
                         </div>
                     </div>
                 </div>
-                <div style={{ height: "auto", width: 2, backgroundColor: "#ffffff" }} />
+                <div className="w-[1px] bg-black/20 dark:bg-white/20 h-auto" />
                 <div
                     onClick={() => makeCall(item.client_mobile)}
                     style={{
@@ -354,20 +346,13 @@ const Reminder = props => {
     return (
         loading ? (
             <div
-                style={{
-                    flex: 1,
-                    display: 'flex',
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "rgba(245,245,245, .4)",
-                    height: '100%'
-                }}
+                className="flex-1 flex justify-center items-center bg-white/40 dark:bg-black/40 h-full"
             >
                 <div className="loader">Loading...</div>
             </div>
         ) : (
             <div
-                style={{ flex: 1, overflowY: 'auto', backgroundColor: "#ffffff", height: '100%' }}
+                className="flex-1 overflow-y-auto bg-background h-full w-full"
                 ref={scrollRef}
                 id="reminder-scroll-container"
                 onScroll={(e) => {
@@ -375,13 +360,12 @@ const Reminder = props => {
                 }}
             >
                 {reminderList.length > 0 ? (
-                    <div style={{ flex: 1, backgroundColor: "#ffffff", marginTop: 0, padding: 10 }}>
+                    <div className="flex-1 bg-background mt-0 p-[10px]">
                         {!isSpecificRemider && (
-                            <div style={styles.searchBar}>
-                                <AiOutlineSearch size={20} color="#999" style={{ marginRight: 5 }} />
+                            <div className="flex flex-row items-center bg-card rounded-lg px-[10px] py-[5px] shadow-sm mt-[10px] border border-border">
+                                <AiOutlineSearch size={20} className="mr-[5px] text-muted-foreground" />
                                 <input
-                                    className="search-input"
-                                    style={{ ...styles.textInputStyle, color: '#000' }}
+                                    className="w-[98%] h-[30px] pl-[5px] m-[5px] rounded-[10px] bg-transparent outline-none text-[14px] text-foreground"
                                     onChange={(e) => searchFilterFunction(e.target.value)}
                                     value={search}
                                     placeholder="Search By Name, Mobile"
@@ -389,14 +373,7 @@ const Reminder = props => {
                             </div>
                         )}
                         <p
-                            style={{
-                                textAlign: "center",
-                                fontSize: 16,
-                                fontWeight: "500",
-                                marginTop: 15,
-                                marginBottom: 10,
-                                color: '#000'
-                            }}
+                            className="text-center text-[16px] font-medium mt-[15px] mb-[10px] text-foreground"
                         >
                             Upcoming Meetings
                         </p>
@@ -404,41 +381,22 @@ const Reminder = props => {
                             futureReminderList.map((item, index) => (
                                 <React.Fragment key={index}>
                                     <ItemView item={item} />
-                                    <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
+                                    <div className="h-[0.5px] w-full bg-border" />
                                 </React.Fragment>
                             ))
                         ) : (
                             <div
-                                style={{
-                                    display: 'flex',
-                                    alignContent: "center",
-                                    justifyContent: "center",
-                                    backgroundColor: "rgba(239, 239, 240, .9)",
-                                    padding: 20
-                                }}
+                                className="flex content-center justify-center bg-muted/90 p-[20px] rounded-lg"
                             >
                                 <p
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: 15,
-                                        fontWeight: "300",
-                                        margin: 0,
-                                        color: '#000'
-                                    }}
+                                    className="text-center text-[15px] font-light m-0 text-foreground"
                                 >
                                     No Meetings
                                 </p>
                             </div>
                         )}
                         <p
-                            style={{
-                                textAlign: "center",
-                                fontSize: 16,
-                                fontWeight: "500",
-                                marginTop: 15,
-                                marginBottom: 10,
-                                color: '#000'
-                            }}
+                            className="text-center text-[16px] font-medium mt-[15px] mb-[10px] text-foreground"
                         >
                             Past Meetings
                         </p>
@@ -447,31 +405,19 @@ const Reminder = props => {
                                 {pastReminderList.map((item, index) => (
                                     <React.Fragment key={index}>
                                         <ItemView item={item} />
-                                        <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
+                                        <div className="h-[0.5px] w-full bg-border" />
                                     </React.Fragment>
                                 ))}
-                                <div style={{ padding: 10, alignItems: 'center', textAlign: 'center' }}>
-                                    <span style={{ color: '#ffffffff' }}>End</span>
+                                <div className="p-[10px] items-center text-center">
+                                    <span style={{ color: "transparent" }}>End</span>
                                 </div>
                             </>
                         ) : (
                             <div
-                                style={{
-                                    display: 'flex',
-                                    alignContent: "center",
-                                    justifyContent: "center",
-                                    backgroundColor: "rgba(239, 239, 240, .9)",
-                                    padding: 20
-                                }}
+                                className="flex content-center justify-center bg-muted/90 p-[20px] rounded-lg"
                             >
                                 <p
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: 15,
-                                        fontWeight: "300",
-                                        margin: 0,
-                                        color: '#000'
-                                    }}
+                                    className="text-center text-[15px] font-light m-0 text-foreground"
                                 >
                                     No Meetings
                                 </p>

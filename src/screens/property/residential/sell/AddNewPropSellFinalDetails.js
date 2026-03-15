@@ -133,13 +133,13 @@ const AddNewPropSellFinalDetails = props => {
     };
 
     return propertyFinalDetails ? (
-        <div className="flex flex-col h-full bg-white overflow-y-auto">
-            <div className="bg-gray-200 p-4">
+        <div className="flex flex-col h-full bg-neutral-900 overflow-y-auto">
+            <div className="bg-neutral-700 p-4">
                 <h2 className="text-lg font-semibold">
                     {"Sell Off "}{propertyFinalDetails.property_address.flat_number},
                     {propertyFinalDetails.property_address.building_name},
                 </h2>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-400">
                     {propertyFinalDetails.property_address.landmark_or_street},
                     {propertyFinalDetails.property_address.location_area.formatted_address}
                 </p>
@@ -149,7 +149,7 @@ const AddNewPropSellFinalDetails = props => {
                 dataSource={propertyFinalDetails.image_urls}
             />
 
-            <div className="border-t border-gray-300 bg-gray-100 p-4">
+            <div className="border-t border-neutral-700 bg-neutral-800 p-4">
                 <div className="flex justify-between">
                     <div className="text-center">
                         <p className="text-sm font-semibold text-center">{propertyFinalDetails.property_details.bhk_type}</p>
@@ -178,8 +178,8 @@ const AddNewPropSellFinalDetails = props => {
                 </div>
             </div>
 
-            <div className="mt-2 bg-white shadow-md">
-                <div className="p-4 border-b border-gray-200">
+            <div className="mt-2 bg-neutral-900 shadow-md">
+                <div className="p-4 border-b border-neutral-700">
                     <h3 className="text-md font-semibold">Details</h3>
                 </div>
                 <div className="flex justify-between p-4">
@@ -229,8 +229,8 @@ const AddNewPropSellFinalDetails = props => {
                 </div>
             </div>
 
-            <div className="mt-2 bg-white shadow-md">
-                <div className="p-4 border-b border-gray-200">
+            <div className="mt-2 bg-neutral-900 shadow-md">
+                <div className="p-4 border-b border-neutral-700">
                     <h3 className="text-md font-semibold">Owner</h3>
                 </div>
                 <div className="p-4">
@@ -252,11 +252,11 @@ const AddNewPropSellFinalDetails = props => {
 
             {modalVisible && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                    <div className="bg-neutral-900 p-6 rounded-lg shadow-lg max-w-sm w-full">
                         <p className="text-center mb-4 font-semibold">You are not logged in, please login.</p>
                         <div className="flex justify-end space-x-4">
                             <button
-                                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                                className="px-4 py-2 text-gray-400 hover:text-gray-200"
                                 onClick={() => setModalVisible(false)}
                             >
                                 Cancel

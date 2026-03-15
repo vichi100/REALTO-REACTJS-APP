@@ -116,20 +116,20 @@ const CustomerCommercialPropertyDetailsForm = props => {
 
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff", height: '100vh', overflowY: 'auto' }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)", height: '100vh', overflowY: 'auto' }}>
             <div style={styles.container}>
                 <div style={{ paddingTop: 30, marginLeft: 20, marginRight: 0 }}>
-                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Property Type*</p>
+                    <p style={{ color: 'var(--foreground)', fontWeight: 'bold' }}>Property Type*</p>
                     <div style={styles.propSubSection}>
                         <CustomButtonGroup
                             buttons={AppConstant.COMMERCIAL_PROPERTY_TYPE_OPTION}
                             accessibilityLabelId="commercial_property_type"
                             selectedIndices={[AppConstant.COMMERCIAL_PROPERTY_TYPE_OPTION.findIndex(option => option.text === propertyType)]}
                             isMultiSelect={false}
-                            buttonStyle={{ backgroundColor: '#fff' }}
+                            buttonStyle={{ backgroundColor: 'var(--background)' }}
                             selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                            buttonTextStyle={{ color: '#000' }}
-                            selectedButtonTextStyle={{ color: '#000' }}
+                            buttonTextStyle={{ color: 'var(--foreground)' }}
+                            selectedButtonTextStyle={{ color: 'var(--foreground)' }}
                             onButtonPress={(index, button) => {
                                 console.log(`Button pressed: ${button.text} (Index: ${index})`);
                                 setPropertyType(button.text);
@@ -138,7 +138,7 @@ const CustomerCommercialPropertyDetailsForm = props => {
                         />
 
                     </div>
-                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Building Type*</p>
+                    <p style={{ color: 'var(--foreground)', fontWeight: 'bold' }}>Building Type*</p>
                     <div style={styles.propSubSection}>
 
                         <CustomButtonGroup
@@ -146,10 +146,10 @@ const CustomerCommercialPropertyDetailsForm = props => {
                             accessibilityLabelId="commercial_property_building_type"
                             selectedIndices={[AppConstant.COMMERCIAL_PROPERTY_BUILDING_TYPE_OPTION.findIndex(option => option.text === buildingType)]}
                             isMultiSelect={false}
-                            buttonStyle={{ backgroundColor: '#fff' }}
+                            buttonStyle={{ backgroundColor: 'var(--background)' }}
                             selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                            buttonTextStyle={{ color: '#000' }}
-                            selectedButtonTextStyle={{ color: '#000' }}
+                            buttonTextStyle={{ color: 'var(--foreground)' }}
+                            selectedButtonTextStyle={{ color: 'var(--foreground)' }}
                             onButtonPress={(index, button) => {
                                 console.log(`Button pressed: ${button.text} (Index: ${index})`);
                                 setBuildingType(button.text);
@@ -159,10 +159,10 @@ const CustomerCommercialPropertyDetailsForm = props => {
 
                     </div>
 
-                    <p style={{ color: '#000000', fontWeight: 'bold' }}>Looking For Size In SQFT*</p>
+                    <p style={{ color: 'var(--foreground)', fontWeight: 'bold' }}>Looking For Size In SQFT*</p>
 
                     <div style={styles.inputContainerStyle}>
-                        <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: '#000000' }}>
+                        <label style={{ display: 'block', marginBottom: 5, fontSize: 12, color: 'var(--foreground)' }}>
                             Property Size*
                         </label>
                         <input
@@ -175,24 +175,24 @@ const CustomerCommercialPropertyDetailsForm = props => {
                                 width: '100%',
                                 padding: 10,
                                 borderRadius: 4,
-                                border: '1px solid #ccc',
-                                backgroundColor: "#f9f9f9",
-                                color: '#000000'
+                                border: '1px solid rgba(255, 255, 255, 0.15)',
+                                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                                color: 'var(--foreground)'
                             }}
                         />
                     </div>
 
-                    <p style={{ marginTop: 10, color: '#000000', fontWeight: 'bold' }}>Parkings*</p>
+                    <p style={{ marginTop: 10, color: 'var(--foreground)', fontWeight: 'bold' }}>Parkings*</p>
                     <div style={styles.doubleColSection}>
                         <CustomButtonGroup
                             buttons={AppConstant.PARKING_REQUIRED_OPTION}
                             accessibilityLabelId="parking_required"
                             selectedIndices={[AppConstant.PARKING_REQUIRED_OPTION.findIndex(option => option.text === parkingRequire)]}
                             isMultiSelect={false}
-                            buttonStyle={{ backgroundColor: '#fff' }}
+                            buttonStyle={{ backgroundColor: 'var(--background)' }}
                             selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                            buttonTextStyle={{ color: '#000' }}
-                            selectedButtonTextStyle={{ color: '#000' }}
+                            buttonTextStyle={{ color: 'var(--foreground)' }}
+                            selectedButtonTextStyle={{ color: 'var(--foreground)' }}
                             onButtonPress={(index, button) => {
                                 console.log(`Button pressed: ${button.text} (Index: ${index})`);
                                 setParkingRequire(button.text);

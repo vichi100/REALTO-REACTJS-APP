@@ -243,21 +243,21 @@ const CustomerMeeting = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
-            <div className="bg-white border-b border-gray-200 flex items-center p-4 shadow-sm sticky top-0 z-10">
+        <div className="flex flex-col h-full bg-neutral-800 overflow-y-auto">
+            <div className="bg-neutral-900 border-b border-neutral-700 flex items-center p-4 shadow-sm sticky top-0 z-10">
                 <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
                     <MdArrowBack size={24} color="#333" />
                 </div>
-                <h1 className="text-lg font-semibold text-gray-800">Schedule Meeting</h1>
+                <h1 className="text-lg font-semibold text-gray-200">Schedule Meeting</h1>
             </div>
             <div className="p-5 flex-1">
                 <div>
-                    <p className="mt-2 mb-2 text-sm font-medium text-black">
+                    <p className="mt-2 mb-2 text-sm font-medium text-white">
                         Create a call/visiting schedule to show property to client and get
                         reminder on time
                     </p>
-                    <div className="border-b border-gray-300" />
-                    <p className="mt-5 mb-4 text-sm font-medium text-black">
+                    <div className="border-b border-neutral-600" />
+                    <p className="mt-5 mb-4 text-sm font-medium text-white">
                         Reminder For ?
                     </p>
                     <div className="mb-2">
@@ -265,10 +265,10 @@ const CustomerMeeting = props => {
                             buttons={AppConstant.REMINDER_FOR_OPTION}
                             selectedIndices={[AppConstant.REMINDER_FOR_OPTION.findIndex(option => option.text === remiderType)]}
                             isMultiSelect={false}
-                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                             selectedButtonStyle={{ backgroundColor: 'rgba(0, 163, 108, .2)' }}
-                            buttonTextStyle={{ color: '#000' }}
-                            selectedButtonTextStyle={{ color: '#000' }}
+                            buttonTextStyle={{ color: 'var(--foreground)' }}
+                            selectedButtonTextStyle={{ color: 'var(--foreground)' }}
                             onButtonPress={(index, button) => {
                                 setReminderType(button.text);
                             }}
@@ -282,7 +282,7 @@ const CustomerMeeting = props => {
                             value={clientName}
                             onChange={e => setClientName(e.target.value)}
                             onFocus={() => setIsVisible(false)}
-                            className="w-full bg-transparent text-base text-gray-900 border-b-2 border-gray-200 focus:outline-none py-1"
+                            className="w-full bg-transparent text-base text-gray-100 border-b-2 border-neutral-700 focus:outline-none py-1"
                         />
                     </div>
 
@@ -294,21 +294,21 @@ const CustomerMeeting = props => {
                             onChange={e => setClientMobile(e.target.value)}
                             onFocus={() => setIsVisible(false)}
                             type="text"
-                            className="w-full bg-transparent text-base text-gray-900 border-b-2 border-gray-200 focus:outline-none py-1"
+                            className="w-full bg-transparent text-base text-gray-100 border-b-2 border-neutral-700 focus:outline-none py-1"
                         />
                     </div>
 
                     {props.propListForMeeting.length > 0 ? (
                         <div className="mb-2">
-                            <p className="mb-1 mt-2 text-black font-medium">Property List</p>
+                            <p className="mb-1 mt-2 text-white font-medium">Property List</p>
                             {props.propListForMeeting.map((item, index) => (
                                 <div
                                     key={index}
-                                    className="bg-gray-200 mt-px flex flex-row justify-between items-center"
+                                    className="bg-neutral-700 mt-px flex flex-row justify-between items-center"
                                 >
-                                    <span className="p-2.5 text-black">{item.name}</span>
+                                    <span className="p-2.5 text-white">{item.name}</span>
                                     <div onClick={() => remove(item)} className="cursor-pointer">
-                                        <div className="bg-white mt-0">
+                                        <div className="bg-neutral-900 mt-0">
                                             <div className="m-2">
                                                 <MdClose color={"#757575"} size={20} />
                                             </div>
@@ -340,8 +340,8 @@ const CustomerMeeting = props => {
 
                     <div className="flex flex-row mt-5 gap-2">
                         <div className="flex-1 w-full min-w-0">
-                            <label className="block mb-1 text-gray-800 font-medium">Date*</label>
-                            <div className="relative w-full bg-white rounded border border-gray-400 h-12 flex items-center">
+                            <label className="block mb-1 text-gray-200 font-medium">Date*</label>
+                            <div className="relative w-full bg-neutral-900 rounded border border-gray-400 h-12 flex items-center">
                                 <style>
                                     {`
                                         input[type="date"]::-webkit-calendar-picker-indicator {
@@ -349,7 +349,7 @@ const CustomerMeeting = props => {
                                             -webkit-appearance: none;
                                         }
                                         input[type="date"] {
-                                            color-scheme: light;
+                                            color-scheme: dark;
                                         }
                                     `}
                                 </style>
@@ -389,7 +389,7 @@ const CustomerMeeting = props => {
                                         }
                                     }}
                                     onKeyDown={(e) => e.preventDefault()}
-                                    className={`p-2.5 rounded bg-transparent outline-none text-base w-full h-full ${!newDate ? 'text-transparent' : 'text-black'}`}
+                                    className={`p-2.5 rounded bg-transparent outline-none text-base w-full h-full ${!newDate ? 'text-transparent' : 'text-white'}`}
                                 />
                                 <div className="absolute right-3 top-3 pointer-events-none">
                                     <MdDateRange color="#757575" size={20} />
@@ -397,13 +397,13 @@ const CustomerMeeting = props => {
                             </div>
                         </div>
                         <div className="flex-1 w-full min-w-0">
-                            <label className="block mb-1 text-gray-800 font-medium">Time*</label>
+                            <label className="block mb-1 text-gray-200 font-medium">Time*</label>
                             <input
                                 readOnly
                                 value={newTime}
                                 onClick={() => setModalVisible(true)}
                                 placeholder="Select Time"
-                                className="w-full h-12 p-2.5 rounded border border-gray-400 bg-white text-black outline-none text-base"
+                                className="w-full h-12 p-2.5 rounded border border-gray-400 bg-neutral-900 text-white outline-none text-base"
                             />
                         </div>
                     </div>
@@ -414,7 +414,7 @@ const CustomerMeeting = props => {
                 </div>
             </div>
             {/* Property releted reminder list */}
-            {loading ? <div className="flex-1 justify-center items-center bg-gray-100 bg-opacity-40 flex h-full">
+            {loading ? <div className="flex-1 justify-center items-center bg-neutral-800 bg-opacity-40 flex h-full">
                 <div>Loading...</div>
             </div> : <PropertyReminder navigation={navigation} reminderListX={reminderListX} />}
             <Snackbar
@@ -449,9 +449,9 @@ const CustomerMeeting = props => {
                                 onButtonPress={(index) => selectAMPMIndex(index)}
                                 selectedIndices={[ampmIndex]}
                                 buttons={ampmArray}
-                                buttonStyle={{ backgroundColor: '#fff', border: '1px solid #ccc', borderRadius: '5px', padding: '10px 0', width: '100%', marginBottom: '4px' }}
+                                buttonStyle={{ backgroundColor: 'var(--background)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '5px', padding: '10px 0', width: '100%', marginBottom: '4px' }}
                                 buttonTextStyle={{ textAlign: "center", color: "#333", fontSize: "16px", fontWeight: "500" }}
-                                selectedButtonTextStyle={{ color: "#000", fontSize: "16px", fontWeight: "500" }}
+                                selectedButtonTextStyle={{ color: "var(--foreground)", fontSize: "16px", fontWeight: "500" }}
                                 containerStyle={{ width: 80 }}
                                 vertical={true}
                             />
@@ -508,9 +508,9 @@ const styles = {
         height: '45px',
         padding: 10,
         borderRadius: 5,
-        border: '1px solid #ccc',
+        border: '1px solid rgba(255, 255, 255, 0.15)',
         fontSize: 16,
-        backgroundColor: '#fff',
+        backgroundColor: 'var(--background)',
         boxSizing: 'border-box'
     },
     centeredView1: {
@@ -526,7 +526,7 @@ const styles = {
         alignItems: "center",
     },
     modalView: {
-        backgroundColor: "white",
+        backgroundColor: "var(--card)",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -541,9 +541,9 @@ const styles = {
         fontSize: 16,
         borderRadius: 5,
         border: '1px solid #757575',
-        backgroundColor: "#ffffff",
+        backgroundColor: "var(--background)",
         outline: 'none',
-        color: '#000'
+        color: 'var(--foreground)'
     },
     textButton: {
         marginLeft: 10,
@@ -553,7 +553,7 @@ const styles = {
         cursor: 'pointer'
     },
     textButtonLabel: {
-        color: "#000",
+        color: "var(--foreground)",
         fontWeight: "500",
         textAlign: "center",
         fontSize: 16

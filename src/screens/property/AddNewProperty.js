@@ -74,20 +74,20 @@ const AddNewProperty = props => {
     };
 
     return (
-        <div className="flex flex-col h-full bg-gray-50 overflow-y-auto">
-            <div className="bg-white px-4 py-3 flex items-center shadow-sm border-b border-gray-200">
+        <div className="flex flex-col h-full bg-neutral-800 overflow-y-auto">
+            <div className="bg-neutral-900 px-4 py-3 flex items-center shadow-sm border-b border-neutral-700">
                 <button
                     onClick={() => navigate(-1)}
-                    className="mr-3 p-1 rounded-full hover:bg-gray-100 focus:outline-none"
+                    className="mr-3 p-1 rounded-full hover:bg-neutral-800 focus:outline-none"
                     aria-label="Go back"
                 >
-                    <MdArrowBack className="text-gray-700 text-xl" />
+                    <MdArrowBack className="text-gray-300 text-xl" />
                 </button>
-                <h1 className="text-lg font-medium text-gray-900">Add New Property</h1>
+                <h1 className="text-lg font-medium text-gray-100">Add New Property</h1>
             </div>
             <div className="p-5">
                 <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Select Property Type</label>
+                    <label className="block text-gray-300 text-sm font-bold mb-2">Select Property Type</label>
                     <div className="mt-2">
                         <CustomButtonGroup
                             buttons={selectedPropTypeOption}
@@ -97,13 +97,13 @@ const AddNewProperty = props => {
                                 setSelectedPropType(button.text);
                             }}
                             containerStyle={{ gap: '12px' }}
-                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
                 </div>
 
                 <div className="mb-5">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Select Property For</label>
+                    <label className="block text-gray-300 text-sm font-bold mb-2">Select Property For</label>
                     <div className="mt-2">
                         <CustomButtonGroup
                             buttons={propertyForOption}
@@ -113,13 +113,13 @@ const AddNewProperty = props => {
                                 setPropertyFor(button.text);
                             }}
                             containerStyle={{ gap: '12px' }}
-                            buttonStyle={{ backgroundColor: '#FFFFFF', borderRadius: '6px', border: '1px solid #E5E7EB', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: '#374151', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            buttonStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.15)', padding: '8px 20px', fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', boxShadow: 'none', width: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         />
                     </div>
                 </div>
 
                 <div className="mt-8 mb-4">
-                    <h3 className="text-lg font-semibold text-gray-700">Owner Details</h3>
+                    <h3 className="text-lg font-semibold text-gray-300">Owner Details</h3>
                 </div>
 
 
@@ -130,7 +130,7 @@ const AddNewProperty = props => {
                     </label>
                     <input
                         type="text"
-                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'name' ? 'border-teal-500' : 'border-gray-200'}`}
+                        className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'name' ? 'border-teal-500' : 'border-neutral-700'}`}
                         value={ownerName}
                         onChange={e => setOwnerName(e.target.value)}
                         onFocus={() => { setIsVisible(false); setFocusedField('name'); }}
@@ -144,7 +144,7 @@ const AddNewProperty = props => {
                     </label>
                     <input
                         type="tel"
-                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'mobile' ? 'border-teal-500' : 'border-gray-200'}`}
+                        className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'mobile' ? 'border-teal-500' : 'border-neutral-700'}`}
                         value={ownerMobile}
                         onChange={e => {
                             const val = e.target.value;
@@ -163,7 +163,7 @@ const AddNewProperty = props => {
                     </label>
                     <input
                         type="text"
-                        className={`w-full bg-transparent text-base text-gray-900 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'address' ? 'border-teal-500' : 'border-gray-200'}`}
+                        className={`w-full bg-transparent text-base text-gray-100 border-b-2 focus:outline-none py-1 transition-colors ${focusedField === 'address' ? 'border-teal-500' : 'border-neutral-700'}`}
                         value={ownerAddress}
                         onChange={e => setOwnerAddress(e.target.value)}
                         onFocus={() => { setIsVisible(false); setFocusedField('address'); }}

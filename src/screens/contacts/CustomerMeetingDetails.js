@@ -68,13 +68,13 @@ const CustomerMeetingDetails = props => {
 
     if (!item) {
         return (
-            <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+            <div style={{ flex: 1, backgroundColor: "var(--background)" }}>
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     padding: '15px 20px',
-                    borderBottom: '1px solid #d0d0d0',
-                    backgroundColor: '#fff',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                    backgroundColor: 'var(--background)',
                     position: 'sticky',
                     top: 0,
                     zIndex: 10,
@@ -85,16 +85,16 @@ const CustomerMeetingDetails = props => {
                         display: 'flex',
                         alignItems: 'center',
                     }}>
-                        <MdArrowBack size={24} color="#333" />
+                        <MdArrowBack size={24} color="var(--foreground)" />
                     </div>
                     <h1 style={{
                         fontSize: '20px',
                         fontWeight: '600',
-                        color: '#333',
+                        color: 'var(--foreground)',
                         margin: 0,
                     }}>Meeting Details</h1>
                 </div>
-                <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
+                <div style={{ padding: '20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.6)' }}>
                     No meeting details available.
                 </div>
             </div>
@@ -102,13 +102,13 @@ const CustomerMeetingDetails = props => {
     }
 
     return (
-        <div style={{ flex: 1, backgroundColor: "#ffffff" }}>
+        <div style={{ flex: 1, backgroundColor: "var(--background)" }}>
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 padding: '15px 20px',
-                borderBottom: '1px solid #d0d0d0',
-                backgroundColor: '#fff',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                backgroundColor: 'var(--background)',
                 position: 'sticky',
                 top: 0,
                 zIndex: 10,
@@ -119,12 +119,12 @@ const CustomerMeetingDetails = props => {
                     display: 'flex',
                     alignItems: 'center',
                 }}>
-                    <MdArrowBack size={24} color="#333" />
+                    <MdArrowBack size={24} color="var(--foreground)" />
                 </div>
                 <h1 style={{
                     fontSize: '20px',
                     fontWeight: '600',
-                    color: '#333',
+                    color: 'var(--foreground)',
                     margin: 0,
                 }}>Meeting Details</h1>
             </div>
@@ -141,11 +141,11 @@ const CustomerMeetingDetails = props => {
                                     displayMatchCount={false}
                                     displayMatchPercent={false}
                                 />
-                                <div className="bg-white border-b border-gray-300 flex flex-col sm:flex-row justify-between p-3 text-black font-semibold text-sm sm:text-base gap-2">
+                                <div className="bg-neutral-900 border-b border-neutral-600 flex flex-col sm:flex-row justify-between p-3 text-white font-semibold text-sm sm:text-base gap-2">
                                     <div className="flex-1 break-words">
                                         {reminderObj.reminder_for}
                                     </div>
-                                    <div className="flex items-center gap-4 text-gray-800 whitespace-nowrap">
+                                    <div className="flex items-center gap-4 text-gray-200 whitespace-nowrap">
                                         <span>
                                             {formatIsoDateToCustomString(reminderObj.meeting_date)}
                                         </span>
@@ -154,14 +154,8 @@ const CustomerMeetingDetails = props => {
                                         </span>
                                     </div>
                                 </div>
-                                <div
-                                    style={{
-                                        backgroundColor: "#E0F7FA"
-                                    }}
-                                >
-                                    <p style={{ padding: 10, textAlign: "center", margin: 0, color: '#000', fontWeight: 'bold' }}>
-                                        Related Properties For Meeting
-                                    </p>
+                                <div className="bg-neutral-800 border-b border-neutral-700 p-3 text-center text-gray-200 font-bold">
+                                    Related Properties For Meeting
                                 </div>
 
                                 {customerMeetingDetailsObj.property_details.map((item, index) => (
@@ -176,7 +170,7 @@ const CustomerMeetingDetails = props => {
                                             })
 
                                         }}
-                                        style={{ cursor: 'pointer', borderBottom: '1px solid #e0e0e0', marginBottom: '10px', paddingBottom: '10px' }}
+                                        style={{ cursor: 'pointer', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', marginBottom: '10px', paddingBottom: '10px' }}
                                     >
                                         <div>
                                             <CardResidentialRent
@@ -200,11 +194,11 @@ const CustomerMeetingDetails = props => {
                                     displayCheckBox={false}
                                     displayMatchCount={false}
                                 />
-                                <div className="bg-white border-b border-gray-300 flex flex-col sm:flex-row justify-between p-3 text-black font-semibold text-sm sm:text-base gap-2">
+                                <div className="bg-neutral-900 border-b border-neutral-600 flex flex-col sm:flex-row justify-between p-3 text-white font-semibold text-sm sm:text-base gap-2">
                                     <div className="flex-1 break-words">
                                         {reminderObj.reminder_for}
                                     </div>
-                                    <div className="flex items-center gap-4 text-gray-800 whitespace-nowrap">
+                                    <div className="flex items-center gap-4 text-gray-200 whitespace-nowrap">
                                         <span>
                                             {formatIsoDateToCustomString(reminderObj.meeting_date)}
                                         </span>
@@ -213,14 +207,8 @@ const CustomerMeetingDetails = props => {
                                         </span>
                                     </div>
                                 </div>
-                                <div
-                                    style={{
-                                        backgroundColor: "#E0F7FA"
-                                    }}
-                                >
-                                    <p style={{ padding: 10, textAlign: "center", margin: 0, color: '#000', fontWeight: 'bold' }}>
-                                        Related Properties For Meeting
-                                    </p>
+                                <div className="bg-neutral-800 border-b border-neutral-700 p-3 text-center text-gray-200 font-bold">
+                                    Related Properties For Meeting
                                 </div>
 
                                 {customerMeetingDetailsObj.property_details.map((item, index) => (
@@ -237,7 +225,7 @@ const CustomerMeetingDetails = props => {
                                         }
 
                                         }
-                                        style={{ cursor: 'pointer', borderBottom: '1px solid #e0e0e0', marginBottom: '10px', paddingBottom: '10px' }}
+                                        style={{ cursor: 'pointer', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', marginBottom: '10px', paddingBottom: '10px' }}
                                     >
                                         <div>
                                             <CardResidentialSell
@@ -263,11 +251,11 @@ const CustomerMeetingDetails = props => {
                                     displayCheckBox={false}
                                     displayMatchCount={false}
                                 />
-                                <div className="bg-white border-b border-gray-300 flex flex-col sm:flex-row justify-between p-3 text-black font-semibold text-sm sm:text-base gap-2">
+                                <div className="bg-neutral-900 border-b border-neutral-600 flex flex-col sm:flex-row justify-between p-3 text-white font-semibold text-sm sm:text-base gap-2">
                                     <div className="flex-1 break-words">
                                         {reminderObj.reminder_for}
                                     </div>
-                                    <div className="flex items-center gap-4 text-gray-800 whitespace-nowrap">
+                                    <div className="flex items-center gap-4 text-gray-200 whitespace-nowrap">
                                         <span>
                                             {formatIsoDateToCustomString(reminderObj.meeting_date)}
                                         </span>
@@ -276,14 +264,8 @@ const CustomerMeetingDetails = props => {
                                         </span>
                                     </div>
                                 </div>
-                                <div
-                                    style={{
-                                        backgroundColor: "#E0F7FA"
-                                    }}
-                                >
-                                    <p style={{ padding: 10, textAlign: "center", margin: 0, color: '#000', fontWeight: 'bold' }}>
-                                        Related Properties For Meeting
-                                    </p>
+                                <div className="bg-neutral-800 border-b border-neutral-700 p-3 text-center text-gray-200 font-bold">
+                                    Related Properties For Meeting
                                 </div>
 
                                 {customerMeetingDetailsObj.property_details.map((item, index) => (
@@ -298,7 +280,7 @@ const CustomerMeetingDetails = props => {
                                             })
                                         }
                                         }
-                                        style={{ cursor: 'pointer', borderBottom: '1px solid #e0e0e0', marginBottom: '10px', paddingBottom: '10px' }}
+                                        style={{ cursor: 'pointer', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', marginBottom: '10px', paddingBottom: '10px' }}
                                     >
                                         <div>
                                             <CardCommercialRent
@@ -323,11 +305,11 @@ const CustomerMeetingDetails = props => {
                                     displayCheckBox={false}
                                     displayMatchCount={false}
                                 />
-                                <div className="bg-white border-b border-gray-300 flex flex-col sm:flex-row justify-between p-3 text-black font-semibold text-sm sm:text-base gap-2">
+                                <div className="bg-neutral-900 border-b border-neutral-600 flex flex-col sm:flex-row justify-between p-3 text-white font-semibold text-sm sm:text-base gap-2">
                                     <div className="flex-1 break-words">
                                         {reminderObj.reminder_for}
                                     </div>
-                                    <div className="flex items-center gap-4 text-gray-800 whitespace-nowrap">
+                                    <div className="flex items-center gap-4 text-gray-200 whitespace-nowrap">
                                         <span>
                                             {formatIsoDateToCustomString(reminderObj.meeting_date)}
                                         </span>
@@ -336,14 +318,8 @@ const CustomerMeetingDetails = props => {
                                         </span>
                                     </div>
                                 </div>
-                                <div
-                                    style={{
-                                        backgroundColor: "#E0F7FA"
-                                    }}
-                                >
-                                    <p style={{ padding: 10, textAlign: "center", margin: 0, color: '#000', fontWeight: 'bold' }}>
-                                        Related Properties For Meeting
-                                    </p>
+                                <div className="bg-neutral-800 border-b border-neutral-700 p-3 text-center text-gray-200 font-bold">
+                                    Related Properties For Meeting
                                 </div>
 
                                 {customerMeetingDetailsObj.property_details.map((item, index) => (
@@ -358,7 +334,7 @@ const CustomerMeetingDetails = props => {
                                             })
                                         }
                                         }
-                                        style={{ cursor: 'pointer', borderBottom: '1px solid #e0e0e0', marginBottom: '10px', paddingBottom: '10px' }}
+                                        style={{ cursor: 'pointer', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', marginBottom: '10px', paddingBottom: '10px' }}
                                     >
                                         <div>
                                             <CardCommercialSell

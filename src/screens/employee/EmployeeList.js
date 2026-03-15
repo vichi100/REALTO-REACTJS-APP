@@ -178,24 +178,24 @@ const EmployeeList = props => {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: 'rgba(245,245,245, .4)',
+                backgroundColor: 'var(--background)',
                 height: '100%',
                 display: 'flex'
             }}
         >
             <div>Loading...</div>
         </div> :
-            <div className="flex flex-col h-full bg-white relative">
-                <div className="flex flex-col bg-white z-10 border-b border-gray-200">
+            <div className="flex flex-col h-full bg-neutral-900 relative">
+                <div className="flex flex-col bg-neutral-900 z-10 border-b border-neutral-700">
                     <div className="flex flex-row items-center p-4">
                         <div onClick={handleBack} className="cursor-pointer mr-4 flex items-center">
-                            <MdArrowBack size={24} color="#333" />
+                            <MdArrowBack size={24} color="var(--foreground)" />
                         </div>
-                        <h1 className="text-xl font-semibold text-gray-800 m-0">Employee List</h1>
+                        <h1 className="text-xl font-semibold text-white m-0">Employee List</h1>
                     </div>
 
-                    <div className="flex flex-row items-center px-4 pb-4 bg-white">
-                        <div className="flex-1 flex items-center bg-white rounded-lg border border-gray-300 px-3 py-2 shadow-sm">
+                    <div className="flex flex-row items-center px-4 pb-4 bg-neutral-900">
+                        <div className="flex-1 flex items-center bg-neutral-900 rounded-lg border border-neutral-600 px-3 py-2 shadow-sm">
                             <MdSearch size={24} className="text-gray-400" />
                             <div className="h-6 w-0.5 bg-blue-500 mx-3"></div>
                             <input
@@ -203,7 +203,7 @@ const EmployeeList = props => {
                                 placeholder="Search By Name, Mobile"
                                 value={search}
                                 onChange={(e) => searchFilterFunction(e.target.value)}
-                                className="flex-1 bg-transparent border-none outline-none text-gray-700 placeholder-gray-500 text-base"
+                                className="flex-1 bg-transparent border-none outline-none text-gray-300 placeholder-gray-500 text-base"
                             />
                         </div>
                     </div>
@@ -228,11 +228,11 @@ const EmployeeList = props => {
                                         disableDrawer={disableDrawer}
                                         displayCheckBox={displayCheckBox}
                                     />
-                                    <div style={{ height: 0.5, width: "100%", backgroundColor: "#C8C8C8" }} />
+                                    <div style={{ height: 0.5, width: "100%", backgroundColor: "rgba(255, 255, 255, 0.2)" }} />
                                 </div>
                             ))}
                             <div style={{ padding: 10, alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-                                <span style={{ color: '#ffffffff' }}>End</span>
+                                <span style={{ color: 'var(--foreground)' }}>End</span>
                             </div>
                         </div>
 
@@ -267,7 +267,7 @@ const EmployeeList = props => {
                                 flexDirection: 'column'
                             }}
                         >
-                            <span style={{ textAlign: "center" }}>
+                            <span style={{ textAlign: "center", color: "var(--foreground)" }}>
                                 You have no Employee
                             </span>
 
@@ -276,7 +276,7 @@ const EmployeeList = props => {
                                 )) ?
                                 <div onClick={() => navigateTo()} style={{ cursor: 'pointer' }}>
                                     <span
-                                        style={{ color: "#00BFFF", textAlign: "center", marginTop: 20 }}
+                                        style={{ color: "var(--blue-500)", textAlign: "center", marginTop: 20 }}
                                     >
                                         Add New Employee
                                     </span>
@@ -358,14 +358,14 @@ const styles = {
         border: 'none',
         outline: 'none',
         fontSize: 16,
-        color: '#000'
+        color: 'var(--foreground)'
     },
     header: {
         display: 'flex',
         alignItems: 'center',
         padding: '10px 15px', // Reduced padding from 15px 20px
-        borderBottom: '1px solid #f0f0f0',
-        backgroundColor: '#fff',
+        borderBottom: '1px solid var(--border)',
+        backgroundColor: 'var(--background)',
         // position: 'sticky', // Removed sticky, using flex layout
         // top: 0,
         zIndex: 10,
@@ -379,7 +379,7 @@ const styles = {
     title: {
         fontSize: '20px',
         fontWeight: '600',
-        color: '#333',
+        color: 'var(--foreground)',
         margin: 0,
     },
 };

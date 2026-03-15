@@ -6,10 +6,10 @@ const CustomButtonGroup = ({
     isMultiSelect = false,
     onButtonPress,
     containerStyle,
-    buttonStyle = { backgroundColor: '#fff', borderWidth: '0px' },
-    selectedButtonStyle = { backgroundColor: 'rgba(0, 163, 108, .2)' },
-    buttonTextStyle = { color: '#000' },
-    selectedButtonTextStyle = { color: '#000' },
+    buttonStyle = { backgroundColor: 'var(--background)', borderWidth: '1px', borderColor: 'var(--border)' },
+    selectedButtonStyle = { backgroundColor: 'rgba(0, 163, 108, 0.3)' },
+    buttonTextStyle = { color: 'var(--foreground)' },
+    selectedButtonTextStyle = { color: 'var(--foreground)' },
     vertical = false,
     isSegmented = false
 }) => {
@@ -53,7 +53,7 @@ const CustomButtonGroup = ({
               ${isSegmented && index > 0 ? '-ml-px' : ''}
               ${isSelected
                                 ? 'z-10'
-                                : 'hover:bg-gray-50 z-0'}
+                                : 'hover:bg-neutral-800 z-0'}
             `}
                         style={{
                             ...buttonStyle,
