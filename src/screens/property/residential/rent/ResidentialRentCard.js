@@ -21,9 +21,8 @@ import {
     setStartNavigationPoint,
     setPropListForMeeting
 } from "./../../../../reducers/Action";
-import { SERVER_URL, WEB_APP_URL } from "./../../../../utils/Constant";
-import { EMPLOYEE_ROLE_DELETE } from "././../../../../utils/AppConstant";
 import { makeCall } from "../../../../utils/methods";
+import { SERVER_URL, WEB_APP_URL, PRO_CALL_URL } from "./../../../../utils/Constant";
 
 const Card = props => {
     const {
@@ -41,6 +40,8 @@ const Card = props => {
     } = props;
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [callModalVisible, setCallModalVisible] = useState(false);
+    const [proCallModalVisible, setProCallModalVisible] = useState(false);
     const [chatModalVisible, setChatModalVisible] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -513,7 +514,7 @@ const Card = props => {
                                 <MdAlarm color={"#ffffff"} size={30} />
                             </div>
 
-                            <div onClick={(e) => { e.stopPropagation(); makeCall(item.owner_details.mobile1); }} className="w-16 h-full bg-teal-500 flex items-center justify-center cursor-pointer">
+                            <div onClick={(e) => { e.stopPropagation(); setCallModalVisible(true); }} className="w-16 h-full bg-teal-500 flex items-center justify-center cursor-pointer">
                                 <MdCall color={"#ffffff"} size={30} />
                             </div>
                         </div>
@@ -622,6 +623,85 @@ const Card = props => {
             }
 
             {
+                callModalVisible && (
+                    <div className="fixed inset-0 flex items-center justify-center z-[9999] px-4" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }} onClick={(e) => { e.stopPropagation(); setCallModalVisible(false); }}>
+                        <div className="bg-neutral-900 p-6 rounded-[2rem] shadow-2xl max-w-sm w-full border border-neutral-800" onClick={(e) => e.stopPropagation()}>
+                            <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                            <h3 className="text-xl font-bold text-white text-center mb-8">Choose Call Option</h3>
+
+                            <div className="flex justify-around items-start mb-8">
+                                <div className="flex flex-col items-center space-y-3">
+                                    <button
+                                        onClick={() => {
+                                            makeCall(item.owner_details.mobile1);
+                                            setCallModalVisible(false);
+                                        }}
+                                        className="w-20 h-20 flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-all active:scale-90 shadow-lg shadow-blue-900/30"
+                                    >
+                                        <MdCall size={36} />
+                                    </button>
+                                    <span className="text-gray-300 font-semibold text-sm">Normal Call</span>
+                                </div>
+
+                                <div className="flex flex-col items-center space-y-3">
+                                    <button
+                                        onClick={() => {
+                                            setProCallModalVisible(true);
+                                            setCallModalVisible(false);
+                                        }}
+                                        className="w-20 h-20 flex items-center justify-center bg-green-600 hover:bg-green-700 text-white rounded-full transition-all active:scale-90 shadow-lg shadow-green-900/30"
+                                    >
+                                        <MdCall size={36} />
+                                    </button>
+                                    <span className="text-gray-300 font-semibold text-sm">Pro Call</span>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-center border-t border-neutral-800 pt-4">
+                                <button
+                                    onClick={() => setCallModalVisible(false)}
+                                    className="text-gray-500 font-bold hover:text-white transition-colors uppercase tracking-wider text-xs"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
+            {proCallModalVisible && (
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={(e) => { e.stopPropagation(); setProCallModalVisible(false); }}>
+                    <div className="bg-neutral-900 w-full h-full overflow-hidden flex flex-col shadow-2xl animate-in fade-in zoom-in duration-300" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center justify-between p-6 border-b border-neutral-800 bg-neutral-900/50">
+                            <div className="flex items-center space-x-3">
+                                <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
+                                    <MdCall className="text-white" size={24} />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-bold text-white leading-tight">Pro Call Dashboard</h3>
+                                    <p className="text-gray-400 text-sm">Property: {item?.property_address?.building_name}</p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => setProCallModalVisible(false)}
+                                className="p-3 hover:bg-neutral-800 text-gray-400 hover:text-white rounded-2xl transition-all"
+                            >
+                                <MdClose size={28} />
+                            </button>
+                        </div>
+                        <div className="flex-1 bg-white relative">
+                            <iframe
+                                src={`${PRO_CALL_URL}?property_id=${item?.property_id}`}
+                                className="w-full h-full border-none"
+                                title="Pro Call Dashboard"
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {
                 chatModalVisible && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                         <div className="bg-neutral-900 p-6 rounded-lg shadow-lg max-w-sm w-full">
@@ -651,7 +731,7 @@ const Card = props => {
                 )
             }
 
-        </div >
+        </div>
     );
 };
 
@@ -659,6 +739,7 @@ const mapStateToProps = state => ({
     userDetails: state.AppReducer.userDetails,
     propListForMeeting: state.AppReducer.propListForMeeting,
 });
+
 const mapDispatchToProps = {
     setPropertyDetails,
     setCustomerDetailsForMeeting,

@@ -7,10 +7,13 @@
 // export const GOOGLE_PLACES_API_KEY = "AIzaSyCjoEa7haFJpjqN3akj0LkYM0zYugXFw4s" // prod
 
 
-export const EMAIL_PDF_SERVER = process.env.NEXT_PUBLIC_REALTO_EMAIL_PDF_SERVER_URL; // "http://192.168.1.3 :3000"; 
-export const WEB_APP_URL = process.env.NEXT_PUBLIC_REALTO_WEB_APP_URL;
-export const SERVER_URL = "/api"; // process.env.NEXT_PUBLIC_REALTO_APP_SERVER_URL;
-export const GOOGLE_PLACES_API_KEY = process.env.NEXT_PUBLIC_REALTO_GOOGLE_PLACES_API_KEY; // "AIzaSyCjoEa7haFJpjqN3akj0LkYM0zYugXFw4s"; // prod
+const APP_HOST = process.env.NEXT_PUBLIC_APP_HOST || 'localhost';
+
+export const EMAIL_PDF_SERVER = `http://${APP_HOST}:3000`;
+export const WEB_APP_URL = `http://${APP_HOST}:3000`;
+export const PRO_CALL_URL = `http://${APP_HOST}:3002/realto`;
+export const SERVER_URL = "/api";
+export const GOOGLE_PLACES_API_KEY = process.env.NEXT_PUBLIC_REALTO_GOOGLE_PLACES_API_KEY;
 
 // export const SERVER_URL = "http://192.168.0.100:3000/";// Prod
 
