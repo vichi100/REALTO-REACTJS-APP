@@ -699,17 +699,19 @@ const ContactsResidential = props => {
 
             {/* Filter Modal */}
             {visible && (
-                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={toggleBottomNavigationView}>
-                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-10">
-                            <h3 className="text-lg font-bold text-white">Filter</h3>
+                <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleBottomNavigationView}>
+                    <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                        <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                        <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                            <div className="w-8" />
+                            <h3 className="text-xl font-bold text-white text-center">Filter</h3>
                             <div
                                 onClick={resetFilter}
-                                className="absolute top-0 right-0 cursor-pointer"
+                                className="cursor-pointer hover:bg-neutral-800 p-2 rounded-full transition-colors"
                             >
                                 <MdRestartAlt
                                     color={"var(--foreground)"}
-                                    size={30}
+                                    size={24}
                                 />
                             </div>
                         </div>
@@ -720,7 +722,6 @@ const ContactsResidential = props => {
                                 buttons={porposeForOptions}
                                 selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 onButtonPress={(index, button) => {
                                     setPurpose(button.text);
                                 }}
@@ -732,7 +733,6 @@ const ContactsResidential = props => {
                             <CustomButtonGroup
                                 buttons={bhkOption}
                                 isMultiSelect={true}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 selectedIndices={selectedBHK.map((item) =>
                                     bhkOption.findIndex((option) => option.text === item)
                                 )}
@@ -768,7 +768,6 @@ const ContactsResidential = props => {
                                 buttons={reqWithinOptions}
                                 selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 onButtonPress={(index, button) => {
                                     setReqWithin(button.text);
                                 }}
@@ -780,7 +779,6 @@ const ContactsResidential = props => {
                             <CustomButtonGroup
                                 buttons={furnishingStatusOptions}
                                 isMultiSelect={true}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 selectedIndices={selectedFunishing.map((item) =>
                                     furnishingStatusOptions.findIndex((option) => option.text === item)
                                 )}
@@ -805,19 +803,20 @@ const ContactsResidential = props => {
                 </div>
             )}
 
-            {/* Sort Modal */}
             {visibleSorting && (
-                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }} onClick={toggleSortingBottomNavigationView}>
-                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-10">
-                            <h3 className="text-lg font-bold text-white">Sort By</h3>
+                <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleSortingBottomNavigationView}>
+                    <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                        <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                        <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                            <div className="w-8" />
+                            <h3 className="text-xl font-bold text-white text-center">Sort By</h3>
                             <div
                                 onClick={resetSortBy}
-                                className="absolute top-0 right-0 cursor-pointer"
+                                className="cursor-pointer hover:bg-neutral-800 p-2 rounded-full transition-colors"
                             >
                                 <MdRestartAlt
                                     color={"var(--foreground)"}
-                                    size={30}
+                                    size={24}
                                 />
                             </div>
                         </div>
@@ -829,7 +828,6 @@ const ContactsResidential = props => {
                                 onButtonPress={(index) => selectLookingForIndexSortBy(index)}
                                 selectedIndices={[lookingForIndexSortBy]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 
@@ -840,7 +838,6 @@ const ContactsResidential = props => {
                                 onButtonPress={(index) => sortByName(index)}
                                 selectedIndices={[sortByNameIndex]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 

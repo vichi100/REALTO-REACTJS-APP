@@ -749,18 +749,19 @@ const ListingCommercial = props => {
             </div>
 
             {visible && (
-                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }} onClick={toggleBottomNavigationView}>
-                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-10">
-                            <h3 className="text-lg font-bold text-white">Filter</h3>
+                <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleBottomNavigationView}>
+                    <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                        <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                        <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                            <div className="w-8" />
+                            <h3 className="text-xl font-bold text-white text-center">Filter</h3>
                             <div
-                                onClick={toggleBottomNavigationView}
-                                className="absolute top-0 right-0 cursor-pointer"
+                                onClick={resetFilter}
+                                className="cursor-pointer hover:bg-neutral-800 p-2 rounded-full transition-colors"
                             >
                                 <MdRestartAlt
                                     color={"var(--foreground)"}
-                                    size={30}
-                                    onClick={resetFilter}
+                                    size={24}
                                 />
                             </div>
                         </div>
@@ -772,10 +773,6 @@ const ListingCommercial = props => {
                                 onButtonPress={(index, button) => setPurpose(button.text)}
                                 selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
-                                buttonTextStyle={{ color: 'var(--foreground)' }}
-                                selectedButtonTextStyle={{ color: 'var(--background)' }}
                             />
                         </div>
 
@@ -790,10 +787,6 @@ const ListingCommercial = props => {
                                 onButtonPress={(index, button) => {
                                     selectProperties(index, button);
                                 }}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
-                                selectedButtonStyle={{ backgroundColor: '#00a36c' }}
-                                buttonTextStyle={{ color: 'var(--foreground)' }}
-                                selectedButtonTextStyle={{ color: 'var(--background)' }}
                             />
                         </div>
 
@@ -808,7 +801,6 @@ const ListingCommercial = props => {
                                 onButtonPress={(index, button) => {
                                     selectBuildingType(index, button);
                                 }}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 
@@ -848,7 +840,6 @@ const ListingCommercial = props => {
                                 onButtonPress={(index, button) => setReqWithin(button.text)}
                                 selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 
@@ -863,7 +854,6 @@ const ListingCommercial = props => {
                                 onButtonPress={(index, button) => {
                                     selectFurnishings(index, button);
                                 }}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 
@@ -875,17 +865,19 @@ const ListingCommercial = props => {
             )}
 
             {visibleSorting && (
-                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }} onClick={toggleSortingBottomNavigationView}>
-                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-10">
-                            <h3 className="text-lg font-bold text-white">Sort By</h3>
+                <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleSortingBottomNavigationView}>
+                    <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                        <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                        <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                            <div className="w-8" />
+                            <h3 className="text-xl font-bold text-white text-center">Sort By</h3>
                             <div
                                 onClick={resetSortBy}
-                                className="absolute top-0 right-0 cursor-pointer"
+                                className="cursor-pointer hover:bg-neutral-800 p-2 rounded-full transition-colors"
                             >
                                 <MdRestartAlt
                                     color={"var(--foreground)"}
-                                    size={30}
+                                    size={24}
                                 />
                             </div>
                         </div>
@@ -898,7 +890,6 @@ const ListingCommercial = props => {
                                 selectedIndices={[lookingForIndexSortBy]}
                                 isSegmented={true}
                                 containerStyle={{ width: '100%' }}
-                                buttonStyle={{ flex: 1, backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 
@@ -910,7 +901,6 @@ const ListingCommercial = props => {
                                 selectedIndices={[sortByRentIndex]}
                                 isSegmented={true}
                                 containerStyle={{ width: '100%' }}
-                                buttonStyle={{ flex: 1, backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 
@@ -922,7 +912,6 @@ const ListingCommercial = props => {
                                 selectedIndices={[sortByAvailabilityIndex]}
                                 isSegmented={true}
                                 containerStyle={{ width: '100%' }}
-                                buttonStyle={{ flex: 1, backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                             />
                         </div>
 

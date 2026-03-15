@@ -913,17 +913,19 @@ const CustomersCommercial = props => {
             )}
 
             {visible && (
-                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={toggleBottomNavigationView}>
-                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-10">
-                            <h3 className="text-lg font-bold text-white">Filter</h3>
+                <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleBottomNavigationView}>
+                    <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                        <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                        <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                            <div className="w-8" />
+                            <h3 className="text-xl font-bold text-white text-center">Filter</h3>
                             <div
                                 onClick={resetFilter}
-                                className="absolute top-0 right-0 cursor-pointer"
+                                className="cursor-pointer hover:bg-neutral-800 p-2 rounded-full transition-colors"
                             >
                                 <MdRestartAlt
                                     color={"var(--foreground)"}
-                                    size={30}
+                                    size={24}
                                 />
                             </div>
                         </div>
@@ -934,7 +936,6 @@ const CustomersCommercial = props => {
                                 buttons={porposeForOptions}
                                 selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 onButtonPress={(index, button) => setPurpose(button.text)}
                             />
                         </div>
@@ -945,7 +946,6 @@ const CustomersCommercial = props => {
                                 buttons={propertyTypeOptions}
                                 selectedIndices={selectedProperties.map(item => propertyTypeOptions.findIndex(option => option.text === item))}
                                 isMultiSelect={true}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 onButtonPress={(index, button) => selectPropertyType(index, button)}
                             />
                         </div>
@@ -956,7 +956,6 @@ const CustomersCommercial = props => {
                                 buttons={buildingTypeOption}
                                 selectedIndices={selectedBuildingType.map(item => buildingTypeOption.findIndex(option => option.text === item))}
                                 isMultiSelect={true}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 onButtonPress={(index, button) => selectbuildingType(index, button)}
                             />
                         </div>
@@ -989,7 +988,6 @@ const CustomersCommercial = props => {
                                 buttons={reqWithinOptions}
                                 selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 onButtonPress={(index, button) => setReqWithin(button.text)}
                             />
                         </div>
@@ -1011,17 +1009,19 @@ const CustomersCommercial = props => {
             )}
 
             {visibleSorting && (
-                <div className="fixed inset-0 flex justify-center items-end z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={toggleSortingBottomNavigationView}>
-                    <div className="bg-neutral-900 w-full p-4 pb-20 rounded-t-lg max-h-[50vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-center items-center relative mb-4 sticky top-0 bg-neutral-900 z-10">
-                            <h3 className="text-lg font-bold text-white">Sort</h3>
+                <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleSortingBottomNavigationView}>
+                    <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                        <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                        <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                            <div className="w-8" />
+                            <h3 className="text-xl font-bold text-white text-center">Sort</h3>
                             <div
                                 onClick={resetSortBy}
-                                className="absolute top-0 right-0 cursor-pointer"
+                                className="cursor-pointer hover:bg-neutral-800 p-2 rounded-full transition-colors"
                             >
                                 <MdRestartAlt
                                     color={"var(--foreground)"}
-                                    size={30}
+                                    size={24}
                                 />
                             </div>
                         </div>
@@ -1054,7 +1054,6 @@ const CustomersCommercial = props => {
                                 buttons={sortByPostedDateArray.map(item => ({ text: item }))}
                                 selectedIndices={[sortByPostedDateIndex]}
                                 isMultiSelect={false}
-                                buttonStyle={{ backgroundColor: 'var(--background)', borderColor: 'rgba(173, 181, 189, .5)', borderWidth: 1 }}
                                 onButtonPress={(index) => sortByPostedDate(index)}
                             />
                         </div>

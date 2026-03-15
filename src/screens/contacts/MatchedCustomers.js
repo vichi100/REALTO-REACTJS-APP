@@ -605,38 +605,19 @@ const MatchedCustomers = props => {
                     )}
                     {/* Bottom for filters */}
                     {visible && (
-                        <div style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(0,0,0,0.5)',
-                            zIndex: 1000,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'flex-end'
-                        }} onClick={toggleBottomNavigationView}>
-                            <div style={{
-                                backgroundColor: "#fff",
-                                width: "100%",
-                                height: "70%",
-                                borderTopLeftRadius: 20,
-                                borderTopRightRadius: 20,
-                                padding: 20,
-                                overflowY: 'auto'
-                            }} onClick={e => e.stopPropagation()}>
-                                <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                                    <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: 'var(--foreground)' }}>
-                                        Filter
-                                    </span>
+                        <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleBottomNavigationView}>
+                            <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                                <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                                <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                                    <div className="w-8" />
+                                    <h3 className="text-xl font-bold text-white text-center">Filter</h3>
                                     <div
                                         onClick={() => resetFilter()}
-                                        style={{ position: "absolute", top: 10, right: 10, cursor: 'pointer' }}
+                                        className="cursor-pointer hover:bg-neutral-800 p-2 rounded-full transition-colors"
                                     >
                                         <MdRestartAlt
-                                            color={"#000000"}
-                                            size={30}
+                                            color={"var(--foreground)"}
+                                            size={24}
                                         />
                                     </div>
                                 </div>
@@ -648,7 +629,6 @@ const MatchedCustomers = props => {
                                             onButtonPress={(index) => selectLookingForIndex(index)}
                                             selectedIndices={[lookingForIndex]}
                                             buttons={lookingForArray.map(item => ({ text: item }))}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
                                     <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Home type</p>
@@ -657,7 +637,6 @@ const MatchedCustomers = props => {
                                             onButtonPress={(index) => selectHomeTypeIndex(index)}
                                             selectedIndices={[homeTypeIndex]}
                                             buttons={homeTypeArray.map(item => ({ text: item }))}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
                                     <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>BHK type</p>
@@ -666,7 +645,6 @@ const MatchedCustomers = props => {
                                             onButtonPress={(index) => selectBHKTypeIndex(index)}
                                             selectedIndices={[bhkTypeIndex]}
                                             buttons={bhkTypeArray.map(item => ({ text: item }))}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
                                     {lookingForIndex === -1 ? null : lookingForIndex === 0 ? (
@@ -739,7 +717,6 @@ const MatchedCustomers = props => {
                                             onButtonPress={(index) => selectAvailabilityIndex(index)}
                                             selectedIndices={[availabilityIndex]}
                                             buttons={availabilityArray.map(item => ({ text: item }))}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
                                     <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Furnishing</p>
@@ -748,7 +725,6 @@ const MatchedCustomers = props => {
                                             onButtonPress={(index) => selectFurnishingIndex(index)}
                                             selectedIndices={[furnishingIndex]}
                                             buttons={furnishingStatusArray.map(item => ({ text: item }))}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
                                     <Button title="Apply" onPress={() => onFilter()} />
@@ -764,40 +740,20 @@ const MatchedCustomers = props => {
                         </div>
                     )}
 
-                    {/* Bottom sheet for sorting */}
                     {visibleSorting && (
-                        <div style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(0,0,0,0.5)',
-                            zIndex: 1000,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'flex-end'
-                        }} onClick={toggleSortingBottomNavigationView}>
-                            <div style={{
-                                backgroundColor: "#fff",
-                                width: "100%",
-                                height: "50%",
-                                borderTopLeftRadius: 20,
-                                borderTopRightRadius: 20,
-                                padding: 20,
-                                overflowY: 'auto'
-                            }} onClick={e => e.stopPropagation()}>
-                                <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                                    <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: 'var(--foreground)' }}>
-                                        Sort By
-                                    </span>
+                        <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleSortingBottomNavigationView}>
+                            <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                                <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                                <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                                    <div className="w-8" />
+                                    <h3 className="text-xl font-bold text-white text-center">Sort By</h3>
                                     <div
                                         onClick={() => resetSortBy()}
-                                        style={{ position: "absolute", top: 10, right: 10, cursor: 'pointer' }}
+                                        className="cursor-pointer hover:bg-neutral-800 p-2 rounded-full transition-colors"
                                     >
                                         <MdRestartAlt
-                                            color={"#000000"}
-                                            size={30}
+                                            color={"var(--foreground)"}
+                                            size={24}
                                         />
                                     </div>
                                 </div>
@@ -809,7 +765,6 @@ const MatchedCustomers = props => {
                                             onButtonPress={selectLookingForIndexSortBy}
                                             selectedIndices={[lookingForIndexSortBy]}
                                             buttons={lookingForArraySortBy.map(item => ({ text: item }))}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
                                     <p style={{ ...styles.marginBottom10, color: 'var(--foreground)' }}>Name</p>
@@ -818,7 +773,6 @@ const MatchedCustomers = props => {
                                             onButtonPress={sortByName}
                                             selectedIndices={[sortByNameIndex]}
                                             buttons={sortByNameArray.map(item => ({ text: item }))}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
 
@@ -828,7 +782,6 @@ const MatchedCustomers = props => {
                                             onButtonPress={sortByPostedDate}
                                             selectedIndices={[sortByPostedDateIndex]}
                                             buttons={sortByPostedDateArray.map(item => ({ text: item }))}
-                                            containerStyle={{ borderRadius: 10, width: '100%' }}
                                         />
                                     </div>
                                 </div>

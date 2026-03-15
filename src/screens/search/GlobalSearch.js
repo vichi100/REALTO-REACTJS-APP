@@ -402,7 +402,6 @@ const GlobalSearch = props => {
                         buttons={lookingForOptions}
                         selectedIndices={[lookingForOptions.findIndex(option => option.text === lookingFor)]}
                         onButtonPress={selectWhatYouLookingFor}
-                        buttonStyle={{ borderRadius: '6px' }}
                     />
                 </div>
 
@@ -413,7 +412,6 @@ const GlobalSearch = props => {
                         buttons={whatTypeOptions}
                         selectedIndices={[whatTypeOptions.findIndex(option => option.text === whatType)]}
                         onButtonPress={selectWhatType}
-                        buttonStyle={{ borderRadius: '6px' }}
                     />
                 </div>
 
@@ -424,7 +422,6 @@ const GlobalSearch = props => {
                         buttons={porposeForOptions}
                         selectedIndices={[porposeForOptions.findIndex(option => option.text === purpose)]}
                         onButtonPress={(index, button) => setPurpose(button.text)}
-                        buttonStyle={{ borderRadius: '6px' }}
                     />
                 </div>
 
@@ -438,7 +435,6 @@ const GlobalSearch = props => {
                                 isMultiSelect={true}
                                 selectedIndices={selectedBHK.map(item => bhkOption.findIndex(option => option.text === item))}
                                 onButtonPress={selectBHK}
-                                buttonStyle={{ borderRadius: '6px' }}
                             />
                         </div>
                     </>
@@ -459,7 +455,6 @@ const GlobalSearch = props => {
                                     }
                                     setSelectedRequiredFor(newSelected);
                                 }}
-                                buttonStyle={{ borderRadius: '6px' }}
                             />
                         </div>
 
@@ -478,7 +473,6 @@ const GlobalSearch = props => {
                                     }
                                     setSelectedBuildingType(newSelected);
                                 }}
-                                buttonStyle={{ borderRadius: '6px' }}
                             />
                         </div>
                     </>
@@ -511,7 +505,6 @@ const GlobalSearch = props => {
                         buttons={reqWithinOptions}
                         selectedIndices={[reqWithinOptions.findIndex(option => option.text === reqWithin)]}
                         onButtonPress={(index, button) => setReqWithin(button.text)}
-                        buttonStyle={{ borderRadius: '6px' }}
                     />
                 </div>
 
@@ -524,7 +517,6 @@ const GlobalSearch = props => {
                                 buttons={tenantOptions}
                                 selectedIndices={[tenantOptions.findIndex(option => option.text === tenant)]}
                                 onButtonPress={(index, button) => setTenant(button.text)}
-                                buttonStyle={{ borderRadius: '6px' }}
                             />
                         </div>
                     </>

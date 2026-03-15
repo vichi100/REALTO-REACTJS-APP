@@ -6,10 +6,10 @@ const CustomButtonGroup = ({
     isMultiSelect = false,
     onButtonPress,
     containerStyle,
-    buttonStyle = { backgroundColor: 'var(--background)', borderWidth: '1px', borderColor: 'var(--border)' },
-    selectedButtonStyle = { backgroundColor: 'rgba(0, 163, 108, 0.3)' },
-    buttonTextStyle = { color: 'var(--foreground)' },
-    selectedButtonTextStyle = { color: 'var(--foreground)' },
+    buttonStyle = { backgroundColor: 'var(--background)', borderWidth: '1px', borderColor: 'var(--border)', borderRadius: '9999px' },
+    selectedButtonStyle = { backgroundColor: 'rgba(0, 163, 108, 0.3)', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' },
+    buttonTextStyle = { color: 'var(--foreground)', fontSize: '14px' },
+    selectedButtonTextStyle = { color: 'var(--foreground)', fontWeight: '600' },
     vertical = false,
     isSegmented = false
 }) => {
@@ -32,10 +32,10 @@ const CustomButtonGroup = ({
     };
 
     const getButtonRoundedClass = (index, total) => {
-        if (!isSegmented) return 'rounded';
-        if (total === 1) return 'rounded-lg';
-        if (index === 0) return 'rounded-l-lg rounded-r-none';
-        if (index === total - 1) return 'rounded-r-lg rounded-l-none';
+        if (!isSegmented) return 'rounded-full';
+        if (total === 1) return 'rounded-full';
+        if (index === 0) return 'rounded-l-full rounded-r-none';
+        if (index === total - 1) return 'rounded-r-full rounded-l-none';
         return 'rounded-none';
     };
 
@@ -48,12 +48,12 @@ const CustomButtonGroup = ({
                         key={index}
                         onClick={() => handlePress(index)}
                         className={`
-              px-4 py-2 transition-colors duration-200
+              px-4 py-2 transition-all duration-200
               ${getButtonRoundedClass(index, buttons.length)}
               ${isSegmented && index > 0 ? '-ml-px' : ''}
               ${isSelected
-                                ? 'z-10'
-                                : 'hover:bg-neutral-800 z-0'}
+                                ? 'z-10 scale-105'
+                                : 'hover:bg-neutral-800 z-0 opacity-80 hover:opacity-100'}
             `}
                         style={{
                             ...buttonStyle,

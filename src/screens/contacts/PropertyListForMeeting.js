@@ -411,38 +411,19 @@ const PropertyListForMeeting = props => {
             )}
             {/* Bottom for filters */}
             {visible && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                    zIndex: 1000,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'flex-end'
-                }} onClick={toggleBottomNavigationView}>
-                    <div style={{
-                        backgroundColor: "#fff",
-                        width: "100%",
-                        height: "70%",
-                        borderTopLeftRadius: 20,
-                        borderTopRightRadius: 20,
-                        padding: 20,
-                        overflowY: 'auto'
-                    }} onClick={e => e.stopPropagation()}>
-                        <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: "var(--foreground)" }}>
-                                Filter
-                            </span>
+                <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleBottomNavigationView}>
+                    <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                        <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                        <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                            <div className="w-8" />
+                            <h3 className="text-xl font-bold text-white text-center">Filter</h3>
                             <div
-                                onClick={() => toggleBottomNavigationView()}
-                                style={{ position: "absolute", top: 10, right: 10, cursor: 'pointer' }}
+                                onClick={() => resetFilter()}
+                                className="cursor-pointer hover:bg-neutral-800 p-2 rounded-full transition-colors"
                             >
                                 <MdRestartAlt
                                     color={"var(--foreground)"}
-                                    size={30}
+                                    size={24}
                                 />
                             </div>
                         </div>
@@ -454,7 +435,6 @@ const PropertyListForMeeting = props => {
                                     onButtonPress={(i) => setFilterForIndex(i)}
                                     selectedIndices={[filterForIndex]}
                                     buttons={["Rent", "Sell"].map(item => ({ text: item }))}
-                                    containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
                             <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Home type</p>
@@ -463,7 +443,6 @@ const PropertyListForMeeting = props => {
                                     onButtonPress={(i) => setFilterTypeIndex(i)}
                                     selectedIndices={[filterTypeIndex]}
                                     buttons={["Apartment", "Villa", "Independent House", "Any"].map(item => ({ text: item }))}
-                                    containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
                             <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>BHK type</p>
@@ -472,7 +451,6 @@ const PropertyListForMeeting = props => {
                                     onButtonPress={(i) => setFilterBHKIndex(i)}
                                     selectedIndices={[filterBHKIndex]}
                                     buttons={["1RK", "1BHK", "2BHK", "3BHK", "4BHK", "4+BHK"].map(item => ({ text: item }))}
-                                    containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
                             <p style={{ color: 'var(--foreground)', fontWeight: '500' }}>Rent Range</p>
@@ -483,7 +461,6 @@ const PropertyListForMeeting = props => {
                                     onButtonPress={(i) => setFilterAvailabilityIndex(i)}
                                     selectedIndices={[filterAvailabilityIndex]}
                                     buttons={["Immediate", "15 Days", "30 Days", "30+ Days"].map(item => ({ text: item }))}
-                                    containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
                             <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Furnishing</p>
@@ -492,7 +469,6 @@ const PropertyListForMeeting = props => {
                                     onButtonPress={(i) => setFilterFurnishingIndex(i)}
                                     selectedIndices={[filterFurnishingIndex]}
                                     buttons={["Full", "Semi", "Empty", "Any"].map(item => ({ text: item }))}
-                                    containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
                             <Button
@@ -504,33 +480,14 @@ const PropertyListForMeeting = props => {
                 </div>
             )}
 
-            {/* Bottom sheet for sorting */}
             {visibleSorting && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                    zIndex: 1000,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'flex-end'
-                }} onClick={toggleSortingBottomNavigationView}>
-                    <div style={{
-                        backgroundColor: "#fff",
-                        width: "100%",
-                        height: "45%",
-                        borderTopLeftRadius: 20,
-                        borderTopRightRadius: 20,
-                        padding: 20,
-                        overflowY: 'auto'
-                    }} onClick={e => e.stopPropagation()}>
-                        <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                            <span style={{ marginTop: 15, fontSize: 16, fontWeight: "600", color: "var(--foreground)" }}>
-                                Sort By
-                            </span>
+                <div className="fixed inset-0 flex justify-center items-end z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }} onClick={toggleSortingBottomNavigationView}>
+                    <div className="bg-neutral-900 w-full p-6 pb-20 rounded-t-[2rem] max-h-[60vh] overflow-y-auto shadow-2xl transition-all duration-300 transform translate-y-0" onClick={e => e.stopPropagation()}>
+                        <div className="w-12 h-1.5 bg-neutral-700 rounded-full mx-auto mb-6" />
+                        <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
+                            <div className="w-8" />
+                            <h3 className="text-xl font-bold text-white text-center">Sort By</h3>
+                            <div className="w-8" />
                         </div>
 
                         <div style={{ marginTop: 10, marginBottom: 20 }}>
@@ -540,7 +497,6 @@ const PropertyListForMeeting = props => {
                                     onButtonPress={(index) => applySort('rent', index)}
                                     selectedIndices={[sortRentIndex]}
                                     buttons={["Lowest First", "Highest First"].map(item => ({ text: item }))}
-                                    containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
                             <p style={{ ...styles.marginBottom10, color: 'var(--foreground)', fontWeight: '500' }}>Availability</p>
@@ -549,7 +505,6 @@ const PropertyListForMeeting = props => {
                                     onButtonPress={(index) => applySort('avail', index)}
                                     selectedIndices={[sortAvailabilityIndex]}
                                     buttons={["Earliest First", "Oldest First"].map(item => ({ text: item }))}
-                                    containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
 
@@ -559,7 +514,6 @@ const PropertyListForMeeting = props => {
                                     onButtonPress={(index) => applySort('date', index)}
                                     selectedIndices={[sortDateIndex]}
                                     buttons={["Recent First", "Oldest Fist"].map(item => ({ text: item }))}
-                                    containerStyle={{ borderRadius: 10, width: '100%' }}
                                 />
                             </div>
                         </div>
